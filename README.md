@@ -1,15 +1,37 @@
-# Basic Sample Hardhat Project
+# Paymagic V2
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+React, NextJS and Chakra-UI
 
-Try running some of the following tasks:
+### 📦 Install
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+```
+$ git clone https://github.com/PaymagicXYZ/paymagic-fe-new
+
+$ yarn install
+```
+
+### 🔨 How to use
+
+Runs next which starts Next.js in development mode
+
+```bash
+$ yarn dev
+```
+
+Runs next build which builds the application for production usage
+
+```bash
+$ yarn build
+```
+
+Runs next start which starts a Next.js production server
+
+```bash
+$ yarn start
+```
+
+Runs next build and export which exports a files in a `out` folder to deploy
+
+```bash
+$ yarn deploy
 ```
