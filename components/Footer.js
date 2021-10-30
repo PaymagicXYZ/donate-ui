@@ -18,12 +18,12 @@ function Footer() {
         <HStack spacing="24px">
           <Link href="https://t.me/paymagics">
             <a>
-              <Image src="telegram.png" alt="telegram" />
+              <Image src="/telegram.png" alt="telegram" />
             </a>
           </Link>
           <Link href="https://twitter.com/paymagic_">
             <a>
-              <Image src="twitter.png" alt="twitter" />
+              <Image src="/twitter.png" alt="twitter" />
             </a>
           </Link>
         </HStack>

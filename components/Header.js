@@ -77,7 +77,7 @@ function Header() {
           <a>
             <Stack direction="row" alignItems="center">
               <Image
-                src="logo_512x512.png"
+                src="/logo_512x512.png"
                 alt="Balloon"
                 boxSize="48px"
                 objectFit="cover"

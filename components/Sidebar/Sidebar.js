@@ -1,74 +1,72 @@
-import React, { useState } from "react";
+import Head from "next/head";
+import Link from "next/link";
 import {
+  Box,
   Flex,
-  Text,
-  IconButton,
-  Divider,
-  Avatar,
-  Heading,
+  Stack,
+  Circle,
+  useColorModeValue as mode,
 } from "@chakra-ui/react";
-import {
-  FiMenu,
-  FiHome,
-  FiCalendar,
-  FiUser,
-  FiDollarSign,
-  FiBriefcase,
-  FaHandshake,
-  FiGithub,
-} from "react-icons/fa";
+import { BiBuoy, BiCog } from "react-icons/bi";
+
+import { FaHandshake } from "react-icons/fa";
 
 import { BsClockHistory } from "react-icons/bs";
 
-import { IoHelpBuoySharp, IoWalletSharp } from "react-icons/io5";
+import { IoWalletSharp } from "react-icons/io5";
 
 import { IoMdContacts } from "react-icons/io";
 
 import { RiHandCoinLine, RiSendPlaneFill } from "react-icons/ri";
 
 import { MdAccountBalance } from "react-icons/md";
+import { NavItem } from "./NavItem";
+import { useRouter } from "next/router";
 
-import { FaQuestion } from "react-icons/fi";
-import NavItem from "./NavItem";
-import Link from "next/link";
-
-export default function Sidebar() {
-  const [navSize, changeNavSize] = useState("small");
+export default function Sidebar(props) {
+  const router = useRouter();
   return (
-    <Flex
-      style={{ position: "fixed" }}
-      position="absolute"
-      left="5"
-      h="95vh"
-      boxShadow="10px 0px 5px 0 rgba(0, 0, 0, 0.05)"
-      borderRadius={navSize == "small" ? "15px" : "30px"}
-      w="200px"
-      flexDir="column"
-      justifyContent="space-between"
-    >
-      <Flex
-        // marginTop="1vh"
-        p="5%"
-        flexDir="column"
-        w="100%"
-        alignItems="center"
-        as="nav"
-      >
-        {" "}
-        <Link href="/payments">
-          <a>
-            <NavItem icon={RiSendPlaneFill} title="Send Payment" />
-          </a>
-        </Link>
-        <NavItem icon={RiHandCoinLine} title="Claim Airdrop" />
-        <NavItem icon={BsClockHistory} title="Past Transactions" />
-        <NavItem icon={MdAccountBalance} title="Balances" />
-        <NavItem icon={IoWalletSharp} title="Wallets" />
-        <NavItem icon={IoMdContacts} title="Contacts" />
-        <NavItem icon={FaHandshake} title="DAO Deals" />
-      </Flex>
+    <>
+      <Box height="140vh" overflow="hidden" position="relative">
+        <Flex h="full" id="app-container">
+          <Box w="64" bg="gray.900" color="white" fontSize="sm" rounded="md">
+            <Flex h="full" direction="column" px="4" py="4">
+              <Stack spacing="2" flex="1" overflow="auto" pt="8">
+                <Link href="/payments">
+                  <a>
+                    <NavItem icon={<RiSendPlaneFill />} label="Send Payment" />
+                  </a>
+                </Link>
+                <Link href="/airdrop">
+                  <a>
+                    <NavItem icon={<RiHandCoinLine />} label="Claim Airdrop" />
+                  </a>
+                </Link>
+                <NavItem icon={<BsClockHistory />} label="Past Transactions" />
+                <NavItem icon={<MdAccountBalance />} label="Balances" />
+                <NavItem icon={<IoWalletSharp />} label="Wallets" />
+                <NavItem icon={<IoMdContacts />} label="Contracts" />
 
-      <Flex p="5%" flexDir="column" w="100%" alignItems="center" mb={4}></Flex>
-    </Flex>
+                <NavItem icon={<FaHandshake />} label="DAO Deals" />
+              </Stack>
+              <Box>
+                <Stack spacing="1">
+                  <NavItem subtle icon={<BiCog />} label="Settings" />
+                  <NavItem
+                    subtle
+                    icon={<BiBuoy />}
+                    label="Help & Support"
+                    endElement={<Circle size="2" bg="blue.400" />}
+                  />
+                </Stack>
+              </Box>
+            </Flex>
+          </Box>
+          <Box bg={mode("white", "gray.800")} flex="1" p="6">
+            {props.children}
+          </Box>
+        </Flex>
+      </Box>
+    </>
   );
 }
