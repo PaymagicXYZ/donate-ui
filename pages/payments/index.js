@@ -17,14 +17,15 @@ import {
   FormHelperText,
   Image,
   Stack,
+  Circle,
   Alert,
   AlertIcon,
   useToast,
   Spacer,
   Divider,
   SimpleGrid,
+  useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { ethers, utils } from "ethers";
 
 // import { AddressesContext } from "../../../contexts";
 import { useWeb3React } from "@web3-react/core";
@@ -36,6 +37,8 @@ import Footer from "../../components/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ConnectionAlert from "../../components/ConnectionAlert";
 import Link from "next/link";
+
+// import { NavItem } from "../../components/NavItem";
 
 function PaymentsPage() {
   const { library, account, chainId } = useWeb3React();
@@ -94,7 +97,8 @@ function PaymentsPage() {
       role={"group"}
       p={6}
       m="5"
-      maxW={"330px"}
+      maxW={"430px"}
+      minW={"230px"}
       w={"full"}
       bg={"white"}
       boxShadow={"2xl"}
@@ -102,52 +106,55 @@ function PaymentsPage() {
       pos={"relative"}
       zIndex={1}
     >
-      <Box
-        rounded={"lg"}
-        mt={-12}
-        pos={"relative"}
-        height={"230px"}
-        _after={{
-          transition: "all .3s ease",
-          content: '""',
-          w: "full",
-          h: "full",
-          pos: "absolute",
-          top: 5,
-          left: 0,
-          backgroundImage: `${payment.image})`,
-          filter: "blur(15px)",
-          zIndex: -1,
-        }}
-        _groupHover={{
-          _after: {
-            filter: "blur(20px)",
-          },
-        }}
-      >
-        <Image
-          rounded={"lg"}
-          height={230}
-          width={282}
-          objectFit={"cover"}
-          src={payment.image}
-          alt={payment.imageAlt}
-        />
-      </Box>
-      <Stack pt={10} align={"center"}>
-        <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
-          {payment.title}
-        </Text>
-        <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
-          {payment.description}
-        </Heading>
-        <Stack direction={"row"} align={"center"}>
-          {/* <Text fontWeight={800} fontSize={"xl"}>
-            $57
-          </Text> */}
-          <Text color={"gray.600"}> {payment.more}</Text>
-        </Stack>
-      </Stack>
+      <Link href={"/payments/" + payment.imageAlt}>
+        <a>
+          <Box
+            rounded={"lg"}
+            mt={-12}
+            pos={"static"}
+            height={"230px"}
+            _after={{
+              transition: "all .3s ease",
+              content: '""',
+              w: "full",
+              h: "full",
+              pos: "absolute",
+              top: 5,
+              left: 0,
+              backgroundImage: `${payment.image})`,
+              filter: "blur(15px)",
+              zIndex: -1,
+            }}
+            _groupHover={{
+              _after: {
+                filter: "blur(20px)",
+              },
+            }}
+          >
+            <Image
+              rounded={"lg"}
+              height={230}
+              width={282}
+              objectFit={"cover"}
+              src={payment.image}
+              alt={payment.imageAlt}
+            />
+          </Box>
+
+          <Stack pt={10} align={"center"}>
+            <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
+              {payment.title}
+            </Heading>
+            <Text color={"gray.600"}>{payment.description}</Text>
+
+            <Text color={"gray.500"} fontSize={"sm"}>
+              {" "}
+              {payment.more}
+            </Text>
+            {/* </Stack> */}
+          </Stack>
+        </a>
+      </Link>
     </Box>
   ));
 
@@ -159,26 +166,52 @@ function PaymentsPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Container justifyContent="center">
-        <Sidebar />
-        {/* <AddressesContext.Provider value={providerAddresses}> */}
-        <Flex justifyContent="center" flexWrap="wrap">
-          {chainId !== 137 ? <ConnectionAlert /> : null}{" "}
-          <Text fontSize="6xl" justifyContent="center">
-            <strong>💳 Payment Types</strong>
-          </Text>{" "}
-          <Divider my={5} />
-        </Flex>
+      <Sidebar>
+        <SimpleGrid columns={3} spacing={5} justifyContent="center">
+          {/* <Box minH="24" mx="auto" maxW={{ base: "full", md: "md" }}> */}
+          {/* <Stack
+                    direction="row"
+                    h="full"
+                    spacing="6"
+                    justifyContent="center"
+                    alignItems="center"
+                    p="2"
+                  > */}
 
-        <SimpleGrid minChildWidth="220px" spacing={5} justifyContent="center">
           {paymentsGrid}
+          {/* </Stack> */}
+          {/* </Box> */}
         </SimpleGrid>
-
-        {/* </AddressesContext.Provider> */}
-      </Container>
-
-      <Footer />
+        <Footer />
+      </Sidebar>
     </>
+    // <>
+    //   <Head>
+    //     <title>Paymagic | Payment Types </title>
+    //     <meta name="description" content="Fill in" />
+    //     <link rel="icon" href="/favicon.ico" />
+    //   </Head>
+    //   <Header />
+    //   <Container justifyContent="center">
+    //     <Sidebar />
+    //     {/* <AddressesContext.Provider value={providerAddresses}> */}
+    //     <Flex justifyContent="center" flexWrap="wrap">
+    //       {chainId !== 137 ? <ConnectionAlert /> : null}{" "}
+    //       <Text fontSize="6xl" justifyContent="center">
+    //         <strong>💳 Payment Types</strong>
+    //       </Text>{" "}
+    //       <Divider my={5} />
+    //     </Flex>
+
+    //     <SimpleGrid minChildWidth="220px" spacing={5} justifyContent="center">
+    //       {paymentsGrid}
+    //     </SimpleGrid>
+
+    //     {/* </AddressesContext.Provider> */}
+    //   </Container>
+
+    //   <Footer />
+    // </>
   );
 }
 
