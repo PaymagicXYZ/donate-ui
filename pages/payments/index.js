@@ -30,11 +30,7 @@ import {
 // import { AddressesContext } from "../../../contexts";
 import { useWeb3React } from "@web3-react/core";
 
-// import AddressList from "../../components/AddressList";
-// import CampaignForm from "../../components/CampaignForm";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import PageContainer from "../../components/PageContainer/PageContainer";
 import ConnectionAlert from "../../components/ConnectionAlert";
 import Link from "next/link";
 
@@ -68,13 +64,6 @@ function PaymentsPage() {
       imageAlt: "stream",
       description: "Send tokens continuously by the second",
       more: "Create real-time subscriptions, salaries, or vesting",
-    },
-    {
-      title: "Airdrop",
-      image: "airdrop-payment.png",
-      imageAlt: "airdrop",
-      description: "Send token rewards for recipients to claim",
-      more: "Reward liquidity providers, users, or communities",
     },
     {
       title: "Escrow",
@@ -159,59 +148,11 @@ function PaymentsPage() {
   ));
 
   return (
-    <>
-      <Head>
-        <title>Paymagic | Payment Types </title>
-        <meta name="description" content="Fill in" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      <Sidebar>
-        <SimpleGrid columns={3} spacing={5} justifyContent="center">
-          {/* <Box minH="24" mx="auto" maxW={{ base: "full", md: "md" }}> */}
-          {/* <Stack
-                    direction="row"
-                    h="full"
-                    spacing="6"
-                    justifyContent="center"
-                    alignItems="center"
-                    p="2"
-                  > */}
-
-          {paymentsGrid}
-          {/* </Stack> */}
-          {/* </Box> */}
-        </SimpleGrid>
-        <Footer />
-      </Sidebar>
-    </>
-    // <>
-    //   <Head>
-    //     <title>Paymagic | Payment Types </title>
-    //     <meta name="description" content="Fill in" />
-    //     <link rel="icon" href="/favicon.ico" />
-    //   </Head>
-    //   <Header />
-    //   <Container justifyContent="center">
-    //     <Sidebar />
-    //     {/* <AddressesContext.Provider value={providerAddresses}> */}
-    //     <Flex justifyContent="center" flexWrap="wrap">
-    //       {chainId !== 137 ? <ConnectionAlert /> : null}{" "}
-    //       <Text fontSize="6xl" justifyContent="center">
-    //         <strong>💳 Payment Types</strong>
-    //       </Text>{" "}
-    //       <Divider my={5} />
-    //     </Flex>
-
-    //     <SimpleGrid minChildWidth="220px" spacing={5} justifyContent="center">
-    //       {paymentsGrid}
-    //     </SimpleGrid>
-
-    //     {/* </AddressesContext.Provider> */}
-    //   </Container>
-
-    //   <Footer />
-    // </>
+    <PageContainer>
+      <SimpleGrid columns={3} spacing={5} justifyContent="center">
+        {paymentsGrid}
+      </SimpleGrid>
+    </PageContainer>
   );
 }
 

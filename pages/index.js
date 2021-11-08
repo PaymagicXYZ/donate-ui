@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
+import PageContainer from "../components/PageContainer/PageContainer";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -31,12 +32,9 @@ export default function Home() {
   } = useDisclosure();
 
   return (
+    <PageContainer>
+
     <Box bgGradient="linear( #fbcdcf, #c471ed, #12c2e9)">
-      <Head>
-        <title>Paymagic</title>
-        <meta name="description" content="Content to be filled in" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Flex p={6} flexWrap="wrap">
         <Stack direction="row" alignItems="center">
           <Image
@@ -107,5 +105,6 @@ export default function Home() {
       </Container>
       <Footer />
     </Box>
+    </PageContainer>
   );
 }
