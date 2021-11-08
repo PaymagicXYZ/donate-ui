@@ -1,22 +1,14 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react"
 import Head from "next/head";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
+import { theme } from "../styles/theme"
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
   // library.pollingInterval = 12000;
   return library;
 }
-
-const theme = extendTheme({
-  styles: {
-    global: {
-      body: {}
-    }
-  }
-})
 
 function MyApp({ Component, pageProps }) {
   return (
