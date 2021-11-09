@@ -1,35 +1,28 @@
+import * as React from 'react'
 import Link from "next/link";
-import {
-  Divider,
-  Flex,
-  Heading,
-  Spacer,
-  Image,
-  HStack,
-  Wrap,
-  Box,
-} from "@chakra-ui/react";
+import { Box, Stack, Divider, Text, Link as ChakraLink } from '@chakra-ui/react'
 
-function Footer() {
+export default function Footer() {
   return (
-    <>
-      <Divider mb={5} />
-      <Flex p={7} flexWrap="wrap" justifyContent="center">
-        <HStack spacing="24px">
-          <Link href="https://t.me/paymagics">
-            <a>
-              <Image src="/telegram.png" alt="telegram" />
-            </a>
-          </Link>
-          <Link href="https://twitter.com/paymagic_">
-            <a>
-              <Image src="/twitter.png" alt="twitter" />
-            </a>
-          </Link>
-        </HStack>
-      </Flex>
-    </>
-  );
+    <Box as="footer" role="contentinfo" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }}>
+      <Divider mt="6" mb="2"/>
+      <Stack direction="row" spacing="4" align="center" justify="center">
+        <Link href="/about">
+          About
+        </Link>
+        <Text>
+          |
+        </Text>
+        <ChakraLink href="https://t.me/paymagics" isExternal>
+          Telegram
+        </ChakraLink>
+        <Text>
+          |
+        </Text>
+        <ChakraLink href="https://twitter.com/paymagic_" isExternal>
+          Twitter
+        </ChakraLink>
+      </Stack>
+    </Box>
+  )
 }
-
-export default Footer;

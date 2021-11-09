@@ -1,5 +1,5 @@
 {
-  "name": "blockchain-balloons",
+  "name": "paymagic-fe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -27,6 +27,7 @@
   "devDependencies": {
     "eslint": "7",
     "eslint-config-next": "11.1.2",
-    "ethers": "^5.5.1"
+    "ethers": "^5.5.1",
+    "typescript": "^4.4.4"
   }
 }

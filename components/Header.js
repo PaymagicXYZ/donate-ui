@@ -78,7 +78,7 @@ function Header() {
             <Stack direction="row" alignItems="center">
               <Image
                 src="/logo_512x512.png"
-                alt="Balloon"
+                alt="Paymagic"
                 boxSize="48px"
                 objectFit="cover"
               />
