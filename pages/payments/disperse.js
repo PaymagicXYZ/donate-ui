@@ -92,6 +92,7 @@ function DispersePage() {
               <a
                 href={getBlockExplorerLink(txData.hash, "transaction")}
                 target="_blank"
+                rel="noreferrer"
               >
                 View on Etherscan
               </a>
