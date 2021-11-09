@@ -4,7 +4,6 @@ import PageContainer from "../../components/PageContainer/PageContainer";
 import { Card } from '../../components/Card/Card'
 import { CardContent } from '../../components/Card/CardContent'
 import { CardHeader } from '../../components/Card/CardHeader'
-import { Property } from '../../components/Card/Property'
 
 export default function About() {
   return (
