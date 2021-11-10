@@ -23,7 +23,7 @@ export const AirdropForm = (props: StackProps) => (
   <Stack as="section" spacing="6" {...props}>
     <HeadingGroup
       title="Send Airdrop"
-      description="Send token or NFT rewards that recipients can claim"
+      description="Send token or NFT rewards that recipients must claim."
     />
     <Card>
       <Stack spacing="6">
@@ -33,6 +33,7 @@ export const AirdropForm = (props: StackProps) => (
               <FormLabel fontSize="sm">TOKEN ADDRESS</FormLabel>
               <Input placeholder="0x..." />
             </FormControl>
+
 
             <FormControl id="tokenType">
               <FormLabel fontSize="sm">TOKEN TYPE</FormLabel>

@@ -35,7 +35,7 @@ import { isAddress } from "@ethersproject/address";
 
 // import AddressList from "../../components/AddressList";
 // import CampaignForm from "../../components/CampaignForm";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ConnectionAlert from "../../components/ConnectionAlert";

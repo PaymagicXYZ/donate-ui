@@ -1,23 +1,18 @@
-import Link from "next/link";
 import {
   Button,
-  Divider,
-  Flex,
-  Heading,
   Spacer,
-  Image,
-  Stack,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
-import { useEagerConnect } from "../hooks/useEagerConnect";
-import { useInactiveListener } from "../hooks/useInactiveListener";
-import { injected } from "../connectors";
-import { translateChainId } from "../utils";
+import { useEagerConnect } from "../../hooks/useEagerConnect";
+import { useInactiveListener } from "../../hooks/useInactiveListener";
+import { injected } from "../../connectors";
+import { translateChainId } from "../../utils";
 
-function Header() {
+export default function Wallet() {
+
   const context = useWeb3React();
   const { account, activate, chainId } = context;
 
@@ -67,34 +62,10 @@ function Header() {
   };
 
   return (
-    <header>
-      <Flex
-        p={6}
-        flexWrap="wrap"
-        // bgGradient="linear(to-l, #12c2e9, #c471ed,  #fbcdcf)"
-      >
-        <Link href="/">
-          <a>
-            <Stack direction="row" alignItems="center">
-              <Image
-                src="/logo_512x512.png"
-                alt="Paymagic"
-                boxSize="48px"
-                objectFit="cover"
-              />
-              <Heading as="h1" size="lg" isTruncated>
-                Paymagic
-              </Heading>
-            </Stack>
-          </a>
-        </Link>
-        <Spacer />
-        <Account />
-        <Network />
-      </Flex>
-      {/* <Divider mb={5} /> */}
-    </header>
-  );
+    <>
+      <Spacer />
+      <Account />
+      <Network />
+    </>
+  )
 }
-
-export default Header;

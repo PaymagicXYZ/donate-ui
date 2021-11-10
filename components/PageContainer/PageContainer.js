@@ -1,4 +1,4 @@
-import Header from "../../components/Header";
+import { Header } from "../../components/Header/Header";
 import Footer from "../../components/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react";
