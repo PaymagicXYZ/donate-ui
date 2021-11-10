@@ -3,6 +3,28 @@ import { getAddress as getAddressEthers } from '@ethersproject/address'
 
 import { BLOCK_EXPLORER_LINK } from "./constants";
 
+import development from "./contractData/kovanPaymagic";
+import test from "./contractData/kovanPaymagic";
+import kovan from "./contractData/kovanPaymagic";
+// import polygon from "./contractData/polygonPaymagic";
+// import mainnet from "./contractData/mainnetPaymagic";
+// import production from "./contractData/mainnetPaymagic";
+
+const env = process.env.REACT_APP_APP_ENV || 'test'; // defaulting to after ||
+
+const config = {
+  development,
+  test,
+  kovan,
+  // polygon,
+  // mainnet,
+  // production
+};
+
+export const contractData = config[env]
+
+
+
 export function translateChainId(chainId) {
   switch (chainId) {
     case 1:

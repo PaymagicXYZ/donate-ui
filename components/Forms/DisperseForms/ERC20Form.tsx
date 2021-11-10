@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import numeral from 'numeral';
 import _ from 'lodash';
 import { ethers, Contract } from "ethers";
-import { Formik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as csv from 'csvtojson'
 
 import {
@@ -34,6 +34,7 @@ import { FiSend, FiToggleLeft } from "react-icons/fi";
 
 
 import {
+  contractData,
   Transactor,
   getAddress,
   isAddress,
@@ -78,7 +79,8 @@ export default function ERC20Form() {
         setAlert((
           <Alert status="success">
             <AlertIcon />
-            (<div>Your transaction is complete! {"\n"}<a href={getBlockExplorerLink(txData.hash,'transaction')} target="_blank">View on Etherscan</a>.</div>)
+              <div>Your transaction is complete!</div>
+            {/*(<div>Your transaction is complete! {"\n"}<a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View on Etherscan</a>.</div>)*/}
           </Alert>
         ))
         break;
@@ -101,7 +103,7 @@ export default function ERC20Form() {
       try {
         _token.contract = new Contract(
           getAddress(values.customTokenAddress),
-          paymagicData.contracts['ERC20']['abi'],
+          contractData.contracts['ERC20']['abi'],
           web3Context.provider.getSigner()
         );
         _token.address = values.customTokenAddress
@@ -171,67 +173,88 @@ export default function ERC20Form() {
     return`${_.join(tempDetails,`\n`)}\n-----\nTOTAL ${numeral(_totalAmount).format('0,0.0000')} ${symbol}\n`
   }
 
-  const validateRules = async values => {
-    const errors = {};
+  async function parseAndValidateRecipients(value) {
+    let error
 
-    // CUSTOM TOKEN ADDRESS
-    if (!values.customTokenAddress) {
-      errors.customTokenAddress = 'Required'
-    } else if ( !isAddress(values.customTokenAddress) ){
-      errors.customTokenAddress = 'Unable to read the token address. Please try again.'
-    } else if ( !isToken(values.customTokenAddress) ){
-      errors.customTokenAddress = 'Unable to find the token. Please try again.'
-    }
+    // Parse
+    let [_addressArray, _amountArray, _totalAmount] =
+      await parseRecipients(value)
+    let _details = getConfirmationDetails(_addressArray, _amountArray, _totalAmount, parsedData.token.symbol)
+  
+    setParsedData({...parsedData,
+      addressArray: _addressArray,
+      amountArray: _amountArray,
+      totalAmount: _totalAmount,
+      confirmationDetails: _details
+    })
 
-    // // RECIPIENTS
-    if (!values.recipients) {
-      errors.recipients = 'Required';
-    } else if (values.addressArray.length === 0 || values.amountArray.length === 0) {
-      errors.recipients = 'Required';
-    } else if (values.addressArray.length !== values.amountArray.length) {
-      errors.recipients = 'Unable to parse the text. Please try again.';
+    // Validate
+    if (!value) {
+      error = 'Required';
+    } else if (_addressArray.length === 0 || _amountArray.length === 0) {
+      error = 'Required';
+    } else if (_addressArray.length !== _amountArray.length) {
+      error = 'Unable to parse the text. Please try again. 1';
     } else {
-      for (let i = 0; i < values.addressArray.length; i++) {
-        if(!isAddress(values.addressArray[i]) || !_.isFinite(values.amountArray[i])) {
-          errors.recipients = 'Unable to parse the text. Please try again.';
+      for (let i = 0; i < _addressArray.length; i++) {
+        if(!isAddress(_addressArray[i]) || !_.isFinite(_amountArray[i])) {
+          error = 'Unable to parse the text. Please try again. 2';
           break;
         }
       }      
     }
 
-
     // // Validate Token Balance
-    if(parsedData.token.contract && parsedData.totalAmount) {
-      let tokenBalanceBN = await parsedData.token.contract["balanceOf"](...[web3Context.address]);
+    // if(parsedData.token.contract && parsedData.totalAmount) {
+    //   let tokenBalanceBN = await parsedData.token.contract["balanceOf"](...[web3Context.address]);
 
-      if (values.totalAmount <= 0 || !_.isFinite(values.totalAmount)) {
-        errors.recipients = 'Unable to parse the text. Please try again.';
-      } else if(tokenBalanceBN.lt(
-          ethers.utils.parseUnits(
-            _.toString(values.totalAmount),
-            parsedData.token.decimals.toNumber()
-          )
-        )
-      ) {
-        errors.recipients = 'Your token balance is too low';
-      }      
+    //   if (values.totalAmount <= 0 || !_.isFinite(values.totalAmount)) {
+    //     // errors.recipients = 'Unable to parse the text. Please try again.';
+    //   } else if(tokenBalanceBN.lt(
+    //       ethers.utils.parseUnits(
+    //         _.toString(values.totalAmount),
+    //         parsedData.token.decimals.toNumber()
+    //       )
+    //     )
+    //   ) {
+    //     errors.recipients = 'Your token balance is too low';
+    //   }      
+    // }
+
+    return error
+  }
+
+  async function validateCustomTokenAddress(value) {
+    let error
+
+    // CUSTOM TOKEN ADDRESS
+    if (!value) {
+      error = 'Required'
+    } else if ( !isAddress(value) ){
+      error = 'Unable to read the token address. Please try again.'
+    } else if ( !isToken(value) ){
+      error = 'Unable to find the token. Please try again.'
     }
 
-    return errors;
-  };
+    return error
+  }
 
   async function handleApproval(cb) {
-    const totalAmountBN = ethers.utils.parseUnits(
-      _.toString(parsedData.totalAmount),
-      parsedData.token.decimals
-    )
-    const tx = Transactor(web3Context.provider, cb, gasPrice);
-    tx(parsedData.token.contract["approve"](paymagicData.contracts.disperse.address, totalAmountBN));
+    console.log('Send Approval Tx')
+    // const totalAmountBN = ethers.utils.parseUnits(
+    //   _.toString(parsedData.totalAmount),
+    //   parsedData.token.decimals
+    // )
+    // const tx = Transactor(web3Context.provider, cb, gasPrice);
+    // tx(parsedData.token.contract["approve"](contractData.contracts.disperse.address, totalAmountBN));
+    cb({'hash': '0x'}) // Just for testing purposes while the above is commented out
   }
   
   async function handleSubmit(cb) {
-    const tx = Transactor(web3Context.provider, cb, gasPrice);
-    tx(contracts['disperse']["disperseTokenSimple"](parsedData.token.address, parsedData.addressArray, parsedData.amountArray));
+    console.log('Send Approval Tx')
+    // const tx = Transactor(web3Context.provider, cb, gasPrice);
+    // tx(contracts['disperse']["disperseTokenSimple"](parsedData.token.address, parsedData.addressArray, parsedData.amountArray));
+    cb({'hash': '0x'}) // Just for testing purposes while the above is commented out
   }
 
   return (
@@ -249,8 +272,11 @@ export default function ERC20Form() {
             amountArray: [],
             totalAmount: 0
           }}
-          validate={ validateRules }
+          // validate={ validateRules }
           onSubmit={async (values, actions) => {
+            console.log('Submitted...')
+            console.log(values)
+            console.log(actions)
             setLoading(true);
 
             const afterMine = async (txStatus, txData) => {
@@ -296,63 +322,52 @@ export default function ERC20Form() {
               run()
             }, [props.values.customTokenAddress]);
 
-            useEffect(() => {
-              async function run() {
-                let [_addressArray, _amountArray, _totalAmount] =
-                  await parseRecipients(props.values.recipients)
-                let _details = getConfirmationDetails(_addressArray, _amountArray, _totalAmount, parsedData.token.symbol)
-              
-                setParsedData({...parsedData,
-                  addressArray: _addressArray,
-                  amountArray: _amountArray,
-                  totalAmount: _totalAmount,
-                  confirmationDetails: _details
-                })
-                if(props.values.recipients !== '') {
-                  props.setFieldValue('addressArray', _addressArray)
-                  props.setFieldValue('amountArray', _amountArray)
-                  props.setFieldValue('totalAmount', _totalAmount)                          
-                }
-              }
-              run()
-            }, [props.values.recipients]);
-
             return (
-              <form onSubmit={props.handleSubmit}>
+              <Form onSubmit={props.handleSubmit}>
 
                 <FieldGroup>
                   <Stack direction={{ base: 'column', md: 'row' }} width="full" spacing="4">
-                    <FormControl id="tokenAddress">
-                      <FormLabel fontSize="sm">TOKEN ADDRESS</FormLabel>
-                      <Input
-                        name='customTokenAddress'
-                        value={props.values.customTokenAddress}
-                        disabled={status >= 4}
-                        placeholder="0x..."
-                        onChange={props.handleChange}
-                      />
-                      <FormErrorMessage>{props.errors.customTokenAddress}</FormErrorMessage>
-                    </FormControl>
+                    <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={form.errors.customTokenAddress && form.touched.customTokenAddress}
+                          isDisabled={status >= 4}
+                        >
+                          <FormLabel htmlFor="customTokenAddress" fontSize="sm">TOKEN ADDRESS</FormLabel>
+                          <Input
+                            {...field} 
+                            id='customTokenAddress'
+                            placeholder="0x..."
+                          />
+                          <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
                   </Stack>
                 </FieldGroup>
 
                 <FieldGroup>
                   <Stack direction={{ base: 'column', md: 'row' }} width="full" spacing="4">
-                    <FormControl id="recipients">
-                      <FormLabel fontSize="sm">RECIPIENTS</FormLabel>
-                      <Textarea
-                        name='recipients'
-                        value={props.values.recipients}
-                        className='height-200'
-                        disabled={status >= 4}
-                        placeholder={`0xABCDFA1DC112917c781942Cc01c68521c415e, 1${'\n'}0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8, 2${'\n'}0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c, 3${'\n'}0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8, 4${'\n'}...`}
-                        onChange={props.handleChange}
-                      />
-                      <FormErrorMessage>{props.errors.recipients}</FormErrorMessage>
-                      <FormHelperText>Add one wallet address and amount per row, comma separated.</FormHelperText>
-                    </FormControl>
+                    <Field name="recipients" validate={parseAndValidateRecipients}>
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={form.errors.recipients && form.touched.recipients}
+                          isDisabled={status >= 4}
+                        >
+                          <FormLabel htmlFor="recipients" fontSize="sm">RECIPIENTS</FormLabel>
+                          <Textarea
+                            {...field} 
+                            id='recipients'
+                            placeholder={`0xABCDFA1DC112917c781942Cc01c68521c415e, 1${'\n'}0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8, 2${'\n'}0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c, 3${'\n'}0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8, 4${'\n'}...`}
+                          />
+                          <FormErrorMessage>{form.errors.recipients}</FormErrorMessage>
+                          <FormHelperText>Add one wallet address and amount per row, comma separated.</FormHelperText>
+                        </FormControl>
+                      )}
+                    </Field>
                   </Stack>
                 </FieldGroup>
+
                 <StackDivider />
 
                 <FieldGroup>
@@ -374,8 +389,9 @@ export default function ERC20Form() {
                           type="submit"
                           value="Submit"
                           leftIcon={<FiSend />}
-                          disabled={status >= 7}
-                          loading={loading}
+                          isDisabled={status >= 7}
+                          isLoading={loading}
+                          loadingText="Submitting tx"
                         >
                           Send
                         </Button> ) : (
@@ -386,8 +402,9 @@ export default function ERC20Form() {
                           type="submit"
                           value="Submit"
                           leftIcon={<FiToggleLeft />}
-                          disabled={!_.isEmpty(props.errors)}
-                          loading={loading}
+                          isDisabled={!_.isEmpty(props.errors)}
+                          isLoading={loading}
+                          loadingText="Submitting tx"
                         >
                           Approve
                         </Button>
@@ -395,7 +412,7 @@ export default function ERC20Form() {
                     }
                   </FormControl>
                 </FieldGroup>
-              </form>
+              </Form>
             )
           }
         }
