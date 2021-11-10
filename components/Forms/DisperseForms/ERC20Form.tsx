@@ -327,11 +327,11 @@ export default function ERC20Form() {
                       <Input
                         name='customTokenAddress'
                         value={props.values.customTokenAddress}
-                        error={props.errors.customTokenAddress }
                         disabled={status >= 4}
                         placeholder="0x..."
                         onChange={props.handleChange}
                       />
+                      <FormErrorMessage>{props.errors.customTokenAddress}</FormErrorMessage>
                     </FormControl>
                   </Stack>
                 </FieldGroup>
@@ -343,12 +343,12 @@ export default function ERC20Form() {
                       <Textarea
                         name='recipients'
                         value={props.values.recipients}
-                        error={props.errors.recipients }
                         className='height-200'
                         disabled={status >= 4}
                         placeholder={`0xABCDFA1DC112917c781942Cc01c68521c415e, 1${'\n'}0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8, 2${'\n'}0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c, 3${'\n'}0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8, 4${'\n'}...`}
                         onChange={props.handleChange}
                       />
+                      <FormErrorMessage>{props.errors.recipients}</FormErrorMessage>
                       <FormHelperText>Add one wallet address and amount per row, comma separated.</FormHelperText>
                     </FormControl>
                   </Stack>

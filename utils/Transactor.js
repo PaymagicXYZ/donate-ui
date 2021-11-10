@@ -1,7 +1,7 @@
 import { hexlify } from "@ethersproject/bytes";
 import { parseUnits } from "@ethersproject/units";
 import { notification } from "antd";
-import { BLOCKNATIVE_ID } from "../config";
+import { BLOCKNATIVE_ID } from "./constants";
 
 import Notify from "bnc-notify";
 
