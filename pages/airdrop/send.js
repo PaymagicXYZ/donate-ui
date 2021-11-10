@@ -20,7 +20,7 @@ import {
 import { useRef } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import PageContainer from "../../components/PageContainer/PageContainer";
-import { AirdropForm } from "../../components/FormWithShadow/AirdropForm";
+import { SendAirdropForm } from "../../components/Forms/SendAirdropForm";
 
 export default function Home() {
   const { chainId } = useWeb3React();
@@ -36,7 +36,7 @@ export default function Home() {
       <Box bg={useColorModeValue('purple.50', 'purple.800')} py="10">
         <Box maxW="xl" mx="auto">
           <Stack spacing="12">
-            <AirdropForm />
+            <SendAirdropForm />
           </Stack>
         </Box>
       </Box>

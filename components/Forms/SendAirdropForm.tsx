@@ -19,7 +19,7 @@ import { Card } from './Card'
 import { FieldGroup } from './FieldGroup'
 import { HeadingGroup } from './HeadingGroup'
 
-export const AirdropForm = (props: StackProps) => (
+export const SendAirdropForm = (props: StackProps) => (
   <Stack as="section" spacing="6" {...props}>
     <HeadingGroup
       title="Send Airdrop"

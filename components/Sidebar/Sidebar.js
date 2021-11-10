@@ -29,7 +29,7 @@ export default function Sidebar(props) {
       <Box w="64" bg="gray.900" color="white" fontSize="sm">
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="2" flex="1" overflow="auto" pt="8">
-            <Link href="/payments">
+            <Link href="/payments/disperse">
               <a>
                 <NavItem icon={<RiSendPlaneFill />} label="Send Batch Payment" />
               </a>
