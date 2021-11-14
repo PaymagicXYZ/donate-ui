@@ -15,10 +15,12 @@ import {
   Heading,
   Stack,
   Spacer,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import PageContainer from "../../components/PageContainer/PageContainer";
+import { SendAirdropForm } from "../../components/Forms/SendAirdropForm";
 
 export default function Home() {
   const { chainId } = useWeb3React();
@@ -31,32 +33,13 @@ export default function Home() {
 
   return (
     <PageContainer>
-      <Flex justifyContent="center" flexWrap="wrap">
-        <Box
-          // role={"group"}
-          p={6}
-          m="5"
-          maxW={"430px"}
-          minW={"530px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"lg"}
-          pos={"relative"}
-          zIndex={1}
-        >
-          <Text fontSize="6xl" align="center" fontWeight={500}>
-            Airdrop
-          </Text>{" "}
-          <Divider my={5} />
-          <Text fontSize={"2xl"}>Send to many recipients</Text>
-          <Text color={"gray.500"}>
-            Input any token address and then batch transfer tokens to many
-            different recipients in a single tx.
-          </Text>
-          <Progress value={15} />
+      <Box bg={useColorModeValue('purple.50', 'purple.800')} py="10">
+        <Box maxW="xl" mx="auto">
+          <Stack spacing="12">
+            <SendAirdropForm />
+          </Stack>
         </Box>
-      </Flex>
+      </Box>
     </PageContainer>
   );
 }

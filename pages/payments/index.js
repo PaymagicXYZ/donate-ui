@@ -51,34 +51,34 @@ function PaymentsPage() {
       description: "Send tokens to multiple recipients at once",
       more: "Great for rewarding followers or paying contributors",
     },
-    {
-      title: "Vesting",
-      image: "vesting-payment.png",
-      imageAlt: "vesting",
-      description: "Create a token vesting schedule for a recipient",
-      more: "Great for distributing tokens over time to your team or investors",
-    },
-    {
-      title: "Stream",
-      image: "stream-payment.png",
-      imageAlt: "stream",
-      description: "Send tokens continuously by the second",
-      more: "Create real-time subscriptions, salaries, or vesting",
-    },
-    {
-      title: "Escrow",
-      image: "escrow-payment.png",
-      imageAlt: "escrow",
-      description: "Collect yield in an escrow account until redemption",
-      more: "Partnerships, security deposites, & pools",
-    },
-    {
-      title: "Private payment",
-      image: "private-payment.png",
-      imageAlt: "private",
-      description: "Send tokens secretly",
-      more: "Use for private transactions or avoiding censorship",
-    },
+    // {
+    //   title: "Vesting",
+    //   image: "vesting-payment.png",
+    //   imageAlt: "vesting",
+    //   description: "Create a token vesting schedule for a recipient",
+    //   more: "Great for distributing tokens over time to your team or investors",
+    // },
+    // {
+    //   title: "Stream",
+    //   image: "stream-payment.png",
+    //   imageAlt: "stream",
+    //   description: "Send tokens continuously by the second",
+    //   more: "Create real-time subscriptions, salaries, or vesting",
+    // },
+    // {
+    //   title: "Escrow",
+    //   image: "escrow-payment.png",
+    //   imageAlt: "escrow",
+    //   description: "Collect yield in an escrow account until redemption",
+    //   more: "Partnerships, security deposites, & pools",
+    // },
+    // {
+    //   title: "Private payment",
+    //   image: "private-payment.png",
+    //   imageAlt: "private",
+    //   description: "Send tokens secretly",
+    //   more: "Use for private transactions or avoiding censorship",
+    // },
   ];
   const paymentsGrid = paymentsTypes.map((payment, index) => (
     <Box
