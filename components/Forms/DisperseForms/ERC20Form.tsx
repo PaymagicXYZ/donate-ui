@@ -34,13 +34,17 @@ import { FiSend, FiToggleLeft } from "react-icons/fi";
 
 import {
   contractData,
-  Transactor,
   getAddress,
   isAddress,
   isToken,
   getBlockExplorerLink,
 } from "../../../utils";
+import Transactor from "../../../utils/Transactor";
 import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
+import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
+import { getDisperseAddress } from "../../../utils/disperse/index";
+// import useGasPrice from "../../../hooks/useGasPrice";
+import { useContract } from "../../../hooks/useContract";
 
 export default function ERC20Form() {
   const [loading, setLoading] = useState(false);
@@ -48,9 +52,15 @@ export default function ERC20Form() {
   const [txData, setTxData] = useState({});
   const [status, setStatus] = useState(1);
   const { library, account, chainId } = useWeb3React();
+  const contract = useContract(
+    library,
+    DisperseContract,
+    getDisperseAddress(chainId)
+  );
   // 1 - start | 2 - notValid |  3 - isValid
   // 4 - approveTx | 5 - isApproved | 6 - submitTx
   // 7 - complete
+  // const gasPrice = useGasPrice("fast");
 
   const [parsedData, setParsedData] = useState({
     token: {
@@ -245,21 +255,32 @@ export default function ERC20Form() {
   }
 
   async function handleApproval(cb) {
-    console.log("Send Approval Tx");
-    // const totalAmountBN = ethers.utils.parseUnits(
-    //   _.toString(parsedData.totalAmount),
-    //   parsedData.token.decimals
-    // )
-    // const tx = Transactor(web3Context.provider, cb, gasPrice);
-    // tx(parsedData.token.contract["approve"](contractData.contracts.disperse.address, totalAmountBN));
-    cb({ hash: "0x" }); // Just for testing purposes while the above is commented out
+    // console.log("Send Approval Tx");
+    const totalAmountBN = ethers.utils.parseUnits(
+      _.toString(parsedData.totalAmount),
+      parsedData.token.decimals
+    );
+    const tx = Transactor(library, cb);
+    tx(
+      parsedData.token.contract["approve"](
+        getDisperseAddress(chainId),
+        totalAmountBN
+      )
+    );
+    // cb({ hash: "0x" }); // Just for testing purposes while the above is commented out
   }
 
   async function handleSubmit(cb) {
     console.log("Send Approval Tx");
-    // const tx = Transactor(web3Context.provider, cb, gasPrice);
-    // tx(contracts['disperse']["disperseTokenSimple"](parsedData.token.address, parsedData.addressArray, parsedData.amountArray));
-    cb({ hash: "0x" }); // Just for testing purposes while the above is commented out
+    const tx = Transactor(library, cb);
+    tx(
+      contract["disperseTokenSimple"](
+        parsedData.token.address,
+        parsedData.addressArray,
+        parsedData.amountArray
+      )
+    );
+    // cb({ hash: "0x" }); // Just for testing purposes while the above is commented out
   }
 
   return (
@@ -346,8 +367,13 @@ export default function ERC20Form() {
                           form.touched.customTokenAddress
                         }
                         isDisabled={status >= 4}
+                        isRequired
                       >
-                        <FormLabel htmlFor="customTokenAddress" fontSize="sm">
+                        <FormLabel
+                          htmlFor="customTokenAddress"
+                          fontSize="sm"
+                          isRequired
+                        >
                           TOKEN ADDRESS
                         </FormLabel>
                         <Input
@@ -380,8 +406,13 @@ export default function ERC20Form() {
                           form.errors.recipients && form.touched.recipients
                         }
                         isDisabled={status >= 4}
+                        isRequired
                       >
-                        <FormLabel htmlFor="recipients" fontSize="sm">
+                        <FormLabel
+                          htmlFor="recipients"
+                          fontSize="sm"
+                          isRequired
+                        >
                           RECIPIENTS
                         </FormLabel>
                         <Textarea
