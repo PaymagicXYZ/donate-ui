@@ -8,12 +8,11 @@ import * as csv from 'csvtojson'
 import {
   Alert,
   AlertIcon,
-  Center,
+
   HStack,
   Avatar,
   Box,
   Button,
-  Divider,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -43,7 +42,7 @@ import {
   getBlockExplorerLink } from "../../../utils";
 
 
-export default function ERC20Form() {
+export default function ERC721Form() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState((<></>))
   const [txData, setTxData] = useState({})
@@ -171,7 +170,7 @@ export default function ERC20Form() {
     let tempDetails = _addressArray.map((a, i) => {
       return `${_addressArray[i]}  ${numeral(_amountArray[i]).format('0,0.0000')} ${symbol}`
     })
-    return`${tempDetails}${'\n'}-----${'\n'}TOTAL ${numeral(_totalAmount).format('0,0.0000')} ${symbol}${'\n'}`
+    return`${_.join(tempDetails,`\n`)}\n-----\nTOTAL ${numeral(_totalAmount).format('0,0.0000')} ${symbol}\n`
   }
 
   async function parseAndValidateRecipients(value) {
@@ -261,10 +260,9 @@ export default function ERC20Form() {
   return (
       <Stack spacing="6">
         { alert }
-        <Box>
-          <Progress colorScheme="purple" size="md" value={20}/>
-          <Text mt={0} style={{"align": "center"}} align="center" color="grey" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 5`}</Text>
-        </Box>
+        <Progress colorScheme="purple" size="md" value={20} />
+        <Text>{`Step ${_.max([status - 2, 1])} of 5`}</Text>
+
          <Formik
           initialValues={{
             token: '',
@@ -328,51 +326,53 @@ export default function ERC20Form() {
               <Form onSubmit={props.handleSubmit}>
 
                 <FieldGroup>
-                  <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
-                    {({ field, form }) => (
-                      <FormControl
-                        isInvalid={form.errors.customTokenAddress && form.touched.customTokenAddress}
-                        isDisabled={status >= 4}
-                      >
-                        <FormLabel htmlFor="customTokenAddress" fontSize="sm">TOKEN ADDRESS</FormLabel>
-                        <Input
-                          {...field} 
-                          id='customTokenAddress'
-                          placeholder="0x..."
-                        />
-                        <FormHelperText>{parsedData.token.symbol ? `${parsedData.token.symbol} Token` : null}</FormHelperText>
-                        <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
-                      </FormControl>
-                    )}
-                  </Field>
+                  <Stack direction={{ base: 'column', md: 'row' }} width="full" spacing="4">
+                    <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={form.errors.customTokenAddress && form.touched.customTokenAddress}
+                          isDisabled={status >= 4}
+                        >
+                          <FormLabel htmlFor="customTokenAddress" fontSize="sm">TOKEN ADDRESS</FormLabel>
+                          <Input
+                            {...field} 
+                            id='customTokenAddress'
+                            placeholder="0x..."
+                          />
+                          <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
+                  </Stack>
                 </FieldGroup>
 
                 <FieldGroup>
-                  <Field name="recipients" validate={parseAndValidateRecipients}>
-                    {({ field, form }) => (
-                      <FormControl
-                        isInvalid={form.errors.recipients && form.touched.recipients}
-                        isDisabled={status >= 4}
-                      >
-                        <FormLabel htmlFor="recipients" fontSize="sm">RECIPIENTS</FormLabel>
-                        <Textarea
-                          {...field} 
-                          id='recipients'
-                          placeholder={`0xABCDFA1DC112917c781942Cc01c68521c415e, 1${'\n'}0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8, 2${'\n'}0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c, 3${'\n'}0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8, 4${'\n'}...`}
-                          h={200}
-                        />
-                        <FormErrorMessage>{form.errors.recipients}</FormErrorMessage>
-                        <FormHelperText>Add one wallet address and amount per row, comma separated.</FormHelperText>
-                      </FormControl>
-                    )}
-                  </Field>
+                  <Stack direction={{ base: 'column', md: 'row' }} width="full" spacing="4">
+                    <Field name="recipients" validate={parseAndValidateRecipients}>
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={form.errors.recipients && form.touched.recipients}
+                          isDisabled={status >= 4}
+                        >
+                          <FormLabel htmlFor="recipients" fontSize="sm">RECIPIENTS</FormLabel>
+                          <Textarea
+                            {...field} 
+                            id='recipients'
+                            placeholder={`0xABCDFA1DC112917c781942Cc01c68521c415e, 1${'\n'}0x00192Fb10dF37c9FB26829eb2CC623cd1BF599E8, 2${'\n'}0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c, 3${'\n'}0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8, 4${'\n'}...`}
+                          />
+                          <FormErrorMessage>{form.errors.recipients}</FormErrorMessage>
+                          <FormHelperText>Add one wallet address and amount per row, comma separated.</FormHelperText>
+                        </FormControl>
+                      )}
+                    </Field>
+                  </Stack>
                 </FieldGroup>
 
-                <Divider mt={6} mb={2}/>
+                <StackDivider />
 
                 <FieldGroup>
                   <FormLabel fontSize="sm">CONFIRMATION DETAILS</FormLabel>
-                  <Text color="gray.500">
+                  <Text color="gray.500" fontSize="sm">
                     { parsedData.confirmationDetails }
                   </Text>
                 </FieldGroup>

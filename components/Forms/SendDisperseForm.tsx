@@ -13,6 +13,7 @@ import { Card } from './Card'
 import { FieldGroup } from './FieldGroup'
 import { HeadingGroup } from './HeadingGroup'
 import ERC20Form from './DisperseForms/ERC20Form'
+import ERC721Form from './DisperseForms/ERC721Form'
 
 export const SendDisperseForm = (props: StackProps) => (
   <Stack as="section" spacing="6" {...props}>
@@ -24,7 +25,7 @@ export const SendDisperseForm = (props: StackProps) => (
   		<Tabs isFitted variant="enclosed">
   		  <TabList>
   		    <Tab>ERC20 Tokens</Tab>
-  		    <Tab isDisabled>NFT (721)</Tab>
+  		    <Tab>NFT (721)</Tab>
   		    <Tab isDisabled>NFT (1155)</Tab>
   		  </TabList>
   		  <TabPanels>
@@ -32,7 +33,7 @@ export const SendDisperseForm = (props: StackProps) => (
   		      <ERC20Form />
   		    </TabPanel>
   		    <TabPanel>
-  		      <p>two!</p>
+  		      <ERC721Form />
   		    </TabPanel>
   		    <TabPanel>
   		      <p>three!</p>
