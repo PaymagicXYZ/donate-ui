@@ -47,7 +47,7 @@ import { getDisperseAddress } from "../../../utils/disperse/index";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 
-export default function ERC721Form() {
+export default function ERC7Form() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);
   const [txData, setTxData] = useState({});
@@ -116,17 +116,17 @@ export default function ERC721Form() {
       contract: {},
     }
     if (
-      values.customTokenAddress &&
-      isAddress(values.customTokenAddress) &&
-      isToken(values.customTokenAddress)
+      value &&
+      isAddress(value) &&
+      isToken(value)
     ) {
       try {
         _token.contract = new Contract(
-          getAddress(values.customTokenAddress),
+          getAddress(value),
           ERC20Contract.abi,
           library.getSigner(account)
         );
-        _token.address = values.customTokenAddress;
+        _token.address = value;
         _token.decimals = await _token.contract.decimals()
         _token.symbol = await _token.contract.symbol()
 
@@ -234,7 +234,8 @@ export default function ERC721Form() {
     }
 
     // Validate Token Balance
-    if(parsedData.token.contract && parsedData.totalAmount) {
+    if(parsedData.token.contract && !_.isEmpty(parsedData.token.contract) && parsedData.totalAmount) {
+      console.log(parsedData.token.contract)
       let tokenBalanceBN = await parsedData.token.contract.balanceOf(account);
       if (_totalAmount <= 0 || !_.isFinite(_totalAmount)) {
         errors.recipients = 'Unable to parse the text. Please try again.';
@@ -384,7 +385,7 @@ export default function ERC721Form() {
                           {...field} 
                           id='customTokenAddress'
                           placeholder="0x..."
-                          onChange={value => parseToken(value, props)}
+                          onChange={e => parseToken(e.target.value, props)}
                         />
                         <FormHelperText>{parsedData.token.symbol ? `${parsedData.token.symbol} Token` : null}</FormHelperText>
                         <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
