@@ -30,7 +30,7 @@ import { RiHandCoinLine, RiSendPlaneFill } from "react-icons/ri";
 import { MdAccountBalance } from "react-icons/md";
 import { useRef } from "react";
 
-import Header from "../../components/Header/Header";
+import { Header } from "../../components/Header/Header";
 import Footer from "../../components/Footer";
 
 import Sidebar from "../../components/Sidebar/Sidebar";
