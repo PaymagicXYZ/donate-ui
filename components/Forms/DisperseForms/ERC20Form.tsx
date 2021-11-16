@@ -68,7 +68,7 @@ export default function ERC20Form() {
       symbol: "",
       decimals: 0,
       address: "",
-      contract: "",
+      contract: {},
     },
 
     addressArray: [],
