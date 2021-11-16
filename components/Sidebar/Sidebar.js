@@ -34,6 +34,11 @@ export default function Sidebar(props) {
                 <NavItem icon={<RiSendPlaneFill />} label="Send Batch Payment" />
               </a>
             </Link>
+            <Link href="/payments/disperseNFT">
+              <a>
+                <NavItem icon={<RiSendPlaneFill />} label="Send Batch Payment" />
+              </a>
+            </Link>
             <Link href="/airdrop/send">
               <a>
                 <NavItem icon={<GiParachute />} label="Send Airdrop" />

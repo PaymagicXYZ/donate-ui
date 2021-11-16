@@ -6,7 +6,6 @@ export const Card = (props: BoxProps) => (
     bg={useColorModeValue('white', 'gray.700')}
     shadow="base"
     rounded="lg"
-    p={{ base: '4', md: '8' }}
     {...props}
   />
 )

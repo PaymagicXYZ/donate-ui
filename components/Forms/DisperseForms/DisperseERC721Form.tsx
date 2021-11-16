@@ -308,9 +308,13 @@ export default function ERC7Form() {
       <Stack>
         { alert }
         <Box mt={0}>
-          <Progress colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
+          <Progress mx={6} colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
           <Text mt={0} align="center" color="gray.500" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 5`}</Text>
         </Box>
+        <Box
+          px={{ base: '6', md: '6' }}
+          py={{ base: '6', md: '6' }}
+        >
          <Formik
           initialValues={{
             token: '',
@@ -362,17 +366,8 @@ export default function ERC7Form() {
         }}
       >
         {(props) => {
-{/*            useEffect(() => {
-              async function run() {
-                await parseToken(props.values, props.errors, props.setFieldError)
-                parseRecipients(props.values.recipients)
-              }
-              run()
-            }, [props.values.customTokenAddress]);*/}
-
             return (
               <Form onSubmit={props.handleSubmit}>
-
                 <FieldGroup>
                   <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
                     {({ field, form }) => (
@@ -463,6 +458,7 @@ export default function ERC7Form() {
           );
         }}
       </Formik>
+      </Box>
     </Stack>
   );
 }
