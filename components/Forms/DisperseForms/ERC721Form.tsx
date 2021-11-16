@@ -92,7 +92,7 @@ export default function ERC721Form() {
           <Alert status="success">
             <AlertIcon />
             <div>Your transaction is complete!{'\n'}
-              <a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View Transaction details here.</a>
+              <a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank" rel="noreferrer">View Transaction details here.</a>
             </div>
           </Alert>
         );
