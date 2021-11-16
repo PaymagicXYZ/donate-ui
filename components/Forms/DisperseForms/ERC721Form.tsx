@@ -101,7 +101,14 @@ export default function ERC721Form() {
     }
   }, [status]);
 
-  async function parseToken(values, errors, setFieldError) {
+  async function parseToken(value, props) {
+    console.log(value)
+    let { values, errors, setFieldError, setFieldValue} = props
+    setFieldValue(
+      "customTokenAddress",
+      value
+    );
+
     let _token = {
       symbol: "",
       decimals: 0,
@@ -377,7 +384,7 @@ export default function ERC721Form() {
                           {...field} 
                           id='customTokenAddress'
                           placeholder="0x..."
-                          onChange={e => parseToken(props.values, props.errors, props.setFieldError)}
+                          onChange={value => parseToken(value, props)}
                         />
                         <FormHelperText>{parsedData.token.symbol ? `${parsedData.token.symbol} Token` : null}</FormHelperText>
                         <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>

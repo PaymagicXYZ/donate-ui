@@ -101,7 +101,14 @@ export default function ERC20Form() {
     }
   }, [status]);
 
-  async function parseToken(values, errors, setFieldError) {
+  async function parseToken(value, props) {
+    console.log(value)
+    let { values, errors, setFieldError, setFieldValue} = props
+    setFieldValue(
+      "customTokenAddress",
+      value
+    );
+
     let _token = {
       symbol: "",
       decimals: 0,
@@ -109,17 +116,17 @@ export default function ERC20Form() {
       contract: {},
     }
     if (
-      values.customTokenAddress &&
-      isAddress(values.customTokenAddress) &&
-      isToken(values.customTokenAddress)
+      value &&
+      isAddress(value) &&
+      isToken(value)
     ) {
       try {
         _token.contract = new Contract(
-          getAddress(values.customTokenAddress),
+          getAddress(value),
           ERC20Contract.abi,
           library.getSigner(account)
         );
-        _token.address = values.customTokenAddress;
+        _token.address = value;
         _token.decimals = await _token.contract.decimals()
         _token.symbol = await _token.contract.symbol()
 
@@ -138,6 +145,7 @@ export default function ERC20Form() {
       }
 
       setParsedData({ ...parsedData, token: _token });
+      parseRecipients(values.recipients)
     }
   }
 
@@ -226,7 +234,8 @@ export default function ERC20Form() {
     }
 
     // Validate Token Balance
-    if(parsedData.token.contract && parsedData.totalAmount) {
+    if(parsedData.token.contract && !_.isEmpty(parsedData.token.contract) && parsedData.totalAmount) {
+      console.log(parsedData.token.contract)
       let tokenBalanceBN = await parsedData.token.contract.balanceOf(account);
       if (_totalAmount <= 0 || !_.isFinite(_totalAmount)) {
         errors.recipients = 'Unable to parse the text. Please try again.';
@@ -353,13 +362,13 @@ export default function ERC20Form() {
         }}
       >
         {(props) => {
-            useEffect(() => {
+{/*            useEffect(() => {
               async function run() {
                 await parseToken(props.values, props.errors, props.setFieldError)
                 parseRecipients(props.values.recipients)
               }
               run()
-            }, [props.values.customTokenAddress]);
+            }, [props.values.customTokenAddress]);*/}
 
             return (
               <Form onSubmit={props.handleSubmit}>
@@ -376,6 +385,7 @@ export default function ERC20Form() {
                           {...field} 
                           id='customTokenAddress'
                           placeholder="0x..."
+                          onChange={e => parseToken(e.target.value, props)}
                         />
                         <FormHelperText>{parsedData.token.symbol ? `${parsedData.token.symbol} Token` : null}</FormHelperText>
                         <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
