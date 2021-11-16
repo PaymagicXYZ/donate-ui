@@ -101,7 +101,12 @@ export default function ERC20Form() {
   }, [status]);
 
   async function parseToken(values, errors, setFieldError) {
-    let _token = parsedData.token;
+    let _token = {
+      symbol: "",
+      decimals: 0,
+      address: "",
+      contract: {},
+    }
     if (
       values.customTokenAddress &&
       isAddress(values.customTokenAddress) &&
@@ -113,9 +118,9 @@ export default function ERC20Form() {
           ERC20Contract.abi,
           library.getSigner(account)
         );
-        _token['address'] = values.customTokenAddress;
-        _token['symbol'] = await _token.contract.symbol();
-        _token['decimal'] = await _token.contract.decimals();
+        _token.address = values.customTokenAddress;
+        _token.symbol = await _token.contract.symbol();
+        _token.decimal = await _token.contract.decimals();
       } catch (err) {
         console.error(err);
         _token = {
