@@ -91,8 +91,9 @@ export default function ERC20Form() {
         setAlert(
           <Alert status="success">
             <AlertIcon />
-            <div>Your transaction is complete!</div>
-            {/*(<div>Your transaction is complete! {"\n"}<a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View on Etherscan</a>.</div>)*/}
+            <div>Your transaction is complete!{'\n'}
+              <a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View Transaction details here.</a>
+            </div>
           </Alert>
         );
         break;
@@ -317,8 +318,8 @@ export default function ERC20Form() {
             setLoading(true);
 
             const afterMine = async (txStatus, txData) => {
-              console.log(txStatus)
-              console.log(txData)
+              // console.log(txStatus)
+              // console.log(txData)
               setTxData(txData)
 
               if(txStatus.code && txStatus.code === 4001) {

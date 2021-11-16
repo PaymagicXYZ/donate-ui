@@ -91,8 +91,9 @@ export default function ERC721Form() {
         setAlert(
           <Alert status="success">
             <AlertIcon />
-            <div>Your transaction is complete!</div>
-            {/*(<div>Your transaction is complete! {"\n"}<a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View on Etherscan</a>.</div>)*/}
+            <div>Your transaction is complete!{'\n'}
+              <a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank">View Transaction details here.</a>
+            </div>
           </Alert>
         );
         break;
@@ -137,6 +138,7 @@ export default function ERC721Form() {
       }
 
       setParsedData({ ...parsedData, token: _token });
+      parseRecipients(values.recipients)
     }
   }
 
@@ -317,8 +319,8 @@ export default function ERC721Form() {
             setLoading(true);
 
             const afterMine = async (txStatus, txData) => {
-              console.log(txStatus)
-              console.log(txData)
+              // console.log(txStatus)
+              // console.log(txData)
               setTxData(txData)
 
               if(txStatus.code && txStatus.code === 4001) {
@@ -352,13 +354,13 @@ export default function ERC721Form() {
         }}
       >
         {(props) => {
-            useEffect(() => {
+{/*            useEffect(() => {
               async function run() {
                 await parseToken(props.values, props.errors, props.setFieldError)
                 parseRecipients(props.values.recipients)
               }
               run()
-            }, [props.values.customTokenAddress]);
+            }, [props.values.customTokenAddress]);*/}
 
             return (
               <Form onSubmit={props.handleSubmit}>
@@ -375,6 +377,7 @@ export default function ERC721Form() {
                           {...field} 
                           id='customTokenAddress'
                           placeholder="0x..."
+                          onChange={e => parseToken(props.values, props.errors, props.setFieldError)}
                         />
                         <FormHelperText>{parsedData.token.symbol ? `${parsedData.token.symbol} Token` : null}</FormHelperText>
                         <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
