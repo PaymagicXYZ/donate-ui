@@ -119,8 +119,9 @@ export default function ERC20Form() {
           library.getSigner(account)
         );
         _token.address = values.customTokenAddress;
-        _token.symbol = await _token.contract.symbol();
-        _token.decimal = await _token.contract.decimals();
+        _token.decimal = await _token.contract.decimals()
+        _token.symbol = await _token.contract.symbol()
+
       } catch (err) {
         console.error(err);
         _token = {
