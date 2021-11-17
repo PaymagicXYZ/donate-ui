@@ -313,7 +313,7 @@ export default function DisperseERC20Form() {
         </Box>
         <Box
           px={{ base: '6', md: '6' }}
-          py={{ base: '6', md: '6' }}
+          pb={{ base: '6', md: '6' }}
         >
          <Formik
           initialValues={{

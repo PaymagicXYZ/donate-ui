@@ -47,7 +47,7 @@ import { getDisperseAddress } from "../../../utils/disperse/index";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 
-export default function ERC7Form() {
+export default function DisperseNFTForm() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);
   const [txData, setTxData] = useState({});
@@ -308,12 +308,12 @@ export default function ERC7Form() {
       <Stack>
         { alert }
         <Box mt={0}>
-          <Progress mx={6} colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
+          <Progress colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
           <Text mt={0} align="center" color="gray.500" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 5`}</Text>
         </Box>
         <Box
           px={{ base: '6', md: '6' }}
-          py={{ base: '6', md: '6' }}
+          pb={{ base: '6', md: '6' }}
         >
          <Formik
           initialValues={{
@@ -368,6 +368,7 @@ export default function ERC7Form() {
         {(props) => {
             return (
               <Form onSubmit={props.handleSubmit}>
+
                 <FieldGroup>
                   <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
                     {({ field, form }) => (

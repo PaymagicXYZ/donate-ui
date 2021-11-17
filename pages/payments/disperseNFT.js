@@ -41,8 +41,8 @@ import ERC721Form from './DisperseForms/ERC721Form'
 export const SendDisperseForm = (props: StackProps) => (
   <Stack as="section" spacing="6" {...props}>
     <HeadingGroup
-      title="Send Batch Payment"
-      description="Send tokens to many recipients all at once."
+      title="Send Batch NFTs"
+      description="Send NFTs to many recipients all at once, no need to claim."
     />
     <Card>
       <ERC20Form />
