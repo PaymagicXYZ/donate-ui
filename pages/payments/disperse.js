@@ -19,7 +19,7 @@ export default function Page() {
           <Stack spacing="12">
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title="Send Batch Tranfer"
+                title="Send Batch Transfer"
                 description="Send tokens to many recipients all at once."
               />
               <Card>

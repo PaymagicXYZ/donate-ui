@@ -15,6 +15,7 @@ import { IoWalletSharp } from "react-icons/io5";
 import { IoMdContacts } from "react-icons/io";
 
 import { RiHandCoinLine, RiSendPlaneFill } from "react-icons/ri";
+import { AiOutlinePicture } from "react-icons/ai";
 import { GiParachute } from "react-icons/gi";
 
 import { MdAccountBalance } from "react-icons/md";
@@ -31,12 +32,12 @@ export default function Sidebar(props) {
           <Stack spacing="2" flex="1" overflow="auto" pt="8">
             <Link href="/payments/disperse">
               <a>
-                <NavItem icon={<RiSendPlaneFill />} label="Send Batch Payment" />
+                <NavItem icon={<RiSendPlaneFill />} label="Send Batch Transfer" />
               </a>
             </Link>
             <Link href="/payments/disperseNFT">
               <a>
-                <NavItem icon={<RiSendPlaneFill />} label="Send Batch Payment" />
+                <NavItem icon={<AiOutlinePicture />} label="Send NFTs" />
               </a>
             </Link>
             <Link href="/airdrop/send">
