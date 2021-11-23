@@ -61,7 +61,7 @@ export default function Sidebar(props) {
                 <NavItem icon={<BsClockHistory />} label="Transactions" />
               </a>
             </Link>
-            <Link href="/airdrop/send">
+{/*            <Link href="/airdrop/send">
               <a>
                 <NavItem icon={<GiParachute />} label="Send Airdrop" />
               </a>
@@ -70,7 +70,7 @@ export default function Sidebar(props) {
               <a>
                 <NavItem icon={<RiHandCoinLine />} label="Claim Airdrop" />
               </a>
-            </Link>
+            </Link>*/}
           </Stack>
         </Flex>
       </Box>
