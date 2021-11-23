@@ -11,7 +11,11 @@ import { useZapper } from "../../hooks/useZapper";
 
 export default function TransactionTable() {
 	const { library, account, chainId } = useWeb3React();
-  const walletData = useZapper(account);
+  // const walletData = useZapper(account);
+  const walletData = useZapper(
+    '0x869eC00FA1DC112917c781942Cc01c68521c415e',
+    'ethereum'
+  ) // For testing purposes
 
   console.log(walletData)
 

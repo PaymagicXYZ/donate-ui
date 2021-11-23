@@ -31,7 +31,7 @@ export default function Sidebar(props) {
   return (
     <>
 
-      <Box w="64" bg="gray.900" color="white" fontSize="sm">
+      <Box w="64" bg="gray.900" color="white" fontSize="md">
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="2" flex="1" overflow="auto" pt="8">
 

@@ -1,9 +1,8 @@
-import React from 'react'
 import _ from 'lodash';
 import numeral from 'numeral'
 
 import {
-  Text,
+  Box
 } from '@chakra-ui/react'
 
 export default function TokenUsdAmount(props) {
@@ -13,12 +12,16 @@ export default function TokenUsdAmount(props) {
 
 	return (
     <Box>
-      <Box fontSize="sm" fontWeight="medium">
-        {`${numeral(amountUsd).format('$0,00')}`}
-      </Box>
       {
         !_.isUndefined(props.amountUsd) && (
-          <Box fontSize="sm" color="gray.500">
+          <Box fontSize="sm" fontWeight="medium">
+            {`${numeral(amountUsd).format('$0,00')}`}
+          </Box>
+        )
+      }
+      {
+        !_.isUndefined(props.amountTokens) && (
+          <Box fontSize="sm" fontWeight={_.isUndefined(props.amountUsd) ? "medium" : "light"}>
             {`${numeral(amountTokens).format('0,00.0a')} ${symbol}`}
           </Box>
         )

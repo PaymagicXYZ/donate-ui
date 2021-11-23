@@ -26,20 +26,22 @@ export const cols = [
   {
     Header: 'AMOUNT',
     accessor: 'amount',
-    // formatted
+    Cell: function AmountCell(data: any) {
+      return (
+        <TokenAmountDisplay
+          amountTokens={data}
+        />
+      )
+    }
   },
   {
     Header: 'ASSET',
     accessor: 'symbol',
     Cell: function AssetCell(data: any) {
       return (
-        <Text>
-          {data}
-        </Text>
-        // <TokenDisplay
-        //   symbol={symbol}
-        //   imageUrl={ getTokenIconUriFromAddress(tx.address) }
-        // />
+        <TokenDisplay
+          symbol={data}
+        />
       )
     }
   },
