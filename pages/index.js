@@ -8,7 +8,7 @@ export default function RedriectPage() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('/payments')
+    router.push('/payments/disperse')
   }, [])
 
   return (
