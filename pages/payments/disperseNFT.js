@@ -7,7 +7,7 @@ import {
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
-import DisperseERC20Form from '../../components/Forms/DisperseForms/DisperseERC20Form'
+import DisperseERC721Form from '../../components/Forms/DisperseForms/DisperseERC721Form'
 
 export default function Page() {
   let props
@@ -19,11 +19,11 @@ export default function Page() {
           <Stack spacing="12">
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title="Send Batch Transfer"
-                description="Send tokens to many recipients all at once."
+                title="Send NFTs"
+                description="Send NFTs to many recipients all at once, no need to claim."
               />
               <Card>
-                <DisperseERC20Form />
+                <DisperseERC721Form />
               </Card>
             </Stack>
           </Stack>

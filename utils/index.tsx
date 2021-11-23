@@ -1,7 +1,10 @@
 import { ethers } from "ethers";
+import moment from "moment";
 import { getAddress as getAddressEthers } from '@ethersproject/address'
 
-import { BLOCK_EXPLORER_LINK } from "./constants";
+import {
+  BLOCK_EXPLORER_LINK
+} from "./constants";
 
 import development from "./contractData/kovanPaymagic";
 import test from "./contractData/kovanPaymagic";
@@ -22,8 +25,6 @@ const config = {
 };
 
 export const contractData = config[env]
-
-
 
 export function translateChainId(chainId) {
   switch (chainId) {
@@ -87,7 +88,7 @@ export function getAddress(value) {
   }
 }
 
-export async function isToken(value, web3Context, data) {
+export async function isToken(value) {
   if(isAddress(value)){
     try {
       const _contract = new Contract(
@@ -105,4 +106,42 @@ export async function isToken(value, web3Context, data) {
   }
 
   return false
+}
+
+export async function isERC721(value) {
+  if(isAddress(value)){
+    try {
+      const _contract = new Contract(
+        getAddress(value),
+        data.contracts['ERC20']['abi'],
+        web3Context.provider.getSigner()
+      );
+      const _symbol = await _contract.symbol()
+      const _decimals = await _contract.decimals()
+      return true
+    }
+    catch(err) {
+      return false
+    }    
+  }
+
+  return false
+}
+
+// Input tx to have 0x + 4 characters at start and end
+export function shortenTx(tx: string, chars = 4): string {
+  return `${tx.substring(0, chars + 2)}...${tx.substring(66 - chars)}`
+}
+
+// shorten the checksummed version of the input address to have 0x + 4 characters at start and end
+export function shortenAddress(address: string, chars = 4): string {
+  const parsed = getAddress(address)
+  if (!parsed) {
+    throw Error(`Invalid 'address' parameter '${address}'.`)
+  }
+  return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+}
+
+export function displayTxDatetime(unixTime) {
+  return moment.unix(unixTime).fromNow();
 }

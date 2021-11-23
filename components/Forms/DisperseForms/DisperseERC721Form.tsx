@@ -37,17 +37,24 @@ import {
   contractData,
   getAddress,
   isAddress,
-  isToken,
+  isERC721,
   getBlockExplorerLink,
 } from "../../../utils";
 import Transactor from "../../../utils/Transactor";
-import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
-import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
+
+
+
+import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
+import DisperseContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
 import { getDisperseAddress } from "../../../utils/disperse/index";
+
+// import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
+// import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
+// import { getDisperseAddress } from "../../../utils/disperse/index";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 
-export default function ERC20Form() {
+export default function DisperseNFTForm() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);
   const [txData, setTxData] = useState({});
@@ -118,7 +125,7 @@ export default function ERC20Form() {
     if (
       value &&
       isAddress(value) &&
-      isToken(value)
+      isERC721(value)
     ) {
       try {
         _token.contract = new Contract(
@@ -261,7 +268,7 @@ export default function ERC20Form() {
       error = "Required";
     } else if (!isAddress(value)) {
       error = "Unable to read the token address. Please try again.";
-    } else if (!isToken(value)) {
+    } else if (!isERC721(value)) {
       error = "Unable to find the token. Please try again.";
     }
 
@@ -311,6 +318,10 @@ export default function ERC20Form() {
           <Progress colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
           <Text mt={0} align="center" color="gray.500" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 5`}</Text>
         </Box>
+        <Box
+          px={{ base: '6', md: '6' }}
+          pb={{ base: '6', md: '6' }}
+        >
          <Formik
           initialValues={{
             token: '',
@@ -362,14 +373,6 @@ export default function ERC20Form() {
         }}
       >
         {(props) => {
-{/*            useEffect(() => {
-              async function run() {
-                await parseToken(props.values, props.errors, props.setFieldError)
-                parseRecipients(props.values.recipients)
-              }
-              run()
-            }, [props.values.customTokenAddress]);*/}
-
             return (
               <Form onSubmit={props.handleSubmit}>
 
@@ -463,6 +466,7 @@ export default function ERC20Form() {
           );
         }}
       </Formik>
+      </Box>
     </Stack>
   );
 }

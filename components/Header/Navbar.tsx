@@ -19,7 +19,7 @@ export const Template: React.FC = (props) => {
     <Flex
       py={4}
       px={{ base: 4, md: 6, lg: 8 }}
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={useColorModeValue('purple.50', 'purple.800')} 
       boxShadow={useColorModeValue('md', 'none')}
       borderBottomWidth={useColorModeValue('none', '1px')}
     >
