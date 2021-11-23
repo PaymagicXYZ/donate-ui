@@ -4,7 +4,6 @@ import * as React from 'react'
 
 export const WalletChecker = (props) => {
 	const { loading, account, children } = props
-	console.log('props',props)
 
   if(_.isUndefined(account)) {
     return (

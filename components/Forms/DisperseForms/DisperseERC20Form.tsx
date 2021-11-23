@@ -26,12 +26,14 @@ import {
   StackDivider,
   StackProps,
   Progress,
+  Link
 } from "@chakra-ui/react";
 import { FieldGroup } from "../FieldGroup";
 import { HeadingGroup } from "../HeadingGroup";
 import { useWeb3React } from "@web3-react/core";
 
 import { FiSend, FiToggleLeft } from "react-icons/fi";
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 import {
   contractData,
@@ -92,7 +94,9 @@ export default function DisperseERC20Form() {
           <Alert status="success">
             <AlertIcon />
             <div>Your transaction is complete!{'\n'}
-              <a href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} target="_blank" rel="noreferrer">View Transaction details here.</a>
+              <Link href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} isExternal>
+                View details here. <ExternalLinkIcon mx="2px" pb="2px"/>
+              </Link>
             </div>
           </Alert>
         );
@@ -223,11 +227,11 @@ export default function DisperseERC20Form() {
     } else if (_addressArray.length === 0 || _amountArray.length === 0) {
       error = "Required";
     } else if (_addressArray.length !== _amountArray.length) {
-      error = "Unable to parse the text. Please try again. 1";
+      error = "Unable to parse the text. Please try again.";
     } else {
       for (let i = 0; i < _addressArray.length; i++) {
         if (!isAddress(_addressArray[i]) || !_.isFinite(_amountArray[i])) {
-          error = "Unable to parse the text. Please try again. 2";
+          error = "Unable to parse the text. Please try again.";
           break;
         }
       }
@@ -284,7 +288,7 @@ export default function DisperseERC20Form() {
   }
 
   async function handleSubmit(cb) {
-    console.log("Send Approval Tx");
+    console.log("Send Submit Tx");
 
     const amountArrayBN = parsedData.amountArray.map( i => {
       return ethers.utils.parseUnits(

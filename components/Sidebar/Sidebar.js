@@ -31,7 +31,7 @@ export default function Sidebar(props) {
   return (
     <>
 
-      <Box w="64" bg="gray.900" color="white" fontSize="md">
+      <Box w="64" bg="gray.900" color="white" fontSize="md" borderTopRightRadius="md">
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="2" flex="1" overflow="auto" pt="8">
 
@@ -48,12 +48,12 @@ export default function Sidebar(props) {
 
             <Link href="/payments/disperse">
               <a>
-                <NavItem icon={<RiSendPlaneFill />} label="Send Batch Transfer" />
+                <NavItem icon={<RiSendPlaneFill />} label="Batch token transfer" />
               </a>
             </Link>
             <Link href="/payments/disperseNFT">
               <a>
-                <NavItem icon={<AiOutlinePicture />} label="Send NFTs" />
+                <NavItem icon={<AiOutlinePicture />} label="Batch NFTs transfer" />
               </a>
             </Link>
             <Link href="/transactions">
