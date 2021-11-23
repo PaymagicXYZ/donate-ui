@@ -37,13 +37,20 @@ import {
   contractData,
   getAddress,
   isAddress,
-  isToken,
+  isERC721,
   getBlockExplorerLink,
 } from "../../../utils";
 import Transactor from "../../../utils/Transactor";
-import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
-import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
+
+
+
+import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
+import DisperseContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
 import { getDisperseAddress } from "../../../utils/disperse/index";
+
+// import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
+// import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
+// import { getDisperseAddress } from "../../../utils/disperse/index";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 
@@ -118,7 +125,7 @@ export default function DisperseNFTForm() {
     if (
       value &&
       isAddress(value) &&
-      isToken(value)
+      isERC721(value)
     ) {
       try {
         _token.contract = new Contract(
@@ -261,7 +268,7 @@ export default function DisperseNFTForm() {
       error = "Required";
     } else if (!isAddress(value)) {
       error = "Unable to read the token address. Please try again.";
-    } else if (!isToken(value)) {
+    } else if (!isERC721(value)) {
       error = "Unable to find the token. Please try again.";
     }
 

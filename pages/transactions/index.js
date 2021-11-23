@@ -1,21 +1,32 @@
-import { Box, Button, Text, Link } from '@chakra-ui/react'
-import * as React from 'react'
-import PageContainer from "../../components/PageContainer/PageContainer";
+import {
+  Box,
+  Stack,
+  StackProps,
+  useColorModeValue as mode
+} from "@chakra-ui/react";
+import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
-import { CardContent } from '../../components/Card/CardContent'
-import { CardHeader } from '../../components/Card/CardHeader'
+import { HeadingGroup } from '../../components/Forms/HeadingGroup'
+import { App as TransactionTable } from '../../components/TransactionTable/TransactionTable'
 
-export default function About() {
+export default function Page() {
+  let props
+
   return (
     <PageContainer>
-      <Card maxW="3xl" mx="auto">
-        <CardHeader
-          title="Transactions"
-        />
-        <CardContent p="6">
-          
-        </CardContent>
-      </Card>
+      <Box bg={mode('purple.50', 'purple.800')} py="10">
+        <Box mx="auto" w="90%">
+          <Stack as="section" spacing="6" {...props}>
+            <HeadingGroup
+              title="Transaction History"
+              size="lg"
+            />
+            <Card>
+              <TransactionTable />
+            </Card>
+          </Stack>
+        </Box>
+      </Box>
     </PageContainer>
   )
 }
