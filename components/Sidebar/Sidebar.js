@@ -16,7 +16,8 @@ import { IoWalletSharp } from "react-icons/io5";
 
 import { IoMdContacts } from "react-icons/io";
 
-import { RiHandCoinLine, RiSendPlaneFill } from "react-icons/ri";
+import { FiSend } from "react-icons/fi";
+import { RiHandCoinLine } from "react-icons/ri";
 import { AiOutlinePicture } from "react-icons/ai";
 import { GiParachute } from "react-icons/gi";
 import { GrHistory } from "react-icons/gr";
@@ -48,7 +49,7 @@ export default function Sidebar(props) {
 
             <Link href="/payments/disperse">
               <a>
-                <NavItem active={router.pathname === '/payments/disperse'} icon={<RiSendPlaneFill />} label="Batch transfer tokens" />
+                <NavItem active={router.pathname === '/payments/disperse'} icon={<FiSend />} label="Batch transfer tokens" />
               </a>
             </Link>
             <Link href="/payments/disperseNFT">

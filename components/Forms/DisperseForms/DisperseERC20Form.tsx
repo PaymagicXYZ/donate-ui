@@ -30,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 import { FieldGroup } from "../FieldGroup";
 import { HeadingGroup } from "../HeadingGroup";
+import { WalletChecker } from "../../WalletChecker";
 import { useWeb3React } from "@web3-react/core";
 
 import { FiSend, FiToggleLeft } from "react-icons/fi";
@@ -309,6 +310,7 @@ export default function DisperseERC20Form() {
   }
 
   return (
+    <WalletChecker loading={false} account={account} p="5">
       <Stack>
         { alert }
         <Box mt={0}>
@@ -473,5 +475,6 @@ export default function DisperseERC20Form() {
       </Formik>
       </Box>
     </Stack>
+    </WalletChecker>
   );
 }
