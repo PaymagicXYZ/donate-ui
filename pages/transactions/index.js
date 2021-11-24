@@ -7,7 +7,7 @@ import {
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
-import { App as TransactionTable } from '../../components/TransactionTable/TransactionTable'
+import TransactionTable from '../../components/TransactionTable/TransactionTable'
 
 export default function Page() {
   let props
