@@ -100,7 +100,7 @@ export default function DisperseNFTForm() {
             <AlertIcon />
             <div>Your transaction is complete!{'\n'}
               <Link href={getBlockExplorerLink(txData.hash ? txData.hash : '0x','transaction')} isExternal>
-              View details here. <ExternalLinkIcon mx="2px" pb="2px" />
+              View details here.<ExternalLinkIcon mx="1px" pb="2px" />
               </Link>
             </div>
           </Alert>
