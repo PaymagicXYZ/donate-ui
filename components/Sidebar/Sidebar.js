@@ -24,6 +24,7 @@ import { GrHistory } from "react-icons/gr";
 
 import { MdAccountBalance } from "react-icons/md";
 import { NavItem } from "./NavItem";
+import { NavGroup } from "./NavGroup";
 import { useRouter } from "next/router";
 import { Logo } from '../Header/Logo'
 
@@ -34,7 +35,7 @@ export default function Sidebar(props) {
 
       <Box w="64" bg="gray.900" color="white" fontSize="md" borderTopRightRadius="md">
         <Flex h="full" direction="column" px="4" py="4">
-          <Stack spacing="2" flex="1" overflow="auto" pt="8">
+          <Stack spacing="6" flex="1" overflow="auto" pt="8">
 
 {/*            <Link href="/">
               <a>
@@ -46,32 +47,38 @@ export default function Sidebar(props) {
 
 
 
+            <NavGroup label="Payments">
+              <Link href="/payments/disperse">
+                <a>
+                  <NavItem active={router.pathname === '/payments/disperse'} icon={<FiSend />} label="Batch transfer tokens" />
+                </a>
+              </Link>
+              <Link href="/payments/disperseNFT">
+                <a>
+                  <NavItem active={router.pathname === '/payments/disperseNFT'} icon={<AiOutlinePicture />} label="Batch transfer NFTs" />
+                </a>
+              </Link>
+            </NavGroup>
 
-            <Link href="/payments/disperse">
-              <a>
-                <NavItem active={router.pathname === '/payments/disperse'} icon={<FiSend />} label="Batch transfer tokens" />
-              </a>
-            </Link>
-            <Link href="/payments/disperseNFT">
-              <a>
-                <NavItem active={router.pathname === '/payments/disperseNFT'} icon={<AiOutlinePicture />} label="Batch transfer NFTs" />
-              </a>
-            </Link>
-            <Link href="/transactions">
-              <a>
-                <NavItem active={router.pathname === '/transactions'} icon={<BsClockHistory />} label="Transactions" />
-              </a>
-            </Link>
-{/*            <Link href="/airdrop/send">
-              <a>
-                <NavItem icon={<GiParachute />} label="Send Airdrop" />
-              </a>
-            </Link>
-            <Link href="/airdrop/claim">
-              <a>
-                <NavItem icon={<RiHandCoinLine />} label="Claim Airdrop" />
-              </a>
-            </Link>*/}
+            <NavGroup label="Airdrops">
+              <Link href="/airdrop/send">
+                <a>
+                  <NavItem icon={<GiParachute />} label="Send Token Airdrop" />
+                </a>
+              </Link>
+              <Link href="/airdrop/claim">
+                <a>
+                  <NavItem icon={<RiHandCoinLine />} label="Claim Airdrop" />
+                </a>
+              </Link>
+            </NavGroup>
+            <NavGroup label="Portfolio">
+              <Link href="/transactions">
+                <a>
+                  <NavItem active={router.pathname === '/transactions'} icon={<BsClockHistory />} label="Transactions" />
+                </a>
+              </Link>
+            </NavGroup>
           </Stack>
         </Flex>
       </Box>

@@ -1,12 +1,13 @@
 import {
   Box,
   Stack,
+  StackProps,
   useColorModeValue
 } from "@chakra-ui/react";
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
-import SendAirdropForm from '../../components/Forms/AirdropForms/SendAirdropForm'
+import DisperseERC721Form from '../../components/Forms/DisperseForms/DisperseERC721Form'
 
 export default function Page() {
   let props
@@ -18,11 +19,11 @@ export default function Page() {
           <Stack spacing="12">
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title="Send Airdrop"
-                description="Send Tokens or FTs to many recipients, who can claim them at any time."
+                title="Send NFTs"
+                description="Send NFTs to many recipients all at once, no need to claim."
               />
               <Card>
-                <SendAirdropForm />
+                <DisperseERC721Form />
               </Card>
             </Stack>
           </Stack>

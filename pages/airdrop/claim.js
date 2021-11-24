@@ -1,62 +1,34 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useWeb3React } from "@web3-react/core";
-import { Progress } from "@chakra-ui/progress";
 import {
-  Alert,
-  AlertIcon,
   Box,
-  Container,
-  Button,
-  Divider,
-  Flex,
-  Text,
-  Image,
-  Heading,
   Stack,
-  Spacer,
+  StackProps,
+  useColorModeValue
 } from "@chakra-ui/react";
-import { useRef } from "react";
-import { useDisclosure } from "@chakra-ui/hooks";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from '../../components/PageContainer/PageContainer'
+import { Card } from '../../components/Card/Card'
+import { HeadingGroup } from '../../components/Forms/HeadingGroup'
+import ClaimAirdropForm from '../../components/Forms/AirdropForms/ClaimAirdropForm'
 
-export default function Home() {
-  const { chainId } = useWeb3React();
-  const focusObj = useRef();
-  const {
-    isOpen: isBarOpen,
-    onOpen: onBarOpen,
-    onClose: onBarClose,
-  } = useDisclosure();
+export default function Page() {
+  let props
 
   return (
     <PageContainer>
-      <Flex justifyContent="center" flexWrap="wrap">
-        <Box
-          // role={"group"}
-          p={6}
-          m="5"
-          maxW={"430px"}
-          minW={"530px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"lg"}
-          pos={"relative"}
-          zIndex={1}
-        >
-          <Text fontSize="6xl" align="center" fontWeight={500}>
-            Airdrop
-          </Text>{" "}
-          <Divider my={5} />
-          <Text fontSize={"2xl"}>Send to many recipients</Text>
-          <Text color={"gray.500"}>
-            Input any token address and then batch transfer tokens to many
-            different recipients in a single tx.
-          </Text>
-          <Progress value={15} />
+      <Box bg={useColorModeValue('purple.50', 'purple.800')} py="10">
+        <Box maxW="xl" mx="auto">
+          <Stack spacing="12">
+            <Stack as="section" spacing="6" {...props}>
+              <HeadingGroup
+                title="Claim Airdrop"
+                description="Check your eligibility below and claim your tokens/NFTs."
+              />
+              <Card>
+                <ClaimAirdropForm />
+              </Card>
+            </Stack>
+          </Stack>
         </Box>
-      </Flex>
+      </Box>
     </PageContainer>
   );
 }
