@@ -7,7 +7,7 @@ export const WalletChecker = (props) => {
 
   if(_.isUndefined(account)) {
     return (
-      <Center>
+      <Center p="10">
         <Text as="i">👆 Connect wallet above</Text>
       </Center>
     )

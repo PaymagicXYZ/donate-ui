@@ -1,8 +1,18 @@
 import {
+  Link,
   Button,
   Spacer,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  IconButton
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { BsThreeDots } from "react-icons/bs";
+import { BiInfoCircle } from "react-icons/bi";
+import { SiTelegram, SiTwitter } from "react-icons/si";
+import { MdDarkMode } from "react-icons/md";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
@@ -26,11 +36,10 @@ export default function Wallet() {
     if (account === null || account === undefined) {
       return (
         <Button
-          colorScheme="red"
-          variant="outline"
+          colorScheme="purple"
           onClick={() => activate(injected)}
         >
-          Connect MetaMask
+          Connect Wallet
         </Button>
       );
     }
@@ -40,6 +49,7 @@ export default function Wallet() {
         colorScheme="blue"
         variant="outline"
         onClick={() => navigator.clipboard.writeText(account)}
+        borderRadius="xl"
       >
         {`${account.substring(0, 6)}...${account.substring(
           account.length - 4
@@ -55,9 +65,56 @@ export default function Wallet() {
     }
 
     return (
-      <Button colorScheme="orange" variant="outline" ml={2}>
+      <Button
+        colorScheme="orange"
+        variant="outline"
+        ml={2}
+        borderRadius="xl"
+        >
         {translateChainId(chainId)}
       </Button>
+    );
+  };
+
+  const MoreItems = () => {
+
+    return (
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          aria-label="More"
+          icon={<BsThreeDots />}
+          backgroundColor='gray.200' 
+          borderRadius="xl"
+          direction="rtl"
+        />
+        <MenuList borderRadius="xl">
+          <MenuItem
+            as="a"
+            href="https://www.paymagic.xyz"
+            target="_blank"
+            icon={<BiInfoCircle size="18"/>}
+          >
+            About
+          </MenuItem>
+          <MenuItem
+            as="a"
+            href="https://t.me/paymagic"
+            target="_blank"
+            icon={<SiTelegram size="18"/>}
+          >
+            Telegram
+          </MenuItem>
+          <MenuItem
+            as="a"
+            href="https://twitter.com/paymagic_"
+            target="_blank"
+            icon={<SiTwitter size="18"/>}
+          >
+            Twitter
+          </MenuItem>
+        </MenuList>
+      </Menu>
     );
   };
 
@@ -66,6 +123,7 @@ export default function Wallet() {
       <Spacer />
       <Account />
       <Network />
+      <MoreItems />
     </>
   )
 }
