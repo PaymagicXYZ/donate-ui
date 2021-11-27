@@ -1,5 +1,7 @@
 import { ethers } from "ethers";
 import moment from "moment";
+// import { create } from "ipfs-http-client";
+import axios from "axios";
 import { getAddress as getAddressEthers } from '@ethersproject/address'
 
 import {
@@ -145,3 +147,28 @@ export function shortenAddress(address: string, chars = 4): string {
 export function displayTxDatetime(unixTime) {
   return moment.unix(unixTime).fromNow();
 }
+
+export async function getMerkleData(path) {
+  const { data } = await axios.get(`https://ipfs.io/ipfs/${path}`);
+  return data;
+}
+
+// const ipfs = create({
+//   host: "ipfs.infura.io",
+//   port: 5001,
+//   protocol: "https",
+// });
+
+export const addTreeToIPFS = async tree => {
+  const result = await ipfs.add(tree);
+  const ipfsURL = `https://gateway.ipfs.io/ipfs/${result.path}`;
+  console.log("ipfsURL", ipfsURL);
+  return result;
+  // const addresses = getAddresses();
+  // const addressArray = Object.assign(
+  //   addresses.map((v) => ({ address: v, signed: false }))
+  // );
+
+  // actions.addContract(result.path, addressArray);
+  // setIsDeployed(true);
+};

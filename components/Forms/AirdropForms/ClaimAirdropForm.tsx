@@ -44,43 +44,33 @@ import {
   isAddress,
   isERC721,
   getBlockExplorerLink,
+  getMerkleData
 } from "../../../utils";
 import Transactor from "../../../utils/Transactor";
 
 import ERC721Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
 import DisperseNFTContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
 import { getDisperseNFTAddress } from "../../../utils/disperse/index";
-// import useGasPrice from "../../../hooks/useGasPrice";
-import { useContract } from "../../../hooks/useContract";
+// import { useContract } from "../../../hooks/useContract";
 
-export default function DisperseNFTForm() {
+import MerkleDistributorContract from "../../../artifacts/contracts/MerkleDistributor.sol/MerkleDistributor.json";
+import { useContract } from "../../../hooks/useContract";
+import { useMerkleDistributor } from "../../../hooks/useMerkleDistributor";
+
+export default function DisperseNFTForm({match}) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);
   const [txData, setTxData] = useState({});
   const [status, setStatus] = useState(1);
   // 1 - start | 2 - notValid |  3 - isValid
-  // 4 - approveTx | 5 - isApproved | 6 - submitTx
-  // 7 - complete
+  // 4 - claimTx | 5 - complete
   const { library, account, chainId } = useWeb3React();
-  const contract = useContract(
-    library,
-    DisperseNFTContract,
-    getDisperseNFTAddress(chainId)
-  );
 
+  let propsAddress = '0x08a9e551e14bfd1c94e5e3a3f669a458d3f5e403'
+  const merkleDistributor = useMerkleDistributor(library, account, chainId, propsAddress)
 
   const [parsedData, setParsedData] = useState({
-    token: {
-      name: "",
-      symbol: "",
-      tokenURI: "",
-      address: "",
-      contract: {},
-    },
-
-    addressArray: [],
-    indexArray: [],
-    totalAmount: 0,
+    recipient: "",
     confirmationDetails: "",
   });
 
@@ -94,7 +84,7 @@ export default function DisperseNFTForm() {
           </Alert>
         );
         break;
-      case 7:
+      case 5:
         setAlert(
           <Alert status="success">
             <AlertIcon />
@@ -110,21 +100,22 @@ export default function DisperseNFTForm() {
     }
   }, [status]);
 
-  async function parseToken(value, props) {
+  async function parseRecipient(value, props) {
     console.log(value)
     let { values, errors, setFieldError, setFieldValue} = props
     setFieldValue(
-      "customTokenAddress",
+      "recipient",
       value
     );
 
-    let _token = {
-      name: "",
-      symbol: "",
-      tokenURI: "",
-      address: "",
-      contract: {},
-    }
+    // Check is address
+    // Check is in the Airdrop
+    // Check whether claimed yet
+    // Check claimed amount
+
+
+
+    // Check Drop Status
     if (
       value &&
       isAddress(value) &&
@@ -157,32 +148,6 @@ export default function DisperseNFTForm() {
 
       console.log('_token',_token)
       setParsedData({ ...parsedData, token: _token });
-      parseRecipients(values.recipients)
-    }
-  }
-
-  async function parseRecipients(recipients) {
-    let _addressArray = [];
-    let _indexArray = [];
-
-    const converter = csv({
-      delimiter: [",", "|", " ", "="],
-      noheader: true,
-      trim: true,
-    });
-    let parsed = await converter.fromString(recipients);
-
-    try {
-      parsed.forEach((a, i) => {
-        _addressArray[i] = _.get(a, "field1", null);
-        let temp = _.toNumber(_.get(a, "field2", 0));
-        _indexArray[i] = _.isFinite(temp) && _.isInteger(temp) ? temp : null; // isFinite excludes NaN
-      });
-
-      return [_addressArray, _indexArray];
-    } catch (err) {
-      console.error(err);
-      return [[], [], 0];
     }
   }
 
@@ -205,92 +170,23 @@ export default function DisperseNFTForm() {
       `
   }
 
-  async function parseAndValidateRecipients(value) {
+  async function validateRecipient(value) {
     let error;
 
-    // Parse
-    let [_addressArray, _indexArray] = await parseRecipients(
-      value
-    );
-
-    let _details = ''
-    // let _details = getConfirmationDetails(
-    //   _addressArray,
-    //   _indexArray,
-    //   _totalAmount,
-    //   parsedData.token.symbol
-    // );
-
-    setParsedData({
-      ...parsedData,
-      addressArray: _addressArray,
-      indexArray: _indexArray,
-      confirmationDetails: _details,
-    });
-
-    // Validate
-    if (!value) {
-      error = "Required";
-    } else if (_addressArray.length === 0 || _indexArray.length === 0) {
-      error = "Required";
-    } else if (_addressArray.length !== _indexArray.length) {
-      error = "Unable to parse the text. Please try again.";
-    } else {
-      for (let i = 0; i < _addressArray.length; i++) {
-        if (
-          !isAddress(_addressArray[i]) ||
-          !_.isFinite(_indexArray[i]) ||
-          !_.isInteger(_indexArray[i])) {
-          error = "Unable to parse the text. Please try again.";
-          break;
-        }
-      }
-    }
-
-    // Validate Token Balance
-    // if(parsedData.token.contract && !_.isEmpty(parsedData.token.contract) && parsedData.totalAmount) {
-    //   console.log(parsedData.token.contract)
-    //   let tokenBalanceBN = await parsedData.token.contract.balanceOf(account);
-    //   if (_totalAmount <= 0 || !_.isFinite(_totalAmount)) {
-    //     errors.recipients = 'Unable to parse the text. Please try again.';
-    //   } else if(tokenBalanceBN.lt(
-    //       ethers.utils.parseUnits(
-    //         _.toString(_totalAmount),
-    //         parsedData.token.decimals
-    //       )
-    //     )
-    //   ) {
-    //     errors.recipients = 'Your token balance is too low';
-    //   }
-    // }
-
-    return error;
-  }
-
-  async function validateCustomTokenAddress(value) {
-    let error;
-
-    // CUSTOM TOKEN ADDRESS
+    // RECIPIENT ADDRESS
     if (!value) {
       error = "Required";
     } else if (!isAddress(value)) {
-      error = "Unable to read the token address. Please try again.";
-    } else if (!isERC721(value)) {
-      error = "Unable to find the token. Please try again.";
+      error = "Unable to read the address. Please try again.";
     }
 
-    return error;
-  }
 
-  async function handleApproval(cb) {
-    console.log("Send Approval Tx");
-    const tx = Transactor(library, cb);
-    tx(
-      parsedData.token.contract["setApprovalForAll"](
-        getDisperseNFTAddress(chainId),
-        true
-      )
-    );
+    // Check is address
+    // Check is in the Airdrop
+    // Check whether claimed yet
+
+
+    return error;
   }
 
   async function handleSubmit(cb) {
@@ -311,8 +207,8 @@ export default function DisperseNFTForm() {
         <Stack>
           { alert }
           <Box mt={0}>
-            <Progress colorScheme="purple" size="md" isIndeterminate={status===4 || status===6} value={[15,15,15,15,30,55,70,100][status]}/>
-            <Text mt={0} align="center" color="gray.500" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 5`}</Text>
+            <Progress colorScheme="purple" size="md" isIndeterminate={status===4} value={[15,15,15,15,60,100][status]}/>
+            <Text mt={0} align="center" color="gray.500" fontSize="sm">{`Step ${_.max([status - 2, 1])} of 3`}</Text>
           </Box>
           <Box
             px={{ base: '6', md: '6' }}
@@ -320,12 +216,7 @@ export default function DisperseNFTForm() {
           >
             <Formik
               initialValues={{
-                token: '',
-                customTokenAddress: '',
-                recipients: '',
-                addressArray: [],
-                indexArray: [],
-                totalAmount: 0
+                recipient: account
               }}
               onSubmit={async (values, actions) => {
                 console.log('Submitted...')
@@ -373,21 +264,20 @@ export default function DisperseNFTForm() {
                   <Form onSubmit={props.handleSubmit}>
 
                     <FieldGroup>
-                      <Field name="customTokenAddress" validate={validateCustomTokenAddress}>
+                      <Field name="recipient" validate={validateRecipient}>
                         {({ field, form }) => (
                           <FormControl
-                            isInvalid={form.errors.customTokenAddress && form.touched.customTokenAddress}
+                            isInvalid={form.errors.recipient && form.touched.recipient}
                             isDisabled={status >= 4}
                           >
-                            <FormLabel htmlFor="customTokenAddress" fontSize="sm">RECIPIENT ADDRESS</FormLabel>
+                            <FormLabel htmlFor="recipient" fontSize="sm">RECIPIENT ADDRESS</FormLabel>
                             <Input
                               {...field} 
-                              id='customTokenAddress'
+                              id='recipient'
                               placeholder="0x..."
-                              onChange={e => parseToken(e.target.value, props)}
+                              onChange={e => parseRecipient(e.target.value, props)}
                             />
-                            <FormHelperText>{parsedData.token.name ? `${parsedData.token.name}` : null}</FormHelperText>
-                            <FormErrorMessage>{form.errors.customTokenAddress}</FormErrorMessage>
+                            <FormErrorMessage>{form.errors.recipient}</FormErrorMessage>
                           </FormControl>
                         )}
                       </Field>

@@ -20,7 +20,7 @@ export default function Page() {
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
                 title="Claim Airdrop"
-                description="Check your eligibility below and claim your tokens/NFTs."
+                description="Check your eligibility below and claim your NFTs or tokens."
               />
               <Card>
                 <ClaimAirdropForm />
