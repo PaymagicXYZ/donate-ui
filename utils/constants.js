@@ -5,7 +5,7 @@ export const NETWORK =
   env === "production"
     ? `homestead`
     : env === `mainnet`
-    ? `mainnet`
+    ? `ethereum`
     : env === `test`
     ? `kovan`
     : env === `kovan`

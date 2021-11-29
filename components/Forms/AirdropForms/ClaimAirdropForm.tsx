@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import numeral from "numeral";
 import _ from "lodash";
 import { ethers, Contract } from "ethers";
+import { parseEther } from "@ethersproject/units";
 import { Formik, Form, Field } from "formik";
 import * as csv from "csvtojson";
 
@@ -69,14 +70,10 @@ export default function DisperseNFTForm(props) {
   const merkleDistributor = useMerkleDistributor(library, account, chainId, contractAddress)
 
   const [parsedData, setParsedData] = useState({
+    recipient: account,
     airdropDisplayStatus: "Checking...",
     checkedAddresses: {}
   });
-
-  useEffect(() => {
-    // Run on initial page load
-    parseRecipient(account, {'setFieldValue': function() { return undefined; }})
-  }, []);
 
   useEffect(() => {
     switch (status) {
@@ -104,53 +101,74 @@ export default function DisperseNFTForm(props) {
     }
   }, [status]);
 
-  async function parseRecipient(value, props) {
-    props.setFieldValue(
-      "recipient",
-      value
-    );
-    setStatus(2) // Default to invalid
-    let index
-    let airdropDisplayStatus = 'Unable to read the address. Please try again.'
-    let checkedAddresses = {}
+  useEffect(() => {
+    async function run(walletAddress) {
+      setStatus(2) // Default to invalid
+      let index
+      let airdropDisplayStatus = 'Unable to read the address. Please try again.'
+      let checkedAddresses = {}
 
-    console.log(merkleDistributor)
+      console.log(merkleDistributor)
 
-    // Check address
-    if (
-      value &&
-      isAddress(value) && 
-      merkleDistributor.data && 
-      merkleDistributor.data.recipients
-    ) {
       // Check if address is in Drop
-      if(!_.isUndefined(parsedData.checkedAddresses[value])) {
-        index = parsedData.checkedAddresses[value]
+      if(!_.isUndefined(parsedData.checkedAddresses[walletAddress])) {
+        index = parsedData.checkedAddresses[walletAddress]
       } else {
         index = merkleDistributor.data.recipients.findIndex(
-          r => r.account === value
+          r => r.account === walletAddress
         );
-        checkedAddresses[value] = index     
+        checkedAddresses[walletAddress] = index     
       }
+
+      console.log(index)
 
       if(index === -1) {
         airdropDisplayStatus = 'Wallet address not found in this airdrop.'
       } else {
         // Check if address has already claimed
-        const isClaimed = await merkleDistributor.contract.isClaimed(ethers.BigNumber.from(index))
+        try {
+          const isClaimed = await merkleDistributor.contract.isClaimed(ethers.BigNumber.from(index))
 
-        if(isClaimed) {
-          airdropDisplayStatus = 'Wallet address already claimed this airdrop.'
-        } else {
-          airdropDisplayStatus = 'Ready to be claimed.'
-          setStatus(3) // Valid
+          console.log(isClaimed)
+
+          if(isClaimed) {
+            airdropDisplayStatus = 'Wallet address already claimed this airdrop.'
+          } else {
+            airdropDisplayStatus = 'Ready to be claimed.'
+            setStatus(3) // Valid
+          }
+        } catch {
+          airdropDisplayStatus = 'An error has occurred.'
+          setStatus(0)
         }
       }
+
+      setParsedData({ ...parsedData,
+        airdropDisplayStatus: airdropDisplayStatus,
+        checkedAddresses: checkedAddresses,
+        recipientIndex: index
+      });
     }
 
+    let walletAddress = parsedData.recipient ? parsedData.recipient : account
+    if (
+      walletAddress &&
+      isAddress(walletAddress) && 
+      merkleDistributor.data && 
+      merkleDistributor.data.recipients
+    ) {
+      run(walletAddress)
+    }
+  }, [parsedData.recipient, merkleDistributor]);
+
+  async function parseRecipient(value, props) {
+    const checkedSumAddress = getAddress(value)
+    props.setFieldValue(
+      "recipient",
+      checkedSumAddress
+    );
     setParsedData({ ...parsedData,
-      airdropDisplayStatus: airdropDisplayStatus,
-      checkedAddresses: checkedAddresses
+      recipient: checkedSumAddress
     });
   }
 
@@ -169,15 +187,20 @@ export default function DisperseNFTForm(props) {
 
   async function handleSubmit(cb) {
     console.log("Send Submit Tx");
-
     const tx = Transactor(library, cb);
-    // tx(
-    //   contract["disperseTokenERC721"](
-    //     parsedData.token.address,
-    //     parsedData.addressArray,
-    //     parsedData.indexArray
-    //   )
-    // );
+
+    const tree = createMerkleTree(merkleDistributor.data.recipients)
+    const leaf = merkleDistributor.data.recipients[parsedData.index]
+    const proof = tree.getProof(parsedData.index, parsedData.recipient, leaf.amount)
+
+    tx(
+      merkleDistributor.contract.claim(
+        index,
+        parsedData.recipient,
+        parseEther(`${leaf.amount}`),
+        proof
+      )
+    )
   }
 
   return (
@@ -247,7 +270,6 @@ export default function DisperseNFTForm(props) {
                       </Field>
                     </FieldGroup>
 
-                    <Divider mt={6} mb={2}/>
 
                     <FieldGroup>
                       <FormLabel fontSize="sm">AIRDROP STATUS</FormLabel>
@@ -266,7 +288,7 @@ export default function DisperseNFTForm(props) {
                           type="submit"
                           value="Submit"
                           leftIcon={<RiHandCoinLine />}
-                          isDisabled={status >= 4 || !_.isEmpty(props.errors)}
+                          isDisabled={status !== 3 || !_.isEmpty(props.errors)}
                           isLoading={loading}
                           loadingText="Submitting tx"
                         >

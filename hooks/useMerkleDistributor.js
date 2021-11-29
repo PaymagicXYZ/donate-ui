@@ -39,7 +39,7 @@ export function useMerkleDistributor(library, account, chainId, contractAddress,
     if(!_.isNull(airdropFactory)) {
       getData();
     }
-  },[contractAddress, recipientAddress]);
+  },[contractAddress, recipientAddress, airdropFactory, account]);
 
   return data;
 }
