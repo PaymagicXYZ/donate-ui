@@ -7,7 +7,7 @@ import contractAbi from "../artifacts/contracts/MerkleDistributor.sol/MerkleDist
 
 export function useMerkleDistributor(library, account, chainId, contractAddress, recipientAddress) {
   const [data, setData] = useState({})
-  const airdropFactory = useAirdropFactory(library);
+  const airdropFactory = useAirdropFactory(library, chainId);
   
   contractAddress = '0x08a9e551e14bfd1c94e5e3a3f669a458d3f5e403'
 

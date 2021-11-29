@@ -1,15 +1,18 @@
+import { useRouter } from 'next/router'
 import {
   Box,
   Stack,
+  StackProps,
   useColorModeValue
 } from "@chakra-ui/react";
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
-import SendAirdropForm from '../../components/Forms/AirdropForms/SendAirdropForm'
+import ClaimAirdropForm from '../../components/Forms/AirdropForms/ClaimAirdropForm'
 
-export default function Page() {
-  let props
+export default function Page(props) {
+  const router = useRouter()
+  const { contractAddress } = router.query
 
   return (
     <PageContainer>
@@ -18,11 +21,11 @@ export default function Page() {
           <Stack spacing="12">
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title="Send Airdrop"
-                description="Send Tokens or FTs to many recipients, who can claim them at any time."
+                title="Claim Airdrop"
+                description="Check your eligibility below and claim your NFTs or tokens."
               />
               <Card>
-                <SendAirdropForm />
+                <ClaimAirdropForm contractAddress={contractAddress} />
               </Card>
             </Stack>
           </Stack>
