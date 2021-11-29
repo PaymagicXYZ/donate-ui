@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import {
   Box,
   Stack,
@@ -7,10 +8,11 @@ import {
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { Card } from '../../components/Card/Card'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
-import DisperseERC721Form from '../../components/Forms/DisperseForms/DisperseERC721Form'
+import ClaimAirdropForm from '../../components/Forms/AirdropForms/ClaimAirdropForm'
 
-export default function Page() {
-  let props
+export default function Page(props) {
+  const router = useRouter()
+  const { contractAddress } = router.query
 
   return (
     <PageContainer>
@@ -19,11 +21,11 @@ export default function Page() {
           <Stack spacing="12">
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title="Send NFTs"
-                description="Send NFTs to many recipients all at once, no need to claim."
+                title="Claim Airdrop"
+                description="Check your eligibility below and claim your NFTs or tokens."
               />
               <Card>
-                <DisperseERC721Form />
+                <ClaimAirdropForm contractAddress={contractAddress} />
               </Card>
             </Stack>
           </Stack>

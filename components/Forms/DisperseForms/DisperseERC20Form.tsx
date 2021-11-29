@@ -46,7 +46,7 @@ import {
 import Transactor from "../../../utils/Transactor";
 import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
 import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
-import { getDisperseAddress } from "../../../utils/disperse/index";
+import { getDisperseAddress } from "../../../utils/contracts";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 

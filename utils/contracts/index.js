@@ -10,7 +10,7 @@ import {
   AIRDROPFACTORY_KOVAN,
 } from "../constants";
 
-export const getDisperseAddress = (chainId) => {
+export const getDisperseAddress = (chainId=1) => {
   switch (chainId) {
     case 1:
       return DISPERSE_MAINNET;
@@ -23,7 +23,7 @@ export const getDisperseAddress = (chainId) => {
   }
 };
 
-export const getDisperseNFTAddress = (chainId) => {
+export const getDisperseNFTAddress = (chainId=1) => {
   switch (chainId) {
     case 1:
       return DISPERSENFT_MAINNET;
@@ -36,7 +36,7 @@ export const getDisperseNFTAddress = (chainId) => {
   }
 };
 
-export const getAirdropFactoryAddress = (chainId) => {
+export const getAirdropFactoryAddress = (chainId=1) => {
   switch (chainId) {
     case 1:
       return AIRDROPFACTORY_MAINNET;

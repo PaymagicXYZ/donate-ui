@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 // const provider = new ethers.providers.Web3Provider();
 
-export const useContract = (provider, contractJSON, contractAddress) => {
+export function useContract(provider, contractJSON, contractAddress) {
   const [contractInstance, setContractInstance] = useState();
   useEffect(() => {
     if (provider) {

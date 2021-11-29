@@ -63,12 +63,12 @@ export default function Sidebar(props) {
             <NavGroup label="Airdrops">
               <Link href="/airdrop/send">
                 <a>
-                  <NavItem icon={<GiParachute />} label="Send Token Airdrop" />
+                  <NavItem active={router.pathname === '/airdrop/send'} icon={<GiParachute />} label="Send Token Airdrop" />
                 </a>
               </Link>
               <Link href="/airdrop/claim">
                 <a>
-                  <NavItem icon={<RiHandCoinLine />} label="Claim Airdrop" />
+                  <NavItem active={router.pathname === '/airdrop/claim'} icon={<RiHandCoinLine />} label="Claim Airdrop" />
                 </a>
               </Link>
             </NavGroup>

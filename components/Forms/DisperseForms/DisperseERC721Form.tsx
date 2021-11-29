@@ -49,7 +49,7 @@ import Transactor from "../../../utils/Transactor";
 
 import ERC721Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
 import DisperseNFTContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
-import { getDisperseNFTAddress } from "../../../utils/disperse/index";
+import { getDisperseNFTAddress } from "../../../utils/contracts";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 

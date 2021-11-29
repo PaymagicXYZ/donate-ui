@@ -3,6 +3,7 @@ import moment from "moment";
 // import { create } from "ipfs-http-client";
 import axios from "axios";
 import { getAddress as getAddressEthers } from '@ethersproject/address'
+import BalanceTree from "./merkleTrees/balance-tree";
 
 import {
   BLOCK_EXPLORER_LINK
@@ -152,6 +153,11 @@ export async function getMerkleData(path) {
   const { data } = await axios.get(`https://ipfs.io/ipfs/${path}`);
   return data;
 }
+
+export const createMerkleTree = (recipients) => {
+  const tree = new BalanceTree(recipients);
+  return tree;
+};
 
 // const ipfs = create({
 //   host: "ipfs.infura.io",
