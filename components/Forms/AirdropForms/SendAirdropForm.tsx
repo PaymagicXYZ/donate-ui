@@ -37,20 +37,24 @@ import { FiSend, FiToggleLeft } from "react-icons/fi";
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 import {
-  contractData,
   getAddress,
   isAddress,
   isToken,
   getBlockExplorerLink,
+  getMerkleData,
+  addTreeToIPFS,
+  createMerkleTree
 } from "../../../utils";
 import Transactor from "../../../utils/Transactor";
-import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
-import DisperseContract from "../../../artifacts/contracts/Disperse.sol/Disperse.json";
-import { getDisperseAddress } from "../../../utils/contracts";
-// import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
+import { useAirdropFactory } from "../../../hooks/useAirdropFactory";
 
-export default function DisperseERC20Form() {
+import contractAbi from "../../../artifacts/contracts/MerkleDistributor.sol/MerkleDistributor.json";
+
+import { getAirdropFactoryAddress } from "../../../utils/contracts";
+import contractData from "../../../artifacts/contracts/AirdropFactory.sol/AirdropFactory.json";
+
+export default function SendAirdropForm() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);
   const [txData, setTxData] = useState({});
@@ -59,19 +63,12 @@ export default function DisperseERC20Form() {
   // 4 - approveTx | 5 - isApproved | 6 - submitTx
   // 7 - complete
   const { library, account, chainId } = useWeb3React();
-  const contract = useContract(
-    library,
-    DisperseContract,
-    getDisperseAddress(chainId)
-  );
-
 
   const [parsedData, setParsedData] = useState({
     token: {
       symbol: "",
       decimals: 0,
       address: "",
-      contract: {},
     },
 
     addressArray: [],
@@ -273,6 +270,36 @@ export default function DisperseERC20Form() {
     return error;
   }
 
+
+  // Create MerkleDistributor
+  // Send tokens to MerkleDistributor
+  async function handleCreateMerkleDistributor(cb) {
+    console.log("Send CreateMerkleDistributor Tx");
+
+    const tree = createMerkleTree(recipients)
+
+    const result = await addTreeToIPFS(
+      JSON.stringify({
+        recipients: [..._parsedRecipients],
+        merkleRoot: tree.getHexRoot(),
+      })
+    );
+
+    console.log(result);
+    const tx = Transactor(web3Context.provider, cb, gasPrice);
+    tx(
+      airdropFactory.createAirdrop(
+        parsedData.token.address,
+        merkleTree.getHexRoot(),
+        result.path
+      )
+    )
+  }
+
+
+
+
+
   async function handleApproval(cb) {
     console.log("Send Approval Tx");
     const totalAmountBN = ethers.utils.parseUnits(
@@ -310,7 +337,7 @@ export default function DisperseERC20Form() {
   }
 
   return (
-    <WalletChecker loading={false} account={account} contractAddress={getDisperseAddress(chainId)} p="5">
+    <WalletChecker loading={false} account={account} contractAddress={getAirdropFactoryAddress(chainId)} p="5">
       <Stack>
         { alert }
         <Box mt={0}>

@@ -1,62 +1,85 @@
-import Head from "next/head";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useWeb3React } from "@web3-react/core";
-import { Progress } from "@chakra-ui/progress";
+import { BigNumber } from "ethers";
 import {
-  Alert,
-  AlertIcon,
   Box,
-  Container,
-  Button,
-  Divider,
-  Flex,
-  Text,
-  Image,
-  Heading,
   Stack,
-  Spacer,
+  SimpleGrid,
+  Text,
+  Flex,
+  useColorModeValue
 } from "@chakra-ui/react";
-import { useRef } from "react";
-import { useDisclosure } from "@chakra-ui/hooks";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from '../../components/PageContainer/PageContainer'
+import { FeatureLink } from '../../components/AirdropFeature/FeatureLink'
+import { HeadingGroup } from '../../components/Forms/HeadingGroup'
 
-export default function Home() {
-  const { chainId } = useWeb3React();
-  const focusObj = useRef();
-  const {
-    isOpen: isBarOpen,
-    onOpen: onBarOpen,
-    onClose: onBarClose,
-  } = useDisclosure();
+import { useWeb3React } from "@web3-react/core";
+import { useAirdropFactory } from "../../hooks/useAirdropFactory";
+import {
+  shortenAddress
+} from "../../utils";
+
+
+function Page() {
+  const { library, account, chainId } = useWeb3React();
+  const airdropFactory = useAirdropFactory(library, chainId);
+  const [airdrops, setAirdrops] = useState({'loading': true, 'addresses': []});
+
+  useEffect(() => {
+    async function getData() {
+      const airdropCount = await airdropFactory.airdropCount()
+      let addresses = []
+
+      for (let i = 0; i < airdropCount; i++) {
+        addresses[i] = await airdropFactory.getAirdropAddress(BigNumber.from(i));
+      }
+
+      setAirdrops({
+        loading: false,
+        airdropCount: airdropCount,
+        addresses: addresses
+      })
+    }
+    if(airdropFactory) {
+      getData();      
+    }
+  },[library, airdropFactory]);
+
+  let props
 
   return (
     <PageContainer>
-      <Flex justifyContent="center" flexWrap="wrap">
-        <Box
-          // role={"group"}
-          p={6}
-          m="5"
-          maxW={"430px"}
-          minW={"530px"}
-          w={"full"}
-          bg={"white"}
-          boxShadow={"2xl"}
-          rounded={"lg"}
-          pos={"relative"}
-          zIndex={1}
-        >
-          <Text fontSize="6xl" align="center" fontWeight={500}>
-            Airdrop
-          </Text>{" "}
-          <Divider my={5} />
-          <Text fontSize={"2xl"}>Send to many recipients</Text>
-          <Text color={"gray.500"}>
-            Input any token address and then batch transfer tokens to many
-            different recipients in a single tx.
-          </Text>
-          <Progress value={15} />
+      <Box bg={useColorModeValue('purple.50', 'purple.800')} py="10">
+        <Box maxW="xl" mx="auto">
+          <Stack spacing="12">
+            <Stack as="section" spacing="6" {...props}>
+              <HeadingGroup
+                title="Claim Airdrop Tokens/NFTs"
+                description="Select an Airdrop to see if you qualify to claim tokens or NFTs."
+              />
+
+              <Box maxW={{ base: 'xl', md: '7xl' }} mx="auto" px={{ base: '6', md: '8' }}>
+                <Flex direction={{ base: 'column', lg: 'row' }} justify="space-between">
+                  <Box ms={{ lg: '12' }} mt={{ base: '12', lg: 0 }} flex="1" maxW={{ lg: 'xl' }}>
+                    <SimpleGrid columns={{ base: 1, md: 1 }} mt="8">
+                      {airdrops.addresses.map((addr) => (
+                        <Flex key={addr} align="center" minH="14" borderBottomWidth="1px">
+                          <FeatureLink href={"/airdrop/" + addr}>{shortenAddress(addr)}</FeatureLink>
+                        </Flex>
+                      ))}
+                    </SimpleGrid>
+                  </Box>
+                </Flex>
+              </Box>
+
+
+
+            </Stack>
+          </Stack>
         </Box>
-      </Flex>
+      </Box>
     </PageContainer>
   );
 }
+
+export default Page;

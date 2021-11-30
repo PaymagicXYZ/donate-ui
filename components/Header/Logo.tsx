@@ -16,6 +16,7 @@ export const Logo = () => {
                 alt="Paymagic"
                 boxSize="48px"
                 objectFit="cover"
+                borderRadius="50%"
               />
               <Heading as="h1" size="lg" isTruncated>
                 Paymagic

@@ -5,9 +5,12 @@ import {
   DISPERSENFT_MAINNET,
   DISPERSENFT_POLYGON,
   DISPERSENFT_KOVAN,
+  AIRDROP_FACTORY_MAINNET,
+  AIRDROP_FACTORY_POLYGON,
+  AIRDROP_FACTORY_KOVAN,
 } from "../constants";
 
-export const getDisperseAddress = (chainId) => {
+export const getDisperseAddress = (chainId=1) => {
   switch (chainId) {
     case 1:
       return DISPERSE_MAINNET;
@@ -20,7 +23,7 @@ export const getDisperseAddress = (chainId) => {
   }
 };
 
-export const getDisperseNFTAddress = (chainId) => {
+export const getDisperseNFTAddress = (chainId=1) => {
   switch (chainId) {
     case 1:
       return DISPERSENFT_MAINNET;
@@ -28,6 +31,19 @@ export const getDisperseNFTAddress = (chainId) => {
       return DISPERSENFT_KOVAN;
     case 137:
       return DISPERSENFT_POLYGON;
+    default:
+      return "";
+  }
+};
+
+export const getAirdropFactoryAddress = (chainId=1) => {
+  switch (chainId) {
+    case 1:
+      return AIRDROP_FACTORY_MAINNET;
+    case 42:
+      return AIRDROP_FACTORY_KOVAN;
+    case 137:
+      return AIRDROP_FACTORY_POLYGON;
     default:
       return "";
   }

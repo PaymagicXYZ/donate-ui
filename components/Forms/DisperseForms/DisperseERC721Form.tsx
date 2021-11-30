@@ -49,7 +49,7 @@ import Transactor from "../../../utils/Transactor";
 
 import ERC721Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
 import DisperseNFTContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
-import { getDisperseNFTAddress } from "../../../utils/disperse/index";
+import { getDisperseNFTAddress } from "../../../utils/contracts";
 // import useGasPrice from "../../../hooks/useGasPrice";
 import { useContract } from "../../../hooks/useContract";
 
@@ -307,7 +307,7 @@ export default function DisperseNFTForm() {
   }
 
   return (
-      <WalletChecker loading={false} account={account} p="5">
+      <WalletChecker loading={false} account={account}  contractAddress={getDisperseNFTAddresst(chainId)} p="5">
         <Stack>
           { alert }
           <Box mt={0}>

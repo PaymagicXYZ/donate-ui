@@ -20,7 +20,7 @@ export default function Page() {
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
                 title="Send Batch Transfer"
-                description="Send tokens to many recipients all at once."
+                description="Send tokens to many recipients all at once. Great for paying contributors or rewarding followers."
               />
               <Card>
                 <DisperseERC20Form />
