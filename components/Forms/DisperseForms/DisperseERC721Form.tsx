@@ -65,7 +65,7 @@ export default function DisperseNFTForm() {
   const contract = useContract(
     library,
     DisperseNFTContract,
-    getDisperseNFTAddresschainId)
+    getDisperseNFTAddress(chainId)
   );
 
 
@@ -287,7 +287,7 @@ export default function DisperseNFTForm() {
     const tx = Transactor(library, cb);
     tx(
       parsedData.token.contract["setApprovalForAll"](
-        getDisperseNFTAddresschainId),
+        getDisperseNFTAddress(chainId),
         true
       )
     );
