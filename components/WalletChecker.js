@@ -1,9 +1,17 @@
+import * as React from 'react'
 import _ from 'lodash';
 import { Center, Spinner, Text } from '@chakra-ui/react'
-import * as React from 'react'
 
 export const WalletChecker = (props) => {
-	const { loading, account, children } = props
+	const { loading, account, contractAddress, children } = props
+
+  if(contractAddress === "0x") {
+    return (
+      <Center p="10">
+        <Text as="i">🚫 Not available on this network</Text>
+      </Center>
+    )
+  }
 
   if(_.isUndefined(account)) {
     return (

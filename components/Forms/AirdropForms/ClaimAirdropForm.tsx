@@ -45,20 +45,15 @@ import {
   isAddress,
   isERC721,
   getBlockExplorerLink,
-  getMerkleData
+  getMerkleData,
+  createMerkleTree
 } from "../../../utils";
 import Transactor from "../../../utils/Transactor";
 
-import ERC721Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC721/ERC721.sol/ERC721.json";
-import DisperseNFTContract from "../../../artifacts/contracts/DisperseNFT.sol/DisperseNFT.json";
-import { getDisperseNFTAddress } from "../../../utils/contracts";
-// import { useContract } from "../../../hooks/useContract";
-
-import MerkleDistributorContract from "../../../artifacts/contracts/MerkleDistributor.sol/MerkleDistributor.json";
 import { useContract } from "../../../hooks/useContract";
 import { useMerkleDistributor } from "../../../hooks/useMerkleDistributor";
 
-export default function DisperseNFTForm(props) {
+export default function ClaimAirdropForm(props) {
   const { contractAddress } = props
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(<></>);

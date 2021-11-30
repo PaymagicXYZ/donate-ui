@@ -5,7 +5,7 @@ export const NETWORK =
   env === "production"
     ? `homestead`
     : env === `mainnet`
-    ? `ethereum`
+    ? `mainnet`
     : env === `test`
     ? `kovan`
     : env === `kovan`
@@ -45,14 +45,27 @@ export const BLOCKNATIVE_ID =
 export const ZAPPER_ID =
   process.env.REACT_APP_ZAPPER_ID || `96e0cc51-a62e-42ca-acee-910ea7d2a241`;
 
+export const ZAPPER_NETWORK =
+  env === "production"
+    ? `ethereum`
+    : env === `mainnet`
+    ? `ethereum`
+    : env === `test`
+    ? `kovan`
+    : env === `kovan`
+    ? `kovan`
+    : env === `polygon`
+    ? `matic`
+    : `kovan`;
+
 export const DISPERSE_MAINNET = "0x5d49D619fc568e610f7e8e9d3981e6474f60179F";
 export const DISPERSE_POLYGON = "0xeA1da800c794228DcD8DA1e4A8F824F7F52999FB";
 export const DISPERSE_KOVAN = "0xA749721d764FF378a41D9b4D0794f7aFde4372E8";
 
-export const DISPERSENFT_MAINNET = "0x56a351f917cC65C5023C347B693fd3588B921250"; // Not deployed yet
+export const DISPERSENFT_MAINNET = "0x"; // Not deployed yet
 export const DISPERSENFT_POLYGON = "0x56a351f917cC65C5023C347B693fd3588B921250";
 export const DISPERSENFT_KOVAN = "0x489dfbf54845150a880BE13aC8DB2ce954986789";
 
-export const AIRDROPFACTORY_MAINNET = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403"; // Not deployed yet
-export const AIRDROPFACTORY_POLYGON = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403"; // Not deployed yet
-export const AIRDROPFACTORY_KOVAN = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";
+export const AIRDROP_FACTORY_MAINNET = "0x"; // Not deployed yet
+export const AIRDROP_FACTORY_POLYGON = "0x"; // Not deployed yet
+export const AIRDROP_FACTORY_KOVAN = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";

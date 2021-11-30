@@ -5,15 +5,20 @@ import {
   Box,
   Stack,
   SimpleGrid,
-  Text
+  Text,
+  Flex,
+  useColorModeValue
 } from "@chakra-ui/react";
 import PageContainer from '../../components/PageContainer/PageContainer'
+import { FeatureLink } from '../../components/AirdropFeature/FeatureLink'
+import { HeadingGroup } from '../../components/Forms/HeadingGroup'
 
 import { useWeb3React } from "@web3-react/core";
 import { useAirdropFactory } from "../../hooks/useAirdropFactory";
 import {
   shortenAddress
 } from "../../utils";
+
 
 function Page() {
   const { library, account, chainId } = useWeb3React();
@@ -40,49 +45,39 @@ function Page() {
     }
   },[library, airdropFactory]);
 
-  const airdropGrid = airdrops.addresses.map((airdrop, index) => (
-    <Box
-      key={index}
-      role={"group"}
-      p={6}
-      m="5"
-      maxW={"430px"}
-      minW={"230px"}
-      w={"full"}
-      bg={"white"}
-      boxShadow={"2xl"}
-      rounded={"lg"}
-      pos={"relative"}
-      zIndex={1}
-    >
-      <Link href={"/airdrop/" + airdrop}>
-        <a>
-          <Box
-            rounded={"lg"}
-            mt={-12}
-            pos={"static"}
-            height={"230px"}
-            _groupHover={{
-              _after: {
-                filter: "blur(20px)",
-              },
-            }}
-          >
-          </Box>
-
-          <Stack pt={10} align={"center"}>
-            <Text color={"gray.600"}>{ shortenAddress(airdrop) }</Text>
-          </Stack>
-        </a>
-      </Link>
-    </Box>
-  ));
+  let props
 
   return (
     <PageContainer>
-      <SimpleGrid columns={3} spacing={5} justifyContent="center">
-        { airdropGrid }
-      </SimpleGrid>
+      <Box bg={useColorModeValue('purple.50', 'purple.800')} py="10">
+        <Box maxW="xl" mx="auto">
+          <Stack spacing="12">
+            <Stack as="section" spacing="6" {...props}>
+              <HeadingGroup
+                title="Claim Airdrop Tokens/NFTs"
+                description="Select an Airdrop to see if you qualify to claim tokens or NFTs."
+              />
+
+              <Box maxW={{ base: 'xl', md: '7xl' }} mx="auto" px={{ base: '6', md: '8' }}>
+                <Flex direction={{ base: 'column', lg: 'row' }} justify="space-between">
+                  <Box ms={{ lg: '12' }} mt={{ base: '12', lg: 0 }} flex="1" maxW={{ lg: 'xl' }}>
+                    <SimpleGrid columns={{ base: 1, md: 1 }} mt="8">
+                      {airdrops.addresses.map((addr) => (
+                        <Flex key={addr} align="center" minH="14" borderBottomWidth="1px">
+                          <FeatureLink href={"/airdrop/" + addr}>{shortenAddress(addr)}</FeatureLink>
+                        </Flex>
+                      ))}
+                    </SimpleGrid>
+                  </Box>
+                </Flex>
+              </Box>
+
+
+
+            </Stack>
+          </Stack>
+        </Box>
+      </Box>
     </PageContainer>
   );
 }

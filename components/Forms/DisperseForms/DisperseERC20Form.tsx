@@ -310,7 +310,7 @@ export default function DisperseERC20Form() {
   }
 
   return (
-    <WalletChecker loading={false} account={account} p="5">
+    <WalletChecker loading={false} account={account} contractAddress={getDisperseAddress(chainId)} p="5">
       <Stack>
         { alert }
         <Box mt={0}>
