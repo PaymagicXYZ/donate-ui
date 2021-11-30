@@ -307,7 +307,7 @@ export default function DisperseNFTForm() {
   }
 
   return (
-      <WalletChecker loading={false} account={account}  contractAddress={getDisperseNFTAddresst(chainId)} p="5">
+      <WalletChecker loading={false} account={account}  contractAddress={getDisperseNFTAddress(chainId)} p="5">
         <Stack>
           { alert }
           <Box mt={0}>
