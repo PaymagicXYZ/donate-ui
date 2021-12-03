@@ -199,7 +199,7 @@ export default function ClaimAirdropForm(props) {
   }
 
   return (
-      <WalletChecker loading={false} account={account} p="5">
+      <WalletChecker loading={loading} account={account} p="5">
         <Stack>
           { alert }
           <Box mt={0}>

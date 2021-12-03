@@ -33,6 +33,9 @@ import { useWeb3React } from "@web3-react/core";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import ConnectionAlert from "../../components/ConnectionAlert";
 import Link from "next/link";
+import { App } from "../../components/SummaryCard/App";
+import SummaryCard from "../../components/SummaryCard/SummaryCard";
+import { BsClockHistory } from "react-icons/bs";
 
 // import { NavItem } from "../../components/NavItem";
 
@@ -149,7 +152,17 @@ function PaymentsPage() {
 
   return (
     <PageContainer>
-      <SimpleGrid columns={3} spacing={5} justifyContent="center">
+      <SimpleGrid columns={3} spacing={5} mx={5} justifyContent="center">
+        <SummaryCard 
+          type="Disperse"
+          title="Batch token transfer"
+          description="Send tokens to multiple recipients at once"
+          more="Great for rewarding followers or paying contributors"
+          icon={<BsClockHistory />}
+          href="/payments/disperse"
+        />
+        <SummaryCard />
+        <SummaryCard />
         {paymentsGrid}
       </SimpleGrid>
     </PageContainer>
