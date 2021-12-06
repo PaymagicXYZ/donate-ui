@@ -10,7 +10,7 @@ export default function PageContainer(props) {
         <Box height="140vh" overflow="hidden" position="relative">
         	<Flex h="full" id="app-container">
       			<Sidebar />
-    				<Box bg={mode("white", "gray.800")} flex="1">
+    				<Box h="100%" bg={mode("white", "gray.800")} flex="1">
       				{ props.children }
       				<Footer />
       			</Box>

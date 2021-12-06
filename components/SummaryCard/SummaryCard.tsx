@@ -12,9 +12,9 @@ import {
 } from '@chakra-ui/react';
 
 export default function SummaryCard(props) {
-  const {type, title, description, more, icon, iconColor, backgroundColor, color, href} = props
+  const {key, type, title, description, more, icon, iconColor, backgroundColor, color, href} = props
   return (
-    <Center py={6}>
+    <Center py={6} key={key}>
       <Link href={href || '#'}>
         <a style={{height:'100%'}}>
           <Box
