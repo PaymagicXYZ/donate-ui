@@ -33,7 +33,7 @@ export default function Sidebar(props) {
   return (
     <>
 
-      <Box w="64" bg="gray.900" color="white" fontSize="md" borderTopRightRadius="md">
+      <Box h='100%' w="64" bg="gray.900" color="white" fontSize="md" borderTopRightRadius="md">
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="6" flex="1" overflow="auto" pt="8">
 
@@ -60,7 +60,7 @@ export default function Sidebar(props) {
               </Link>
             </NavGroup>
 
-{            <NavGroup label="Airdrops">
+{/*{            <NavGroup label="Airdrops">
               <Link href="/airdrop/send">
                 <a>
                   <NavItem active={router.pathname === '/airdrop/send'} icon={<GiParachute />} label="Send Token Airdrop" />
@@ -71,7 +71,7 @@ export default function Sidebar(props) {
                   <NavItem active={router.pathname === '/airdrop/claim'} icon={<RiHandCoinLine />} label="Claim Airdrop" />
                 </a>
               </Link>
-            </NavGroup>}
+            </NavGroup>}*/}
 
 {/*            <NavGroup label="Other Payments">
               <Link href="/payments/vesting">

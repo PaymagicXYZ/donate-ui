@@ -35,7 +35,10 @@ import ConnectionAlert from "../../components/ConnectionAlert";
 import Link from "next/link";
 import { App } from "../../components/SummaryCard/App";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";
-import { BsClockHistory } from "react-icons/bs";
+import { FiSend } from "react-icons/fi";
+import { AiOutlinePicture } from "react-icons/ai";
+import { GiParachute } from "react-icons/gi";
+import { MdOutlineCallSplit } from "react-icons/md";
 
 // import { NavItem } from "../../components/NavItem";
 
@@ -46,14 +49,50 @@ function PaymentsPage() {
     () => ({ addresses, setAddresses }),
     [addresses, setAddresses]
   );
-  const paymentsTypes = [
+  const paymentSummaries = [
     {
-      title: "Disperse",
-      image: "split-payment.png",
-      imageAlt: "disperse",
-      description: "Send tokens to multiple recipients at once",
-      more: "Great for rewarding followers or paying contributors",
+      type: "Disperse",
+      title: "Batch token transfer",
+      description: "Send tokens to many recipients all at once. Great for paying contributors or rewarding followers.",
+      // more: "Great for rewarding followers or paying contributors",
+      icon: FiSend,
+      iconColor: "white",
+      backgroundColor: "purple.500",
+      href: "/payments/disperse",
     },
+    {
+      type: "Disperse",
+      title: "Batch NFT transfer",
+      description: "Send NFTs to many recipients all at once, no need to claim. Great for rewarding your community.",
+      // more: "Great for rewarding followers or paying contributors",
+      icon: AiOutlinePicture,
+      iconColor: "white",
+      backgroundColor: "pink.500",
+      href: "/payments/disperseNFT",
+    }
+    // {
+    //   type: "Airdrop Tokens",
+    //   title: "Send Token Airdrop",
+    //   description: "Send tokens for recipients to claim. Great for issuing staking rewards, sending yield to liquidity providers, or rewarding your community.",
+    //   // more: "Great for rewarding followers or paying contributors",
+    //   icon: GiParachute,
+    //   iconColor: "white",
+    //   backgroundColor: "green.500",
+    //   href: "/airdrop/send"
+    // }
+    // {
+    //   type: "Clique Tip",
+    //   title: "Tip popular fams for fun and profit",
+    //   description: "",
+    //   // more: "Great for rewarding followers or paying contributors",
+    //   icon: MdOutlineCallSplit,
+    //   iconColor: "white",
+    //   backgroundColor: "blue.500",
+    //   href: "/airdrop/send",
+    // }
+  ]
+
+  // const paymentsTypes = [
     // {
     //   title: "Vesting",
     //   image: "vesting-payment.png",
@@ -82,89 +121,23 @@ function PaymentsPage() {
     //   description: "Send tokens secretly",
     //   more: "Use for private transactions or avoiding censorship",
     // },
-  ];
-  const paymentsGrid = paymentsTypes.map((payment, index) => (
-    <Box
-      key={index}
-      role={"group"}
-      p={6}
-      m="5"
-      maxW={"430px"}
-      minW={"230px"}
-      w={"full"}
-      bg={"white"}
-      boxShadow={"2xl"}
-      rounded={"lg"}
-      pos={"relative"}
-      zIndex={1}
-    >
-      <Link href={"/payments/" + payment.imageAlt}>
-        <a>
-          <Box
-            rounded={"lg"}
-            mt={-12}
-            pos={"static"}
-            height={"230px"}
-            _after={{
-              transition: "all .3s ease",
-              content: '""',
-              w: "full",
-              h: "full",
-              pos: "absolute",
-              top: 5,
-              left: 0,
-              backgroundImage: `${payment.image})`,
-              filter: "blur(15px)",
-              zIndex: -1,
-            }}
-            _groupHover={{
-              _after: {
-                filter: "blur(20px)",
-              },
-            }}
-          >
-            <Image
-              rounded={"lg"}
-              height={230}
-              width={282}
-              objectFit={"cover"}
-              src={payment.image}
-              alt={payment.imageAlt}
-            />
-          </Box>
-
-          <Stack pt={10} align={"center"}>
-            <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
-              {payment.title}
-            </Heading>
-            <Text color={"gray.600"}>{payment.description}</Text>
-
-            <Text color={"gray.500"} fontSize={"sm"}>
-              {" "}
-              {payment.more}
-            </Text>
-            {/* </Stack> */}
-          </Stack>
-        </a>
-      </Link>
-    </Box>
-  ));
+  // ];
 
   return (
     <PageContainer>
-      <SimpleGrid columns={3} spacing={5} mx={5} justifyContent="center">
-        <SummaryCard 
-          type="Disperse"
-          title="Batch token transfer"
-          description="Send tokens to multiple recipients at once"
-          more="Great for rewarding followers or paying contributors"
-          icon={<BsClockHistory />}
-          href="/payments/disperse"
-        />
-        <SummaryCard />
-        <SummaryCard />
-        {paymentsGrid}
-      </SimpleGrid>
+      <Box bg={mode('purple.50', 'purple.800')} py="10">
+        <SimpleGrid minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
+          {
+            paymentSummaries.map((payment, index) => {
+              return (
+                <SummaryCard
+                  { ...payment }
+                />
+              )
+            })
+          }
+        </SimpleGrid>
+      </Box>
     </PageContainer>
   );
 }

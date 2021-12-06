@@ -10,32 +10,32 @@ import {
   useColorModeValue,
   Icon
 } from '@chakra-ui/react';
-import { BsClockHistory } from "react-icons/bs";
 
 export default function SummaryCard(props) {
-  const {type, title, description, more, icon, href} = props
+  const {type, title, description, more, icon, iconColor, backgroundColor, color, href} = props
   return (
     <Center py={6}>
       <Link href={href || '#'}>
-        <a>
-
+        <a style={{height:'100%'}}>
           <Box
             maxW={'445px'}
             w={'full'}
+            h={'100%'}
             bg={useColorModeValue('white', 'gray.900')}
-            boxShadow={'2xl'}
+            boxShadow={'lg'}
+            _hover={{ boxShadow: 'xl' }}
             rounded={'md'}
             p={6}
             overflow={'hidden'}>
             <Box
               h={'210px'}
-              bg={'purple.500'}
+              bg={backgroundColor}
               mt={-6}
               mx={-6}
               mb={6}
               pos={'relative'}>
               <Center h="100%">
-                <Icon as={BsClockHistory} boxSize={36} color='white' />
+                <Icon as={icon} boxSize={36} color={iconColor} />
               </Center>
             </Box>
             <Stack>

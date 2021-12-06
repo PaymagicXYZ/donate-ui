@@ -8,13 +8,13 @@ export default function RedriectPage() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('/payments/disperse')
+    router.push('/payments')
   }, [])
 
   return (
     <PageContainer>
       <Center>
-        <Spinner size="xl" />
+        <Spinner size="xl" color="purple"/>
       </Center>
     </PageContainer>
   )
