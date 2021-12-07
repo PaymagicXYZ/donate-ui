@@ -201,14 +201,10 @@ function PaymentsPage() {
         <SimpleGrid columns={3} spacing={5} mx={5} justifyContent="center">
           {
             paymentSummaries.map((payment, index) => {
-              const params = {
-                key: index,
-                ...payment
-              }
               return (
                 <SummaryCard
                   key={index}
-                  { ...params }
+                  { ...payment }
                 />
               )
             })
