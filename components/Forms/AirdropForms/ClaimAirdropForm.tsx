@@ -129,7 +129,10 @@ export default function ClaimAirdropForm(props) {
           if(isClaimed) {
             airdropDisplayStatus = 'Wallet address already claimed this airdrop.'
           } else {
-            airdropDisplayStatus = 'Ready to be claimed.'
+            let leaf = merkleDistributor.data.recipients[index]
+            console.log(amount)
+
+            airdropDisplayStatus = `Ready to be claimed: ${numeral(leaf.amount).format('0,0.0000')} Tokens`
             setStatus(3) // Valid
           }
         } catch {
@@ -199,7 +202,7 @@ export default function ClaimAirdropForm(props) {
   }
 
   return (
-      <WalletChecker loading={false} account={account} p="5">
+      <WalletChecker loading={loading} account={account} p="5">
         <Stack>
           { alert }
           <Box mt={0}>

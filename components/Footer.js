@@ -7,9 +7,9 @@ export default function Footer() {
     <Box as="footer" role="contentinfo" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }}>
       <Divider mt="6" mb="2"/>
       <Stack color="grey" direction="row" spacing="4" align="center" justify="center">
-        <Link href="/about">
-          About
-        </Link>
+        <ChakraLink href="https://www.paymagic.xyz" isExternal>
+          Home
+        </ChakraLink>
         <Text>
           |
         </Text>
