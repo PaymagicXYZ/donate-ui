@@ -150,7 +150,6 @@ function PaymentsPage() {
               as="a"
               href="https://www.paymagic.xyz"
               target="_blank"
-              target="_blank"
               icon={<FiSend size="18"/>}
             >
               Pay Someone
@@ -158,7 +157,6 @@ function PaymentsPage() {
             <MenuItem
               as="a"
               href="https://www.paymagic.xyz"
-              target="_blank"
               target="_blank"
               icon={<AiOutlineFork size="18" />}
             >
