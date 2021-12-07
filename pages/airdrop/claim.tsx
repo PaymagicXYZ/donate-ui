@@ -89,13 +89,10 @@ function Page() {
                 <SimpleGrid columns={{sm: 2, md: 3}} minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
                   {
                     airdrops.data.map((payment, index) => {
-                      const params = {
-                        key: index,
-                        ...payment
-                      }
                       return (
                         <SummaryCard
-                          { ...params }
+                          key={index}
+                          { ...payment }
                         />
                       )
                     })

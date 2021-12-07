@@ -14,7 +14,7 @@ import {
 export default function SummaryCard(props) {
   const {key, type, title, description, more, icon, iconColor, backgroundColor, color, href} = props
   return (
-    <Center py={6} key={key}>
+    <Center key={key}>
       <Link href={href || '#'}>
         <a style={{height:'100%'}}>
           <Box
