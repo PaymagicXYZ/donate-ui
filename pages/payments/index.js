@@ -76,17 +76,20 @@ function PaymentsPage() {
       iconColor: "white",
       backgroundColor: "pink.500",
       href: "/payments/disperseNFT",
-    },
-    {
-      type: "Airdrop",
-      title: "Send Token Airdrop",
-      description: "Send tokens for recipients to claim. Great for distributing tokens, issuing staking rewards, or rewarding your community.",
-      // more: "Great for rewarding followers or paying contributors",
-      icon: GiParachute,
-      iconColor: "white",
-      backgroundColor: "green.500",
-      href: "/airdrop/send"
     }
+    // {
+    //   type: "Airdrop",
+    //   title: "Send Token Airdrop",
+    //   description: "Send tokens for recipients to claim. Great for distributing tokens, issuing staking rewards, or rewarding your community.",
+    //   // more: "Great for rewarding followers or paying contributors",
+    //   icon: GiParachute,
+    //   iconColor: "white",
+    //   backgroundColor: "green.500",
+    //   href: "/airdrop/send"
+    // }
+  ]
+
+  // const paymentsTypes = [
     // {
     //   type: "Clique Tip",
     //   title: "Tip popular fams for fun and profit",
@@ -97,9 +100,6 @@ function PaymentsPage() {
     //   backgroundColor: "blue.500",
     //   href: "/airdrop/send",
     // }
-  ]
-
-  // const paymentsTypes = [
     // {
     //   title: "Vesting",
     //   image: "vesting-payment.png",
@@ -195,8 +195,10 @@ function PaymentsPage() {
   return (
     <PageContainer>
       <Box bg={mode('purple.50', 'purple.800')}>
-        < PaymentMenu />          
-        <SimpleGrid minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
+        { false && 
+          < PaymentMenu />   
+        }       
+        <SimpleGrid columns={3} spacing={5} mx={5} justifyContent="center">
           {
             paymentSummaries.map((payment, index) => {
               const params = {

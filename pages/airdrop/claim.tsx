@@ -86,7 +86,7 @@ function Page() {
               />
               <WalletChecker loading={false} account={account} contractAddress={getAirdropFactoryAddress(chainId)} p="5">
          
-                <SimpleGrid minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
+                <SimpleGrid columns={{sm: 2, md: 3}} minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
                   {
                     airdrops.data.map((payment, index) => {
                       const params = {
