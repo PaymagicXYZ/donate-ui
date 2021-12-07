@@ -95,7 +95,6 @@ function Page() {
                       }
                       return (
                         <SummaryCard
-                          key={index}
                           { ...params }
                         />
                       )
