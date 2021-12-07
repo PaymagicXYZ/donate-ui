@@ -40,7 +40,7 @@ import ConnectionAlert from "../../components/ConnectionAlert";
 import Link from "next/link";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";
 import { FiSend } from "react-icons/fi";
-import { AiOutlinePicture } from "react-icons/ai";
+import { AiOutlinePicture, AiOutlineFork } from "react-icons/ai";
 import { GiParachute } from "react-icons/gi";
 import { MdOutlineCallSplit } from "react-icons/md";
 
@@ -60,7 +60,7 @@ function PaymentsPage() {
     {
       type: "Tokens",
       title: "Batch transfer tokens",
-      description: "Send tokens to many recipients all at once. Great for paying contributors or rewarding followers.",
+      description: "Send tokens to many recipients all at once. Great for paying contributors, issuing dividends, or rewarding followers.",
       // more: "Great for rewarding followers or paying contributors",
       icon: FiSend,
       iconColor: "white",
@@ -70,7 +70,7 @@ function PaymentsPage() {
     {
       type: "NFT",
       title: "Batch transfer NFTs",
-      description: "Send NFTs to many recipients all at once, no need to claim. Great for rewarding your community.",
+      description: "Send NFTs to many recipients all at once. Great for distributing tickets/badges or rewarding your community.",
       // more: "Great for rewarding followers or paying contributors",
       icon: AiOutlinePicture,
       iconColor: "white",
@@ -80,7 +80,7 @@ function PaymentsPage() {
     {
       type: "Airdrop",
       title: "Send Token Airdrop",
-      description: "Send tokens for recipients to claim. Great for issuing staking rewards, paying dividends, or rewarding your community.",
+      description: "Send tokens for recipients to claim. Great for distributing tokens, issuing staking rewards, or rewarding your community.",
       // more: "Great for rewarding followers or paying contributors",
       icon: GiParachute,
       iconColor: "white",
@@ -130,51 +130,72 @@ function PaymentsPage() {
     // },
   // ];
 
+  const PaymentMenu = () => {
+    return (
+      <Stack direction="column" align="end" mr="5">
+        <Menu>
+          <MenuButton
+            as={Button}
+            aria-label="Send Tokens"
+            colorScheme='purple'
+            rightIcon={<FiChevronDown />}
+            borderRadius="xl"
+            direction="rtl"
+            px="3"
+          >
+            Send Tokens
+          </MenuButton>
+          <MenuList borderRadius="xl">
+            <MenuItem
+              as="a"
+              href="https://www.paymagic.xyz"
+              target="_blank"
+              target="_blank"
+              icon={<FiSend size="18"/>}
+            >
+              Pay Someone
+            </MenuItem>
+            <MenuItem
+              as="a"
+              href="https://www.paymagic.xyz"
+              target="_blank"
+              target="_blank"
+              icon={<AiOutlineFork size="18" />}
+            >
+              Pay Multiple People
+            </MenuItem>
+            <MenuItem
+              as="a"
+              href="https://www.paymagic.xyz"
+              icon={<MdRepeat size="18"/>}
+            >
+              Create Recurring Payment
+            </MenuItem>
+            <MenuItem
+              as="a"
+              href="https://www.paymagic.xyz"
+              icon={<FaPiggyBank size="18"/>}
+            >
+              Add Funds
+            </MenuItem>
+            <MenuItem
+              as="a"
+              href="https://www.paymagic.xyz"
+              icon={<GiParachute size="18"/>}
+            >
+              Create Airdrop
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Stack>
+    )
+  }
+
+
   return (
     <PageContainer>
       <Box bg={mode('purple.50', 'purple.800')}>
-        <Stack direction="column" align="end" mr="5">
-{/*          <Menu>
-            <MenuButton
-              as={Button}
-              aria-label="Send Tokens"
-              colorScheme='purple'
-              rightIcon={<FiChevronDown />}
-              borderRadius="xl"
-              direction="rtl"
-              px="3"
-            >
-              Send Tokens
-            </MenuButton>
-            <MenuList borderRadius="xl">
-              <MenuItem
-                as="a"
-                href="https://www.paymagic.xyz"
-                target="_blank"
-                target="_blank"
-                icon={<FiSend size="18"/>}
-              >
-                Pay Someone
-              </MenuItem>
-              <MenuItem
-                as="a"
-                href="https://www.paymagic.xyz"
-                icon={<MdRepeat size="18"/>}
-              >
-                Create Recurring Payment
-              </MenuItem>
-              <MenuItem
-                as="a"
-                href="https://www.paymagic.xyz"
-                icon={<FaPiggyBank size="18"/>}
-              >
-                Add Funds
-              </MenuItem>
-            </MenuList>
-          </Menu>*/}
-        </Stack>
-
-
+        < PaymentMenu />          
         <SimpleGrid minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
           {
             paymentSummaries.map((payment, index) => {
@@ -184,6 +205,7 @@ function PaymentsPage() {
               }
               return (
                 <SummaryCard
+                  key={index}
                   { ...params }
                 />
               )

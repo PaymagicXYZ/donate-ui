@@ -16,6 +16,9 @@ import {
 import PageContainer from '../../components/PageContainer/PageContainer'
 import { HeadingGroup } from '../../components/Forms/HeadingGroup'
 import { WalletChecker } from "../../components/WalletChecker";
+import SummaryCard from "../../components/SummaryCard/SummaryCard";
+
+import { GiParachute } from "react-icons/gi";
 
 import { useWeb3React } from "@web3-react/core";
 import { useAirdropFactory } from "../../hooks/useAirdropFactory";
@@ -26,48 +29,42 @@ import {
 } from "../../utils";
 
 
-const RightArrow = createIcon({
-  viewBox: '0 0 11 12',
-  d: 'M0 0L4.8 6L0 12H5.78182L10.5818 6L5.78182 0H0Z',
-})
 
-const FeatureLink = (props: HTMLChakraProps<'a'>) => {
-  const { children, href} = props as StackProps
-  return (
-    <Link href={href}>
-      <HStack align="center" fontSize="md" className="group" cursor="pointer">
-        <Box fontWeight="semibold">{children}</Box>
-        <RightArrow
-          color={mode('purple.500', 'purple.400')}
-          fontSize="sm"
-          transition="transform 0.2s"
-          pos="relative"
-          top="2px"
-          _groupHover={{ transform: 'translateX(2px)' }}
-        />
-      </HStack>
-    </Link>
-  )
+
+function airdropTemplate(address, index) {
+
+  return   {
+    type: "Airdrop",
+    title: shortenAddress(address),
+    // description: "Send tokens for recipients to claim. Great for distributing tokens, issuing staking rewards, or rewarding your community.",
+    // more: "Great for rewarding followers or paying contributors",
+    icon: GiParachute,
+    iconColor: "white",
+    backgroundColor: ["blue.500", "yellow.500", "green.500",  "orange.500"][index % 3],
+    href: `/airdrop/${address}`
+  }
+
 }
 
 function Page() {
   const { library, account, chainId } = useWeb3React();
   const airdropFactory = useAirdropFactory(library, chainId);
-  const [airdrops, setAirdrops] = useState({'loading': true, 'addresses': []});
+  const [airdrops, setAirdrops] = useState({'loading': true, 'data': []});
 
   useEffect(() => {
     async function getData() {
       const airdropCount = await airdropFactory.airdropCount()
-      let addresses = []
+      let data = []
 
       for (let i = 0; i < airdropCount; i++) {
-        addresses[i] = await airdropFactory.getAirdropAddress(BigNumber.from(i));
+        let tempData = await airdropFactory.getAirdropAddress(BigNumber.from(i));
+        data[i] = airdropTemplate(tempData, i)
       }
 
       setAirdrops({
         loading: false,
         airdropCount: airdropCount,
-        addresses: addresses
+        data: data
       })
     }
 
@@ -76,31 +73,37 @@ function Page() {
     }
   },[library, airdropFactory]);
 
+
+
   return (
     <PageContainer>
-      <Box bg={mode('purple.50', 'purple.800')} py="10">
-        <Box maxW="xl" mx="auto">
-          <Stack spacing="12">
-            <Stack as="section" spacing="6">
+      <Box bg={mode('purple.50', 'purple.800')}>
+        <Box mx="5">
+            <Stack as="section">
               <HeadingGroup
                 title="Claim Airdrop"
                 description="Select an Airdrop to check if you qualify and your claim tokens or NFTs."
               />
               <WalletChecker loading={false} account={account} contractAddress={getAirdropFactoryAddress(chainId)} p="5">
-
-                <Box ms={{ lg: '12' }} mt={{ base: '12', lg: 0 }} flex="1" maxW={{ lg: 'xl' }}>
-                  <SimpleGrid columns={{ base: 1, md: 1 }}>
-                    {airdrops.addresses.map((addr) => (
-                      <Flex key={addr} align="center" minH="14" borderBottomWidth="1px">
-                        <FeatureLink href={"/airdrop/" + addr}>{shortenAddress(addr)}</FeatureLink>
-                      </Flex>
-                    ))}
-                  </SimpleGrid>
-                </Box>
-
+         
+                <SimpleGrid minChildWidth='210px' spacing={5} mx={5} justifyContent="center">
+                  {
+                    airdrops.data.map((payment, index) => {
+                      const params = {
+                        key: index,
+                        ...payment
+                      }
+                      return (
+                        <SummaryCard
+                          key={index}
+                          { ...params }
+                        />
+                      )
+                    })
+                  }
+                </SimpleGrid>
               </WalletChecker>
             </Stack>
-          </Stack>
         </Box>
       </Box>
     </PageContainer>

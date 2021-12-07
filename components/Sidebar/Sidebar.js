@@ -45,19 +45,27 @@ export default function Sidebar(props) {
               </a>
             </Link>*/}
 
-
-
-            <NavGroup label="Payments">
-              <Link href="/payments/disperse">
+            <NavGroup label="My Account">
+              <Link href="/payments">
                 <a>
-                  <NavItem active={router.pathname === '/payments/disperse'} icon={<FiSend />} label="Batch transfer tokens" />
+                  <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="All Payments" />
                 </a>
               </Link>
-              <Link href="/payments/disperseNFT">
+              <Link href="/transactions">
                 <a>
-                  <NavItem active={router.pathname === '/payments/disperseNFT'} icon={<AiOutlinePicture />} label="Batch transfer NFTs" />
+                  <NavItem active={router.pathname === '/transactions'} icon={<MdReceipt />} label="Transactions" />
                 </a>
               </Link>
+                {/* Disabled */}
+                <a>
+                  <NavItem isDisabled active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
+                </a>
+                <a>
+                  <NavItem isDisabled active={router.pathname === '/cards'} icon={<MdPayment />} label="Card" />
+                </a>
+{/*                <a>
+                  <NavItem isDisabled active={router.pathname === '/accounts'} icon={<MdAccountTree />} label="Accounts" />
+                </a>*/}
             </NavGroup>
 
 {            <NavGroup label="Airdrops">
@@ -87,29 +95,7 @@ export default function Sidebar(props) {
             </NavGroup>*/}
 
 
-{/*            <NavGroup label="Smart Accounts">
-              <Link href="/payments">
-                <a>
-                  <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="Payments" />
-                </a>
-              </Link>
-              <Link href="/transactions">
-                <a>
-                  <NavItem active={router.pathname === '/transactions'} icon={<MdReceipt />} label="Transactions" />
-                </a>
-              </Link>
 
-
-                <a>
-                  <NavItem isDisabled active={router.pathname === '/cards'} icon={<MdPayment />} label="Card" />
-                </a>
-                <a>
-                  <NavItem isDisabled active={router.pathname === '/accounts'} icon={<MdAccountTree />} label="Accounts" />
-                </a>
-                <a>
-                  <NavItem isDisabled active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
-                </a>
-            </NavGroup>*/}
 
 
 
