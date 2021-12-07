@@ -1,129 +1,109 @@
 import {
-  Link,
   Button,
   Spacer,
   Menu,
-  MenuButton,
-  MenuItem,
   MenuList,
-  IconButton
+  MenuItem,
+  MenuButton,
+  Box,
+  Flex,
+  Text,
 } from "@chakra-ui/react";
-import { CopyIcon } from "@chakra-ui/icons";
-import { BsThreeDots } from "react-icons/bs";
-import { BiInfoCircle } from "react-icons/bi";
-import { SiTelegram, SiTwitter } from "react-icons/si";
-import { MdDarkMode } from "react-icons/md";
+import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
-
+import { BigNumber } from "@ethersproject/bignumber";
 import { useEagerConnect } from "../../hooks/useEagerConnect";
 import { useInactiveListener } from "../../hooks/useInactiveListener";
 import { injected } from "../../connectors";
 import { translateChainId } from "../../utils";
+import NetworkMenu from "./NetworkMenu";
+// import { getEtherBalance } from "../../utils";
+import { useEffect, useState } from "react";
+import { formatEther } from "@ethersproject/units";
+import { shortenAddress } from "../../utils";
+import { getNativeToken } from "../../utils";
 
 export default function Wallet() {
-
   const context = useWeb3React();
-  const { account, activate, chainId } = context;
+  const { account, library, activate, chainId, deactivate } = context;
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
 
+  const [etherBalance, setEtherBalance] = useState();
+  // const userEthBalance = useETHBalances(account ? [account] : [])?.[
+  //   account ?? ""
+  // ];
+
+  useEffect(() => {
+    getNativeToken(chainId);
+  }, [chainId]);
+
+  useEffect(() => {
+    const getEtherBalance = async (address) => {
+      const balance = await library?.getBalance(address);
+      if (balance) {
+        setEtherBalance(balance);
+      }
+    };
+
+    getEtherBalance(account);
+  }, [account, library]);
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager);
 
   const Account = () => {
-    if (account === null || account === undefined) {
+    console.log("account", account);
+    if (!library) {
       return (
         <Button
-          colorScheme="purple"
+          colorScheme="red"
+          variant="outline"
           onClick={() => activate(injected)}
         >
-          Connect Wallet
+          Connect MetaMask
         </Button>
       );
     }
 
     return (
-      <Button
-        colorScheme="blue"
-        variant="outline"
-        onClick={() => navigator.clipboard.writeText(account)}
-        borderRadius="xl"
-      >
-        {`${account.substring(0, 6)}...${account.substring(
-          account.length - 4
-        )}`}
-        <CopyIcon ml={1} color="blue.400" />
-      </Button>
+      <Flex align="center">
+        {etherBalance ? (
+          <Box
+            rounded="md"
+            bg="purple"
+            w="160px"
+            mx="-10px"
+            h="40px"
+            justifyContent="flex-start"
+          >
+            <Text color="white" fontSize="xl" mt="5px" ml="10px">
+              {Number(formatEther(etherBalance)).toFixed(5)}{" "}
+              {getNativeToken(chainId)}
+            </Text>
+          </Box>
+        ) : null}
+
+        <Button colorScheme="purple" onClick={() => deactivate()}>
+          {shortenAddress(account)}
+          <SmallCloseIcon ml={1} color="blue.400" />
+        </Button>
+      </Flex>
     );
   };
 
-  const Network = () => {
-    if (!chainId) {
-      return null;
-    }
-
-    return (
-      <Button
-        colorScheme="orange"
-        variant="outline"
-        ml={2}
-        borderRadius="xl"
-        >
-        {translateChainId(chainId)}
-      </Button>
-    );
-  };
-
-  const MoreItems = () => {
-
-    return (
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label="More"
-          icon={<BsThreeDots />}
-          backgroundColor='gray.200' 
-          borderRadius="xl"
-          direction="rtl"
-        />
-        <MenuList borderRadius="xl">
-          <MenuItem
-            as="a"
-            href="https://www.paymagic.xyz"
-            target="_blank"
-            icon={<BiInfoCircle size="18"/>}
-          >
-            About
-          </MenuItem>
-          <MenuItem
-            as="a"
-            href="https://t.me/paymagic"
-            target="_blank"
-            icon={<SiTelegram size="18"/>}
-          >
-            Telegram
-          </MenuItem>
-          <MenuItem
-            as="a"
-            href="https://twitter.com/paymagic_"
-            target="_blank"
-            icon={<SiTwitter size="18"/>}
-          >
-            Twitter
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    );
-  };
+  // const Network = () => {
+  //   {
+  //     library && library.provider.isMetaMask && <NetworkMenu />;
+  //   }
+  // };
 
   return (
     <>
       <Spacer />
+      {library && library.provider.isMetaMask && <NetworkMenu />}
       <Account />
-      <Network />
-      <MoreItems />
     </>
-  )
+  );
 }

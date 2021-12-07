@@ -2,14 +2,13 @@ import { ethers } from "ethers";
 import moment from "moment";
 // import { create } from "ipfs-http-client";
 import axios from "axios";
-import { getAddress as getAddressEthers } from '@ethersproject/address'
+import { getAddress as getAddressEthers } from "@ethersproject/address";
 import BalanceTree from "./merkleTrees/balance-tree";
+import { BigNumber, utils } from "ethers";
 
-import {
-  BLOCK_EXPLORER_LINK
-} from "./constants";
+import { BLOCK_EXPLORER_LINK } from "./constants";
 
-const env = process.env.REACT_APP_APP_ENV || 'test'; // defaulting to after ||
+const env = process.env.REACT_APP_APP_ENV || "test"; // defaulting to after ||
 
 export function translateChainId(chainId) {
   switch (chainId) {
@@ -35,21 +34,21 @@ export function translateChainId(chainId) {
 }
 
 export function getBlockExplorerLink(data, type) {
-  const prefix = BLOCK_EXPLORER_LINK
+  const prefix = BLOCK_EXPLORER_LINK;
 
   switch (type) {
-    case 'transaction': {
-      return `${prefix}/tx/${data}`
+    case "transaction": {
+      return `${prefix}/tx/${data}`;
     }
-    case 'token': {
-      return `${prefix}/token/${data}`
+    case "token": {
+      return `${prefix}/token/${data}`;
     }
-    case 'block': {
-      return `${prefix}/block/${data}`
+    case "block": {
+      return `${prefix}/block/${data}`;
     }
-    case 'address':
+    case "address":
     default: {
-      return `${prefix}/address/${data}`
+      return `${prefix}/address/${data}`;
     }
   }
 }
@@ -57,74 +56,72 @@ export function getBlockExplorerLink(data, type) {
 // // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value) {
   try {
-    return ethers.utils.isAddress(value)
+    return ethers.utils.isAddress(value);
     // return getAddressEthers(value)
   } catch {
-    return false
+    return false;
   }
 }
 
 // // returns the checksummed address if the address is valid, otherwise returns input
 export function getAddress(value) {
   try {
-    return getAddressEthers(value)
+    return getAddressEthers(value);
   } catch {
-    return value
+    return value;
   }
 }
 
 export async function isToken(value) {
-  if(isAddress(value)){
+  if (isAddress(value)) {
     try {
       const _contract = new Contract(
         getAddress(value),
-        data.contracts['ERC20']['abi'],
+        data.contracts["ERC20"]["abi"],
         web3Context.provider.getSigner()
       );
-      const _symbol = await _contract.symbol()
-      const _decimals = await _contract.decimals()
-      return true
+      const _symbol = await _contract.symbol();
+      const _decimals = await _contract.decimals();
+      return true;
+    } catch (err) {
+      return false;
     }
-    catch(err) {
-      return false
-    }    
   }
 
-  return false
+  return false;
 }
 
 export async function isERC721(value) {
-  if(isAddress(value)){
+  if (isAddress(value)) {
     try {
       const _contract = new Contract(
         getAddress(value),
-        data.contracts['ERC20']['abi'],
+        data.contracts["ERC20"]["abi"],
         web3Context.provider.getSigner()
       );
-      const _symbol = await _contract.symbol()
-      const _decimals = await _contract.decimals()
-      return true
+      const _symbol = await _contract.symbol();
+      const _decimals = await _contract.decimals();
+      return true;
+    } catch (err) {
+      return false;
     }
-    catch(err) {
-      return false
-    }    
   }
 
-  return false
+  return false;
 }
 
 // Input tx to have 0x + 4 characters at start and end
 export function shortenTx(tx: string, chars = 4): string {
-  return `${tx.substring(0, chars + 2)}...${tx.substring(66 - chars)}`
+  return `${tx.substring(0, chars + 2)}...${tx.substring(66 - chars)}`;
 }
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
 export function shortenAddress(address: string, chars = 4): string {
-  const parsed = getAddress(address)
+  const parsed = getAddress(address);
   if (!parsed) {
-    throw Error(`Invalid 'address' parameter '${address}'.`)
+    throw Error(`Invalid 'address' parameter '${address}'.`);
   }
-  return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+  return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`;
 }
 
 export function displayTxDatetime(unixTime) {
@@ -147,7 +144,7 @@ export const createMerkleTree = (recipients) => {
 //   protocol: "https",
 // });
 
-export const addTreeToIPFS = async tree => {
+export const addTreeToIPFS = async (tree) => {
   const result = await ipfs.add(tree);
   const ipfsURL = `https://gateway.ipfs.io/ipfs/${result.path}`;
   console.log("ipfsURL", ipfsURL);
@@ -160,3 +157,21 @@ export const addTreeToIPFS = async tree => {
   // actions.addContract(result.path, addressArray);
   // setIsDeployed(true);
 };
+
+export const switchNetwork = (library, chainId) => {
+  const formattedChainId = utils.hexStripZeros(
+    BigNumber.from(chainId).toHexString()
+  );
+  library?.provider.request({
+    method: "wallet_switchEthereumChain",
+    params: [{ chainId: formattedChainId }],
+  });
+};
+
+export function getNativeToken(chainId) {
+  if (chainId == 1 || chainId == 42 || chainId == 4) {
+    return "ETH";
+  } else if (chainId == 137 || chainId == 80001) {
+    return "MATIC";
+  }
+}
