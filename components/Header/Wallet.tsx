@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { formatEther } from "@ethersproject/units";
 import { shortenAddress } from "../../utils";
 import { getNativeToken } from "../../utils";
+import { ethers } from "ethers";
 
 export default function Wallet() {
   const context = useWeb3React();
@@ -32,6 +33,9 @@ export default function Wallet() {
   const triedEager = useEagerConnect();
 
   const [etherBalance, setEtherBalance] = useState();
+
+  const [ENSname, setENSName] = useState();
+
   // const userEthBalance = useETHBalances(account ? [account] : [])?.[
   //   account ?? ""
   // ];
@@ -48,7 +52,21 @@ export default function Wallet() {
       }
     };
 
+    const getENSName = async (address) => {
+      try {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const name = await provider?.lookupAddress(address);
+        if (name) {
+          setENSName(name);
+        }
+      } catch (error) {
+        //It will send an error if the address is not registered on the ENS or the network is not supported
+        console.log(error);
+      }
+    };
+
     getEtherBalance(account);
+    getENSName(account);
   }, [account, library]);
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager);
@@ -86,7 +104,7 @@ export default function Wallet() {
         ) : null}
 
         <Button colorScheme="purple" onClick={() => deactivate()}>
-          {shortenAddress(account)}
+          {ENSname ? ENSname : shortenAddress(account)}
           <SmallCloseIcon ml={1} color="blue.400" />
         </Button>
       </Flex>
