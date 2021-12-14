@@ -56,7 +56,14 @@ const NetworkMenu = () => {
         <MenuButton
           as={Button}
           rightIcon={<ChevronDownIcon />}
-          colorScheme="purple"
+          borderRadius="xl"
+          backgroundColor='purple.100'
+          _hover={{
+            bg: 'purple.400',
+          }}
+          _active={{
+            bg: 'purple.400',
+          }}
         >
           {translateChainId(chainId)}
         </MenuButton>
