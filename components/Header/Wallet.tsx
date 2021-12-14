@@ -87,10 +87,7 @@ export default function Wallet() {
     console.log("account", account);
     if (!library) {
       return (
-        <Button
-          colorScheme="purple"
-          onClick={() => activate(injected)}
-        >
+        <Button colorScheme="purple" onClick={() => activate(injected)}>
           Connect MetaMask
         </Button>
       );
@@ -98,21 +95,21 @@ export default function Wallet() {
     return (
       <HStack spacing={-4}>
         {etherBalance ? (
-           <Button
+          <Button
             isDisabled
-            size='sm'
+            size="sm"
             borderRadius="xl"
-            pr='5'
-            backgroundColor='purple.100'
+            pr="5"
+            backgroundColor="purple.100"
             _hover={{
-              bg: 'purple.100',
+              bg: "purple.100",
             }}
             _active={{
-              bg: 'purple.100',
+              bg: "purple.100",
             }}
             _disabled={{
-              bg: 'purple.100',
-              cursor: 'default',
+              bg: "purple.100",
+              cursor: "default",
             }}
           >
             {Number(formatEther(etherBalance)).toFixed(5)}{" "}
@@ -121,18 +118,20 @@ export default function Wallet() {
         ) : null}
 
         <Button colorScheme="purple" onClick={() => deactivate()}>
-          {ENSAvatar?
-            <Avatar name={ENSname} src={ENSAvatar} />
-            : 
-          (ENSname ? ENSname : shortenAddress(account))
-          }
+          {ENSname ? (
+            <>
+              <Avatar
+                name={ENSname}
+                src={`https://metadata.ens.domains/mainnet/avatar/${ENSname}`}
+              />
+              &nbsp;{ENSname}
+            </>
+          ) : (
+            shortenAddress(account)
+          )}
           <SmallCloseIcon ml={1} color="blue.400" />
         </Button>
       </HStack>
-
-
-
-        
     );
   };
 
@@ -143,21 +142,20 @@ export default function Wallet() {
   // };
 
   const MoreItems = () => {
-
     return (
       <Menu>
         <MenuButton
           as={IconButton}
           aria-label="More"
           icon={<BsThreeDots />}
-          backgroundColor='purple.100'
+          backgroundColor="purple.100"
           borderRadius="xl"
           direction="rtl"
           _hover={{
-            bg: 'purple.400',
+            bg: "purple.400",
           }}
           _active={{
-            bg: 'purple.400',
+            bg: "purple.400",
           }}
         />
         <MenuList borderRadius="xl">
@@ -165,7 +163,7 @@ export default function Wallet() {
             as="a"
             href="https://www.paymagic.xyz"
             target="_blank"
-            icon={<BiInfoCircle size="18"/>}
+            icon={<BiInfoCircle size="18" />}
           >
             About
           </MenuItem>
@@ -173,7 +171,7 @@ export default function Wallet() {
             as="a"
             href="https://t.me/paymagic"
             target="_blank"
-            icon={<SiTelegram size="18"/>}
+            icon={<SiTelegram size="18" />}
           >
             Telegram
           </MenuItem>
@@ -181,7 +179,7 @@ export default function Wallet() {
             as="a"
             href="https://twitter.com/paymagic_"
             target="_blank"
-            icon={<SiTwitter size="18"/>}
+            icon={<SiTwitter size="18" />}
           >
             Twitter
           </MenuItem>
@@ -189,7 +187,6 @@ export default function Wallet() {
       </Menu>
     );
   };
-
 
   return (
     <HStack spacing={4}>
