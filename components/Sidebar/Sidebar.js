@@ -46,9 +46,15 @@ export default function Sidebar(props) {
             </Link>*/}
 
             <NavGroup label="My Account">
+
+              <Link href="/holdings">
+                <a>
+                  <NavItem active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
+                </a>
+              </Link>
               <Link href="/payments">
                 <a>
-                  <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="All Payments" />
+                  <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="Send Payment" />
                 </a>
               </Link>
               <Link href="/transactions">
@@ -57,9 +63,6 @@ export default function Sidebar(props) {
                 </a>
               </Link>
                 {/* Disabled */}
-                <a>
-                  <NavItem isDisabled active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
-                </a>
                 <a>
                   <NavItem isDisabled active={router.pathname === '/cards'} icon={<MdPayment />} label="Card" />
                 </a>
