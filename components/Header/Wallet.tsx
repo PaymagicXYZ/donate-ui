@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Spacer,
   Menu,
@@ -34,7 +35,8 @@ export default function Wallet() {
 
   const [etherBalance, setEtherBalance] = useState();
 
-  const [ENSname, setENSName] = useState();
+  const [ENSname, setENSname] = useState();
+  const [ENSAvatar, setENSAvatar] = useState();
 
   // const userEthBalance = useETHBalances(account ? [account] : [])?.[
   //   account ?? ""
@@ -52,12 +54,16 @@ export default function Wallet() {
       }
     };
 
-    const getENSName = async (address) => {
+    const getENSname = async (address) => {
       try {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const name = await provider?.lookupAddress(address);
         if (name) {
-          setENSName(name);
+          setENSname(name);
+          const resolver = await provider.getResolver(name);
+          const avatar = await resolver.getText("avatar");
+          setENSAvatar(avatar);
+          console.log(avatar);
         }
       } catch (error) {
         //It will send an error if the address is not registered on the ENS or the network is not supported
@@ -66,7 +72,7 @@ export default function Wallet() {
     };
 
     getEtherBalance(account);
-    getENSName(account);
+    getENSname(account);
   }, [account, library]);
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager);
@@ -84,7 +90,6 @@ export default function Wallet() {
         </Button>
       );
     }
-
     return (
       <Flex align="center">
         {etherBalance ? (
@@ -104,7 +109,11 @@ export default function Wallet() {
         ) : null}
 
         <Button colorScheme="purple" onClick={() => deactivate()}>
-          {ENSname ? ENSname : shortenAddress(account)}
+          {ENSAvatar?
+            <Avatar name={ENSname} src={ENSAvatar} />
+            : 
+          (ENSname ? ENSname : shortenAddress(account))
+          }
           <SmallCloseIcon ml={1} color="blue.400" />
         </Button>
       </Flex>
