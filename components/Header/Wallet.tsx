@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Spacer,
   Menu,
   MenuList,
@@ -9,6 +10,8 @@ import {
   Box,
   Flex,
   Text,
+  HStack,
+  IconButton,
 } from "@chakra-ui/react";
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
@@ -25,6 +28,9 @@ import { formatEther } from "@ethersproject/units";
 import { shortenAddress } from "../../utils";
 import { getNativeToken } from "../../utils";
 import { ethers } from "ethers";
+import { BsThreeDots } from "react-icons/bs";
+import { BiInfoCircle } from "react-icons/bi";
+import { SiTelegram, SiTwitter } from "react-icons/si";
 
 export default function Wallet() {
   const context = useWeb3React();
@@ -82,8 +88,7 @@ export default function Wallet() {
     if (!library) {
       return (
         <Button
-          colorScheme="red"
-          variant="outline"
+          colorScheme="purple"
           onClick={() => activate(injected)}
         >
           Connect MetaMask
@@ -91,21 +96,28 @@ export default function Wallet() {
       );
     }
     return (
-      <Flex align="center">
+      <HStack spacing={-4}>
         {etherBalance ? (
-          <Box
-            rounded="md"
-            bg="purple"
-            w="160px"
-            mx="-10px"
-            h="40px"
-            justifyContent="flex-start"
+           <Button
+            isDisabled
+            size='sm'
+            borderRadius="xl"
+            pr='5'
+            backgroundColor='purple.100'
+            _hover={{
+              bg: 'purple.100',
+            }}
+            _active={{
+              bg: 'purple.100',
+            }}
+            _disabled={{
+              bg: 'purple.100',
+              cursor: 'default',
+            }}
           >
-            <Text color="white" fontSize="xl" mt="5px" ml="10px">
-              {Number(formatEther(etherBalance)).toFixed(5)}{" "}
-              {getNativeToken(chainId)}
-            </Text>
-          </Box>
+            {Number(formatEther(etherBalance)).toFixed(5)}{" "}
+            {getNativeToken(chainId)}
+          </Button>
         ) : null}
 
         <Button colorScheme="purple" onClick={() => deactivate()}>
@@ -116,7 +128,11 @@ export default function Wallet() {
           }
           <SmallCloseIcon ml={1} color="blue.400" />
         </Button>
-      </Flex>
+      </HStack>
+
+
+
+        
     );
   };
 
@@ -126,11 +142,61 @@ export default function Wallet() {
   //   }
   // };
 
+  const MoreItems = () => {
+
+    return (
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          aria-label="More"
+          icon={<BsThreeDots />}
+          backgroundColor='purple.100'
+          borderRadius="xl"
+          direction="rtl"
+          _hover={{
+            bg: 'purple.400',
+          }}
+          _active={{
+            bg: 'purple.400',
+          }}
+        />
+        <MenuList borderRadius="xl">
+          <MenuItem
+            as="a"
+            href="https://www.paymagic.xyz"
+            target="_blank"
+            icon={<BiInfoCircle size="18"/>}
+          >
+            About
+          </MenuItem>
+          <MenuItem
+            as="a"
+            href="https://t.me/paymagic"
+            target="_blank"
+            icon={<SiTelegram size="18"/>}
+          >
+            Telegram
+          </MenuItem>
+          <MenuItem
+            as="a"
+            href="https://twitter.com/paymagic_"
+            target="_blank"
+            icon={<SiTwitter size="18"/>}
+          >
+            Twitter
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    );
+  };
+
+
   return (
-    <>
+    <HStack spacing={4}>
       <Spacer />
       {library && library.provider.isMetaMask && <NetworkMenu />}
       <Account />
-    </>
+      <MoreItems />
+    </HStack>
   );
 }

@@ -64,7 +64,7 @@ function PaymentsPage() {
       // more: "Great for rewarding followers or paying contributors",
       icon: FiSend,
       iconColor: "white",
-      backgroundColor: "purple.500",
+      backgroundColor: "green.500",
       href: "/payments/disperse",
     },
     {
