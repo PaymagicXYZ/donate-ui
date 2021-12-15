@@ -121,6 +121,7 @@ export default function Wallet() {
           {ENSname ? (
             <>
               <Avatar
+                size="sm"
                 name={ENSname}
                 src={`https://metadata.ens.domains/mainnet/avatar/${ENSname}`}
               />
