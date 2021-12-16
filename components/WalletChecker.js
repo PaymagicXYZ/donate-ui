@@ -1,8 +1,7 @@
 import * as React from "react";
 import _ from "lodash";
 import { Center, Spinner, Text } from "@chakra-ui/react";
-import { Wallet}  from "./Header/Wallet";
-import { Account }  from "./Header/Wallet";
+import Wallet  from "./Header/Wallet";
 
 export const WalletChecker = (props) => {
   const { loading, account, contractAddress, children } = props;
@@ -20,8 +19,8 @@ export const WalletChecker = (props) => {
       <Center p="10">
         <Text as="i">
           Please connect your wallet to continue
-          {/*<Wallet />*/}
         </Text>
+          {/*<Wallet />*/}
       </Center>
     );
   }
