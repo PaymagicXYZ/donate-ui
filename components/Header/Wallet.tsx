@@ -88,7 +88,7 @@ export default function Wallet() {
     if (!library) {
       return (
         <Button colorScheme="purple" onClick={() => activate(injected)}>
-          Connect MetaMask
+          Connect Wallet
         </Button>
       );
     }

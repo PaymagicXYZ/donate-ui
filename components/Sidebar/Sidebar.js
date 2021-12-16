@@ -47,11 +47,11 @@ export default function Sidebar(props) {
 
             <NavGroup label="My Account">
 
-              <Link href="/holdings">
+{/*              <Link href="/holdings">
                 <a>
                   <NavItem active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
                 </a>
-              </Link>
+              </Link>*/}
               <Link href="/payments">
                 <a>
                   <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="Send Payment" />
