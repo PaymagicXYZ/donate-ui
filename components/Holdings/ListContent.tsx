@@ -13,19 +13,44 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import { cols } from "./_data";
 
 export function ListContent(props) {
   const { walletData } = props;
-  console.log(walletData);
+  console.log(walletData.assets);
   return (
     <Table borderWidth="1px" fontSize="sm">
-      {_.isEmpty(walletData.assets) ? (
-        <Center p={6}>
-          <Text as="i">No data found</Text>
-        </Center>
-      ) : (
-        <Text>Data Loaded in Console</Text>
-      )}
+      <Thead bg={mode("gray.50", "gray.800")}>
+        <Tr>
+          {cols.map((column, index) => (
+            <Th whiteSpace="nowrap" scope="col" key={index}>
+              {column.Header}
+            </Th>
+          ))}
+          <Th />
+        </Tr>
+      </Thead>
+      <Tbody>
+        {_.isEmpty(walletData.assets) ? (
+          <Center p={6}>
+            <Text as="i">No data found</Text>
+          </Center>
+        ) : (
+          walletData.assets.map((row, index) => (
+            <Tr key={index}>
+              {cols.map((column, index) => {
+                const cell = row[column.accessor as keyof typeof row];
+                const element = column.Cell?.(cell) ?? cell;
+                return (
+                  <Td whiteSpace="nowrap" key={index}>
+                    {element}
+                  </Td>
+                );
+              })}
+            </Tr>
+          ))
+        )}
+      </Tbody>
     </Table>
   );
 }
