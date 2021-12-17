@@ -7,6 +7,7 @@ import {
 import PageContainer from "../../components/PageContainer/PageContainer";
 import { Card } from "../../components/Card/Card";
 import { HeadingGroup } from "../../components/Forms/HeadingGroup";
+import HoldingsList from "../../components/Holdings/HoldingsList";
 
 export default function Page() {
   let props;
@@ -17,7 +18,9 @@ export default function Page() {
         <Box mx="auto" w="90%">
           <Stack as="section" spacing="6" {...props}>
             <HeadingGroup title="Holdings" size="lg" />
-            <Card></Card>
+            <Card>
+              <HoldingsList />
+            </Card>
           </Stack>
         </Box>
       </Box>
