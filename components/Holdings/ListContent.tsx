@@ -17,7 +17,6 @@ import { cols } from "./_data";
 
 export function ListContent(props) {
   const { walletData } = props;
-  console.log(walletData.assets);
   return (
     <Table borderWidth="1px" fontSize="sm">
       <Thead bg={mode("gray.50", "gray.800")}>

@@ -1,6 +1,6 @@
 import { Badge } from "@chakra-ui/react";
 import * as React from "react";
-import { Text, Link } from "@chakra-ui/react";
+import { Text, Link, Image } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 import { shortenAddress } from "../../utils";
