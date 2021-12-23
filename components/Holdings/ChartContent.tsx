@@ -5,6 +5,7 @@ import {
   Sector,
   Legend,
   Tooltip,
+  Treemap,
   ResponsiveContainer,
 } from "recharts";
 import _ from "lodash";
@@ -89,6 +90,12 @@ export function ChartContent(props) {
   const onPieEnter = (_, index) => {
     setIndex(index);
   };
+  const data = walletData.assets.map((asset) => {
+    return {
+      name: asset.symbol,
+      value: asset.balanceUSD,
+    };
+  });
   return (
     <Container>
       {_.isEmpty(walletData.assets) ? (
@@ -96,25 +103,33 @@ export function ChartContent(props) {
           <Text as="i">No data found</Text>
         </Center>
       ) : (
-        <PieChart width={400} height={400}>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={walletData.assets.map((asset) => {
-              return {
-                name: asset.symbol,
-                value: asset.balanceUSD,
-              };
-            })}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
+        <Container>
+          <PieChart width={400} height={400}>
+            <Pie
+              activeIndex={activeIndex}
+              activeShape={renderActiveShape}
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              onMouseEnter={onPieEnter}
+            />
+          </PieChart>
+          <Treemap
+            width={400}
+            height={200}
+            data={data}
             dataKey="value"
-            onMouseEnter={onPieEnter}
-          />
-        </PieChart>
+            ratio={4 / 3}
+            stroke="#fff"
+            fill="#8884d8"
+          >
+            <Tooltip />
+          </Treemap>
+        </Container>
       )}
     </Container>
   );
