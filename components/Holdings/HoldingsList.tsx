@@ -18,11 +18,7 @@ import { ZAPPER_NETWORK } from "../../utils/constants";
 
 export default function HoldingsList() {
   const { library, account, chainId } = useWeb3React();
-  //   const walletData = useZapper(account, ZAPPER_NETWORK);
-  const walletData = useZapper(
-    "0x869ec00fa1dc112917c781942cc01c68521c415e",
-    "ethereum"
-  );
+  const walletData = useZapper(account, ZAPPER_NETWORK);
 
   return (
     <Box as="section" py={{ base: "2", md: "4" }}>
