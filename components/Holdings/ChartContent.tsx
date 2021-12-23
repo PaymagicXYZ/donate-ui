@@ -69,7 +69,7 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`$ ${value}`}</text>
+      >{`$ ${value.toFixed(2)}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -77,7 +77,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -85,8 +85,10 @@ const renderActiveShape = (props) => {
 
 export function ChartContent(props) {
   const { walletData } = props;
-  const [index, setIndex] = useState(0);
-
+  const [activeIndex, setIndex] = useState(0);
+  const onPieEnter = (_, index) => {
+    setIndex(index);
+  };
   return (
     <Container>
       {_.isEmpty(walletData.assets) ? (
@@ -96,7 +98,7 @@ export function ChartContent(props) {
       ) : (
         <PieChart width={400} height={400}>
           <Pie
-            activeIndex={index}
+            activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={walletData.assets.map((asset) => {
               return {
@@ -110,7 +112,7 @@ export function ChartContent(props) {
             outerRadius={80}
             fill="#8884d8"
             dataKey="value"
-            // onClick={setIndex(index)}
+            onMouseEnter={onPieEnter}
           />
         </PieChart>
       )}
