@@ -11,7 +11,6 @@ import {
   Flex,
   Text,
   HStack,
-  IconButton,
 } from "@chakra-ui/react";
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
@@ -22,15 +21,15 @@ import { useInactiveListener } from "../../hooks/useInactiveListener";
 import { injected } from "../../connectors";
 import { translateChainId } from "../../utils";
 import NetworkMenu from "./NetworkMenu";
+import { MoreItems } from "./MoreItems";
 // import { getEtherBalance } from "../../utils";
 import { useEffect, useState } from "react";
 import { formatEther } from "@ethersproject/units";
 import { shortenAddress } from "../../utils";
 import { getNativeToken } from "../../utils";
 import { ethers } from "ethers";
-import { BsThreeDots } from "react-icons/bs";
-import { BiInfoCircle } from "react-icons/bi";
-import { SiTelegram, SiTwitter } from "react-icons/si";
+
+
 
 export default function Wallet() {
   const context = useWeb3React();
@@ -88,7 +87,7 @@ export default function Wallet() {
     if (!library) {
       return (
         <Button colorScheme="purple" onClick={() => activate(injected)}>
-          Connect MetaMask
+          Connect Wallet
         </Button>
       );
     }
@@ -121,6 +120,7 @@ export default function Wallet() {
           {ENSname ? (
             <>
               <Avatar
+                size="sm"
                 name={ENSname}
                 src={`https://metadata.ens.domains/mainnet/avatar/${ENSname}`}
               />
@@ -141,52 +141,7 @@ export default function Wallet() {
   //   }
   // };
 
-  const MoreItems = () => {
-    return (
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label="More"
-          icon={<BsThreeDots />}
-          backgroundColor="purple.100"
-          borderRadius="xl"
-          direction="rtl"
-          _hover={{
-            bg: "purple.400",
-          }}
-          _active={{
-            bg: "purple.400",
-          }}
-        />
-        <MenuList borderRadius="xl">
-          <MenuItem
-            as="a"
-            href="https://www.paymagic.xyz"
-            target="_blank"
-            icon={<BiInfoCircle size="18" />}
-          >
-            About
-          </MenuItem>
-          <MenuItem
-            as="a"
-            href="https://t.me/paymagic"
-            target="_blank"
-            icon={<SiTelegram size="18" />}
-          >
-            Telegram
-          </MenuItem>
-          <MenuItem
-            as="a"
-            href="https://twitter.com/paymagic_"
-            target="_blank"
-            icon={<SiTwitter size="18" />}
-          >
-            Twitter
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    );
-  };
+
 
   return (
     <HStack spacing={4}>

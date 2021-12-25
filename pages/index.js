@@ -4,7 +4,7 @@ import PageContainer from "../components/PageContainer/PageContainer";
 import { Center, Spinner } from "@chakra-ui/react"
 
 
-export default function RedriectPage() {
+export default function RedirectPage() {
   const router = useRouter()
 
   useEffect(() => {
