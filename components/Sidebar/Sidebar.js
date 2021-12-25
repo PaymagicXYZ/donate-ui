@@ -6,7 +6,7 @@ import {
   Stack,
   Circle,
   Center,
-  useColorModeValue as mode
+  useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { BiBuoy, BiCog } from "react-icons/bi";
 
@@ -21,23 +21,34 @@ import { RiHandCoinLine } from "react-icons/ri";
 import { AiOutlinePicture } from "react-icons/ai";
 import { GiParachute } from "react-icons/gi";
 import { GrHistory, GrAnalytics } from "react-icons/gr";
-import { MdPayment, MdPayments, MdAccountTree, MdAccountBalance, MdReceipt } from "react-icons/md";
+import {
+  MdPayment,
+  MdPayments,
+  MdAccountTree,
+  MdAccountBalance,
+  MdReceipt,
+} from "react-icons/md";
 
 import { NavItem } from "./NavItem";
 import { NavGroup } from "./NavGroup";
 import { useRouter } from "next/router";
-import { Logo } from '../Header/Logo'
+import { Logo } from "../Header/Logo";
 
 export default function Sidebar(props) {
   const router = useRouter();
   return (
     <>
-
-      <Box h='100%' w="64" bg="gray.900" color="white" fontSize="md" borderTopRightRadius="md">
+      <Box
+        h="100%"
+        w="64"
+        bg="gray.900"
+        color="white"
+        fontSize="md"
+        borderTopRightRadius="md"
+      >
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="6" flex="1" overflow="auto" pt="8">
-
-{/*            <Link href="/">
+            {/*            <Link href="/">
               <a>
                 <Center marginEnd="10">
                   <Logo h="6" iconColor={mode('blue.600', 'blue.300')} />
@@ -54,24 +65,43 @@ export default function Sidebar(props) {
               </Link>*/}
               <Link href="/payments">
                 <a>
+
                   <NavItem active={router.pathname === '/payments'} icon={<MdPayments />} label="Send Payment" />
                 </a>
               </Link>
               <Link href="/transactions">
                 <a>
-                  <NavItem active={router.pathname === '/transactions'} icon={<MdReceipt />} label="Transactions" />
+                  <NavItem
+                    active={router.pathname === "/transactions"}
+                    icon={<MdReceipt />}
+                    label="Transactions"
+                  />
                 </a>
               </Link>
-                {/* Disabled */}
+              <Link href="/holdings">
                 <a>
-                  <NavItem isDisabled active={router.pathname === '/cards'} icon={<MdPayment />} label="Card" />
+                  <NavItem
+                    active={router.pathname === "/holdings"}
+                    icon={<FiPieChart />}
+                    label="Holdings"
+                  />
                 </a>
-{/*                <a>
+              </Link>
+              {/* Disabled */}
+              <a>
+                <NavItem
+                  isDisabled
+                  active={router.pathname === "/cards"}
+                  icon={<MdPayment />}
+                  label="Card"
+                />
+              </a>
+              {/*                <a>
                   <NavItem isDisabled active={router.pathname === '/accounts'} icon={<MdAccountTree />} label="Accounts" />
                 </a>*/}
             </NavGroup>
 
-{/*{            <NavGroup label="Airdrops">
+            {/*{            <NavGroup label="Airdrops">
               <Link href="/airdrop/send">
                 <a>
                   <NavItem active={router.pathname === '/airdrop/send'} icon={<GiParachute />} label="Send Token Airdrop" />
@@ -84,7 +114,7 @@ export default function Sidebar(props) {
               </Link>
             </NavGroup>}*/}
 
-{/*            <NavGroup label="Other Payments">
+            {/*            <NavGroup label="Other Payments">
               <Link href="/payments/vesting">
                 <a>
                   <NavItem active={router.pathname === '/payments/vesting'} icon={<GiParachute />} label="Vesting Schedules" />
@@ -96,14 +126,6 @@ export default function Sidebar(props) {
                 </a>
               </Link>
             </NavGroup>*/}
-
-
-
-
-
-
-
-
           </Stack>
         </Flex>
       </Box>
