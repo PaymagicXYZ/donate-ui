@@ -111,7 +111,7 @@ export default function Wallet() {
               cursor: "default",
             }}
           >
-            {Number(formatEther(etherBalance)).toFixed(5)}{" "}
+            {Number(formatEther(T)).toFixed(5)}{" "}
             {getNativeToken(chainId)}
           </Button>
         ) : null}

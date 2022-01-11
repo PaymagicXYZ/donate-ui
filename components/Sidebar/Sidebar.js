@@ -17,6 +17,7 @@ import { IoWalletSharp } from "react-icons/io5";
 import { IoMdContacts } from "react-icons/io";
 
 import { FiSend, FiPieChart } from "react-icons/fi";
+import { FaList } from "react-icons/fa";
 import { RiHandCoinLine } from "react-icons/ri";
 import { AiOutlinePicture } from "react-icons/ai";
 import { GiParachute } from "react-icons/gi";
@@ -48,21 +49,9 @@ export default function Sidebar(props) {
       >
         <Flex h="full" direction="column" px="4" py="4">
           <Stack spacing="6" flex="1" overflow="auto" pt="8">
-            {/*            <Link href="/">
-              <a>
-                <Center marginEnd="10">
-                  <Logo h="6" iconColor={mode('blue.600', 'blue.300')} />
-                </Center>
-              </a>
-            </Link>*/}
 
-            <NavGroup label="My Account">
+            <NavGroup label="Connected Wallet">
 
-{/*              <Link href="/holdings">
-                <a>
-                  <NavItem active={router.pathname === '/holdings'} icon={<FiPieChart />} label="Holdings" />
-                </a>
-              </Link>*/}
               <Link href="/payments">
                 <a>
 
@@ -78,54 +67,55 @@ export default function Sidebar(props) {
                   />
                 </a>
               </Link>
-              <Link href="/holdings">
+            </NavGroup>
+
+            <NavGroup label="Smart Accounts">
+
+              <Link href="/accounts">
                 <a>
                   <NavItem
-                    active={router.pathname === "/holdings"}
-                    icon={<FiPieChart />}
-                    label="Holdings"
+                    active={router.pathname === "/accounts"}
+                    icon={<FaList />}
+                    label="All Accounts"
                   />
                 </a>
               </Link>
+
               {/* Disabled */}
+
               <a>
                 <NavItem
                   isDisabled
-                  active={router.pathname === "/cards"}
-                  icon={<MdPayment />}
-                  label="Card"
+                  active={router.pathname === "/accounts/analytics"}
+                  icon={<FiPieChart />}
+                  label="Analytics"
                 />
               </a>
-              {/*                <a>
-                  <NavItem isDisabled active={router.pathname === '/accounts'} icon={<MdAccountTree />} label="Accounts" />
-                </a>*/}
+
             </NavGroup>
 
-            {/*{            <NavGroup label="Airdrops">
-              <Link href="/airdrop/send">
-                <a>
-                  <NavItem active={router.pathname === '/airdrop/send'} icon={<GiParachute />} label="Send Token Airdrop" />
-                </a>
-              </Link>
-              <Link href="/airdrop/claim">
-                <a>
-                  <NavItem active={router.pathname === '/airdrop/claim'} icon={<RiHandCoinLine />} label="Claim Airdrop" />
-                </a>
-              </Link>
-            </NavGroup>}*/}
+            <NavGroup label="Airdrops (Coming Soon)">
 
-            {/*            <NavGroup label="Other Payments">
-              <Link href="/payments/vesting">
-                <a>
-                  <NavItem active={router.pathname === '/payments/vesting'} icon={<GiParachute />} label="Vesting Schedules" />
-                </a>
-              </Link>
-              <Link href="/payments/streaming">
-                <a>
-                  <NavItem active={router.pathname === '/payments/streaming'} icon={<RiHandCoinLine />} label="Streaming Payments" />
-                </a>
-              </Link>
-            </NavGroup>*/}
+              <a>
+                <NavItem
+                  isDisabled
+                  active={router.pathname === "/airdrop/send"}
+                  icon={<GiParachute />}
+                  label="Send Token Airdrop"
+                />
+              </a>
+
+              <a>
+                <NavItem
+                  isDisabled
+                  active={router.pathname === "/airdrop/claim"}
+                  icon={<RiHandCoinLine />}
+                  label="Claim Airdrop"
+                />
+              </a>
+
+            </NavGroup>
+
           </Stack>
         </Flex>
       </Box>

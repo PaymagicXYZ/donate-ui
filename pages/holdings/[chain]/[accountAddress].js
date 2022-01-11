@@ -18,7 +18,7 @@ export default function Page() {
   const { chain, accountAddress } = router.query;
   return (
     <PageContainer>
-      <Box bg={mode("purple.50", "purple.800")} py="10">
+      <Box bg={mode("purple.50", "purple.800")}>
         <Box mx="auto" w="90%">
           <Stack as="section" spacing="6" {...props}>
             <HeadingGroup
