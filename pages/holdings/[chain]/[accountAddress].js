@@ -20,6 +20,7 @@ export default function Page() {
   const router = useRouter();
   const [Altname, setAltname] = useState();
   const [address, setAddress] = useState();
+  const [account, setAccount] = useState(false);
   const { chain, accountAddress } = router.query;
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
   const validETHAddress = new RegExp(/(\.?(eth)$)/);
@@ -31,6 +32,7 @@ export default function Page() {
 
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
+      setAccount(true);
       if (chain === "ethereum") {
         const getENSname = async () => {
           try {
@@ -41,25 +43,27 @@ export default function Page() {
         };
         getENSname();
       }
-    }
-    if (validETHAddress.test(accountAddress) && chain === "ethereum") {
+    } else if (validETHAddress.test(accountAddress) && chain === "ethereum") {
       const getENSresolve = async () => {
         try {
           const resolver = await provider.getResolver(accountAddress);
           setAddress(await resolver.getAddress());
-          console.log(address);
+          setAccount(true);
         } catch (err) {
           console.log(err);
         }
       };
       getENSresolve();
-    }
-
-    if (validUDAddress.test(accountAddress)) {
+    } else if (validUDAddress.test(accountAddress)) {
       function resolve(domain, currency) {
         resolution
           .addr(domain, currency)
-          .then((address) => console.log(domain, "resolves to", address))
+          .then((address) => {
+            if (address) {
+              console.log(domain, "resolves to", address);
+              setAccount(true);
+            }
+          })
           .catch(console.error);
       }
       const getUDresolve = async (coin) => {
@@ -82,27 +86,42 @@ export default function Page() {
     <PageContainer>
       <Box bg={mode("purple.50", "purple.800")} py="10">
         <Box mx="auto" w="90%">
-          <Stack as="section" spacing="6" {...props}>
-            <HeadingGroup
-              title={`Holdings for "${
-                Altname ? Altname : accountAddress
-              }" on ${chain}`}
-              size="lg"
-            />
-            <Text>
-              Please be aware, this might not be your account. &nbsp;
-              <Link href="/holdings" color="teal.500">
-                To your account
-              </Link>
-            </Text>
-
-            <Card>
-              <HoldingsList
-                chain={chain}
-                accountAddress={address ? address : accountAddress}
+          {account ? (
+            <Stack as="section" spacing="6" {...props}>
+              <HeadingGroup
+                title={`Holdings for "${
+                  Altname ? Altname : accountAddress
+                }" on ${chain}`}
+                size="lg"
               />
-            </Card>
-          </Stack>
+              <Text>
+                Please be aware, this might not be your account. &nbsp;
+                <Link href="/holdings" color="teal.500">
+                  To your account
+                </Link>
+              </Text>
+
+              <Card>
+                <HoldingsList
+                  chain={chain}
+                  accountAddress={address ? address : accountAddress}
+                />
+              </Card>
+            </Stack>
+          ) : (
+            <>
+              <HeadingGroup
+                title={`Unable to find ${accountAddress}" on ${chain}`}
+                size="lg"
+              />
+              <Text>
+                Please check if you have the valid address. &nbsp;
+                <Link href="/holdings" color="teal.500">
+                  To your account
+                </Link>
+              </Text>
+            </>
+          )}
         </Box>
       </Box>
     </PageContainer>
