@@ -18,7 +18,7 @@ export default function Page() {
           <Stack as="section" spacing="6" {...props}>
             <HeadingGroup title="Holdings" size="lg" />
             <Card>
-              <iframe={`https://dune.xyz/embeds/1171/1994/2f9d12ee-3981-4de1-a79d-f8efba29f238`} />
+              {/* <iframe={`https://dune.xyz/embeds/1171/1994/2f9d12ee-3981-4de1-a79d-f8efba29f238`} /> */}
             </Card>
           </Stack>
         </Box>
