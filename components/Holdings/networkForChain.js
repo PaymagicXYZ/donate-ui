@@ -1,0 +1,15 @@
+export const ZapperNetworkForChain = {
+  eth: "ethereum",
+  matic: "polygon",
+  ava: "avalanche",
+  xdai: "xdai",
+  arb: "arbitrum",
+  ovm: "optimism",
+  bnb: "binance-smart-chain",
+  ftm: "fantom",
+  celo: "celo",
+  hmy: "harmony",
+  kov: "kovan",
+  rin: "rinkeby",
+  gor: "gorli",
+};
