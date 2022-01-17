@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import {
-  Center,
   Table,
   Thead,
   Tbody,
@@ -19,10 +18,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   useColorModeValue as mode,
-  As,
-  OmitCommonProps,
-  TableColumnHeaderProps,
-  Link,
 } from "@chakra-ui/react";
 import {
   ArrowRightIcon,
@@ -32,8 +27,6 @@ import {
 } from "@chakra-ui/icons";
 import { useTable, usePagination } from "react-table";
 import { cols } from "./_data";
-import TokenDisplay from "../TokenDisplay";
-import TokenAmountDisplay from "../TokenAmountDisplay";
 
 function CustomTable({ columns, data }) {
   const {
