@@ -6,37 +6,29 @@ import { shortenAddress } from "../../utils";
 import TokenDisplay from "../TokenDisplay";
 import TokenAmountDisplay from "../TokenAmountDisplay";
 
-export const cols = [
+export const cols: { Header: String; accessor: String; Cell?: Function }[] = [
   {
     Header: "Symbol",
     accessor: "symbol",
-    Cell: function AssetCell(data: any) {
-      return <TokenDisplay symbol={data} />;
-    },
+    Cell: ({ value }) => <TokenDisplay symbol={String(value)} />,
   },
   {
     Header: "Balance",
     accessor: "balance",
-    Cell: function AmountCell(data: any) {
-      return <TokenAmountDisplay amountTokens={data} />;
-    },
+    Cell: ({ value }) => <TokenAmountDisplay amountTokens={String(value)} />,
   },
   {
     Header: "Value in USD",
     accessor: "balanceUSD",
-    Cell: function AmountCell(data: any) {
-      return <TokenAmountDisplay amountTokens={data} />;
-    },
+    Cell: ({ value }) => <TokenAmountDisplay amountTokens={String(value)} />,
   },
   {
     Header: "Contract",
     accessor: "address",
-    Cell: function StatusCell(data: any) {
-      return (
-        <Link href={`https://etherscan.io/token/${data}`} isExternal>
-          {shortenAddress(data)} <ExternalLinkIcon mx="2px" />
-        </Link>
-      );
-    },
+    Cell: ({ value }) => (
+      <Link href={`https://etherscan.io/token/${String(value)}`} isExternal>
+        {shortenAddress(String(value))} <ExternalLinkIcon mx="2px" />
+      </Link>
+    ),
   },
 ];

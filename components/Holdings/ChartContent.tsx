@@ -90,7 +90,7 @@ export function ChartContent(props) {
   const onPieEnter = (_, index) => {
     setIndex(index);
   };
-  const data = walletData.assets.map((asset) => {
+  const data = walletData.map((asset) => {
     return {
       name: asset.symbol,
       value: asset.balanceUSD,
@@ -98,7 +98,7 @@ export function ChartContent(props) {
   });
   return (
     <Container>
-      {_.isEmpty(walletData.assets) ? (
+      {_.isEmpty(walletData) ? (
         <Center p={6}>
           <Text as="i">No data found</Text>
         </Center>
