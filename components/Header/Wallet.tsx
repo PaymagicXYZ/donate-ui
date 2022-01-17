@@ -29,8 +29,6 @@ import { shortenAddress } from "../../utils";
 import { getNativeToken } from "../../utils";
 import { ethers } from "ethers";
 
-
-
 export default function Wallet() {
   const context = useWeb3React();
   const { account, library, activate, chainId, deactivate } = context;
@@ -96,7 +94,7 @@ export default function Wallet() {
         {etherBalance ? (
           <Button
             isDisabled
-            size="sm"
+            size="md"
             borderRadius="xl"
             pr="5"
             backgroundColor="purple.100"
@@ -111,12 +109,27 @@ export default function Wallet() {
               cursor: "default",
             }}
           >
-            {Number(formatEther(T)).toFixed(5)}{" "}
+            {Number(formatEther(etherBalance)).toFixed(5)}{" "}
             {getNativeToken(chainId)}
           </Button>
         ) : null}
 
-        <Button colorScheme="purple" onClick={() => deactivate()}>
+        <Button
+          colorScheme="purple"
+          size="md"
+          borderRadius="xl"
+          margin-left="-20px"
+          pr="5"
+          color="black"
+          backgroundColor="purple.100"
+          _hover={{
+            bg: "purple.100",
+          }}
+          _active={{
+            bg: "purple.100",
+          }}
+          onClick={() => deactivate()}
+        >
           {ENSname ? (
             <>
               <Avatar
@@ -129,7 +142,7 @@ export default function Wallet() {
           ) : (
             shortenAddress(account)
           )}
-          <SmallCloseIcon ml={1} color="blue.400" />
+          <SmallCloseIcon ml={1} color="blue.400" marginRight="-13px" />
         </Button>
       </HStack>
     );
@@ -140,8 +153,6 @@ export default function Wallet() {
   //     library && library.provider.isMetaMask && <NetworkMenu />;
   //   }
   // };
-
-
 
   return (
     <HStack spacing={4}>

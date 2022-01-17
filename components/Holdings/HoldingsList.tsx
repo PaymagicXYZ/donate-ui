@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -8,6 +8,8 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
+import { useTable, usePagination } from "react-table";
+
 import { WalletChecker } from "../WalletChecker";
 
 import { ListContent } from "./ListContent";
@@ -40,10 +42,10 @@ export default function HoldingsList(props) {
 
               <TabPanels>
                 <TabPanel>
-                  <ListContent walletData={walletData} />
+                  <ListContent walletData={walletData.assets} />
                 </TabPanel>
                 <TabPanel>
-                  <ChartContent walletData={walletData} />
+                  <ChartContent walletData={walletData.assets} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

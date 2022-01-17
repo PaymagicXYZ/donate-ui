@@ -14,6 +14,7 @@ import { Card } from "../../../components/Card/Card";
 import { HeadingGroup } from "../../../components/Forms/HeadingGroup";
 import HoldingsList from "../../../components/Holdings/HoldingsList";
 const { default: Resolution } = require("@unstoppabledomains/resolution");
+import { ZapperNetworkForChain } from "../../../components/Holdings/networkForChain";
 
 export default function Page() {
   let props;
@@ -21,7 +22,8 @@ export default function Page() {
   const [Altname, setAltname] = useState();
   const [address, setAddress] = useState();
   const [account, setAccount] = useState(false);
-  const { chain, accountAddress } = router.query;
+  const { inputChain, accountAddress } = router.query;
+  let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
   const validETHAddress = new RegExp(/(\.?(eth)$)/);
   const validUDAddress = new RegExp(
@@ -111,7 +113,11 @@ export default function Page() {
           ) : (
             <>
               <HeadingGroup
-                title={`Unable to find ${accountAddress}" on ${chain}`}
+                title={
+                  chain
+                    ? `Unable to find ${accountAddress} on ${chain}`
+                    : `${inputChain} is not a valid chain, please try "eth" or "matic"`
+                }
                 size="lg"
               />
               <Text>
