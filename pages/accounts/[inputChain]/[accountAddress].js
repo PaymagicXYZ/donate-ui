@@ -6,6 +6,7 @@ import {
   StackProps,
   Link,
   Text,
+  Image,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
@@ -128,6 +129,9 @@ export default function Page() {
               </Text>
             </>
           )}
+          <Link href="https://zapper.fi/" isExternal>
+            <Image src="/power-zap-gray.svg" alt="Powered by Zapper" />
+          </Link>
         </Box>
       </Box>
     </PageContainer>
