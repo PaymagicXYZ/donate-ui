@@ -23,6 +23,7 @@ export default function Page() {
   const [Altname, setAltname] = useState();
   const [address, setAddress] = useState();
   const [account, setAccount] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { inputChain, accountAddress } = router.query;
   let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
@@ -36,6 +37,7 @@ export default function Page() {
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
+      setLoading(false);
       if (chain === "ethereum") {
         const getENSname = async () => {
           try {
@@ -52,6 +54,7 @@ export default function Page() {
           const resolver = await provider.getResolver(accountAddress);
           setAddress(await resolver.getAddress());
           setAccount(true);
+          setLoading(false);
         } catch (err) {
           console.log(err);
         }
@@ -65,6 +68,7 @@ export default function Page() {
             if (address) {
               console.log(domain, "resolves to", address);
               setAccount(true);
+              setLoading(false);
             }
           })
           .catch(console.error);
@@ -89,7 +93,9 @@ export default function Page() {
     <PageContainer>
       <Box bg={mode("purple.50", "purple.800")}>
         <Box mx="auto" w="90%">
-          {account ? (
+          {loading ? (
+            <Text>Fetching addresses ...</Text>
+          ) : account ? (
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
                 title={`Holdings for "${
@@ -130,7 +136,20 @@ export default function Page() {
             </>
           )}
           <Link href="https://zapper.fi/" isExternal>
-            <Image src="/power-zap-gray.svg" alt="Powered by Zapper" />
+            <Image
+              src="/power-zap-gray.svg"
+              width="250px"
+              maxWidth="15vw"
+              alt="Powered by Zapper"
+            />
+          </Link>
+          <Link href="https://www.covalenthq.com" isExternal>
+            <Image
+              width="250px"
+              maxWidth="15vw"
+              src="/Powered_by_Covalent_Stacked_Full.svg"
+              alt="Powered by covalent"
+            />
           </Link>
         </Box>
       </Box>

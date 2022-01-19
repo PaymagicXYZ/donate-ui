@@ -29,6 +29,7 @@ export default function HoldingsList(props) {
     props.accountAddress ? props.accountAddress : account,
     props.chain ? CovalentNetworkForID[props.chain] : 1
   );
+  console.log(covalentData.balance);
   return (
     <Box as="section" py={{ base: "2", md: "4" }}>
       <Box
@@ -51,7 +52,7 @@ export default function HoldingsList(props) {
                 <TabPanel>
                   <ChartContent
                     walletData={walletData.assets}
-                    historyData={covalentData.history}
+                    covalentData={covalentData}
                   />
                 </TabPanel>
               </TabPanels>
