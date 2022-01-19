@@ -85,7 +85,7 @@ const renderActiveShape = (props) => {
 };
 
 export function ChartContent(props) {
-  const { walletData } = props;
+  const { walletData, historyData } = props;
   const [activeIndex, setIndex] = useState(0);
   const onPieEnter = (_, index) => {
     setIndex(index);
@@ -98,6 +98,23 @@ export function ChartContent(props) {
   });
   return (
     <Container>
+      {_.isEmpty(historyData) ? (
+        <Center p={6}>
+          <Text as="i">No history found</Text>
+        </Center>
+      ) : (
+        <pre>
+          <code>
+            {JSON.stringify(
+              {
+                historyData,
+              },
+              null,
+              2
+            )}
+          </code>
+        </pre>
+      )}
       {_.isEmpty(walletData) ? (
         <Center p={6}>
           <Text as="i">No data found</Text>

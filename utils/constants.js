@@ -58,6 +58,16 @@ export const ZAPPER_NETWORK =
     ? `matic`
     : `kovan`;
 
+export const ZERION_API_KEY = process.env.REACT_APP_ZERION_API_KEY || null;
+
+export const COVALENT_API_KEY =
+  process.env.REACT_APP_COVALENT_API_KEY || "ckey_49d9fd231cef43db9e77ed26450";
+export const CovalentNetworkForID = {
+  eth: "1",
+  matic: "137",
+  ava: "43114",
+};
+
 export const DISPERSE_MAINNET = "0x5d49D619fc568e610f7e8e9d3981e6474f60179F";
 export const DISPERSE_POLYGON = "0xeA1da800c794228DcD8DA1e4A8F824F7F52999FB";
 export const DISPERSE_KOVAN = "0xA749721d764FF378a41D9b4D0794f7aFde4372E8";
@@ -68,4 +78,5 @@ export const DISPERSENFT_KOVAN = "0x489dfbf54845150a880BE13aC8DB2ce954986789";
 
 export const AIRDROP_FACTORY_MAINNET = "0x"; // Not deployed yet
 export const AIRDROP_FACTORY_POLYGON = "0x"; // Not deployed yet
-export const AIRDROP_FACTORY_KOVAN = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";
+export const AIRDROP_FACTORY_KOVAN =
+  "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";

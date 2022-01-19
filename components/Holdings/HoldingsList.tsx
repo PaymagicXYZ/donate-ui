@@ -16,7 +16,8 @@ import { ListContent } from "./ListContent";
 import { ChartContent } from "./ChartContent";
 import { useWeb3React } from "@web3-react/core";
 import { useZapper } from "../../hooks/useZapper";
-import { ZAPPER_NETWORK } from "../../utils/constants";
+import { useCovalent } from "../../hooks/useCovalent";
+import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function HoldingsList(props) {
   const { library, account, chainId } = useWeb3React();
@@ -24,7 +25,10 @@ export default function HoldingsList(props) {
     props.accountAddress ? props.accountAddress : account,
     props.chain ? props.chain : ZAPPER_NETWORK
   );
-
+  const covalentData = useCovalent(
+    props.accountAddress ? props.accountAddress : account,
+    props.chain ? CovalentNetworkForID[props.chain] : 1
+  );
   return (
     <Box as="section" py={{ base: "2", md: "4" }}>
       <Box
@@ -45,7 +49,10 @@ export default function HoldingsList(props) {
                   <ListContent walletData={walletData.assets} />
                 </TabPanel>
                 <TabPanel>
-                  <ChartContent walletData={walletData.assets} />
+                  <ChartContent
+                    walletData={walletData.assets}
+                    historyData={covalentData.history}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
