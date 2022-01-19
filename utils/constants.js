@@ -64,7 +64,10 @@ export const COVALENT_API_KEY =
   process.env.REACT_APP_COVALENT_API_KEY || "ckey_49d9fd231cef43db9e77ed26450";
 export const CovalentNetworkForID = {
   eth: "1",
+  mainnet: "1",
+  ethereum: "1",
   matic: "137",
+  polygon: "137",
   ava: "43114",
 };
 
