@@ -63,10 +63,7 @@ export default function HoldingsList(props) {
                   <ListContent walletData={walletData.assets} />
                 </TabPanel>
                 <TabPanel>
-                  <ChartContent
-                    walletData={walletData.assets}
-                    covalentData={covalentData}
-                  />
+                  <ChartContent walletData={walletData.assets} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

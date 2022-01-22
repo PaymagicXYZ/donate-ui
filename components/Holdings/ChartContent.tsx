@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Sector,
-  Legend,
-  Tooltip,
-  Treemap,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Sector, Tooltip, Treemap } from "recharts";
 import _ from "lodash";
 import { Center, Container, Text } from "@chakra-ui/react";
 
@@ -85,7 +77,7 @@ const renderActiveShape = (props) => {
 };
 
 export function ChartContent(props) {
-  const { walletData, covalentData } = props;
+  const { walletData } = props;
   const [activeIndex, setIndex] = useState(0);
   const onPieEnter = (_, index) => {
     setIndex(index);
@@ -98,27 +90,6 @@ export function ChartContent(props) {
   });
   return (
     <Container>
-      {covalentData.loading ? (
-        <Center p={6}>
-          <Text as="i">Fetching data</Text>
-        </Center>
-      ) : _.isEmpty(covalentData.history) ? (
-        <Center p={6}>
-          <Text as="i">No history found</Text>
-        </Center>
-      ) : (
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                covalentData,
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
-      )}
       {_.isEmpty(walletData) ? (
         <Center p={6}>
           <Text as="i">No data found</Text>

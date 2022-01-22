@@ -94,9 +94,7 @@ export function HistoryChart(props) {
             />
           </AreaChart>
           <Select onChange={(e) => setDays(Number(e.target.value))}>
-            <option value={30} selected>
-              Last 30 Days
-            </option>
+            <option value={30}>Last 30 Days</option>
             <option value={15}>Last 15 Days</option>
             <option value={7}>Last 7 Days</option>
           </Select>
