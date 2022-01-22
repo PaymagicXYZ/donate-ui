@@ -96,7 +96,6 @@ export function ChartContent(props) {
       value: asset.balanceUSD,
     };
   });
-  console.log(covalentData.history.items);
   return (
     <Container>
       {covalentData.loading ? (

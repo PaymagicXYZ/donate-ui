@@ -15,6 +15,7 @@ export function HistoryChart(props) {
   const { covalentData } = props;
   const [days, setDays] = useState(30);
   const [activeDates, setActiveDates] = useState([]);
+  const [totalValue, setTotalValue] = useState([]);
   function getFormattedDate(date) {
     let year = date.getFullYear();
     let month = (1 + date.getMonth()).toString().padStart(2, "0");
@@ -22,18 +23,19 @@ export function HistoryChart(props) {
     return month + "/" + day + "/" + year;
   }
   const dates = [];
-  covalentData.history.items[0].holdings.map((item) => {
-    const D = new Date(item.timestamp);
-    dates.unshift(getFormattedDate(D));
-  });
-  // const data = covalentData.history.items.map((item) => {
-  //   return {
-  //     name: asset.symbol,
-  //     value: asset.balanceUSD,
-  //   };
-  // });
+  const value = [];
+  const data = {};
+
   useEffect(() => {
     setActiveDates(dates.slice(dates.length - days));
+    for (let i = 0; i < days; i++) {
+      let totalValue = 0;
+      covalentData.history.items.forEach((item) => {
+        totalValue += item.holdings[i].close.quote;
+      });
+      value.unshift(totalValue);
+    }
+    setTotalValue(value);
   }, [days]);
 
   return (
@@ -55,10 +57,14 @@ export function HistoryChart(props) {
         </Center>
       ) : (
         <pre>
+          {covalentData.history.items[0].holdings.map((item) => {
+            dates.unshift(item.timestamp);
+          })}
           <code>
             {JSON.stringify(
               {
                 activeDates,
+                totalValue,
               },
               null,
               2
