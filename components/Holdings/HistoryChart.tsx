@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import _ from "lodash";
 import { Center, Container, Text, Select } from "@chakra-ui/react";
-// import numeral from "numeral";
+import numeral from "numeral";
 
 export function HistoryChart(props) {
   const { covalentData } = props;
@@ -39,10 +39,7 @@ export function HistoryChart(props) {
   }
 
   useEffect(() => {
-    if (
-      covalentData.loading == false &&
-      covalentData.history.items.length > 0
-    ) {
+    if (covalentData.loading == false) {
       setActiveDates(
         dates.slice(dates.length - days).map((date) => {
           return getFormattedDate(new Date(date));
@@ -51,7 +48,7 @@ export function HistoryChart(props) {
       setTotalValue(value.slice(dates.length - days));
       // .map((value) => `${numeral(value).format("$0,00")}`)
     }
-  }, [days]);
+  }, [days, covalentData.loading]);
 
   return (
     <Container>
@@ -65,10 +62,9 @@ export function HistoryChart(props) {
         </Center>
       ) : (
         <>
-          {/* <pre>
-            <code>{JSON.stringify(activeDates, null, 2)}</code>
-            <code>{JSON.stringify(totalValue, null, 2)}</code>
-          </pre> */}
+          <Text>
+            {numeral(totalValue[totalValue.length - 1]).format("$0,00")}
+          </Text>
           <AreaChart
             width={500}
             height={400}
