@@ -144,7 +144,7 @@ export function ChartContent(props) {
             height={200}
             data={data}
             dataKey="value"
-            ratio={4 / 3}
+            // ratio={4 / 3}
             stroke="#fff"
             fill="#8884d8"
           >

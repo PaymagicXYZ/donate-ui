@@ -7,6 +7,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { useTable, usePagination } from "react-table";
 
@@ -41,7 +43,16 @@ export default function HoldingsList(props) {
           <WalletChecker loading={walletData.loading} account={account}>
             <Tabs>
               <TabList>
-                <Tab>Holdings</Tab>
+                <Text>
+                  <Link href="https://zapper.fi/" color="teal.500" isExternal>
+                    View on Zapper
+                  </Link>
+                  &nbsp;&nbsp;|&nbsp;&nbsp;
+                  <Link href="https://zerion.io/" color="teal.500" isExternal>
+                    View on Zerion
+                  </Link>
+                </Text>
+                <Tab>Table</Tab>
                 <Tab>Charts</Tab>
               </TabList>
 

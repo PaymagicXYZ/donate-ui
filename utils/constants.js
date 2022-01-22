@@ -58,7 +58,9 @@ export const ZAPPER_NETWORK =
     ? `matic`
     : `kovan`;
 
-export const ZERION_API_KEY = process.env.REACT_APP_ZERION_API_KEY || null;
+export const ZERION_API_KEY =
+  process.env.REACT_APP_ZERION_API_KEY ||
+  "Paymagic.pBHI7DOsXaHAuHE7fFQQoBKkejC6ERUy";
 
 export const COVALENT_API_KEY =
   process.env.REACT_APP_COVALENT_API_KEY || "ckey_49d9fd231cef43db9e77ed26450";

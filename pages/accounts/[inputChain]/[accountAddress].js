@@ -57,6 +57,7 @@ export default function Page() {
           setLoading(false);
         } catch (err) {
           console.log(err);
+          setLoading(false);
         }
       };
       getENSresolve();
@@ -72,6 +73,7 @@ export default function Page() {
             }
           })
           .catch(console.error);
+        setLoading(false);
       }
       const getUDresolve = async (coin) => {
         try {
@@ -94,7 +96,7 @@ export default function Page() {
       <Box bg={mode("purple.50", "purple.800")}>
         <Box mx="auto" w="90%">
           {loading ? (
-            <Text>Fetching addresses ...</Text>
+            <Text>Resolving your address ...</Text>
           ) : account ? (
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
