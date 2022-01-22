@@ -16,6 +16,7 @@ import { WalletChecker } from "../WalletChecker";
 
 import { ListContent } from "./ListContent";
 import { ChartContent } from "./ChartContent";
+import { HistoryChart } from "./HistoryChart";
 import { useWeb3React } from "@web3-react/core";
 import { useZapper } from "../../hooks/useZapper";
 import { useCovalent } from "../../hooks/useCovalent";
@@ -41,6 +42,7 @@ export default function HoldingsList(props) {
       >
         <Box overflowX="auto">
           <WalletChecker loading={walletData.loading} account={account}>
+            <HistoryChart covalentData={covalentData} />
             <Tabs>
               <TabList>
                 <Text>
