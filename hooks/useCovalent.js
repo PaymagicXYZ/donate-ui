@@ -17,7 +17,6 @@ function get(params) {
       const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/${params}/?key=${covalentApiKey}`;
       console.log(url);
       const response = await axios.get(url);
-      console.log(response);
       const data = response.data ? response.data : [];
       return data;
     } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Heading,
@@ -10,16 +10,17 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
-import { useTable, usePagination } from "react-table";
 
 import { WalletChecker } from "../WalletChecker";
 
 import { ListContent } from "./ListContent";
 import { ChartContent } from "./ChartContent";
 import { HistoryChart } from "./HistoryChart";
+import { Zerion } from "./Zerion";
 import { useWeb3React } from "@web3-react/core";
 import { useZapper } from "../../hooks/useZapper";
 import { useCovalent } from "../../hooks/useCovalent";
+import { useZerion } from "../../hooks/useZerion";
 import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function HoldingsList(props) {
@@ -32,7 +33,11 @@ export default function HoldingsList(props) {
     props.accountAddress ? props.accountAddress : account,
     props.chain ? CovalentNetworkForID[props.chain] : 1
   );
-  console.log(covalentData.balance);
+
+  const portfolio = useZerion(
+    props.accountAddress ? props.accountAddress : account
+  );
+
   return (
     <Box as="section" py={{ base: "2", md: "4" }}>
       <Box
@@ -41,7 +46,10 @@ export default function HoldingsList(props) {
         px={{ base: "2", md: "4" }}
       >
         <Box overflowX="auto">
-          <WalletChecker loading={walletData.loading} account={account}>
+          <WalletChecker
+            loading={walletData.loading && covalentData.loading}
+            account={account}
+          >
             <HistoryChart covalentData={covalentData} />
             <Tabs>
               <TabList>
@@ -56,6 +64,7 @@ export default function HoldingsList(props) {
                 </Text>
                 <Tab>Table</Tab>
                 <Tab>Charts</Tab>
+                <Tab>Zerion</Tab>
               </TabList>
 
               <TabPanels>
@@ -64,6 +73,9 @@ export default function HoldingsList(props) {
                 </TabPanel>
                 <TabPanel>
                   <ChartContent walletData={walletData.assets} />
+                </TabPanel>
+                <TabPanel>
+                  <Zerion portfolio={portfolio} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

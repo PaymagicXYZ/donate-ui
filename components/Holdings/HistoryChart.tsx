@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -24,19 +24,25 @@ export function HistoryChart(props) {
     return month + "/" + day + "/" + year;
   }
   const dates = [];
-  const value = [];
-  if (covalentData.loading == false) {
-    covalentData.history.items[0].holdings.map((item) => {
-      dates.unshift(item.timestamp);
-    });
-    for (let i = 0; i < 31; i++) {
-      let calculatedValue = 0;
-      covalentData.history.items.forEach((item) => {
-        calculatedValue += item.holdings[i].close.quote;
+
+  const value = useMemo(() => {
+    const value = [];
+    try {
+      covalentData.history.items[0].holdings.map((item) => {
+        dates.unshift(item.timestamp);
       });
-      value.unshift(calculatedValue);
+      for (let i = 0; i < 31; i++) {
+        let calculatedValue = 0;
+        covalentData.history.items.forEach((item) => {
+          calculatedValue += item.holdings[i].close.quote;
+        });
+        value.unshift(calculatedValue);
+      }
+    } catch (e) {
+      console.log(e);
     }
-  }
+    return value;
+  }, [covalentData]);
 
   useEffect(() => {
     if (covalentData.loading == false) {
@@ -48,7 +54,7 @@ export function HistoryChart(props) {
       setTotalValue(value.slice(dates.length - days));
       // .map((value) => `${numeral(value).format("$0,00")}`)
     }
-  }, [days, covalentData.loading]);
+  }, [days, covalentData]);
 
   return (
     <Container>
