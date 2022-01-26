@@ -34,9 +34,9 @@ export default function HoldingsList(props) {
     props.chain ? CovalentNetworkForID[props.chain] : 1
   );
 
-  const portfolio = useZerion(
-    props.accountAddress ? props.accountAddress : account
-  );
+  // const portfolio = useZerion(
+  //   props.accountAddress ? props.accountAddress : account
+  // );
 
   return (
     <Box as="section" py={{ base: "2", md: "4" }}>
