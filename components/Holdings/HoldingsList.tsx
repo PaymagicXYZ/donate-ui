@@ -16,11 +16,11 @@ import { WalletChecker } from "../WalletChecker";
 import { ListContent } from "./ListContent";
 import { ChartContent } from "./ChartContent";
 import { HistoryChart } from "./HistoryChart";
-import { Zerion } from "./Zerion";
+// import { Zerion } from "./Zerion";
 import { useWeb3React } from "@web3-react/core";
 import { useZapper } from "../../hooks/useZapper";
 import { useCovalent } from "../../hooks/useCovalent";
-import { useZerion } from "../../hooks/useZerion";
+// import { useZerion } from "../../hooks/useZerion";
 import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function HoldingsList(props) {
@@ -64,7 +64,7 @@ export default function HoldingsList(props) {
                 </Text>
                 <Tab>Table</Tab>
                 <Tab>Charts</Tab>
-                <Tab>Zerion</Tab>
+                {/* <Tab>Zerion</Tab> */}
               </TabList>
 
               <TabPanels>
@@ -74,9 +74,9 @@ export default function HoldingsList(props) {
                 <TabPanel>
                   <ChartContent walletData={walletData.assets} />
                 </TabPanel>
-                <TabPanel>
+                {/* <TabPanel>
                   <Zerion portfolio={portfolio} />
-                </TabPanel>
+                </TabPanel> */}
               </TabPanels>
             </Tabs>
           </WalletChecker>
