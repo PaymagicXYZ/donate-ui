@@ -50,35 +50,49 @@ export default function HoldingsList(props) {
             loading={walletData.loading && covalentData.loading}
             account={account}
           >
-            <HistoryChart covalentData={covalentData} />
-            <Tabs>
-              <TabList>
-                <Text>
-                  <Link href="https://zapper.fi/" color="teal.500" isExternal>
-                    View on Zapper
-                  </Link>
-                  &nbsp;&nbsp;|&nbsp;&nbsp;
-                  <Link href="https://zerion.io/" color="teal.500" isExternal>
-                    View on Zerion
-                  </Link>
-                </Text>
-                <Tab>Table</Tab>
-                <Tab>Charts</Tab>
-                {/* <Tab>Zerion</Tab> */}
-              </TabList>
+            {covalentData.history && walletData.assets ? (
+              <>
+                <HistoryChart covalentData={covalentData} />
+                <Tabs>
+                  <TabList>
+                    <Text>
+                      <Link
+                        href="https://zapper.fi/"
+                        color="teal.500"
+                        isExternal
+                      >
+                        View on Zapper
+                      </Link>
+                      &nbsp;&nbsp;|&nbsp;&nbsp;
+                      <Link
+                        href="https://zerion.io/"
+                        color="teal.500"
+                        isExternal
+                      >
+                        View on Zerion
+                      </Link>
+                    </Text>
+                    <Tab>Table</Tab>
+                    <Tab>Charts</Tab>
+                    {/* <Tab>Zerion</Tab> */}
+                  </TabList>
 
-              <TabPanels>
-                <TabPanel>
-                  <ListContent walletData={walletData.assets} />
-                </TabPanel>
-                <TabPanel>
-                  <ChartContent walletData={walletData.assets} />
-                </TabPanel>
-                {/* <TabPanel>
+                  <TabPanels>
+                    <TabPanel>
+                      <ListContent walletData={walletData.assets} />
+                    </TabPanel>
+                    <TabPanel>
+                      <ChartContent walletData={walletData.assets} />
+                    </TabPanel>
+                    {/* <TabPanel>
                   <Zerion portfolio={portfolio} />
                 </TabPanel> */}
-              </TabPanels>
-            </Tabs>
+                  </TabPanels>
+                </Tabs>
+              </>
+            ) : (
+              <Text>Unable to find any data for your wallet.</Text>
+            )}
           </WalletChecker>
         </Box>
       </Box>
