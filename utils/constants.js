@@ -28,16 +28,12 @@ export const INFURA_LINK =
     : `kovan`;
 export const infuraProvider = new JsonRpcProvider(INFURA_LINK);
 
-export const BLOCK_EXPLORER_LINK =
-  env === "production"
-    ? `https://etherscan.io`
-    : env === `mainnet`
-    ? `https://etherscan.io`
-    : env === `kovan`
-    ? `https://kovan.etherscan.io`
-    : env === `polygon`
-    ? `https://polygonscan.com`
-    : `https://kovan.etherscan.io`;
+export const BLOCK_EXPLORER_LINK = {
+  production: `https://etherscan.io`,
+  mainnet: `https://etherscan.io`,
+  kovan: `https://kovan.etherscan.io`,
+  polygon: `https://polygonscan.com`,
+};
 
 export const BLOCKNATIVE_ID =
   process.env.REACT_APP_BLOCKNATIVE_ID ||
