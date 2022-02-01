@@ -7,9 +7,12 @@ interface HeadingGroupProps extends StackProps {
 }
 
 export const HeadingGroup = (props: HeadingGroupProps) => {
-  const { title, description, ...stackProps } = props
+  const { title, description, subtitle, ...stackProps } = props
   return (
     <Stack spacing="1" {...stackProps}>
+      <Text fontSize="md" fontWeight="semibold" color='gray.400'>
+        {subtitle}
+      </Text>
       <Heading size="md" fontWeight="semibold">
         {title}
       </Heading>

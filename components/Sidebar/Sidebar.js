@@ -52,6 +52,12 @@ export default function Sidebar(props) {
 
             <NavGroup label="Connected Wallet">
 
+              <Link href="/dashboard">
+                <a>
+
+                  <NavItem active={router.pathname === '/dashboard'} icon={<FiPieChart />} label="Dashboard" />
+                </a>
+              </Link>
               <Link href="/payments">
                 <a>
 
@@ -82,15 +88,6 @@ export default function Sidebar(props) {
               </Link>
 
               {/* Disabled */}
-
-              <a>
-                <NavItem
-                  isDisabled
-                  active={router.pathname === "/accounts/analytics"}
-                  icon={<FiPieChart />}
-                  label="Analytics"
-                />
-              </a>
 
             </NavGroup>
 
