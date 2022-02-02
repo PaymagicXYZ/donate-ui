@@ -25,11 +25,45 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-client
-  .query({
-    query: gql(tokensQuery),
-  })
-  .then((data) => console.log("Subgraph data: ", data))
-  .catch((err) => {
-    console.log("Error fetching data: ", err);
+// function getSafeQuery(id)=>{return `query {
+//       wallets(id: "${id}") {
+//         id
+//     creator
+//     network
+//     stamp
+//     hash
+//     factory
+//     mastercopy
+//     owners
+//     threshold
+//     currentNonce
+//     version
+//       }`}
+
+export function useSubgraph(address) {
+  const [data, setData] = useState({
+    loading: true,
+    subgraph: null,
   });
+  useEffect(() => {
+    async function getData(address) {
+      client
+        .query({
+          query: gql(tokensQuery),
+        })
+        .then((data) => {
+          setData({ loading: false, subgraph: data });
+          console.log("Subgraph data: ", data);
+        })
+        .catch((err) => {
+          console.log("Error fetching data: ", err);
+        });
+    }
+
+    if (!_.isUndefined(address)) {
+      getData(address);
+    }
+  }, [address]);
+
+  return data;
+}
