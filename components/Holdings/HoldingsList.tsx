@@ -93,7 +93,9 @@ export default function HoldingsList(props) {
                 </Tabs>
               </>
             ) : (
-              <Text>Unable to find any data for your wallet.</Text>
+              setTimeout(() => {
+                <Text>Unable to find any data for your wallet.</Text>;
+              }, 2000)
             )}
           </WalletChecker>
         </Box>

@@ -45,7 +45,7 @@ const tokensQuery = `query {
   }
 }`;
 
-export function useSubgraph(address, network = "mainnet") {
+export function useSubgraph(address = null, network = "mainnet") {
   const client = returnClient(network);
   const [graphData, setGraphData] = useState({
     loading: true,

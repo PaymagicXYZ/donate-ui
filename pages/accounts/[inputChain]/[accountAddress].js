@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Stack,
@@ -36,7 +36,7 @@ export default function Page() {
   const provider = ethers.getDefaultProvider();
   const resolution = new Resolution();
   const graphData = useSubgraph(address ? address : accountAddress);
-  console.log(graphData);
+  // console.log(graphData);
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
@@ -91,11 +91,25 @@ export default function Page() {
       if (chain === "polygon") {
         getUDresolve("MATIC");
       }
+    } else {
+      setLoading(false);
     }
-    if (graphData.loading == false && graphData.subgraph.data.wallet) {
-      setIsSafe(true);
+    try {
+      if (graphData.loading == false && graphData.subgraph.data.wallet) {
+        if (graphData.subgraph.data.wallet.version) {
+          setIsSafe(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   });
+
+  const displayAddress = (address) => (
+    <Link href={`/accounts/${inputChain}/${address}`} color="teal.500">
+      {address}
+    </Link>
+  );
 
   return (
     <PageContainer>
@@ -115,13 +129,14 @@ export default function Page() {
                 <>
                   <Text>
                     This {graphData.subgraph.data.wallet.version} safe is
-                    created by {graphData.subgraph.data.wallet.creator}
+                    created by{" "}
+                    {displayAddress(graphData.subgraph.data.wallet.creator)}
                     <br />
                     The owners of the safe:
                     <br />
                     {graphData.subgraph.data.wallet.owners.map((owner) => (
                       <>
-                        {owner} <br />
+                        {displayAddress(owner)} <br />
                       </>
                     ))}
                   </Text>
