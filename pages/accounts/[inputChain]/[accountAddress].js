@@ -26,6 +26,7 @@ export default function Page() {
   const [account, setAccount] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isSafe, setIsSafe] = useState(false);
+  const [safeData, setSafeData] = useState();
   const { inputChain, accountAddress } = router.query;
   let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
@@ -36,7 +37,6 @@ export default function Page() {
   const provider = ethers.getDefaultProvider();
   const resolution = new Resolution();
   const graphData = useSubgraph(address ? address : accountAddress);
-  // console.log(graphData);
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
@@ -92,12 +92,15 @@ export default function Page() {
         getUDresolve("MATIC");
       }
     } else {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000);
     }
     try {
       if (graphData.loading == false && graphData.subgraph.data.wallet) {
         if (graphData.subgraph.data.wallet.version) {
           setIsSafe(true);
+          setSafeData(graphData.subgraph.data.wallet);
         }
       }
     } catch (err) {
@@ -110,7 +113,6 @@ export default function Page() {
       {address}
     </Link>
   );
-
   return (
     <PageContainer>
       <Box bg={mode("purple.50", "purple.800")}>
@@ -126,21 +128,18 @@ export default function Page() {
                 size="lg"
               />
               {isSafe ? (
-                <>
-                  <Text>
-                    This {graphData.subgraph.data.wallet.version} safe is
-                    created by{" "}
-                    {displayAddress(graphData.subgraph.data.wallet.creator)}
-                    <br />
-                    The owners of the safe:
-                    <br />
-                    {graphData.subgraph.data.wallet.owners.map((owner) => (
-                      <>
-                        {displayAddress(owner)} <br />
-                      </>
-                    ))}
-                  </Text>
-                </>
+                <Text>
+                  This {safeData.version} safe is created by{" "}
+                  {displayAddress(safeData.creator)}
+                  <br />
+                  The owners of the safe:
+                  <br />
+                  {safeData.owners.map((owner) => (
+                    <>
+                      {displayAddress(owner)} <br />
+                    </>
+                  ))}
+                </Text>
               ) : (
                 <Text>
                   Please be aware, this might not be your account. &nbsp;

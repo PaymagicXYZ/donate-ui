@@ -28,6 +28,24 @@ const returnQuery = (address) => `
     threshold
     currentNonce
     version
+    transactions(orderBy: stamp, orderDirection: desc) {
+      id
+      stamp
+      hash
+      txhash
+      status
+      value
+      destination
+      data
+      signatures
+      nonce
+      operation
+      estimatedSafeTxGas
+      estimatedBaseGas
+      gasToken
+      refundReceiver
+      gasPrice
+    }
   }
 }
 `;
