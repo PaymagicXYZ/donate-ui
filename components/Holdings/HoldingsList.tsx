@@ -50,7 +50,9 @@ export default function HoldingsList(props) {
             loading={walletData.loading && covalentData.loading}
             account={account}
           >
-            {covalentData.history && walletData.assets ? (
+            {walletData.loading && covalentData.loading ? (
+              <Text>Loading...</Text>
+            ) : covalentData.history && walletData.assets ? (
               <>
                 <HistoryChart covalentData={covalentData} />
                 <Tabs>

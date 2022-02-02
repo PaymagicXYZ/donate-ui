@@ -106,17 +106,34 @@ export default function Page() {
           ) : account ? (
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title={`Holdings for "${
+                title={`Holdings for ${isSafe ? "safe" : ""} "${
                   Altname ? Altname : accountAddress
                 }" on ${chain}`}
                 size="lg"
               />
-              <Text>
-                Please be aware, this might not be your account. &nbsp;
-                <Link href="/holdings" color="teal.500">
-                  To your account
-                </Link>
-              </Text>
+              {isSafe ? (
+                <>
+                  <Text>
+                    This {graphData.subgraph.data.wallet.version} safe is
+                    created by {graphData.subgraph.data.wallet.creator}
+                    <br />
+                    The owners of the safe:
+                    <br />
+                    {graphData.subgraph.data.wallet.owners.map((owner) => (
+                      <>
+                        {owner} <br />
+                      </>
+                    ))}
+                  </Text>
+                </>
+              ) : (
+                <Text>
+                  Please be aware, this might not be your account. &nbsp;
+                  <Link href="/holdings" color="teal.500">
+                    To your account
+                  </Link>
+                </Text>
+              )}
 
               <Card>
                 <HoldingsList
