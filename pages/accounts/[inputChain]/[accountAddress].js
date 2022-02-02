@@ -16,6 +16,7 @@ import { HeadingGroup } from "../../../components/Forms/HeadingGroup";
 import HoldingsList from "../../../components/Holdings/HoldingsList";
 const { default: Resolution } = require("@unstoppabledomains/resolution");
 import { ZapperNetworkForChain } from "../../../components/Holdings/networkForChain";
+import { useSubgraph } from "../../../hooks/useSubgraph";
 
 export default function Page() {
   let props;
@@ -24,6 +25,7 @@ export default function Page() {
   const [address, setAddress] = useState();
   const [account, setAccount] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSafe, setIsSafe] = useState(false);
   const { inputChain, accountAddress } = router.query;
   let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
@@ -33,7 +35,8 @@ export default function Page() {
   );
   const provider = ethers.getDefaultProvider();
   const resolution = new Resolution();
-
+  const graphData = useSubgraph(address ? address : accountAddress);
+  console.log(graphData);
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
@@ -88,6 +91,9 @@ export default function Page() {
       if (chain === "polygon") {
         getUDresolve("MATIC");
       }
+    }
+    if (graphData.loading == false && graphData.subgraph.data.wallet) {
+      setIsSafe(true);
     }
   });
 

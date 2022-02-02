@@ -3,7 +3,7 @@ import { useSubgraph } from "../../hooks/useSubgraph";
 
 export default function Topsafes(props) {
   const graphData = useSubgraph();
-  //   const data = React.useMemo(() => graphData, [graphData]);
+  const data = React.useMemo(() => graphData, [graphData]);
   useSubgraph();
   return (
     <>

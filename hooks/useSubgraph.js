@@ -1,21 +1,22 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { createClient } from "urql";
 
-const APIURL =
-  "https://api.thegraph.com/subgraphs/name/gjeanmart/gnosis-safe-mainnet";
+const APIURL = {
+  mainnet:
+    "https://api.thegraph.com/subgraphs/name/gjeanmart/gnosis-safe-mainnet",
+  polygon:
+    "https://api.thegraph.com/subgraphs/name/gjeanmart/gnosis-safe-polygon",
+};
 
-const client = createClient({
-  url: APIURL,
-});
+const returnClient = (network) =>
+  createClient({
+    url: APIURL[network],
+  });
 
-// const APIURL =
-//   "https://api.studio.thegraph.com/query/gjeanmart/gnosis-safe-mainnet/";
-
-const tokensQuery = `
+const returnQuery = (address) => `
   query {
-  wallet(id: "0x8e4d87ad4dafdac06d86a3ed002f5085dc036e08") {
+  wallet(id: "${address}") {
     id
     creator
     network
@@ -31,38 +32,40 @@ const tokensQuery = `
 }
 `;
 
-// function getSafeQuery(id)=>{return `query {
-//       wallets(id: "${id}") {
-//         id
-//     creator
-//     network
-//     stamp
-//     hash
-//     factory
-//     mastercopy
-//     owners
-//     threshold
-//     currentNonce
-//     version
-//       }`}
+const tokensQuery = `query {
+  wallets {
+    id
+    stamp
+    owners
+    threshold
+    creator
+    factory
+    version
+    currentNonce
+  }
+}`;
 
-export function useSubgraph(address) {
-  const [data, setData] = useState({
+export function useSubgraph(address, network = "mainnet") {
+  const client = returnClient(network);
+  const [graphData, setGraphData] = useState({
     loading: true,
     subgraph: null,
   });
+
   useEffect(() => {
-    async function getData() {
-      const data = await client.query(tokensQuery).toPromise();
-      console.log(data);
-      setData({ loading: false, subgraph: data });
-      // console.log("Subgraph data: ", data);
-    }
+    address ? fetchSafe(address) : fetchTopSafes();
+  }, [address, network]);
 
-    if (!_.isUndefined(address)) {
-      getData(address);
-    }
-  }, [address]);
+  async function fetchTopSafes() {
+    const data = await client.query(tokensQuery).toPromise();
+    console.log(data);
+    setGraphData({ loading: false, subgraph: data });
+  }
 
-  return data;
+  async function fetchSafe(address) {
+    const data = await client.query(returnQuery(address)).toPromise();
+    setGraphData({ loading: false, subgraph: data });
+  }
+
+  return graphData;
 }
