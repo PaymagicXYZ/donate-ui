@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Sector,
-  Legend,
-  Tooltip,
-  Treemap,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Sector, Tooltip, Treemap } from "recharts";
 import _ from "lodash";
 import { Center, Container, Text } from "@chakra-ui/react";
 
@@ -123,7 +115,7 @@ export function ChartContent(props) {
             height={200}
             data={data}
             dataKey="value"
-            ratio={4 / 3}
+            // ratio={4 / 3}
             stroke="#fff"
             fill="#8884d8"
           >

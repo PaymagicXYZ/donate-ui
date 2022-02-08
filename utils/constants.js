@@ -28,16 +28,12 @@ export const INFURA_LINK =
     : `kovan`;
 export const infuraProvider = new JsonRpcProvider(INFURA_LINK);
 
-export const BLOCK_EXPLORER_LINK =
-  env === "production"
-    ? `https://etherscan.io`
-    : env === `mainnet`
-    ? `https://etherscan.io`
-    : env === `kovan`
-    ? `https://kovan.etherscan.io`
-    : env === `polygon`
-    ? `https://polygonscan.com`
-    : `https://kovan.etherscan.io`;
+export const BLOCK_EXPLORER_LINK = {
+  production: `https://etherscan.io`,
+  mainnet: `https://etherscan.io`,
+  kovan: `https://kovan.etherscan.io`,
+  polygon: `https://polygonscan.com`,
+};
 
 export const BLOCKNATIVE_ID =
   process.env.REACT_APP_BLOCKNATIVE_ID ||
@@ -58,6 +54,21 @@ export const ZAPPER_NETWORK =
     ? `matic`
     : `kovan`;
 
+export const ZERION_API_KEY =
+  process.env.REACT_APP_ZERION_API_KEY ||
+  "Paymagic.pBHI7DOsXaHAuHE7fFQQoBKkejC6ERUy";
+
+export const COVALENT_API_KEY =
+  process.env.REACT_APP_COVALENT_API_KEY || "ckey_49d9fd231cef43db9e77ed26450";
+export const CovalentNetworkForID = {
+  eth: "1",
+  mainnet: "1",
+  ethereum: "1",
+  matic: "137",
+  polygon: "137",
+  ava: "43114",
+};
+
 export const DISPERSE_MAINNET = "0x5d49D619fc568e610f7e8e9d3981e6474f60179F";
 export const DISPERSE_POLYGON = "0xeA1da800c794228DcD8DA1e4A8F824F7F52999FB";
 export const DISPERSE_KOVAN = "0xA749721d764FF378a41D9b4D0794f7aFde4372E8";
@@ -68,4 +79,5 @@ export const DISPERSENFT_KOVAN = "0x489dfbf54845150a880BE13aC8DB2ce954986789";
 
 export const AIRDROP_FACTORY_MAINNET = "0x"; // Not deployed yet
 export const AIRDROP_FACTORY_POLYGON = "0x"; // Not deployed yet
-export const AIRDROP_FACTORY_KOVAN = "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";
+export const AIRDROP_FACTORY_KOVAN =
+  "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";

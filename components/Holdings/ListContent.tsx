@@ -126,7 +126,7 @@ function CustomTable({ columns, data }) {
             min={1}
             max={pageOptions.length}
             onChange={(value) => {
-              const page = value ? value - 1 : 0;
+              const page = value ? Number(value) - 1 : 0;
               gotoPage(page);
             }}
             defaultValue={pageIndex + 1}

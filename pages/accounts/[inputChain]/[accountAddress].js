@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Stack,
   StackProps,
   Link,
   Text,
+  Image,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
@@ -15,6 +16,7 @@ import { HeadingGroup } from "../../../components/Forms/HeadingGroup";
 import HoldingsList from "../../../components/Holdings/HoldingsList";
 const { default: Resolution } = require("@unstoppabledomains/resolution");
 import { ZapperNetworkForChain } from "../../../components/Holdings/networkForChain";
+import { useSubgraph } from "../../../hooks/useSubgraph";
 
 export default function Page() {
   let props;
@@ -22,6 +24,9 @@ export default function Page() {
   const [Altname, setAltname] = useState();
   const [address, setAddress] = useState();
   const [account, setAccount] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isSafe, setIsSafe] = useState(false);
+  const [safeData, setSafeData] = useState();
   const { inputChain, accountAddress } = router.query;
   let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
@@ -31,10 +36,11 @@ export default function Page() {
   );
   const provider = ethers.getDefaultProvider();
   const resolution = new Resolution();
-
+  const graphData = useSubgraph(address ? address : accountAddress);
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
+      setLoading(false);
       if (chain === "ethereum") {
         const getENSname = async () => {
           try {
@@ -51,8 +57,10 @@ export default function Page() {
           const resolver = await provider.getResolver(accountAddress);
           setAddress(await resolver.getAddress());
           setAccount(true);
+          setLoading(false);
         } catch (err) {
           console.log(err);
+          setLoading(false);
         }
       };
       getENSresolve();
@@ -64,9 +72,11 @@ export default function Page() {
             if (address) {
               console.log(domain, "resolves to", address);
               setAccount(true);
+              setLoading(false);
             }
           })
           .catch(console.error);
+        setLoading(false);
       }
       const getUDresolve = async (coin) => {
         try {
@@ -81,27 +91,63 @@ export default function Page() {
       if (chain === "polygon") {
         getUDresolve("MATIC");
       }
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000);
+    }
+    try {
+      if (graphData.loading == false && graphData.subgraph.data.wallet) {
+        if (graphData.subgraph.data.wallet.version) {
+          setIsSafe(true);
+          setSafeData(graphData.subgraph.data.wallet);
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   });
 
+  const displayAddress = (address) => (
+    <Link href={`/accounts/${inputChain}/${address}`} color="teal.500">
+      {address}
+    </Link>
+  );
   return (
     <PageContainer>
       <Box bg={mode("purple.50", "purple.800")}>
         <Box mx="auto" w="90%">
-          {account ? (
+          {loading ? (
+            <Text>Resolving your address ...</Text>
+          ) : account ? (
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title={`Holdings for "${
+                title={`Holdings for ${isSafe ? "safe" : ""} "${
                   Altname ? Altname : accountAddress
                 }" on ${chain}`}
                 size="lg"
               />
-              <Text>
-                Please be aware, this might not be your account. &nbsp;
-                <Link href="/holdings" color="teal.500">
-                  To your account
-                </Link>
-              </Text>
+              {isSafe ? (
+                <Text>
+                  This {safeData.version} safe is created by{" "}
+                  {displayAddress(safeData.creator)}
+                  <br />
+                  The owners of the safe:
+                  <br />
+                  {safeData.owners.map((owner) => (
+                    <>
+                      {displayAddress(owner)} <br />
+                    </>
+                  ))}
+                </Text>
+              ) : (
+                <Text>
+                  Please be aware, this might not be your account. &nbsp;
+                  <Link href="/holdings" color="teal.500">
+                    To your account
+                  </Link>
+                </Text>
+              )}
 
               <Card>
                 <HoldingsList
@@ -128,6 +174,22 @@ export default function Page() {
               </Text>
             </>
           )}
+          <Link href="https://zapper.fi/" isExternal>
+            <Image
+              src="/power-zap-gray.svg"
+              width="250px"
+              maxWidth="15vw"
+              alt="Powered by Zapper"
+            />
+          </Link>
+          <Link href="https://www.covalenthq.com" isExternal>
+            <Image
+              width="250px"
+              maxWidth="15vw"
+              src="/Powered_by_Covalent_Stacked_Full.svg"
+              alt="Powered by covalent"
+            />
+          </Link>
         </Box>
       </Box>
     </PageContainer>
