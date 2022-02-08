@@ -28,12 +28,12 @@ export function HistoryChart(props) {
   const value = useMemo(() => {
     const value = [];
     try {
-      covalentData.history.items[0].holdings.map((item) => {
+      covalentData.history.data.items[0].holdings.map((item) => {
         dates.unshift(item.timestamp);
       });
       for (let i = 0; i < 31; i++) {
         let calculatedValue = 0;
-        covalentData.history.items.forEach((item) => {
+        covalentData.history.data.items.forEach((item) => {
           calculatedValue += item.holdings[i].close.quote;
         });
         value.unshift(calculatedValue);

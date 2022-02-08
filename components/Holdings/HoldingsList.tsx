@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import {
   Box,
   Heading,
@@ -25,14 +25,20 @@ import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function HoldingsList(props) {
   const { library, account, chainId } = useWeb3React();
-  const walletData = useZapper(
+  const fetchWalletData = useZapper(
     props.accountAddress ? props.accountAddress : account,
     props.chain ? props.chain : ZAPPER_NETWORK
   );
-  const covalentData = useCovalent(
+  const fetchCovalentData = useCovalent(
     props.accountAddress ? props.accountAddress : account,
     props.chain ? CovalentNetworkForID[props.chain] : 1
   );
+  const covalentData = useMemo(() => {
+    return fetchCovalentData;
+  }, [fetchCovalentData]);
+  const walletData = useMemo(() => {
+    return fetchWalletData;
+  }, [fetchWalletData]);
 
   // const portfolio = useZerion(
   //   props.accountAddress ? props.accountAddress : account
@@ -87,8 +93,8 @@ export default function HoldingsList(props) {
                       <ChartContent walletData={walletData.assets} />
                     </TabPanel>
                     {/* <TabPanel>
-                  <Zerion portfolio={portfolio} />
-                </TabPanel> */}
+                      <Zerion portfolio={portfolio} />
+                    </TabPanel> */}
                   </TabPanels>
                 </Tabs>
               </>
