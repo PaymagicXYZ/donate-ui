@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Stack,
@@ -16,6 +16,7 @@ import { HeadingGroup } from "../../../components/Forms/HeadingGroup";
 import HoldingsList from "../../../components/Holdings/HoldingsList";
 const { default: Resolution } = require("@unstoppabledomains/resolution");
 import { ZapperNetworkForChain } from "../../../components/Holdings/networkForChain";
+import { useSubgraph } from "../../../hooks/useSubgraph";
 
 export default function Page() {
   let props;
@@ -24,6 +25,8 @@ export default function Page() {
   const [address, setAddress] = useState();
   const [account, setAccount] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSafe, setIsSafe] = useState(false);
+  const [safeData, setSafeData] = useState();
   const { inputChain, accountAddress } = router.query;
   let chain = ZapperNetworkForChain[inputChain];
   const validAddress = new RegExp(/^0x[a-fA-F0-9]{40}$/);
@@ -33,7 +36,7 @@ export default function Page() {
   );
   const provider = ethers.getDefaultProvider();
   const resolution = new Resolution();
-
+  const graphData = useSubgraph(address ? address : accountAddress);
   useEffect(() => {
     if (validAddress.test(accountAddress)) {
       setAccount(true);
@@ -88,9 +91,28 @@ export default function Page() {
       if (chain === "polygon") {
         getUDresolve("MATIC");
       }
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000);
+    }
+    try {
+      if (graphData.loading == false && graphData.subgraph.data.wallet) {
+        if (graphData.subgraph.data.wallet.version) {
+          setIsSafe(true);
+          setSafeData(graphData.subgraph.data.wallet);
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   });
 
+  const displayAddress = (address) => (
+    <Link href={`/accounts/${inputChain}/${address}`} color="teal.500">
+      {address}
+    </Link>
+  );
   return (
     <PageContainer>
       <Box bg={mode("purple.50", "purple.800")}>
@@ -100,17 +122,32 @@ export default function Page() {
           ) : account ? (
             <Stack as="section" spacing="6" {...props}>
               <HeadingGroup
-                title={`Holdings for "${
+                title={`Holdings for ${isSafe ? "safe" : ""} "${
                   Altname ? Altname : accountAddress
                 }" on ${chain}`}
                 size="lg"
               />
-              <Text>
-                Please be aware, this might not be your account. &nbsp;
-                <Link href="/holdings" color="teal.500">
-                  To your account
-                </Link>
-              </Text>
+              {isSafe ? (
+                <Text>
+                  This {safeData.version} safe is created by{" "}
+                  {displayAddress(safeData.creator)}
+                  <br />
+                  The owners of the safe:
+                  <br />
+                  {safeData.owners.map((owner) => (
+                    <>
+                      {displayAddress(owner)} <br />
+                    </>
+                  ))}
+                </Text>
+              ) : (
+                <Text>
+                  Please be aware, this might not be your account. &nbsp;
+                  <Link href="/holdings" color="teal.500">
+                    To your account
+                  </Link>
+                </Text>
+              )}
 
               <Card>
                 <HoldingsList
