@@ -18,7 +18,8 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { FiSend, FiToggleLeft } from "react-icons/fi";
-import BalanceTable from '../../components/BalanceTable/Table'
+import BalanceTable from '../../components/DustSweeperTables/Table'
+import ApprovalTable from '../../components/DustSweeperTables/ApprovalTable'
 import { WalletChecker } from "../../components/WalletChecker";
 import { ethers } from "ethers";
 import PageContainer from "../../components/PageContainer/PageContainer";
@@ -84,10 +85,7 @@ export default function Page() {
               </Center>
             </TabPanel>
             <TabPanel>
-              <p>XYZ tokens, USD</p>
-              <p>Logo Token</p>
-              <p>Cost in ETH</p>
-              <p>Dust to receive</p>
+              <ApprovalTable />
             </TabPanel>
           </TabPanels>
         </Tabs>

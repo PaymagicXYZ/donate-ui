@@ -5,7 +5,7 @@ import { Box, Img, Stack } from '@chakra-ui/react'
 
 export default function TokenDisplay(props) {
   const symbol = props.symbol || '';
-  const imageUrl = props.imageUrl || '';
+  const imageUrl = props.imageUrl || null;
 
   return (
     <Stack direction="row" spacing="4" align="center">

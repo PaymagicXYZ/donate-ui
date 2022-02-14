@@ -13,9 +13,9 @@ import {
   Text,
   useColorModeValue as mode,
 } from '@chakra-ui/react'
-import { cols } from './_data'
+import { cols } from './_approvalTableColumns'
 
-export function TableContent(props) {
+export function ApprovalTableContent(props) {
   const { walletData } = props
 
   console.log(walletData)
