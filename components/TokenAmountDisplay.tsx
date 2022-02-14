@@ -14,7 +14,7 @@ export default function TokenUsdAmount(props) {
     <Box>
       {
         !_.isUndefined(props.amountUsd) && (
-          <Box fontSize="sm" fontWeight="medium">
+          <Box fontSize="lg" fontWeight="medium">
             {`${numeral(amountUsd).format('$0,00')}`}
           </Box>
         )
@@ -22,7 +22,7 @@ export default function TokenUsdAmount(props) {
       {
         !_.isUndefined(props.amountTokens) && (
           <Box fontSize="sm" fontWeight={_.isUndefined(props.amountUsd) ? "medium" : "light"}>
-            {`${numeral(amountTokens).format('0,00.0a')} ${symbol}`}
+            {`${numeral(amountTokens).format('0,00.0000a')} ${symbol}`}
           </Box>
         )
       }

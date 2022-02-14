@@ -110,7 +110,7 @@
 
 .logo {
   height: 1em;
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
 }
 
 @media (max-width: 600px) {
@@ -119,3 +119,11 @@
     flex-direction: column;
   }
 }
+
+@media (hover: hover) {
+  button:hover {
+    outline:0;
+  }
+}
+
+button:focus {outline:0;}

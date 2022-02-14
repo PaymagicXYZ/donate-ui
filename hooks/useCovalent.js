@@ -53,6 +53,7 @@ export function useCovalent(address, _chainId) {
     async function getData(address) {
       const history = await getHistory(address);
       const balance = await getBalance(address);
+
       setData({
         loading: false,
         history: history,

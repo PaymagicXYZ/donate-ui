@@ -1,5 +1,7 @@
 import { ethers } from "ethers";
 import moment from "moment";
+import numeral from "numeral";
+import _ from "lodash";
 // import { create } from "ipfs-http-client";
 import axios from "axios";
 import { getAddress as getAddressEthers } from "@ethersproject/address";
@@ -125,6 +127,10 @@ export function displayTxDatetime(unixTime) {
   return moment.unix(unixTime).fromNow();
 }
 
+export function displayISODatetime(unixTime) {
+  return moment(unixTime).fromNow();
+}
+
 export async function getMerkleData(path) {
   const { data } = await axios.get(`https://ipfs.io/ipfs/${path}`);
   return data;
@@ -172,3 +178,11 @@ export function getNativeToken(chainId) {
     return "MATIC";
   }
 }
+
+// export function formatTokenAmount(amountBN, decimals=18) {
+//   return numeral(
+//     ethers.utils.formatUnits(
+//       amountBN,
+//       decimals
+//     )).format('0,0.0000')
+// }
