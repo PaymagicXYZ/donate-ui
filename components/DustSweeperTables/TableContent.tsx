@@ -17,8 +17,6 @@ import {
 import { cols } from './_columns'
 
 export function TableContent(props) {
-  const { walletData, selectedIndices, setSelectedIndices } = props
-
   return (
     <Table borderWidth="1px" fontSize="sm">
       <Thead bg={mode('gray.50', 'gray.800')}>
@@ -36,19 +34,19 @@ export function TableContent(props) {
       <Tbody>
 
 
-        {_.isEmpty(walletData) ? 
+        {_.isEmpty(props.walletData) ? 
           (<Center p={6}><Text as="i">No data found</Text></Center>) :
-          walletData.map((row, index) => (
+          props.walletData.map((row, index) => (
             <Tr key={index}>
               <Td key={index}>
                 <Checkbox
                   colorScheme='purple'
-                  isChecked={selectedIndices[index]}
+                  isChecked={props.selectedIndices[index]}
 
                   onChange={event => {
-                    let tmp = selectedIndices
-                    tmp[index] = !selectedIndices[index]
-                    setSelectedIndices(tmp)
+                    let tmp = props.selectedIndices
+                    tmp[index] = !props.selectedIndices[index]
+                    props.handleChange(tmp)
                   }}
 
                 ></Checkbox>

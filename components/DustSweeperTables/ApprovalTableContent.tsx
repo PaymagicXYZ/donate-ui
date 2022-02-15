@@ -18,7 +18,7 @@ import { cols } from './_approvalTableColumns'
 export function ApprovalTableContent(props) {
   const { walletData } = props
 
-  console.log(walletData)
+  // console.log(walletData)
 
   return (
     <Table borderWidth="1px" fontSize="sm">

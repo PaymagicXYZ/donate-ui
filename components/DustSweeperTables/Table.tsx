@@ -18,7 +18,7 @@ export default function Table(props) {
       <TableContent
         walletData={props.balances}
         selectedIndices={props.selectedIndices}
-        setSelectedIndices={props.setSelectedIndices}
+        handleChange={props.handleChange}
       />
     </Box>
   );

@@ -41,10 +41,13 @@ export default function SubmitApprovalsForm(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [selectedIndices, setSelectedIndices] = useState([]);
+  const [tokenApprovals, setTokenApprovals] = useState([]);
+  const [disabledButton, setDisabledButton] = useState(true);
   const fetchCovalentData = useCovalent(
     '0x869eC00FA1DC112917c781942Cc01c68521c415e',
     // account,
-    chainId
+    // chainId
+    1
   );
   const balances = useMemo(() => {
     const items = _.get(fetchCovalentData, 'balance.data.items', [])
@@ -57,9 +60,47 @@ export default function SubmitApprovalsForm(props) {
     return validBalances;
   }, [fetchCovalentData]);
 
+  function handleSelectedIndicesChange(newValue) {
+    setSelectedIndices(newValue)
+
+    let tmpTokenApprovals = []
+    newValue.map( (x,i) => {
+      if(selectedIndices[i]) {
+        tmpTokenApprovals.push(balances[i])
+      }
+    })
+    setTokenApprovals(tmpTokenApprovals)
+  }
+
+  const afterMine = async () => {
+
+  }
+
+  async function handleApproval(cb) {
+    console.log("Send Approval Tx");
 
 
 
+
+    // const totalAmountBN = ethers.utils.parseUnits(
+    //   _.toString(parsedData.totalAmount),
+    //   parsedData.token.decimals
+    // );
+    // const tx = Transactor(library, cb);
+    // tx(
+    //   parsedData.token.contract["approve"](
+    //     getDisperseAddress(chainId),
+    //     totalAmountBN
+    //   )
+    // );
+  }
+
+
+  console.log(selectedIndices)
+  // console.log(isOpen || _.indexOf(selectedIndices, true) === -1)
+  console.log(_.indexOf(selectedIndices, true))
+  console.log(disabledButton)
+  console.log(tokenApprovals)
 
   return (
     <WalletChecker loading={fetchCovalentData.loading} account={account}>
@@ -68,7 +109,7 @@ export default function SubmitApprovalsForm(props) {
           <BalanceTable
             balances={balances}
             selectedIndices={selectedIndices}
-            setSelectedIndices={setSelectedIndices}
+            handleChange={handleSelectedIndicesChange}
           />
           <Button
             size="lg"
@@ -77,7 +118,7 @@ export default function SubmitApprovalsForm(props) {
             type="submit"
             value="Submit"
             leftIcon={<FiToggleLeft />}
-            isDisabled={isOpen}
+            isDisabled={isOpen || _.isEmpty(tokenApprovals)}
             isLoading={isOpen}
             loadingText="Sign txs"
             onClick={onOpen}
@@ -93,8 +134,7 @@ export default function SubmitApprovalsForm(props) {
           <ModalCloseButton />
           <ModalBody>
           <VerticalSteps
-            balances={balances}
-            selectedIndices={selectedIndices}
+            tokenApprovals={tokenApprovals}
           />
           </ModalBody>
         </ModalContent>

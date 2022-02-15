@@ -34,7 +34,7 @@ export default function TransactionTable() {
     return validBalances;
   }, [fetchCovalentData]);
 
-console.log(balances)
+// console.log(balances)
 
 
   return (
