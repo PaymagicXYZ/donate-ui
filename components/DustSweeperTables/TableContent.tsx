@@ -12,8 +12,11 @@ import {
   Spinner,
   Text,
   Checkbox,
+  Tooltip,
   useColorModeValue as mode,
 } from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
+
 import { cols } from './_columns'
 
 export function TableContent(props) {
@@ -27,6 +30,11 @@ export function TableContent(props) {
           {cols.map((column, index) => (
             <Th whiteSpace="nowrap" scope="col" key={index}>
               {column.Header}
+
+              {column.accessor === 'balanceETH' && <Tooltip label='Token Market Price at 10% discount' fontSize='md'>
+                <InfoIcon w={4} h={4} ml='1'/>
+              </Tooltip>}
+
             </Th>
           ))}
         </Tr>
@@ -48,14 +56,20 @@ export function TableContent(props) {
                     tmp[index] = !props.selectedIndices[index]
                     props.handleChange(tmp)
                   }}
-
                 ></Checkbox>
+
+
+                { false && <Tooltip label='Already approved' fontSize='lg'>
+                  <InfoIcon w={6} h={6} ml='1'/>
+                </Tooltip>} 
+
+
               </Td>
               {cols.map((column, index) => {
                 const cell = row[column.accessor as keyof typeof row]
                 const element = column.Cell?.(row) ?? cell
                 return (
-                  <Td key={index}>
+                  <Td key={index} backgroundColor={column.accessor === 'balanceETH' ? "green.100": null}>
                     {element}
                   </Td>
                 )

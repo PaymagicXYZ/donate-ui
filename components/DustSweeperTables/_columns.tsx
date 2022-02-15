@@ -1,4 +1,4 @@
-import { Badge } from '@chakra-ui/react'
+import { Badge, Center } from '@chakra-ui/react'
 import * as React from 'react'
 import { ethers } from "ethers";
 import { User } from './User'
@@ -70,12 +70,14 @@ export const cols = [
   // },
   {
     Header: 'TO RECEIVE IN ETH',
-    accessor: 'balance',
+    accessor: 'balanceETH',
     Cell: function Cell(data: any) {
       return (
-        <TokenAmountDisplay
-          amountUsd={data.quote * .9}
-        />
+        <Center>
+          <TokenAmountDisplay
+            amountUsd={data.quote * .9}
+          />
+        </Center>
       )
     }
   },

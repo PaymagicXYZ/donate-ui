@@ -21,7 +21,7 @@ export default function TransactionTable() {
   const fetchCovalentData = useCovalent(
     '0x869eC00FA1DC112917c781942Cc01c68521c415e',
     // account,
-    chainId
+    1
   );
   const balances = useMemo(() => {
   	const items = _.get(fetchCovalentData, 'balance.data.items', [])

@@ -39,15 +39,14 @@ import { VerticalSteps } from "./VerticalSteps"
 export default function SubmitApprovalsForm(props) {
   const { library, account, chainId } = useWeb3React();
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const [selectedIndices, setSelectedIndices] = useState([]);
   const [tokenApprovals, setTokenApprovals] = useState([]);
-  const [disabledButton, setDisabledButton] = useState(true);
+
   const fetchCovalentData = useCovalent(
     '0x869eC00FA1DC112917c781942Cc01c68521c415e',
+    1
     // account,
     // chainId
-    1
   );
   const balances = useMemo(() => {
     const items = _.get(fetchCovalentData, 'balance.data.items', [])
@@ -71,36 +70,6 @@ export default function SubmitApprovalsForm(props) {
     })
     setTokenApprovals(tmpTokenApprovals)
   }
-
-  const afterMine = async () => {
-
-  }
-
-  async function handleApproval(cb) {
-    console.log("Send Approval Tx");
-
-
-
-
-    // const totalAmountBN = ethers.utils.parseUnits(
-    //   _.toString(parsedData.totalAmount),
-    //   parsedData.token.decimals
-    // );
-    // const tx = Transactor(library, cb);
-    // tx(
-    //   parsedData.token.contract["approve"](
-    //     getDisperseAddress(chainId),
-    //     totalAmountBN
-    //   )
-    // );
-  }
-
-
-  console.log(selectedIndices)
-  // console.log(isOpen || _.indexOf(selectedIndices, true) === -1)
-  console.log(_.indexOf(selectedIndices, true))
-  console.log(disabledButton)
-  console.log(tokenApprovals)
 
   return (
     <WalletChecker loading={fetchCovalentData.loading} account={account}>

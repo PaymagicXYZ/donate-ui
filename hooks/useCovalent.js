@@ -9,7 +9,8 @@ import {
 
 const covalentApiKey = COVALENT_API_KEY;
 
-let chainId = CovalentNetworkForID[NETWORK];
+let chainId = 1;
+// let chainId = CovalentNetworkForID[NETWORK];
 
 // curl -X GET https://api.covalenthq.com/v1/1/events/topics/0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a/?starting-block=12500000&ending-block=12500100&sender-address=0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9&key=Get an API Key 
 //  \ -H "Accept: application/json"
@@ -29,11 +30,11 @@ let chainId = CovalentNetworkForID[NETWORK];
 //   };
 // }
 
-function get(params) {
-  return async function (address) {
+function get(params, chainId) {
+  return async function (address, chainId=1) {
     try {
       const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/${params}/?key=${covalentApiKey}`;
-      // console.log(url);
+      console.log(url);
       const response = await axios.get(url);
       const data = response.data ? response.data : [];
       return data;
@@ -68,7 +69,7 @@ export function useCovalent(address, _chainId) {
     balance: null,
   });
   useEffect(() => {
-    async function getData(address) {
+    async function getData(address, chainId) {
       const history = await getHistory(address);
       const balance = await getBalance(address);
 
@@ -80,7 +81,7 @@ export function useCovalent(address, _chainId) {
     }
 
     if (!_.isUndefined(address) && !_.isUndefined(chainId)) {
-      getData(address);
+      getData(address, chainId);
     }
   }, [address, _chainId]);
 

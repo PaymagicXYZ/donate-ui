@@ -7,10 +7,6 @@ import { Center, Spinner } from "@chakra-ui/react"
 export default function RedirectPage() {
   const router = useRouter()
 
-  useEffect(() => {
-    router.push('/payments')
-  }, [])
-
   return (
     <PageContainer>
       <Center>

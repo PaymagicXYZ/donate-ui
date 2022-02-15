@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Paymagic</title>
+        <title>DustSweeper</title>
         <meta name="description" content="Content to be filled in" />
         <link
           rel="apple-touch-icon"
