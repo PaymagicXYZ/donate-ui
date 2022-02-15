@@ -19,9 +19,6 @@ import { cols } from './_columns'
 export function TableContent(props) {
   const { walletData, selectedIndices, setSelectedIndices } = props
 
-  console.log(walletData)
-  console.log(selectedIndices)
-
   return (
     <Table borderWidth="1px" fontSize="sm">
       <Thead bg={mode('gray.50', 'gray.800')}>

@@ -19,12 +19,6 @@ export const VerticalSteps = ({balances, selectedIndices}) => {
     }
   })
 
-
-
-  console.log(balances)
-  console.log(selectedIndices)
-  console.log(tokenApprovals)
-
   return (
     <Box mx="auto" maxW="2xl" py="10" px={{ base: '6', md: '8' }} minH="400px">
       <Steps activeStep={activeStep}>

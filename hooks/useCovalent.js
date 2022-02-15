@@ -11,11 +11,29 @@ const covalentApiKey = COVALENT_API_KEY;
 
 let chainId = CovalentNetworkForID[NETWORK];
 
+// curl -X GET https://api.covalenthq.com/v1/1/events/topics/0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a/?starting-block=12500000&ending-block=12500100&sender-address=0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9&key=Get an API Key 
+//  \ -H "Accept: application/json"
+
+// function getEvents(params) {
+//   return async function (address) {
+//     try {
+//       const url = `https://api.covalenthq.com/v1/${chainId}/events/topics/${address}/${params}/?key=${covalentApiKey}`;
+//       // console.log(url);
+//       const response = await axios.get(url);
+//       const data = response.data ? response.data : [];
+//       return data;
+//     } catch (error) {
+//       console.error(error);
+//       return [];
+//     }
+//   };
+// }
+
 function get(params) {
   return async function (address) {
     try {
       const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/${params}/?key=${covalentApiKey}`;
-      console.log(url);
+      // console.log(url);
       const response = await axios.get(url);
       const data = response.data ? response.data : [];
       return data;

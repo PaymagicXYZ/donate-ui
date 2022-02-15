@@ -1,14 +1,10 @@
 import { useRouter } from "next/router";
+import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
 import {
-  Button,
+  Text,
   Box,
   Center,
-  Stack,
-  StackProps,
-  Link,
-  Text,
-  Image,
   Tabs,
   Tab,
   TabList,
@@ -17,23 +13,42 @@ import {
   VStack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { FiSend, FiToggleLeft } from "react-icons/fi";
 import SubmitApprovalsForm from '../../components/DustSweeperTables/SubmitApprovalsForm'
 import ApprovalTable from '../../components/DustSweeperTables/ApprovalTable'
-import { WalletChecker } from "../../components/WalletChecker";
-import { ethers } from "ethers";
 import PageContainer from "../../components/PageContainer/PageContainer";
-import { Card } from "../../components/Card/Card";
 import { HeadingGroup } from "../../components/Forms/HeadingGroup";
-import HoldingsList from "../../components/Holdings/HoldingsList";
-const { default: Resolution } = require("@unstoppabledomains/resolution");
-import { ZapperNetworkForChain } from "../../components/Holdings/networkForChain";
-// import { useSubgraph } from "../../hooks/useSubgraph";
-import { useCovalent } from "../../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
-import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
+import ERC20Contract from "../../artifacts/contracts/TestERC20.sol/TestERC20.json";
+
 
 export default function Page() {
+  const { library, account, chainId } = useWeb3React();
+
+  useEffect(() => {
+
+    async function getData() {
+      const erc20 = new ethers.Contract(
+        `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48`,
+        ERC20Contract.abi,
+        library
+      );
+
+      // event Approval(address indexed owner, address indexed spender, uint256 value);
+      const filterSpender = erc20.filters.Approval(null, '0x869eC00FA1DC112917c781942Cc01c68521c415e');
+      const filterOwner = erc20.filters.Approval('0x869eC00FA1DC112917c781942Cc01c68521c415e');
+
+      const logsFrom = await erc20.queryFilter(filterOwner, -10000, "latest");
+
+      console.log('logsFrom')
+      console.log(logsFrom)
+    }
+
+    getData();
+
+  }, []);
+
+
+
 
   return (
     <PageContainer>
