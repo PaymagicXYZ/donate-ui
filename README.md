@@ -1,4 +1,4 @@
-# Paymagic V2
+# DustSweeper ETHGlobal Hackathon
 
 React, NextJS and Chakra-UI
 
