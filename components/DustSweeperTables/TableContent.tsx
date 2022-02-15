@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import _ from 'lodash';
 import {
   Button,
+  Badge,
   Table,
   Tbody,
   Td,
@@ -16,10 +17,30 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
-
 import { cols } from './_columns'
+import * as tokensData from './tokens.json'
+
+
+
+
 
 export function TableContent(props) {
+  const [tokenRows, setTokenRows] = useState([]);
+
+  const tokenAddresses = useMemo(() => {
+    return tokensData.tokens.map(i => {
+      return i.address
+    })
+  }, []);
+
+  useEffect(() => {
+    const tmp = _.sortBy(props.walletData, [function(o) { return !_.includes(tokenAddresses, o.contract_address) }]);
+
+    setTokenRows(tmp)
+
+  },[props.walletData])
+
+
   return (
     <Table borderWidth="1px" fontSize="sm">
       <Thead bg={mode('gray.50', 'gray.800')}>
@@ -31,7 +52,7 @@ export function TableContent(props) {
             <Th whiteSpace="nowrap" scope="col" key={index}>
               {column.Header}
 
-              {column.accessor === 'balanceETH' && <Tooltip label='Token Market Price at 10% discount' fontSize='md'>
+              {column.accessor === 'balanceETH' && <Tooltip label='Balance at Market Price with 10% discount' fontSize='md'>
                 <InfoIcon w={4} h={4} ml='1'/>
               </Tooltip>}
 
@@ -42,28 +63,26 @@ export function TableContent(props) {
       <Tbody>
 
 
-        {_.isEmpty(props.walletData) ? 
+        {_.isEmpty(tokenRows) ? 
           (<Center p={6}><Text as="i">No data found</Text></Center>) :
-          props.walletData.map((row, index) => (
+          tokenRows.map((row, index) => (
             <Tr key={index}>
               <Td key={index}>
-                <Checkbox
-                  colorScheme='purple'
-                  isChecked={props.selectedIndices[index]}
+                <Center>
+                  {!_.includes(tokenAddresses, row.contract_address) ?
+                    <Badge>Not Supported</Badge> :
+                    <Checkbox
+                      colorScheme='purple'
+                      isChecked={props.selectedIndices[index]}
 
-                  onChange={event => {
-                    let tmp = props.selectedIndices
-                    tmp[index] = !props.selectedIndices[index]
-                    props.handleChange(tmp)
-                  }}
-                ></Checkbox>
-
-
-                { false && <Tooltip label='Already approved' fontSize='lg'>
-                  <InfoIcon w={6} h={6} ml='1'/>
-                </Tooltip>} 
-
-
+                      onChange={event => {
+                        let tmp = props.selectedIndices
+                        tmp[index] = !props.selectedIndices[index]
+                        props.handleChange(tmp)
+                      }}
+                    ></Checkbox>
+                  }
+                </Center>
               </Td>
               {cols.map((column, index) => {
                 const cell = row[column.accessor as keyof typeof row]

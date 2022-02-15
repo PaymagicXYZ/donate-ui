@@ -16,9 +16,9 @@ import { useWeb3React } from "@web3-react/core";
 export const VerticalSteps = ({tokenApprovals}) => {
   const { library, account, chainId } = useWeb3React();
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 })
-  
   const DUSTSWEEPER_ADDRESS = '0x869eC00FA1DC112917c781942Cc01c68521c415e'
 
+  console.log(tokenApprovals)
 
   return (
     <Box mx="auto" maxW="2xl" py="10" px={{ base: '6', md: '8' }} minH="400px">

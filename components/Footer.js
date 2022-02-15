@@ -7,20 +7,14 @@ export default function Footer() {
     <Box as="footer" role="contentinfo" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }} bg={mode('purple.50', 'purple.800')}>
       <Divider mt="6" mb="2"/>
       <Stack color="grey" direction="row" spacing="4" align="center" justify="center">
+        <ChakraLink href="/about">
+          About
+        </ChakraLink>
+        <Text>
+          |
+        </Text>
         <ChakraLink href="https://www.paymagic.xyz" isExternal>
-          Home
-        </ChakraLink>
-        <Text>
-          |
-        </Text>
-        <ChakraLink href="https://t.me/paymagics" isExternal>
-          Telegram
-        </ChakraLink>
-        <Text>
-          |
-        </Text>
-        <ChakraLink href="https://twitter.com/paymagic_" isExternal>
-          Twitter
+          Paymagic
         </ChakraLink>
       </Stack>
     </Box>

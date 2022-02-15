@@ -29,8 +29,7 @@ export const MoreItems = () => {
       <MenuList borderRadius="xl">
         <MenuItem
           as="a"
-          href="https://www.paymagic.xyz"
-          target="_blank"
+          href="/about"
           icon={<BiInfoCircle size="18" />}
         >
           About
@@ -41,7 +40,7 @@ export const MoreItems = () => {
           target="_blank"
           icon={<SiTelegram size="18" />}
         >
-          Telegram
+          Paymagic Telegram
         </MenuItem>
         <MenuItem
           as="a"
@@ -49,7 +48,7 @@ export const MoreItems = () => {
           target="_blank"
           icon={<SiTwitter size="18" />}
         >
-          Twitter
+          Paymagic Twitter
         </MenuItem>
       </MenuList>
     </Menu>

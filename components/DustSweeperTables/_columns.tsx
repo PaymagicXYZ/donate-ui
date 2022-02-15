@@ -19,6 +19,43 @@ import {
 } from "../../utils"
 
 export const cols = [
+
+
+  {
+    Header: 'TOKEN',
+    accessor: 'contract_ticker_symbol',
+    Cell: function Cell(data: any) {
+      return (
+        <TokenDisplay
+          symbol={data.contract_ticker_symbol}
+          imageUrl={data.logo_url}
+        />
+      )
+    }
+  },
+
+  {
+    Header: 'PRICE',
+    accessor: 'quote_rate',
+    Cell: function Cell(data: any) {
+      return numeral(
+        data.quote_rate
+        ).format('$0,0.00')
+    }
+  },
+
+  {
+    Header: 'LAST TRANSFERRED',
+    accessor: 'last_transferred_at',
+    Cell: function Cell(data: any) {
+      return (
+        <Text>
+          { displayISODatetime(data.last_transferred_at)}
+        </Text>
+      )
+    }
+  },
+
   {
     Header: 'BALANCE',
     accessor: 'balance',
@@ -35,41 +72,9 @@ export const cols = [
       )
     }
   },
-  {
-    Header: 'PRICE',
-    accessor: 'quote_rate',
-    Cell: function Cell(data: any) {
-      return numeral(
-        data.quote_rate
-        ).format('$0,0.00')
-    }
-  },
-  {
-    Header: 'TOKEN',
-    accessor: 'contract_ticker_symbol',
-    Cell: function Cell(data: any) {
-      return (
-        <TokenDisplay
-          symbol={data.contract_ticker_symbol}
-          imageUrl={data.logo_url}
-        />
-      )
-    }
-  },
 
-  // {
-  //   Header: 'LAST TRANSFERRED',
-  //   accessor: 'last_transferred_at',
-  //   Cell: function Cell(data: any) {
-  //     return (
-  //       <Text>
-  //         { displayISODatetime(data.last_transferred_at)}
-  //       </Text>
-  //     )
-  //   }
-  // },
   {
-    Header: 'TO RECEIVE IN ETH',
+    Header: 'YOU RECEIVE IN ETH',
     accessor: 'balanceETH',
     Cell: function Cell(data: any) {
       return (

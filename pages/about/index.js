@@ -10,27 +10,21 @@ export default function About() {
     <PageContainer>
       <Card maxW="3xl" mx="auto">
         <CardHeader
-          title="ℹ️ About"
+          title="ℹ️  About"
         />
         <CardContent p="6">
           <Text mt="1">
-            Paymagic is a payment tool for DAOs and crypto teams. Send batch transfers, airdrops, vesting schedules, streaming payments, and more all from one easy app. 💸✨
+            DustSweeper cleans our small token balances from your Ethereum wallet and gives you ETH in return! 🧹            
           </Text>
           <br />
           <Text>
-            The app was inspired by the ideas and creations of projects like Disperse.app, SuperFluid, Sabler, MerkleDrops, and many more. 🙏
+            The app was built by the <Link href="https://www.paymagic.xyz/" isExternal>Paymagic</Link> team at ETHDenver 2021. We hope you find the application useful!
           </Text>
           <br />
           <Text>
-            🐛 Submit bugs or feature requests{" "}
-            <Link href="https://airtable.com/shrpR5auT6RUIOrDC" isExternal>
-              here.
-            </Link>
-          </Text>
-          <Text>
-            💬 To contact or contribute to the DAO, join on{" "}
+            To contact, request other tokens, or contribute to the DAO, get in touch via the{" "}
             <Link href="https://t.me/paymagic" isExternal>
-              Telegram.
+              Paymagic Telegram.
             </Link>
           </Text>
           <br />
