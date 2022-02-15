@@ -64,27 +64,28 @@ export default function SubmitApprovalsForm(props) {
   return (
     <WalletChecker loading={fetchCovalentData.loading} account={account}>
       <Center>
-        <BalanceTable
-          balances={balances}
-          selectedIndices={selectedIndices}
-          setSelectedIndices={setSelectedIndices}
-        />
-        <Button
-          size="lg"
-          fontWeight="normal"
-          colorScheme="purple"
-          type="submit"
-          value="Submit"
-          leftIcon={<FiToggleLeft />}
-          isDisabled={isOpen}
-          isLoading={isOpen}
-          loadingText="Sign txs"
-          onClick={onOpen}
-        >
-          Approve Selected Tokens
-        </Button>
+        <VStack>
+          <BalanceTable
+            balances={balances}
+            selectedIndices={selectedIndices}
+            setSelectedIndices={setSelectedIndices}
+          />
+          <Button
+            size="lg"
+            fontWeight="normal"
+            colorScheme="purple"
+            type="submit"
+            value="Submit"
+            leftIcon={<FiToggleLeft />}
+            isDisabled={isOpen}
+            isLoading={isOpen}
+            loadingText="Sign txs"
+            onClick={onOpen}
+          >
+            Approve Selected Tokens
+          </Button>
+        </VStack>
       </Center>
-
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
