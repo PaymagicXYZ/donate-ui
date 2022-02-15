@@ -126,4 +126,7 @@
   }
 }
 
-button:focus {outline:0;}
+button:focus {outline: none;}
+input:focus {outline: none;}
+textarea:focus {outline: none;}
+select:focus {outline: none;}

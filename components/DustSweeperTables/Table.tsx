@@ -11,29 +11,14 @@ import { CovalentNetworkForID } from "../../utils/constants";
 
 
 
-export default function TransactionTable() {
-  const { library, account, chainId } = useWeb3React();
-  let props = {
-    chain: chainId,
-    accountAddress: '0x869eC00FA1DC112917c781942Cc01c68521c415e'
-  }
-
-  // const fetchCovalentData = {loading: false}
-  const fetchCovalentData = useCovalent(
-    '0x869eC00FA1DC112917c781942Cc01c68521c415e',
-    // account,
-    chainId
-  );
-  const covalentData = useMemo(() => {
-    return fetchCovalentData;
-  }, [fetchCovalentData]);
-
-
+export default function Table(props) {
 
   return (
     <Box py={{ base: "2", md: "4" }}>
       <TableContent
-        walletData={_.get(covalentData, 'balance.data.items', [])}
+        walletData={props.balances}
+        selectedIndices={props.selectedIndices}
+        setSelectedIndices={props.setSelectedIndices}
       />
     </Box>
   );

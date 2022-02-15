@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash';
 
-import { Box, Img, Stack } from '@chakra-ui/react'
+import { Box, Image, Stack } from '@chakra-ui/react'
 
 export default function TokenDisplay(props) {
   const symbol = props.symbol || '';
@@ -12,7 +12,7 @@ export default function TokenDisplay(props) {
     	{
     		props.imageUrl && (
 		      <Box flexShrink={0} h="10" w="10">
-		        <Img
+		        <Image
 		          objectFit="cover"
 		          htmlWidth="160px"
 		          htmlHeight="160px"
@@ -21,6 +21,7 @@ export default function TokenDisplay(props) {
 		          rounded="full"
 		          src={imageUrl}
 		          alt=""
+		          fallback={(<></>)}
 		        />
 		      </Box>
     		)

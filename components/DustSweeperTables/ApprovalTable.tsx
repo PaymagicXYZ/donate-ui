@@ -18,22 +18,29 @@ export default function TransactionTable() {
     accountAddress: '0x869eC00FA1DC112917c781942Cc01c68521c415e'
   }
 
-  // const fetchCovalentData = {loading: false}
   const fetchCovalentData = useCovalent(
     '0x869eC00FA1DC112917c781942Cc01c68521c415e',
     // account,
     chainId
   );
-  const covalentData = useMemo(() => {
-    return fetchCovalentData;
+  const balances = useMemo(() => {
+  	const items = _.get(fetchCovalentData, 'balance.data.items', [])
+  	const validBalances = _.filter(
+      items, (i) => {
+        return i.quote > 5;
+      }
+    );
+
+    return validBalances;
   }, [fetchCovalentData]);
 
+console.log(balances)
 
 
   return (
     <Box py={{ base: "2", md: "4" }}>
       <ApprovalTableContent
-        walletData={_.get(covalentData, 'balance.data.items', [])}
+        walletData={balances}
       />
     </Box>
   );

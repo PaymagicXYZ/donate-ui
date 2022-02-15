@@ -6,14 +6,12 @@ export default function PageContainer(props) {
   return (
     <>
       <Header />
-        <Box height="140vh" overflow="hidden" position="relative">
+        <Box overflow="hidden" position="relative" bg={mode('purple.50', 'purple.800')}>
         	<Flex h="100%" id="app-container">
-    				<Box bg={mode('purple.50', 'purple.800')} flex="1">
-      				{ props.children }
-      				<Footer />
-      			</Box>
+      			{ props.children }
         	</Flex>
       	</Box>
+      <Footer />
     </>
   );
 }

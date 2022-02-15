@@ -18,7 +18,7 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { FiSend, FiToggleLeft } from "react-icons/fi";
-import BalanceTable from '../../components/DustSweeperTables/Table'
+import SubmitApprovalsForm from '../../components/DustSweeperTables/SubmitApprovalsForm'
 import ApprovalTable from '../../components/DustSweeperTables/ApprovalTable'
 import { WalletChecker } from "../../components/WalletChecker";
 import { ethers } from "ethers";
@@ -34,16 +34,6 @@ import { useWeb3React } from "@web3-react/core";
 import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function Page() {
-  const { library, account, chainId } = useWeb3React();
-  let props = {
-    chain: chainId,
-    accountAddress: '0x869eC00FA1DC112917c781942Cc01c68521c415e'
-  }
-  const router = useRouter();
-
-
-
-
 
   return (
     <PageContainer>
@@ -67,22 +57,7 @@ export default function Page() {
             </Center>
           <TabPanels>
             <TabPanel>
-              <BalanceTable />
-              <Center>
-                <Button
-                  size="lg"
-                  fontWeight="normal"
-                  colorScheme="purple"
-                  type="submit"
-                  value="Submit"
-                  leftIcon={<FiToggleLeft />}
-                  isDisabled={false}
-                  isLoading={false}
-                  loadingText="Sign txs"
-                >
-                  Approve All to Sweep
-                </Button>
-              </Center>
+              <SubmitApprovalsForm />
             </TabPanel>
             <TabPanel>
               <ApprovalTable />

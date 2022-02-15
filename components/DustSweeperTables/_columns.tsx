@@ -11,7 +11,6 @@ import numeral from "numeral";
 import TokenDisplay from '../TokenDisplay'
 import TokenAmountDisplay from '../TokenAmountDisplay'
 
-
 import {
   shortenAddress,
   shortenTx,
@@ -20,10 +19,6 @@ import {
 } from "../../utils"
 
 export const cols = [
-  // {
-  //   Header: 'ACTION',
-  //   accessor: 'name'
-  // },
   {
     Header: 'BALANCE',
     accessor: 'balance',
@@ -74,17 +69,12 @@ export const cols = [
   //   }
   // },
   {
-    Header: 'RECEIVE 90% OF MARKET PRICE',
+    Header: 'TO RECEIVE IN ETH',
     accessor: 'balance',
     Cell: function Cell(data: any) {
       return (
         <TokenAmountDisplay
           amountUsd={data.quote * .9}
-          amountTokens={ethers.utils.formatUnits(
-            ethers.BigNumber.from(data.balance).div('10').mul('9'),
-            data.contract_decimals
-          )}
-          symbol={'ETH'}
         />
       )
     }

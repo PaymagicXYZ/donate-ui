@@ -61,10 +61,10 @@ export function useCovalent(address, _chainId) {
       });
     }
 
-    if (!_.isUndefined(address)) {
+    if (!_.isUndefined(address) && !_.isUndefined(chainId)) {
       getData(address);
     }
-  }, [address]);
+  }, [address, _chainId]);
 
   return data;
 }
