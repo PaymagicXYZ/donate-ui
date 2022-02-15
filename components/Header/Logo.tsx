@@ -7,7 +7,7 @@ export const Logo = () => {
     <Link href="/">
       <a>
         <Stack direction="row" alignItems="center">
-          <Image src="/logo.png" alt="Paymagic" maxWidth="25vw" width="220px" />
+          <Image src="/logo.png" alt="Paymagic" maxWidth="25vw" width="600px" />
         </Stack>
       </a>
     </Link>
