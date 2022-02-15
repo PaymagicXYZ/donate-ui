@@ -24,28 +24,31 @@ import ERC20Contract from "../../artifacts/contracts/TestERC20.sol/TestERC20.jso
 export default function Page() {
   const { library, account, chainId } = useWeb3React();
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   async function getData() {
-  //     const erc20 = new ethers.Contract(
-  //       `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48`,
-  //       ERC20Contract.abi,
-  //       library
-  //     );
 
-  //     // event Approval(address indexed owner, address indexed spender, uint256 value);
-  //     const filterSpender = erc20.filters.Approval(null, '0x869eC00FA1DC112917c781942Cc01c68521c415e');
-  //     const filterOwner = erc20.filters.Approval('0x869eC00FA1DC112917c781942Cc01c68521c415e');
 
-  //     const logsFrom = await erc20.queryFilter(filterOwner, -10000, "latest");
 
-  //     console.log('logsFrom')
-  //     console.log(logsFrom)
-  //   }
+    async function getData() {
+      const erc20 = new ethers.Contract(
+        `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48`,
+        ERC20Contract.abi,
+        library.getSigner(account)
+      );
 
-  //   getData();
+      // event Approval(address indexed owner, address indexed spender, uint256 value);
+      const filterSpender = erc20.filters.Approval(null, '0x869eC00FA1DC112917c781942Cc01c68521c415e');
+      const filterOwner = erc20.filters.Approval('0x869eC00FA1DC112917c781942Cc01c68521c415e');
 
-  // }, []);
+      const logsFrom = await erc20.queryFilter(filterOwner, -5000, "latest");
+
+      console.log('logsFrom')
+      console.log(logsFrom)
+    }
+
+    getData();
+
+  }, []);
 
 
 

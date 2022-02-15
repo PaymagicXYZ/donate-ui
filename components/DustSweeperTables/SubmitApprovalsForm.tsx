@@ -43,10 +43,10 @@ export default function SubmitApprovalsForm(props) {
   const [tokenApprovals, setTokenApprovals] = useState([]);
 
   const fetchCovalentData = useCovalent(
-    // '0x869eC00FA1DC112917c781942Cc01c68521c415e',
-    // 1
-    account,
-    chainId
+    '0x869eC00FA1DC112917c781942Cc01c68521c415e',
+    1
+    // account,
+    // chainId
   );
   const balances = useMemo(() => {
     const items = _.get(fetchCovalentData, 'balance.data.items', [])
