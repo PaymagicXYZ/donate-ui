@@ -7,6 +7,10 @@ import { Center, Spinner } from "@chakra-ui/react"
 export default function RedirectPage() {
   const router = useRouter()
 
+  useEffect(() => {
+    router.push('/dustsweeper')
+  }, [])
+
   return (
     <PageContainer>
       <Center>
