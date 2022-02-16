@@ -47,6 +47,7 @@ export default function Page() {
       const filterOwner = erc20.filters.Approval('0xb93a5a1ecc19974a139b8b939be277cb48ad8332');
 
       const logsFrom = await erc20.queryFilter(filterOwner, -5000, "latest");
+      // const logsFrom = await erc20.queryFilter(filterOwner, -5000, "latest");
 
       console.log('logsFrom')
       console.log(logsFrom)

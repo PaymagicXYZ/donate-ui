@@ -46,13 +46,15 @@ export function TableContent(props) {
       <Thead bg={mode('gray.50', 'gray.800')}>
         <Tr>
           <Th whiteSpace="nowrap" scope="col" key={-1}>
-            {''}
+            <Center>
+              {'SELECT'}
+            </Center>
           </Th>
           {cols.map((column, index) => (
             <Th whiteSpace="nowrap" scope="col" key={index}>
               {column.Header}
 
-              {column.accessor === 'balanceETH' && <Tooltip label='Balance at Market Price with 10% discount' fontSize='md'>
+              {column.accessor === 'balanceETH' && <Tooltip label='Token Balance at ChainLink Market Price with 10% discount' fontSize='md'>
                 <InfoIcon w={4} h={4} ml='1'/>
               </Tooltip>}
 

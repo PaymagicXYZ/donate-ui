@@ -24,17 +24,7 @@ export const cols = [
   //   Header: 'ACTION',
   //   accessor: 'name'
   // },
-  {
-    Header: 'MAKER',
-    accessor: 'contract_address',
-    Cell: function Cell(data: any) {
-      return (
-      	<Text>
-      		{shortenAddress(data.contract_address)}
-      	</Text>
-      )
-    }
-  },
+
   {
     Header: 'YOU GET',
     accessor: 'balance',
@@ -64,15 +54,6 @@ export const cols = [
     }
   },
   {
-    Header: 'PRICE (CHAINLINK)',
-    accessor: 'quote_rate',
-    Cell: function Cell(data: any) {
-      return numeral(
-        data.quote_rate
-        ).format('$0,0.00')
-    }
-  },
-  {
     Header: 'COST TO YOU (9% OFF)',
     accessor: 'balance',
     Cell: function Cell(data: any) {
@@ -85,6 +66,28 @@ export const cols = [
           )}
           symbol={'ETH'}
         />
+      )
+    }
+  },
+  {
+    Header: 'DISCOUNT',
+    accessor: 'discount',
+    Cell: function Cell(data: any) {
+      return (
+        <TokenAmountDisplay
+          amountUsd={data.quote * .09}
+        />
+      )
+    }
+  },
+  {
+    Header: 'MAKER',
+    accessor: 'contract_address',
+    Cell: function Cell(data: any) {
+      return (
+        <Text>
+          {shortenAddress(data.contract_address)}
+        </Text>
       )
     }
   }
