@@ -4,7 +4,7 @@ import { Box, Stack, Divider, Text, Link as ChakraLink, useColorModeValue as mod
 
 export default function Footer() {
   return (
-    <Box as="footer" role="contentinfo" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }} bg={mode('purple.50', 'purple.800')}>
+    <Box as="footer" role="contentinfo" m="0" w="100%" py="12" px={{ base: '4', md: '8' }} bg={mode('purple.50', 'purple.800')}>
       <Divider mt="6" mb="2"/>
       <Stack color="grey" direction="row" spacing="4" align="center" justify="center">
         <ChakraLink href="/about">

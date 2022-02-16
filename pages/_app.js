@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider theme={theme}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Head>
-          <title>Paymagic</title>
+          <title>DustSweeper</title>
           <meta name="description" content="Fill in" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

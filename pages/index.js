@@ -13,7 +13,7 @@ export default function RedirectPage() {
 
   return (
     <PageContainer>
-      <Center>
+      <Center w="100%" mx="auto">
         <Spinner size="xl" color="purple"/>
       </Center>
     </PageContainer>

@@ -16,9 +16,9 @@ import {
 import { cols } from './_approvalTableColumns'
 
 export function ApprovalTableContent(props) {
-  const { walletData } = props
+  const { approvalList } = props
 
-  // console.log(walletData)
+  // console.log(approvalList)
 
   return (
     <Table borderWidth="1px" fontSize="sm">
@@ -35,9 +35,9 @@ export function ApprovalTableContent(props) {
       <Tbody>
 
 
-        {_.isEmpty(walletData) ? 
+        {_.isEmpty(approvalList) ? 
           (<Center p={6}><Text as="i">No data found</Text></Center>) :
-          walletData.map((row, index) => (
+          approvalList.map((row, index) => (
             <Tr key={index}>
               {cols.map((column, index) => {
                 const cell = row[column.accessor as keyof typeof row]

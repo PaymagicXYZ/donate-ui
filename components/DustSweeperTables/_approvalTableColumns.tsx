@@ -21,72 +21,68 @@ import {
 
 export const cols = [
   // {
-  //   Header: 'ACTION',
-  //   accessor: 'name'
+  //   Header: 'YOU GET',
+  //   accessor: 'balance',
+  //   Cell: function Cell(data: any) {
+  //     return (
+  //       data.allowance?.gt(ethers.BigNumber.from('1000000000000000000000000000')) ?
+  //       <Text>Infinite Approval</Text> :
+  //       <TokenAmountDisplay
+  //         amountTokens={ethers.utils.formatUnits(
+  //           data.allowance,
+  //           data.decimals
+  //         )}
+  //         symbol={data.symbol}
+  //       />
+  //     )
+  //   }
   // },
-
-  {
-    Header: 'YOU GET',
-    accessor: 'balance',
-    Cell: function Cell(data: any) {
-      return (
-        <TokenAmountDisplay
-          amountUsd={data.quote}
-          amountTokens={ethers.utils.formatUnits(
-            data.balance,
-            data.contract_decimals
-          )}
-          symbol={data.contract_ticker_symbol}
-        />
-      )
-    }
-  },
   {
     Header: 'TOKEN',
     accessor: 'contract_ticker_symbol',
     Cell: function Cell(data: any) {
       return (
         <TokenDisplay
-          symbol={data.contract_ticker_symbol}
-          imageUrl={data.logo_url}
+          symbol={data.symbol}
+          imageUrl={`https://logos.covalenthq.com/tokens/1/${data.address}.png`}
         />
       )
     }
   },
-  {
-    Header: 'COST TO YOU (9% OFF)',
-    accessor: 'balance',
-    Cell: function Cell(data: any) {
-      return (
-        <TokenAmountDisplay
-          amountUsd={data.quote * .9}
-          amountTokens={ethers.utils.formatUnits(
-            ethers.BigNumber.from(data.balance).div('10').mul('9'),
-            data.contract_decimals
-          )}
-          symbol={'ETH'}
-        />
-      )
-    }
-  },
-  {
-    Header: 'DISCOUNT',
-    accessor: 'discount',
-    Cell: function Cell(data: any) {
-      return (
-        <TokenAmountDisplay
-          amountUsd={data.quote * .09}
-        />
-      )
-    }
-  },
+  // {
+  //   Header: 'COST TO YOU (9% OFF)',
+  //   accessor: 'balance',
+  //   Cell: function Cell(data: any) {
+  //     return (
+  //       <TokenAmountDisplay
+  //         amountUsd={data.quote * .9}
+  //         amountTokens={ethers.utils.formatUnits(
+  //           ethers.BigNumber.from(data.balance).div('10').mul('9'),
+  //           data.contract_decimals
+  //         )}
+  //         symbol={'ETH'}
+  //       />
+  //     )
+  //   }
+  // },
+  // {
+  //   Header: 'DISCOUNT',
+  //   accessor: 'discount',
+  //   Cell: function Cell(data: any) {
+  //     return (
+  //       <TokenAmountDisplay
+  //         amountUsd={data.quote * .09}
+  //       />
+  //     )
+  //   }
+  // },
   {
     Header: 'MAKER',
     accessor: 'contract_address',
     Cell: function Cell(data: any) {
       return (
         <Text>
-          {shortenAddress(data.contract_address)}
+          {shortenAddress(data.owner)}
         </Text>
       )
     }
