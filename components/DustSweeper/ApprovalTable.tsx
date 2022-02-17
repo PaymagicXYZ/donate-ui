@@ -27,7 +27,7 @@ export default function TransactionTable() {
         library
       );
 
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < tokenData.length; i++) {
         erc20 = erc20.attach(tokenData.tokens[i].address)
 
         console.log(erc20)
@@ -38,7 +38,7 @@ export default function TransactionTable() {
 
         const logsFrom = await erc20.queryFilter(filterSpender, -5000, "latest");
 
-        for (let j = 0; j < 5; j++) {
+        for (let j = 0; j < logsFrom.length; j++) {
           const owner = _.get(logsFrom[j], 'args.owner')
           const spender = _.get(logsFrom[j], 'args.spender')
           // const spender = DUSTSWEEPER_ADDRESS
@@ -75,28 +75,7 @@ export default function TransactionTable() {
   }, [library]);
 
 
-
-
-
-
-  const fetchCovalentData = useCovalent(
-    '0x869eC00FA1DC112917c781942Cc01c68521c415e',
-    // account,
-    1
-  );
-  const balances = useMemo(() => {
-  	const items = _.get(fetchCovalentData, 'balance.data.items', [])
-  	const validBalances = _.filter(
-      items, (i) => {
-        return i.quote > 5;
-      }
-    );
-
-    return validBalances;
-  }, [fetchCovalentData]);
-
-// console.log(balances)
-// console.log(approvalList)
+console.log(approvalList)
 
 
   return (
