@@ -13,6 +13,7 @@ import Transactor from "../../../utils/Transactor";
 import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
 import { useWeb3React } from "@web3-react/core";
 import { DUSTSWEEPER_ADDRESS } from '../../../utils/constants'
+import { ApprovalStep } from './ApprovalStep'
 
 export const VerticalSteps = ({tokenApprovals}) => {
   const { library, account, chainId } = useWeb3React();
@@ -25,69 +26,11 @@ export const VerticalSteps = ({tokenApprovals}) => {
       <Steps activeStep={activeStep}>
         {
           tokenApprovals?.map((x,i) => {
-            let loading = false
-
-            async function handleApproval() {
-              function afterMine() {
-                loading = false
-                nextStep
-              }
-
-              console.log("Send Approval Tx");
-              console.log(loading);
-              loading = true
-              console.log(loading);
-
-              const erc20 = new ethers.Contract(
-                x.contract_address,
-                ERC20Contract.abi,
-                library.getSigner(account)
-              );
-
-              const amountBN = ethers.BigNumber.from(x.balance)
-              const tx = Transactor(library, afterMine);
-              tx(
-                erc20.approve(
-                  DUSTSWEEPER_ADDRESS,
-                  amountBN
-                )
-              );
-            }
-
-
             return (
-
-              <Step title={`Approve ${x.contract_ticker_symbol}`} key={i}>
-                <StepContent>
-                  <Stack shouldWrapChildren spacing="4">
-                    <HStack spacing="4" shouldWrapChildren>
-                      <TokenAmountDisplay
-                        amountUsd={x.quote}
-                        amountTokens={ethers.utils.formatUnits(
-                          x.balance,
-                          x.contract_decimals
-                        )}
-                        symbol={x.contract_ticker_symbol}
-                      />
-                      <TokenDisplay
-                        imageUrl={x.logo_url}
-                      />
-                      <Button
-                        colorScheme="purple"
-                        variant="outline"
-                        size="sm"
-                        onClick={handleApproval}
-                        leftIcon={<FiToggleLeft />}
-                        loadingText="Sign tx"
-                        isLoading={loading}
-                      >
-                        Approve
-                      </Button>
-                    </HStack>
-                  </Stack>
-                </StepContent>
-              </Step>
-
+              <ApprovalStep
+                approvalStep={x}
+                i={i}
+              />
             )
           })
         }
