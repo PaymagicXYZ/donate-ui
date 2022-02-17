@@ -69,6 +69,8 @@ export const ApprovalStep = ({approvalStep, i}) => {
               onClick={handleApproval}
               leftIcon={<FiToggleLeft />}
               loadingText="Sign tx"
+              isLoading={loading}
+
             >
               Approve
             </Button>
