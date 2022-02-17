@@ -39,7 +39,7 @@ export default function Page() {
             <OrderedList>
               <ListItem fontSize="md">✅  Approve tokens (costing $8-15 each) to swap.</ListItem>
               <ListItem fontSize="md">🤖  Bots will execute the swap and pay the gas.</ListItem>
-              <ListItem fontSize="md">💰  You'll receive ETH in your wallet. Done!</ListItem>
+              <ListItem fontSize="md">💰  You will receive ETH in your wallet. Done!</ListItem>
             </OrderedList>
           </VStack>
         </VStack>
