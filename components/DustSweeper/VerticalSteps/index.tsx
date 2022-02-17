@@ -12,11 +12,11 @@ import TokenDisplay from '../../TokenDisplay'
 import Transactor from "../../../utils/Transactor";
 import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC20/ERC20.sol/ERC20.json";
 import { useWeb3React } from "@web3-react/core";
+import { DUSTSWEEPER_ADDRESS } from '../../../utils/constants'
 
 export const VerticalSteps = ({tokenApprovals}) => {
   const { library, account, chainId } = useWeb3React();
   const { nextStep, prevStep, reset, activeStep } = useSteps({ initialStep: 0 })
-  const DUSTSWEEPER_ADDRESS = '0x869eC00FA1DC112917c781942Cc01c68521c415e'
 
   console.log(tokenApprovals)
 

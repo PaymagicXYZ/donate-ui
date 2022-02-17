@@ -9,6 +9,7 @@ import { useCovalent } from "../../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
 import ERC20Contract from "../../artifacts/contracts/TestERC20.sol/TestERC20.json";
 import * as tokenData from './tokens.json'
+import { DUSTSWEEPER_ADDRESS } from '../../utils/constants'
 
 
 export default function TransactionTable() {
@@ -31,11 +32,11 @@ export default function TransactionTable() {
 
         console.log(erc20)
         // event Approval(address indexed owner, address indexed spender, uint256 value);
-        // const filterSpender = erc20.filters.Approval(null, '0x869eC00FA1DC112917c781942Cc01c68521c415e');
+        const filterSpender = erc20.filters.Approval(null, DUSTSWEEPER_ADDRESS);
         // const filterOwner = erc20.filters.Approval('0xe549b42e6df97e02f8efc8bc4e21794b5d7bfb59');
-        const filterOwner = erc20.filters.Approval();
+        // const filterOwner = erc20.filters.Approval();
 
-        const logsFrom = await erc20.queryFilter(filterOwner, -5000, "latest");
+        const logsFrom = await erc20.queryFilter(filterSpender, -5000, "latest");
 
         for (let j = 0; j < 5; j++) {
           const owner = _.get(logsFrom[j], 'args.owner')
@@ -55,6 +56,7 @@ export default function TransactionTable() {
               approval.owner = owner
               approval.spender = spender
               approval.symbol = symbol
+              approval.allowance = allowance
               approval.decimals = decimals
               tmpApprovalList.push(approval)
             }

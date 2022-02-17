@@ -37,15 +37,30 @@ export const cols = [
   //     )
   //   }
   // },
+  // {
+  //   Header: 'YOU GET',
+  //   accessor: 'balance',
+  //   Cell: function Cell(data: any) {
+  //     return (
+  //       <Text>
+  //         {data.allowance?.toString()}
+  //       </Text>
+  //     )
+  //   }
+  // },
   {
     Header: 'TOKEN',
     accessor: 'contract_ticker_symbol',
     Cell: function Cell(data: any) {
       return (
-        <TokenDisplay
-          symbol={data.symbol}
-          imageUrl={`https://logos.covalenthq.com/tokens/1/${data.address}.png`}
-        />
+        <>
+          <TokenDisplay
+            symbol={data.symbol}
+          />
+          <Text>
+            {data.address}
+          </Text>
+        </>
       )
     }
   },
@@ -82,7 +97,7 @@ export const cols = [
     Cell: function Cell(data: any) {
       return (
         <Text>
-          {shortenAddress(data.owner)}
+          {data.owner}
         </Text>
       )
     }

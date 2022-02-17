@@ -26,16 +26,22 @@ export default function Page() {
     <PageContainer>
       <Box w={['97%', '90%', '70%']} mx="auto" >
         <VStack mt="8" mb="3">
-          <Heading as="h5" size="md">
-            🧹  Clean out small token balances and swap for ETH!
+          <Heading as="h3" size="md">
+            🧹  DustSweeper AMM
           </Heading>
-          <Center>
+          <Text size='md' >
+            Clean your wallet of small token balances and swap for ETH!
+          </Text>
+          <VStack mt='8'>
+            <Heading as="h5" size="sm" mt='8' align='right'>
+              How to use:
+            </Heading>
             <OrderedList>
               <ListItem fontSize="md">✅  Approve tokens (costing $8-15 each) to swap.</ListItem>
-              <ListItem fontSize="md">🤖  Bots will execute the swap and pay gas.</ListItem>
+              <ListItem fontSize="md">🤖  Bots will execute the swap and pay the gas.</ListItem>
               <ListItem fontSize="md">💰  You'll receive ETH in your wallet. Done!</ListItem>
             </OrderedList>
-          </Center>
+          </VStack>
         </VStack>
         <Tabs variant='soft-rounded' colorScheme='purple' mt="8">
           <Center>

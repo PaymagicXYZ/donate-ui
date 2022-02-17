@@ -24,6 +24,7 @@ import * as tokensData from './tokens.json'
 
 
 
+
 export function TableContent(props) {
   const [tokenRows, setTokenRows] = useState([]);
 
