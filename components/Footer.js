@@ -7,7 +7,7 @@ export default function Footer() {
     <Box as="footer" role="contentinfo" m="0" w="100%" py="12" px={{ base: '4', md: '8' }} bg={mode('purple.50', 'purple.800')}>
       <Divider mt="6" mb="2"/>
       <Stack color="grey" direction="row" spacing="4" align="center" justify="center">
-        <ChakraLink href="/about">
+        <ChakraLink href="https://launch.mirror.xyz/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk" isExternal>
           About
         </ChakraLink>
         <Text>

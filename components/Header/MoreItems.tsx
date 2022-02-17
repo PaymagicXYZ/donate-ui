@@ -29,7 +29,8 @@ export const MoreItems = () => {
       <MenuList borderRadius="xl">
         <MenuItem
           as="a"
-          href="/about"
+          href="https://launch.mirror.xyz/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk"
+          target="_blank"
           icon={<BiInfoCircle size="18" />}
         >
           About
