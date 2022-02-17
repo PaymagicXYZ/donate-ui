@@ -34,7 +34,7 @@ import { WalletChecker } from "../../components/WalletChecker";
 import { useCovalent } from "../../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
 import { VerticalSteps } from "./VerticalSteps"
-
+import * as tokensData from './tokens.json'
 
 export default function SubmitApprovalsForm(props) {
   const { library, account, chainId } = useWeb3React();
@@ -42,11 +42,17 @@ export default function SubmitApprovalsForm(props) {
   const [selectedIndices, setSelectedIndices] = useState([]);
   const [tokenApprovals, setTokenApprovals] = useState([]);
 
+  const tokenAddresses = useMemo(() => {
+    return tokensData.tokens.map(i => {
+      return i.address
+    })
+  }, []);
+
   const fetchCovalentData = useCovalent(
-    '0x869eC00FA1DC112917c781942Cc01c68521c415e',
-    1
-    // account,
-    // chainId
+    // '0x869eC00FA1DC112917c781942Cc01c68521c415e',
+    // 1
+    account,
+    chainId
   );
   const balances = useMemo(() => {
     const items = _.get(fetchCovalentData, 'balance.data.items', [])
@@ -56,7 +62,12 @@ export default function SubmitApprovalsForm(props) {
       }
     );
 
-    return validBalances;
+
+
+    const tmp = _.sortBy(validBalances, [function(o) { return !_.includes(tokenAddresses, o.contract_address) }]);
+
+
+    return tmp;
   }, [fetchCovalentData]);
 
   function handleSelectedIndicesChange(newValue) {

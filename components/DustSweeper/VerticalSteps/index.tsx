@@ -27,15 +27,16 @@ export const VerticalSteps = ({tokenApprovals}) => {
           tokenApprovals?.map((x,i) => {
             let loading = false
 
-
-            const afterMine = async () => {
-              loading = false
-              nextStep
-            }
-
             async function handleApproval() {
+              function afterMine() {
+                loading = false
+                nextStep
+              }
+
               console.log("Send Approval Tx");
+              console.log(loading);
               loading = true
+              console.log(loading);
 
               const erc20 = new ethers.Contract(
                 x.contract_address,
@@ -78,6 +79,7 @@ export const VerticalSteps = ({tokenApprovals}) => {
                         onClick={handleApproval}
                         leftIcon={<FiToggleLeft />}
                         loadingText="Sign tx"
+                        isLoading={loading}
                       >
                         Approve
                       </Button>

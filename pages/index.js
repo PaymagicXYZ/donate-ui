@@ -30,7 +30,7 @@ export default function Page() {
             🧹  DustSweeper AMM
           </Heading>
           <Text size='md' >
-            Clean your wallet of small token balances and swap for ETH!
+            Clean small token balances from your wallet and swap for ETH!
           </Text>
           <VStack mt='8'>
             <Heading as="h5" size="sm" mt='8' align='right'>
