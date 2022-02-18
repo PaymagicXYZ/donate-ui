@@ -30,6 +30,7 @@ export const VerticalSteps = ({tokenApprovals}) => {
               <ApprovalStep
                 approvalStep={x}
                 i={i}
+                key={i}
               />
             )
           })
