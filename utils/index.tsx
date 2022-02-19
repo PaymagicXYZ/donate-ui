@@ -160,12 +160,17 @@ export const addTreeToIPFS = async (tree) => {
   // actions.addContract(result.path, addressArray);
   // setIsDeployed(true);
 };
-
-export const switchNetwork = (library, chainId) => {
+export const switchToNetwork = async (
+  library,
+  chainId,
+) => {
+  if (!library?.provider?.request) {
+    return;
+  }
   const formattedChainId = utils.hexStripZeros(
     BigNumber.from(chainId).toHexString()
   );
-  library?.provider.request({
+  return library?.provider.request({
     method: "wallet_switchEthereumChain",
     params: [{ chainId: formattedChainId }],
   });
