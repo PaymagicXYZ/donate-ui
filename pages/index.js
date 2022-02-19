@@ -27,10 +27,10 @@ export default function Page() {
       <Box w={['97%', '90%', '70%']} mx="auto" >
         <VStack mt="8" mb="3">
           <Heading as="h3" size="md">
-            🧹  DustSweeper AMM
+            🧹  DustSweeper DEX
           </Heading>
           <Text size='md' >
-            Clean small token balances from your wallet and swap for ETH!
+            Clean out small token balances and swap for ETH with minimal gas!
           </Text>
           <VStack mt='8'>
             <Heading as="h5" size="sm" mt='8' align='right'>
@@ -55,7 +55,7 @@ export default function Page() {
               <SubmitApprovalsForm />
             </TabPanel>
             <TabPanel>
-              <ApprovalTable />
+              <ApprovalTable toggle={true}/>
             </TabPanel>
           </TabPanels>
         </Tabs>

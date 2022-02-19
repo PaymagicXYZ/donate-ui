@@ -52,7 +52,8 @@ export default function SubmitApprovalsForm(props) {
     // '0x869eC00FA1DC112917c781942Cc01c68521c415e',
     // 1
     account,
-    chainId
+    // chainId
+    1
   );
   const balances = useMemo(() => {
     const items = _.get(fetchCovalentData, 'balance.data.items', [])
@@ -81,6 +82,10 @@ export default function SubmitApprovalsForm(props) {
     })
     setTokenApprovals(tmpTokenApprovals)
   }
+
+  console.log('balances')
+  console.log(chainId)
+  console.log(balances)
 
   return (
     <WalletChecker loading={fetchCovalentData.loading} account={account}>

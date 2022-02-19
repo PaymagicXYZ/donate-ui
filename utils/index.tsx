@@ -28,6 +28,8 @@ export function translateChainId(chainId) {
       return "Goerli";
     case 1337:
       return "Localhost";
+    case 31337:
+      return "Localhost";
     case 80001:
       return "Mumbai Testnet";
     default:
