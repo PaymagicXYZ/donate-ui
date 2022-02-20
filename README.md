@@ -1,11 +1,13 @@
-# DustSweeper ETHGlobal Hackathon
+# DustSweeper - ETHDenver 2022 Hackathon
+
+Backend Repo: https://github.com/PaymagicXYZ/dustsweeper-backend
 
 React, NextJS and Chakra-UI
 
 ### 📦 Install
 
 ```
-$ git clone https://github.com/PaymagicXYZ/paymagic-fe-new
+$ git clone https://github.com/PaymagicXYZ/dustsweeper-ui
 
 $ yarn install
 ```
