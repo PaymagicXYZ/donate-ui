@@ -1,6 +1,7 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-export const DUSTSWEEPER_ADDRESS =  process.env.REACT_APP_DUSTSWEEPER || '0x01c1DeF3b91672704716159C9041Aeca392DdFfb'
+export const DUSTSWEEPER_ADDRESS = '0x32EEce76C2C2e8758584A83Ee2F522D4788feA0f'
+// process.env.REACT_APP_DUSTSWEEPER || '0x01c1DeF3b91672704716159C9041Aeca392DdFfb'
 
 
 export const env = process.env.REACT_APP_APP_ENV || "test"; // defaulting to after ||
