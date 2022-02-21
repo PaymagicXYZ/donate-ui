@@ -14,7 +14,7 @@ export default function Footer() {
           |
         </Text>
         <ChakraLink href="https://www.paymagic.xyz" isExternal>
-          Paymagic
+          Built by Paymagic
         </ChakraLink>
       </Stack>
     </Box>
