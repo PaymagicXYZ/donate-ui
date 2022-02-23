@@ -25,26 +25,28 @@ const NetworkMenu = () => {
 
   const WrongNetworkButton = () => {
     return (
-      <MenuButton as={Button} colorScheme="red"  onClick={() => switchToNetwork(library, 1337)}>
-        Wrong Network. Switch to Local Mainnet Fork
+      <MenuButton
+        as={Button}
+        colorScheme="red"
+        onClick={() => switchToNetwork(library, 1)}
+      >
+        Wrong Network. Switch to Mainnet
       </MenuButton>
     );
   };
 
-
-
   return (
     <Menu>
-      {chainId == 1337 ? (
+      {chainId == 1 ? (
         <MenuButton
           as={Button}
           borderRadius="xl"
-          backgroundColor='purple.100'
+          backgroundColor="purple.100"
           _hover={{
-            bg: 'purple.400',
+            bg: "purple.400",
           }}
           _active={{
-            bg: 'purple.400',
+            bg: "purple.400",
           }}
         >
           {translateChainId(chainId)}
@@ -73,12 +75,9 @@ const NetworkMenu = () => {
               Ethereum
             </Flex>
           </MenuItemOption> */}
-     
-    
-         
-        {/* </MenuOptionGroup> */}
+
+      {/* </MenuOptionGroup> */}
       {/* </MenuList> */}
-    
     </Menu>
     // <Menu>
     //   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
