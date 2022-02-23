@@ -37,17 +37,17 @@ export const cols = [
   //     )
   //   }
   // },
-  // {
-  //   Header: 'YOU GET',
-  //   accessor: 'balance',
-  //   Cell: function Cell(data: any) {
-  //     return (
-  //       <Text>
-  //         {data.allowance?.toString()}
-  //       </Text>
-  //     )
-  //   }
-  // },
+  {
+    Header: 'YOU GET',
+    accessor: 'balance',
+    Cell: function Cell(data: any) {
+      return (
+        <Text>
+          {data.allowance}
+        </Text>
+      )
+    }
+  },
   {
     Header: 'TOKEN',
     accessor: 'contract_ticker_symbol',

@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { BiInfoCircle } from "react-icons/bi";
-import { SiTelegram, SiTwitter } from "react-icons/si";
+import { SiDiscord, SiTwitter } from "react-icons/si";
 
 export const MoreItems = () => {
   return (
@@ -37,19 +37,19 @@ export const MoreItems = () => {
         </MenuItem>
         <MenuItem
           as="a"
-          href="https://t.me/paymagic"
+          href="https://discord.gg/CjeeqMeAGc"
           target="_blank"
-          icon={<SiTelegram size="18" />}
+          icon={<SiDiscord size="18" />}
         >
-          Paymagic Telegram
+          Discord
         </MenuItem>
         <MenuItem
           as="a"
-          href="https://twitter.com/paymagic_"
+          href="https://twitter.com/DustSweeperDAO"
           target="_blank"
           icon={<SiTwitter size="18" />}
         >
-          Paymagic Twitter
+          Twitter
         </MenuItem>
       </MenuList>
     </Menu>

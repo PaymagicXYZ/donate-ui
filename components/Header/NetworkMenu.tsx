@@ -15,7 +15,7 @@ import {
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
 import { translateChainId } from "../../utils";
-import { switchToNetwork } from "../../utils";
+import { switchNetwork } from "../../utils";
 
 const NetworkMenu = () => {
   const context = useWeb3React();
@@ -37,9 +37,10 @@ const NetworkMenu = () => {
 
   return (
     <Menu>
-      {chainId == 1 ? (
+      {chainId == 1 || chainId == 1337 ? (
         <MenuButton
           as={Button}
+          rightIcon={<ChevronDownIcon />}
           borderRadius="xl"
           backgroundColor="purple.100"
           _hover={{
@@ -54,7 +55,7 @@ const NetworkMenu = () => {
       ) : (
         <WrongNetworkButton />
       )}
-      {/* <MenuList minWidth="240px">
+      <MenuList minWidth="240px">
         <MenuOptionGroup
           // defaultValue="asc"
           title="Select a network"
@@ -62,7 +63,7 @@ const NetworkMenu = () => {
         >
           <MenuItemOption
             value="ethereum"
-            onClick={() => switchNetwork(library, 1337)}
+            onClick={() => switchNetwork(library, 1)}
           >
             <Flex>
               <Image
@@ -79,43 +80,6 @@ const NetworkMenu = () => {
       {/* </MenuOptionGroup> */}
       {/* </MenuList> */}
     </Menu>
-    // <Menu>
-    //   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-    //     {translateChainId(chainId)}
-    //   </MenuButton>
-
-    //   {chainId == 1 ? (
-    //     <MenuList>
-    //       <MenuItem onClick={() => switchNetwork(library, 137)}>
-    //         {translateChainId(137)}
-    //       </MenuItem>
-    //       <MenuItem onClick={() => switchNetwork(library, 42)}>
-    //         {translateChainId(42)}
-    //       </MenuItem>
-    //     </MenuList>
-    //   ) : null}
-
-    //   {chainId == 42 ? (
-    //     <MenuList>
-    //       <MenuItem onClick={() => switchNetwork(library, 1)}>
-    //         {translateChainId(1)}
-    //       </MenuItem>
-    //       <MenuItem onClick={() => switchNetwork(library, 137)}>
-    //         {translateChainId(137)}
-    //       </MenuItem>
-    //     </MenuList>
-    //   ) : null}
-    //   {chainId == 137 ? (
-    //     <MenuList>
-    //       <MenuItem onClick={() => switchNetwork(library, 1)}>
-    //         {translateChainId(1)}
-    //       </MenuItem>
-    //       <MenuItem onClick={() => switchNetwork(library, 42)}>
-    //         {translateChainId(42)}
-    //       </MenuItem>
-    //     </MenuList>
-    //   ) : null}
-    // </Menu>
   );
 };
 
