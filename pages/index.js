@@ -20,6 +20,7 @@ import SubmitApprovalsForm from '../components/DustSweeper/SubmitApprovalsForm'
 import ApprovalTable from '../components/DustSweeper/ApprovalTable'
 import PageContainer from "../components/PageContainer/PageContainer";
 import { HeadingGroup } from "../components/Forms/HeadingGroup";
+import ModalWarning from "../components/ModalWarning";
 
 export default function Page() {
   return (
@@ -37,9 +38,9 @@ export default function Page() {
               How to use:
             </Heading>
             <OrderedList>
-              <ListItem fontSize="md">✅  Approve tokens (costing $8-15 each) to swap.</ListItem>
-              <ListItem fontSize="md">🤖  Bots will execute the swap and pay the gas.</ListItem>
-              <ListItem fontSize="md">💰  You will receive ETH in your wallet. Done!</ListItem>
+              <ListItem fontSize="md">⛽  Approve tokens to swap costing ~$10 each.</ListItem>
+              <ListItem fontSize="md">🤖  Bots swap the tokens for ETH at a discount and pay the gas.</ListItem>
+              <ListItem fontSize="md">💰  You receive ETH in your wallet once done, usually within 24hrs.</ListItem>
             </OrderedList>
           </VStack>
         </VStack>
@@ -59,6 +60,7 @@ export default function Page() {
             </TabPanel>
           </TabPanels>
         </Tabs>
+        {false && <ModalWarning />}
       </Box>
     </PageContainer>
   );
