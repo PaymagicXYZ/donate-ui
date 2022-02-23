@@ -13,8 +13,20 @@ export default function Footer() {
         <Text>
           |
         </Text>
+        <ChakraLink href="https://discord.gg/CjeeqMeAGc" isExternal>
+          Discord
+        </ChakraLink>
+        <Text>
+          |
+        </Text>
+        <ChakraLink href="https://twitter.com/DustSweeperDAO" isExternal>
+          Twitter
+        </ChakraLink>
+        <Text>
+          |
+        </Text>
         <ChakraLink href="https://www.paymagic.xyz" isExternal>
-          Paymagic
+          Built by Paymagic
         </ChakraLink>
       </Stack>
     </Box>

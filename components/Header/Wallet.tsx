@@ -81,7 +81,8 @@ export default function Wallet() {
   useInactiveListener(!triedEager);
 
   const Account = () => {
-    // console.log("account", account);
+    console.log("account", account);
+    console.log("chainId", chainId);
     if (!library) {
       return (
         <Button colorScheme="purple" onClick={() => activate(injected)}>

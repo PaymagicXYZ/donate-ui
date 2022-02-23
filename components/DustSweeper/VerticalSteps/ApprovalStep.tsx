@@ -21,11 +21,13 @@ export const ApprovalStep = ({approvalStep, i}) => {
 
   console.log(approvalStep)
 
+  function afterMine() {
+    setLoading(false)
+    nextStep
+  }
+
+
 	async function handleApproval() {
-	  function afterMine() {
-      setLoading(false)
-	    nextStep
-	  }
 
     setLoading(true)
 
