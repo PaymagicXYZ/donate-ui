@@ -66,7 +66,7 @@ export default function Wallet() {
           const resolver = await provider.getResolver(name);
           const avatar = await resolver.getText("avatar");
           setENSAvatar(avatar);
-          console.log(avatar);
+          // console.log(avatar);
         }
       } catch (error) {
         //It will send an error if the address is not registered on the ENS or the network is not supported
