@@ -55,30 +55,6 @@ const NetworkMenu = () => {
       ) : (
         <WrongNetworkButton />
       )}
-      <MenuList minWidth="240px">
-        <MenuOptionGroup
-          // defaultValue="asc"
-          title="Select a network"
-          // type="radio"
-        >
-          <MenuItemOption
-            value="ethereum"
-            onClick={() => switchNetwork(library, 1)}
-          >
-            <Flex>
-              <Image
-                boxSize="20px"
-                // borderRadius="full"
-                src="/ethereum-logo.png"
-                alt="ethereum-logo"
-                mr="5px"
-              />
-              Ethereum
-            </Flex>
-          </MenuItemOption> */}
-
-      {/* </MenuOptionGroup> */}
-      {/* </MenuList> */}
     </Menu>
   );
 };
