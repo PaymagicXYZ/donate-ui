@@ -7,8 +7,8 @@ export default function PageContainer(props) {
     <>
       <Header />
         <Alert status="error">
-          <Text>
-            The app only works on **Testnets** right now. If you would like to see it deployed to mainnet, consider giving <Link href={'https://mirror.xyz/dashboard/edit/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk'} isExternal>on Mirror</Link>.
+          <Text mx="auto">
+            The app only works on **Testnets** right now. <Link href={'https://discord.gg/CjeeqMeAGc'} isExternal>Join our Discord</Link> for updates on the mainnet launch..
           </Text>
         </Alert>
         <Box overflow="hidden" minH="100vh" position="relative" bg={mode('purple.50', 'purple.800')}>

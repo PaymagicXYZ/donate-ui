@@ -25,11 +25,7 @@ export default function TransactionTable(props) {
 
     if(toggle === 'true') {
       console.log('values')
-      setApprovalList([{
-        allowance: '0.4786 KP3R',
-        address: '0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44',
-        owner: '0x869ec00fa1dc112917c781942cc01c68521c415e'
-      }])   
+      setApprovalList([])   
       localStorage.setItem("toggle", 'false')   
     } else {
       console.log('no values')
