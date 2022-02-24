@@ -2,6 +2,7 @@ import {
   Box,
   Stack,
   StackProps,
+  Link,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import PageContainer from "../../components/PageContainer/PageContainer";
@@ -18,6 +19,7 @@ export default function Page() {
         <Box mx="auto" w="90%">
           <Stack as="section" spacing="6" {...props}>
             <HeadingGroup title="Accounts" size="lg" />
+            <Link href="/"> Back to Home</Link>
             <Card>
               <HoldingsList />
             </Card>

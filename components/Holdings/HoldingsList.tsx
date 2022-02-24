@@ -56,7 +56,7 @@ export default function HoldingsList(props) {
               {covalentData.loading ? (
                 <Text>Loading...</Text>
               ) : covalentData.history && covalentData.balance ? (
-                <Box>
+                <Box alignItems="center" padding="10">
                   <HistoryChart covalentData={covalentData} />
                   <Tabs>
                     <TabList>

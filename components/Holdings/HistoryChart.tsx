@@ -54,7 +54,7 @@ export function HistoryChart(props) {
   }, [days, covalentData]);
 
   return (
-    <Box>
+    <Box alignItems="center">
       {covalentData.loading ? (
         <Center p={6}>
           <Text as="i">Fetching data</Text>
