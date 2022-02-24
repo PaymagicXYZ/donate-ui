@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { useMemo } from "react";
 import {
   Heading,
   Text,
@@ -10,8 +11,6 @@ import {
   TabPanel,
   TabPanels,
   VStack,
-  HStack,
-  Stack,
   OrderedList,
   ListItem,
   Link,
@@ -20,10 +19,22 @@ import {
 import SubmitApprovalsForm from "../components/DustSweeper/SubmitApprovalsForm";
 import ApprovalTable from "../components/DustSweeper/ApprovalTable";
 import PageContainer from "../components/PageContainer/PageContainer";
-import { HeadingGroup } from "../components/Forms/HeadingGroup";
+// import { HeadingGroup } from "../components/Forms/HeadingGroup";
 import ModalWarning from "../components/ModalWarning";
-import { Dashboard } from "./dashboard/dashboard";
+import { Dashboard } from "../components/Holdings/Dashboard";
+import { CleanWallet } from "../components/CleanWallet/CleanWallet";
+
+import { useCovalent } from "../hooks/useCovalent";
+import { useWeb3React } from "@web3-react/core";
+
 export default function Page() {
+  const { library, account, chainId } = useWeb3React();
+  //only fetching mainnet for now
+  const fetchCovalentData = useCovalent(account, 1);
+  const covalentData = useMemo(() => {
+    return fetchCovalentData;
+  }, [fetchCovalentData]);
+
   return (
     <PageContainer>
       <Box w={["97%", "90%", "70%"]} mx="auto">
@@ -62,13 +73,13 @@ export default function Page() {
           </Center>
           <TabPanels>
             <TabPanel>
-              <SubmitApprovalsForm />
+              <CleanWallet {...{ account, covalentData }} />
             </TabPanel>
             <TabPanel>
               <ApprovalTable toggle={true} />
             </TabPanel>
             <TabPanel>
-              <Dashboard />
+              <Dashboard {...{ account, covalentData }} />
             </TabPanel>
           </TabPanels>
         </Tabs>
