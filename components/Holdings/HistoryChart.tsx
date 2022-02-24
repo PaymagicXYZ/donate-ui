@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "recharts";
 import _ from "lodash";
-import { Center, Container, Text, Select } from "@chakra-ui/react";
+import { Center, Box, Text, Select } from "@chakra-ui/react";
 import numeral from "numeral";
 
 export function HistoryChart(props) {
@@ -25,24 +25,21 @@ export function HistoryChart(props) {
   }
   const dates = [];
 
-  const value = useMemo(() => {
-    const value = [];
-    try {
-      covalentData.history.data.items[0].holdings.map((item) => {
-        dates.unshift(item.timestamp);
+  const value = [];
+  try {
+    covalentData.history.data.items[0].holdings.map((item) => {
+      dates.unshift(item.timestamp);
+    });
+    for (let i = 0; i < 31; i++) {
+      let calculatedValue = 0;
+      covalentData.history.data.items.forEach((item) => {
+        calculatedValue += item.holdings[i].close.quote;
       });
-      for (let i = 0; i < 31; i++) {
-        let calculatedValue = 0;
-        covalentData.history.data.items.forEach((item) => {
-          calculatedValue += item.holdings[i].close.quote;
-        });
-        value.unshift(calculatedValue);
-      }
-    } catch (e) {
-      console.log(e);
+      value.unshift(calculatedValue);
     }
-    return value;
-  }, [covalentData]);
+  } catch (e) {
+    console.log(e);
+  }
 
   useEffect(() => {
     if (covalentData.loading == false) {
@@ -57,12 +54,12 @@ export function HistoryChart(props) {
   }, [days, covalentData]);
 
   return (
-    <Container>
+    <Box>
       {covalentData.loading ? (
         <Center p={6}>
           <Text as="i">Fetching data</Text>
         </Center>
-      ) : _.isEmpty(covalentData.history) ? (
+      ) : _.isEmpty(covalentData.history.data) ? (
         <Center p={6}>
           <Text as="i">No history found</Text>
         </Center>
@@ -102,6 +99,6 @@ export function HistoryChart(props) {
           </Select>
         </>
       )}
-    </Container>
+    </Box>
   );
 }
