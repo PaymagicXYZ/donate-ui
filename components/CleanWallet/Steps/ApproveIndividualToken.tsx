@@ -13,7 +13,13 @@ import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC2
 import { useWeb3React } from "@web3-react/core";
 import { DUSTSWEEPER_ADDRESS } from "../../../utils/constants";
 
-export const ApproveIndividualToken = ({ token, i, nextStep }) => {
+export const ApproveIndividualToken = ({
+  token,
+  i,
+  nextStep,
+  activeStep,
+  length,
+}) => {
   const { library, account, chainId } = useWeb3React();
 
   const [
@@ -88,13 +94,13 @@ export const ApproveIndividualToken = ({ token, i, nextStep }) => {
               </Button>
             ) : (
               <Button size="sm" onClick={nextStep}>
-                Next
+                {length !== activeStep + 1 ? "Next" : "Done"}
               </Button>
             )}
           </HStack>
           {error && <Box color="red.500">{error}</Box>}
           <Link href={`https://etherscan.io/tx/${signed}`}>
-            View Transaction
+            {signed && "View Transaction"}
           </Link>
         </Stack>
       </StepContent>

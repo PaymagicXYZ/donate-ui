@@ -1,8 +1,8 @@
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { Box, Button, Center, HStack, Text } from "@chakra-ui/react";
 import { useSteps } from "./Hook/useStepsHook";
 import { Steps } from "./Steps";
 import { ApproveIndividualToken } from "./ApproveIndividualToken";
-export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
+export const ApproveTokenInSteps = ({ selectedFlatRows, onClose }) => {
   const { nextStep, prevStep, reset, activeStep } = useSteps({
     initialStep: 0,
   });
@@ -13,6 +13,8 @@ export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
         {selectedFlatRows?.map((row, i) => {
           return (
             <ApproveIndividualToken
+              activeStep={activeStep}
+              length={selectedFlatRows.length}
               nextStep={nextStep}
               token={row.cells}
               i={i}
@@ -28,9 +30,15 @@ export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
         shouldWrapChildren
       >
         <Text>
-          ✅ All approvals complete, you’ll receive ETH in your wallet shortly
+          ✅ All approvals complete, <br />
+          you’ll receive ETH in your wallet shortly
         </Text>
       </HStack>
+      <Center
+        display={activeStep === selectedFlatRows?.length ? "flex" : "none"}
+      >
+        <Button onClick={onClose}>Back to home</Button>
+      </Center>
     </Box>
   );
 };

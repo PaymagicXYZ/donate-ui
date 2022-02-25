@@ -19,7 +19,7 @@ export function ApprovalModal(props) {
         <ModalHeader>Approve Tokens</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <ApproveTokenInSteps {...{ selectedFlatRows }} />
+          <ApproveTokenInSteps {...{ selectedFlatRows, onClose }} />
         </ModalBody>
       </ModalContent>
     </Modal>
