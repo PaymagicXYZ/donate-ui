@@ -19,8 +19,7 @@ import { ChartContent } from "./ChartContent";
 import { HistoryChart } from "./HistoryChart";
 
 export default function HoldingsList(props) {
-  const covalentData = props.covalentData;
-  const account = props.account;
+  const { covalentData, account } = props;
   return (
     <Box>
       <Box as="section">

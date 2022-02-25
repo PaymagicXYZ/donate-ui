@@ -1,14 +1,14 @@
-import { Box, useColorModeValue as mode } from "@chakra-ui/react";
-import { Card } from "../Card/Card";
-// import HoldingsList from "./HoldingsList";
-
+import { useDisclosure } from "@chakra-ui/react";
+import { WalletChecker } from "../WalletChecker";
+import { ApprovalForm } from "./ApprovalForm";
+import { ApprovalModal } from "./ApprovalModal";
 export function CleanWallet(props) {
-  const covalentData = props.covalentData;
+  const { covalentData, account } = props;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box bg={mode("purple.50", "purple.800")}>
-      <Box mx="auto" w="90%">
-        <Card>{/* <HoldingsList {...covalentData} /> */}</Card>
-      </Box>
-    </Box>
+    <WalletChecker loading={covalentData.loading} account={account}>
+      <ApprovalForm {...{ covalentData, isOpen, onOpen, onClose }} />
+      <ApprovalModal {...{ isOpen, onOpen, onClose }} />
+    </WalletChecker>
   );
 }

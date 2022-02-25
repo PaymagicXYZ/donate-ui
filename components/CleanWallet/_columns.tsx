@@ -1,76 +1,56 @@
 import { Badge, Center } from "@chakra-ui/react";
 import * as React from "react";
 import { ethers } from "ethers";
-import { Text, Link } from "@chakra-ui/react";
+import { Text, Link, Tooltip } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import numeral from "numeral";
 import TokenDisplay from "../TokenDisplay";
 import TokenAmountDisplay from "../TokenAmountDisplay";
 
-import {
-  shortenAddress,
-  shortenTx,
-  getBlockExplorerLink,
-  displayISODatetime,
-} from "../../utils";
+import { displayISODatetime } from "../../utils";
 
 export const cols = [
   {
     Header: "TOKEN",
-    accessor: "contract_ticker_symbol",
-    Cell: function Cell(data: any) {
-      return (
-        <TokenDisplay
-          symbol={data.contract_ticker_symbol}
-          imageUrl={data.logo_url}
-        />
-      );
-    },
+    accessor: "symbol",
+    Cell: ({ value }) => (
+      <TokenDisplay imageUrl={value[1]} symbol={String(value[0])} />
+    ),
   },
 
   {
     Header: "PRICE",
     accessor: "quote_rate",
-    Cell: function Cell(data: any) {
-      return numeral(data.quote_rate).format("$0,0.00");
-    },
+    Cell: ({ value }) => numeral(value).format("$0,0.00"),
   },
 
   {
     Header: "LAST TRANSFERRED",
     accessor: "last_transferred_at",
-    Cell: function Cell(data: any) {
-      return <Text>{displayISODatetime(data.last_transferred_at)}</Text>;
-    },
+    Cell: ({ value }) => <Text>{displayISODatetime(value)}</Text>,
   },
 
   {
     Header: "BALANCE",
     accessor: "balance",
-    Cell: function Cell(data: any) {
-      return (
-        <TokenAmountDisplay
-          amountUsd={data.quote}
-          amountTokens={ethers.utils.formatUnits(
-            data.balance,
-            data.contract_decimals
-          )}
-          symbol={data.contract_ticker_symbol}
-        />
-      );
-    },
+    Cell: ({ value }) => (
+      <TokenAmountDisplay
+        amountUsd={value[0]}
+        amountTokens={ethers.utils.formatUnits(value[1], value[2])}
+        symbol={value[3]}
+      />
+    ),
   },
 
   {
     Header: "YOU RECEIVE IN ETH",
     accessor: "balanceETH",
-    Cell: function Cell(data: any) {
-      return (
+    Cell: ({ value }) =>
+      value == null ? null : (
         <Center>
-          <TokenAmountDisplay amountUsd={data.quote * 0.9} />
+          <TokenAmountDisplay amountUsd={value[0]} amountEth={value[1]} />
         </Center>
-      );
-    },
+      ),
   },
 
   // {
