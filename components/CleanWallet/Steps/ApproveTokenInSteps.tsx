@@ -23,17 +23,16 @@ export const ApproveTokenInSteps = ({ selectedFlatRows, onClose }) => {
           );
         })}
       </Steps>
-      <HStack
+      <Box
         display={activeStep === selectedFlatRows?.length ? "flex" : "none"}
         mt="10"
-        spacing="4"
-        shouldWrapChildren
       >
         <Text>
-          ✅ All approvals complete, <br />
-          you’ll receive ETH in your wallet shortly
+          ✅ &nbsp; All approvals complete, you’ll receive ETH in your wallet
+          shortly.
         </Text>
-      </HStack>
+      </Box>
+      <br />
       <Center
         display={activeStep === selectedFlatRows?.length ? "flex" : "none"}
       >

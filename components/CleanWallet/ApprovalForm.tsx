@@ -31,6 +31,7 @@ export function ApprovalForm(props) {
             asset.contract_ticker_symbol,
             asset.logo_url,
             asset.contract_address,
+            null,
           ],
           quote_rate: asset.quote_rate,
           last_transferred_at: asset.last_transferred_at,
