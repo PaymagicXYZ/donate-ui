@@ -16,7 +16,7 @@ import {
   Link,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import ApprovalTable from "../components/DustSweeper/ApprovalTable";
+import ApprovalTable from "../components/Opportunities/ApprovalTable";
 import PageContainer from "../components/PageContainer/PageContainer";
 // import { HeadingGroup } from "../components/Forms/HeadingGroup";
 import ModalWarning from "../components/ModalWarning";

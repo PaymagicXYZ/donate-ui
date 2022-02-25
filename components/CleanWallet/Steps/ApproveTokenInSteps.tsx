@@ -1,5 +1,5 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
-import { useSteps } from "./useSteps";
+import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { useSteps } from "./Hook/useStepsHook";
 import { Steps } from "./Steps";
 import { ApproveIndividualToken } from "./ApproveIndividualToken";
 export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
@@ -11,7 +11,14 @@ export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
     <Box mx="auto" maxW="2xl" py="10" px={{ base: "6", md: "8" }} minH="400px">
       <Steps activeStep={activeStep}>
         {selectedFlatRows?.map((row, i) => {
-          return <ApproveIndividualToken token={row.cells} i={i} key={i} />;
+          return (
+            <ApproveIndividualToken
+              nextStep={nextStep}
+              token={row.cells}
+              i={i}
+              key={i}
+            />
+          );
         })}
       </Steps>
       <HStack

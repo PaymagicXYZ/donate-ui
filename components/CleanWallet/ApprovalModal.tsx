@@ -12,7 +12,6 @@ import { ApproveTokenInSteps } from "./Steps/ApproveTokenInSteps";
 
 export function ApprovalModal(props) {
   const { isOpen, onClose, selectedFlatRows } = props;
-  console.log(selectedFlatRows);
   return (
     <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

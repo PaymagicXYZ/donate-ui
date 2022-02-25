@@ -1,20 +1,11 @@
 import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
-import {
-  Box,
-  Stack,
-  Button,
-  Text,
-  HStack,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Stack, Button, Link, HStack } from "@chakra-ui/react";
 import { FiToggleLeft } from "react-icons/fi";
 import numeral from "numeral";
 import _ from "lodash";
 import { Step } from "./Step";
 import { StepContent } from "./StepContent";
-import { Steps } from "./Steps";
-import { useSteps } from "./useSteps";
 import TokenAmountDisplay from "../../TokenAmountDisplay";
 import TokenDisplay from "../../TokenDisplay";
 import Transactor from "../../../utils/Transactor";
@@ -22,7 +13,7 @@ import ERC20Contract from "../../../artifacts/@openzeppelin/contracts/token/ERC2
 import { useWeb3React } from "@web3-react/core";
 import { DUSTSWEEPER_ADDRESS } from "../../../utils/constants";
 
-export const ApproveIndividualToken = ({ token, i }) => {
+export const ApproveIndividualToken = ({ token, i, nextStep }) => {
   const { library, account, chainId } = useWeb3React();
 
   const [
@@ -40,14 +31,14 @@ export const ApproveIndividualToken = ({ token, i }) => {
     token[5].value[1],
     token[4].value,
   ];
-  const { nextStep, prevStep, reset, activeStep } = useSteps({
-    initialStep: 0,
-  });
   const [loading, setLoading] = useState(false);
-
-  function afterMine() {
+  const [signed, setSigned] = useState("");
+  const [error, setError] = useState("");
+  function afterMine(result) {
     setLoading(false);
-    nextStep;
+    setError("");
+    // console.log(result);
+    result.hash ? setSigned(result.hash) : setError(result.message);
   }
 
   async function handleApproval() {
@@ -83,18 +74,26 @@ export const ApproveIndividualToken = ({ token, i }) => {
               symbol={symbol}
             />
             <TokenDisplay imageUrl={logo} />
-            <Button
-              colorScheme="purple"
-              variant="outline"
-              size="sm"
-              onClick={handleApproval}
-              leftIcon={<FiToggleLeft />}
-              loadingText="Sign tx"
-              isLoading={loading}
-            >
-              Approve
-            </Button>
+            {!signed ? (
+              <Button
+                colorScheme="purple"
+                variant="outline"
+                size="sm"
+                onClick={handleApproval}
+                leftIcon={<FiToggleLeft />}
+                loadingText="Sign tx"
+                isLoading={loading}
+              >
+                Approve
+              </Button>
+            ) : (
+              <Button size="sm" onClick={nextStep}>
+                Next
+              </Button>
+            )}
           </HStack>
+          {error && <Box color="red.500">{error}</Box>}
+          <Link href={`https://etherscan.io/tx/${signed}`}>{signed}</Link>
         </Stack>
       </StepContent>
     </Step>

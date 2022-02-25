@@ -3,7 +3,7 @@ import { parseUnits } from "@ethersproject/units";
 import { notification } from "antd";
 import { BLOCKNATIVE_ID } from "./constants";
 
-import Notify from "bnc-notify";
+// import Notify from "bnc-notify";
 
 // this should probably just be renamed to "notifier"
 // it is basically just a wrapper around BlockNative's wonderful Notify.js
@@ -12,7 +12,7 @@ import Notify from "bnc-notify";
 export default function Transactor(provider, cb, gasPrice, etherscan) {
   if (typeof provider !== "undefined") {
     // eslint-disable-next-line consistent-return
-    return async tx => {
+    return async (tx) => {
       const signer = provider.getSigner();
       const network = await provider.getNetwork();
       const options = {
@@ -21,11 +21,11 @@ export default function Transactor(provider, cb, gasPrice, etherscan) {
         networkId: network.chainId,
         desktopPosition: "topRight",
         // darkMode: Boolean, // (default: false)
-        transactionHandler: txInformation => {
+        transactionHandler: (txInformation) => {
           console.log("HANDLE TX", txInformation);
         },
       };
-      const notify = Notify(options);
+      // const notify = Notify(options);
 
       let etherscanNetwork = "";
       if (network.name && network.chainId > 1) {
@@ -53,53 +53,54 @@ export default function Transactor(provider, cb, gasPrice, etherscan) {
           result = await signer.sendTransaction(tx);
         }
         console.log("RESULT:", result);
-        console.log("Notify", notify);
+        // console.log("Notify", notify);
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
-        if ([1, 3, 4, 5, 42, 100, 137, 1337, 31337, 80001].indexOf(network.chainId) >= 0) {
-          const { emitter } = notify.hash(result.hash);
-          emitter.on("all", transaction => {
-            return {
-              onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
-            };
-          });
-          emitter.on('txConfirmed', transaction => {
-            console.log('txConfirmed');
-            cb('txConfirmed', transaction);
-            return {
-              onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
-            };
-          });
-          emitter.on('txCancel', transaction => {
-            console.log('txCancel', transaction);
-            cb('txCancel');
-            return {
-              onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
-            };
-          });
-          emitter.on('txFailed', transaction => {
-            console.log('txFailed');
-            cb('txFailed', transaction);
-            return {
-              onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
-            };
-          });
-        } else {
-          notification.info({
-            message: "Local Transaction Sent",
-            description: result.hash,
-            placement: "topRight",
-          });
-        }
-
+        // if ([1, 3, 4, 5, 42, 100, 137, 1337, 31337, 80001].indexOf(network.chainId) >= 0) {
+        //   const { emitter } = notify.hash(result.hash);
+        //   emitter.on("all", transaction => {
+        //     return {
+        //       onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
+        //     };
+        //   });
+        //   emitter.on('txConfirmed', transaction => {
+        //     console.log('txConfirmed');
+        //     cb('txConfirmed', transaction);
+        //     return {
+        //       onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
+        //     };
+        //   });
+        //   emitter.on('txCancel', transaction => {
+        //     console.log('txCancel', transaction);
+        //     cb('txCancel');
+        //     return {
+        //       onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
+        //     };
+        //   });
+        //   emitter.on('txFailed', transaction => {
+        //     console.log('txFailed');
+        //     cb('txFailed', transaction);
+        //     return {
+        //       onclick: () => window.open((etherscan || etherscanTxUrl) + transaction.hash),
+        //     };
+        //   });
+        // } else {
+        //   notification.info({
+        //     message: "Local Transaction Sent",
+        //     description: result.hash,
+        //     placement: "topRight",
+        //   });
+        // }
+        cb(result);
         return result;
       } catch (e) {
+        // console.log(e);
         cb(e);
-        notification.error({
-          message: "Transaction Error",
-          description: e.message,
-          desktopPosition: "topRight"
-        });
+        // notification.error({
+        //   message: "Transaction Error",
+        //   description: e.message,
+        //   desktopPosition: "topRight",
+        // });
       }
     };
   }

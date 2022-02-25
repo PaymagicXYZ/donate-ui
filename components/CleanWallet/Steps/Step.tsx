@@ -1,4 +1,4 @@
-import { CheckIcon } from '@chakra-ui/icons'
+import { CheckIcon } from "@chakra-ui/icons";
 import {
   Box,
   BoxProps,
@@ -8,21 +8,21 @@ import {
   HStack,
   Icon,
   useColorModeValue,
-} from '@chakra-ui/react'
-import * as React from 'react'
-import { useStep } from './useStep'
+} from "@chakra-ui/react";
+import * as React from "react";
+import { useStep } from "./Context/useStepContext";
 
 interface StepProps extends BoxProps {
-  title?: string
+  title?: string;
 }
 
 export const Step = (props: StepProps) => {
-  const { title, children, ...boxProps } = props
-  const { isActive, isCompleted, step } = useStep()
+  const { title, children, ...boxProps } = props;
+  const { isActive, isCompleted, step } = useStep();
 
-  const accentColor = useColorModeValue('purple.500', 'purple.300')
-  const mutedColor = useColorModeValue('gray.600', 'whiteAlpha.800')
-  const activeColor = useColorModeValue('white', 'black')
+  const accentColor = useColorModeValue("purple.500", "purple.300");
+  const mutedColor = useColorModeValue("gray.600", "whiteAlpha.800");
+  const activeColor = useColorModeValue("white", "black");
 
   return (
     <Box {...boxProps}>
@@ -30,22 +30,24 @@ export const Step = (props: StepProps) => {
         <Circle
           size="8"
           fontWeight="bold"
-          color={isActive ? activeColor : isCompleted ? accentColor : mutedColor}
-          bg={isActive ? accentColor : 'transparent'}
-          borderColor={isCompleted ? accentColor : 'inherit'}
-          borderWidth={isActive ? '0px' : '1px'}
+          color={
+            isActive ? activeColor : isCompleted ? accentColor : mutedColor
+          }
+          bg={isActive ? accentColor : "transparent"}
+          borderColor={isCompleted ? accentColor : "inherit"}
+          borderWidth={isActive ? "0px" : "1px"}
         >
           {isCompleted ? <Icon as={CheckIcon} /> : step}
         </Circle>
         <Heading
           fontSize="lg"
           fontWeight="semibold"
-          color={isActive || isCompleted ? 'inherit' : mutedColor}
+          color={isActive || isCompleted ? "inherit" : mutedColor}
         >
           {title}
         </Heading>
       </HStack>
       <Collapse in={isActive}>{children}</Collapse>
     </Box>
-  )
-}
+  );
+};
