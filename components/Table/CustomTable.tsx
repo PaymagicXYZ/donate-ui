@@ -33,7 +33,7 @@ export function CustomTable({ columns, data }) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    // rows,
+    rows,
     prepareRow,
     page,
     canPreviousPage,

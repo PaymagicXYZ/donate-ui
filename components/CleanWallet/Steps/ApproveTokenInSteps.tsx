@@ -27,7 +27,9 @@ export const ApproveTokenInSteps = ({ selectedFlatRows }) => {
         spacing="4"
         shouldWrapChildren
       >
-        <Text>✅ All approvals complete</Text>
+        <Text>
+          ✅ All approvals complete, you’ll receive ETH in your wallet shortly
+        </Text>
       </HStack>
     </Box>
   );

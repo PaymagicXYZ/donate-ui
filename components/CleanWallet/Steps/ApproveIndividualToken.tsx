@@ -57,7 +57,7 @@ export const ApproveIndividualToken = ({ token, i, nextStep }) => {
 
   return (
     <Step
-      title={`Approve ${symbol} for ≈${numeral(amountETHReceived).format(
+      title={`Approve ${symbol} to receive ≈${numeral(amountETHReceived).format(
         "0,00.0000a"
       )} ETH`}
       key={i}
@@ -93,7 +93,9 @@ export const ApproveIndividualToken = ({ token, i, nextStep }) => {
             )}
           </HStack>
           {error && <Box color="red.500">{error}</Box>}
-          <Link href={`https://etherscan.io/tx/${signed}`}>{signed}</Link>
+          <Link href={`https://etherscan.io/tx/${signed}`}>
+            View Transaction
+          </Link>
         </Stack>
       </StepContent>
     </Step>

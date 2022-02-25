@@ -17,30 +17,39 @@ export function ApprovalForm(props) {
         return !_.includes(tokenAddresses, o.contract_address);
       },
     ]);
-    const ethPrice = covalentData.balance.data.items[0].quote_rate;
-    const data = sortedItems.map((asset) => {
-      return {
-        symbol: [
-          asset.contract_ticker_symbol,
-          asset.logo_url,
-          asset.contract_address,
-        ],
-        quote_rate: asset.quote_rate,
-        last_transferred_at: asset.last_transferred_at,
-        balance: [
-          asset.quote,
-          asset.balance,
-          asset.contract_decimals,
-          asset.contract_ticker_symbol,
-        ],
-        balanceETH:
-          asset.contract_ticker_symbol == "ETH"
-            ? null
-            : [asset.quote * 0.9, (asset.quote * 0.9) / ethPrice],
-      };
+
+    let ethPrice;
+    sortedItems.forEach((item) => {
+      if (item.contract_ticker_symbol === "ETH") {
+        ethPrice = item.quote_rate;
+      }
     });
-    return data;
+    const data = sortedItems.map((asset) => {
+      if (asset.contract_ticker_symbol !== "ETH") {
+        return {
+          symbol: [
+            asset.contract_ticker_symbol,
+            asset.logo_url,
+            asset.contract_address,
+          ],
+          quote_rate: asset.quote_rate,
+          last_transferred_at: asset.last_transferred_at,
+          balance: [
+            asset.quote,
+            asset.balance,
+            asset.contract_decimals,
+            asset.contract_ticker_symbol,
+          ],
+          balanceETH:
+            asset.contract_ticker_symbol == "ETH"
+              ? null
+              : [asset.quote * 0.9, (asset.quote * 0.9) / ethPrice],
+        };
+      }
+    });
+    return data.filter((a) => a);
   }, [covalentData]);
+  console.log(balances);
   return (
     <Center>
       <BalanceTable {...{ balances }} />
