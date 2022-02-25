@@ -1,8 +1,7 @@
 import { Badge, Center } from "@chakra-ui/react";
 import * as React from "react";
 import { ethers } from "ethers";
-import { Text, Link, Tooltip } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/react";
 import numeral from "numeral";
 import TokenDisplay from "../TokenDisplay";
 import TokenAmountDisplay from "../TokenAmountDisplay";

@@ -1,15 +1,11 @@
 import _ from "lodash";
 import { useState, useMemo } from "react";
 import { Button, Center, VStack } from "@chakra-ui/react";
-import { FiSend, FiToggleLeft } from "react-icons/fi";
 import BalanceTable from "./BalanceTable";
 import tokensData from "./tokens.json";
 
 export function ApprovalForm(props) {
-  const { covalentData, isOpen, onOpen } = props;
-  const [selectedIndices, setSelectedIndices] = useState({});
-  const [tokenApprovals, setTokenApprovals] = useState([]);
-  console.log(selectedIndices);
+  const { covalentData } = props;
   const balances = useMemo(() => {
     const items = _.get(covalentData, "balance.data.items", []);
     const validBalances = _.filter(items, (i) => {
@@ -24,7 +20,11 @@ export function ApprovalForm(props) {
     const ethPrice = covalentData.balance.data.items[0].quote_rate;
     const data = sortedItems.map((asset) => {
       return {
-        symbol: [asset.contract_ticker_symbol, asset.logo_url],
+        symbol: [
+          asset.contract_ticker_symbol,
+          asset.logo_url,
+          asset.contract_address,
+        ],
         quote_rate: asset.quote_rate,
         last_transferred_at: asset.last_transferred_at,
         balance: [
@@ -43,23 +43,7 @@ export function ApprovalForm(props) {
   }, [covalentData]);
   return (
     <Center>
-      <VStack>
-        <BalanceTable {...{ balances, setSelectedIndices }} />
-        <Button
-          size="lg"
-          fontWeight="normal"
-          colorScheme="purple"
-          type="submit"
-          value="Submit"
-          leftIcon={<FiToggleLeft />}
-          isDisabled={isOpen || _.isEmpty(tokenApprovals)}
-          isLoading={isOpen}
-          loadingText="Sign txs"
-          onClick={onOpen}
-        >
-          Approve Selected Tokens
-        </Button>
-      </VStack>
+      <BalanceTable {...{ balances }} />
     </Center>
   );
 }

@@ -1,6 +1,8 @@
 import _ from "lodash";
+import { useState } from "react";
 import {
   Badge,
+  Button,
   Center,
   Text,
   Table,
@@ -11,17 +13,22 @@ import {
   Td,
   Tooltip,
   useColorModeValue as mode,
+  VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { FiSend, FiToggleLeft } from "react-icons/fi";
 import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import { Pagination } from "./Pagination";
 import IndeterminateCheckbox from "./Checkbox";
 import { InfoIcon } from "@chakra-ui/icons";
 import tokensData from "../CleanWallet/tokens.json";
+import { ApprovalModal } from "../CleanWallet/ApprovalModal";
 
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 
 export function CustomTable({ columns, data }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     getTableProps,
     getTableBodyProps,
@@ -75,11 +82,9 @@ export function CustomTable({ columns, data }) {
       ]);
     }
   );
-  // setSelectedIndices(selectedRowIds);
   return (
-    <>
+    <VStack>
       <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>
-        {/* {} */}
         <Thead bg={mode("gray.50", "gray.800")}>
           {headerGroups.map((headerGroup, i) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
@@ -160,6 +165,21 @@ export function CustomTable({ columns, data }) {
           pageSize,
         }}
       />
-    </>
+      <Button
+        size="lg"
+        fontWeight="normal"
+        colorScheme="purple"
+        type="submit"
+        value="Submit"
+        leftIcon={<FiToggleLeft />}
+        isDisabled={isOpen || _.isEmpty(selectedRowIds)}
+        isLoading={isOpen}
+        loadingText="Sign txs"
+        onClick={onOpen}
+      >
+        Approve Selected Tokens
+      </Button>
+      <ApprovalModal {...{ isOpen, onOpen, onClose, selectedFlatRows }} />
+    </VStack>
   );
 }

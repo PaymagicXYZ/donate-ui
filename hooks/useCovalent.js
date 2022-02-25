@@ -12,12 +12,11 @@ const covalentApiKey = COVALENT_API_KEY;
 let chainId = 1;
 // let chainId = CovalentNetworkForID[NETWORK];
 
-
 function get(params, chainId) {
-  return async function (address, chainId=1) {
+  return async function (address, chainId = 1) {
     try {
       const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/${params}/?key=${covalentApiKey}`;
-      console.log(url);
+      // console.log(url);
       const response = await axios.get(url);
       const data = response.data ? response.data : [];
       return data;
