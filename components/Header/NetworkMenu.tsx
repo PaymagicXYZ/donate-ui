@@ -15,14 +15,14 @@ import {
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
 import { translateChainId } from "../../utils";
-import { switchNetwork } from "../../utils";
+import { switchToNetwork } from "../../utils";
 
 const NetworkMenu = () => {
+  const env = process.env.NODE_ENV;
   const context = useWeb3React();
   const { account, activate, chainId, deactivate, library } = context;
 
   if (!chainId) return null;
-
   const WrongNetworkButton = () => {
     return (
       <MenuButton
@@ -30,17 +30,19 @@ const NetworkMenu = () => {
         colorScheme="red"
         onClick={() => switchToNetwork(library, 1)}
       >
-        Wrong Network. Switch to Mainnet
+        DustSweeper is only supported on Mainnet at the moment. Switch to
+        Mainnet
       </MenuButton>
     );
   };
 
   return (
     <Menu>
-      {chainId == 1 || chainId == 1337 ? (
+      {(env == "production" && chainId == 1) ||
+      (env == "development" && chainId == 1337) ? (
         <MenuButton
           as={Button}
-          rightIcon={<ChevronDownIcon />}
+          // rightIcon={<ChevronDownIcon />}
           borderRadius="xl"
           backgroundColor="purple.100"
           _hover={{

@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { StepConnector } from './StepConnector'
-import { StepContext } from './StepContext'
+import * as React from "react";
+import { StepConnector } from "./StepConnector";
+import { StepContext } from "./Context/StepContext";
 
 interface Props {
-  activeStep: number
-  children?: React.ReactNode
+  activeStep: number;
+  children?: React.ReactNode;
 }
 
 export const Steps = (props: Props) => {
-  const { activeStep, children } = props
+  const { activeStep, children } = props;
   const steps = React.useMemo(
     () =>
       React.Children.toArray(children).map((step, i, arr) => (
@@ -25,7 +25,7 @@ export const Steps = (props: Props) => {
           {arr.length !== i + 1 && <StepConnector />}
         </StepContext.Provider>
       )),
-    [activeStep, children],
-  )
-  return <>{steps}</>
-}
+    [activeStep, children]
+  );
+  return <>{steps}</>;
+};

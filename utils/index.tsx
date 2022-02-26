@@ -121,7 +121,7 @@ export function shortenTx(tx: string, chars = 4): string {
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
 export function shortenAddress(address: string, chars = 4): string {
-  const parsed = getAddress(address) || address
+  const parsed = getAddress(address) || address;
   return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`;
 }
 
@@ -162,10 +162,7 @@ export const addTreeToIPFS = async (tree) => {
   // actions.addContract(result.path, addressArray);
   // setIsDeployed(true);
 };
-export const switchToNetwork = async (
-  library,
-  chainId,
-) => {
+export const switchToNetwork = async (library, chainId) => {
   if (!library?.provider?.request) {
     return;
   }

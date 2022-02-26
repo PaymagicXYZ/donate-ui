@@ -14,12 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import { BigNumber } from "@ethersproject/bignumber";
+// import { Web3Provider } from "@ethersproject/providers";
+// import { BigNumber } from "@ethersproject/bignumber";
 import { useEagerConnect } from "../../hooks/useEagerConnect";
 import { useInactiveListener } from "../../hooks/useInactiveListener";
 import { injected } from "../../connectors";
-import { translateChainId } from "../../utils";
+// import { translateChainId } from "../../utils";
 import NetworkMenu from "./NetworkMenu";
 import { MoreItems } from "./MoreItems";
 // import { getEtherBalance } from "../../utils";
@@ -38,8 +38,8 @@ export default function Wallet() {
 
   const [etherBalance, setEtherBalance] = useState();
 
-  const [ENSname, setENSname] = useState();
-  const [ENSAvatar, setENSAvatar] = useState();
+  const [ENSname, setENSname] = useState("");
+  // const [ENSAvatar, setENSAvatar] = useState();
 
   // const userEthBalance = useETHBalances(account ? [account] : [])?.[
   //   account ?? ""
@@ -63,9 +63,9 @@ export default function Wallet() {
         const name = await provider?.lookupAddress(address);
         if (name) {
           setENSname(name);
-          const resolver = await provider.getResolver(name);
-          const avatar = await resolver.getText("avatar");
-          setENSAvatar(avatar);
+          // const resolver = await provider.getResolver(name);
+          // const avatar = await resolver.getText("avatar");
+          // setENSAvatar(avatar);
           // console.log(avatar);
         }
       } catch (error) {
@@ -81,8 +81,8 @@ export default function Wallet() {
   useInactiveListener(!triedEager);
 
   const Account = () => {
-    console.log("account", account);
-    console.log("chainId", chainId);
+    // console.log("account", account);
+    // console.log("chainId", chainId);
     if (!library) {
       return (
         <Button colorScheme="purple" onClick={() => activate(injected)}>

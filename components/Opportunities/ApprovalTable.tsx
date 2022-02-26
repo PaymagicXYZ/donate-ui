@@ -1,16 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
-import _ from 'lodash';
+import _ from "lodash";
 import { ethers } from "ethers";
 import { Box, Center } from "@chakra-ui/react";
 
 import { ApprovalTableContent } from "./ApprovalTableContent";
-import { WalletChecker } from "../../components/WalletChecker";
+import { WalletChecker } from "../WalletChecker";
 import { useCovalent } from "../../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
 import ERC20Contract from "../../artifacts/contracts/TestERC20.sol/TestERC20.json";
-import * as tokenData from './tokens.json'
-import { DUSTSWEEPER_ADDRESS } from '../../utils/constants'
-
+import tokenData from "../CleanWallet/tokens.json";
+import { DUSTSWEEPER_ADDRESS } from "../../utils/constants";
 
 export default function TransactionTable(props) {
   const { library, account, chainId } = useWeb3React();
@@ -18,24 +17,23 @@ export default function TransactionTable(props) {
   const [approvalList, setApprovalList] = useState([]);
 
   useEffect(() => {
-    let toggle = localStorage.getItem("toggle")
+    let toggle = localStorage.getItem("toggle");
 
-    console.log('toggle')
-    console.log(toggle)
+    console.log("toggle");
+    console.log(toggle);
 
-    if(toggle === 'true') {
-      console.log('values')
-      setApprovalList([])   
-      localStorage.setItem("toggle", 'false')   
+    if (toggle === "true") {
+      console.log("values");
+      setApprovalList([]);
+      localStorage.setItem("toggle", "false");
     } else {
-      console.log('no values')
-      setApprovalList([])  
-      localStorage.setItem("toggle", 'true')
+      console.log("no values");
+      setApprovalList([]);
+      localStorage.setItem("toggle", "true");
     }
 
-    setLoading(false)
-  },[])
-
+    setLoading(false);
+  }, []);
 
   // useEffect(() => {
 
@@ -92,24 +90,19 @@ export default function TransactionTable(props) {
   //   }
 
   //   if(library) {
-  //     getData();      
+  //     getData();
   //   }
   // }, [library]);
 
-
-console.log(approvalList)
-
+  console.log(approvalList);
 
   return (
     <WalletChecker loading={loading} account={account}>
       <Center>
         <Box py={{ base: "2", md: "4" }}>
-          <ApprovalTableContent
-            approvalList={approvalList}
-          />
+          <ApprovalTableContent approvalList={approvalList} />
         </Box>
       </Center>
     </WalletChecker>
-
   );
 }

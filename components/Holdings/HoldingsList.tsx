@@ -17,36 +17,9 @@ import { WalletChecker } from "../WalletChecker";
 import { ListContent } from "./ListContent";
 import { ChartContent } from "./ChartContent";
 import { HistoryChart } from "./HistoryChart";
-// import { Zerion } from "./Zerion";
-import { useWeb3React } from "@web3-react/core";
-// import { useZapper } from "../../hooks/useZapper";
-import { useCovalent } from "../../hooks/useCovalent";
-// import { useZerion } from "../../hooks/useZerion";
-import { ZAPPER_NETWORK, CovalentNetworkForID } from "../../utils/constants";
 
 export default function HoldingsList(props) {
-  const { library, account, chainId } = useWeb3React();
-  // const fetchWalletData = useZapper(
-  //   props.accountAddress ? props.accountAddress : account,
-  //   props.chain ? props.chain : ZAPPER_NETWORK
-  // );
-  const fetchCovalentData = useCovalent(
-    props.accountAddress ? props.accountAddress : account,
-    props.chain ? CovalentNetworkForID[props.chain] : 1
-  );
-
-  const covalentData = useMemo(() => {
-    return fetchCovalentData;
-  }, [fetchCovalentData]);
-  // const walletData = useMemo(() => {
-  //   return fetchWalletData;
-  // }, [fetchWalletData]);
-
-  // const portfolio = useZerion(
-  //   props.accountAddress ? props.accountAddress : account
-  // );
-  // const portfolio = useMemo(() => fetchPortfolio, [fetchPortfolio]);
-
+  const { covalentData, account } = props;
   return (
     <Box>
       <Box as="section">
@@ -56,7 +29,7 @@ export default function HoldingsList(props) {
               {covalentData.loading ? (
                 <Text>Loading...</Text>
               ) : covalentData.history && covalentData.balance ? (
-                <Box>
+                <Box alignItems="center" padding="10">
                   <HistoryChart covalentData={covalentData} />
                   <Tabs>
                     <TabList>
@@ -79,7 +52,6 @@ export default function HoldingsList(props) {
                       </Text>
                       <Tab>Table</Tab>
                       <Tab>Charts</Tab>
-                      {/* <Tab>Zerion</Tab> */}
                     </TabList>
 
                     <TabPanels>
@@ -93,9 +65,6 @@ export default function HoldingsList(props) {
                           walletData={covalentData.balance.data.items}
                         />
                       </TabPanel>
-                      {/* <TabPanel>
-                        <Zerion portfolio={portfolio} />
-                      </TabPanel> */}
                     </TabPanels>
                   </Tabs>
                 </Box>
