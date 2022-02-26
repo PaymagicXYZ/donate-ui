@@ -13,6 +13,7 @@ import {
   Td,
   Tooltip,
   useColorModeValue as mode,
+  Link,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -27,7 +28,12 @@ import { ApprovalModal } from "../CleanWallet/ApprovalModal";
 
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 
-export function CustomTable({ columns, data }) {
+export function CustomTable({
+  columns,
+  data,
+  signedTokensCallback,
+  signedTokens,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     getTableProps,
@@ -67,7 +73,9 @@ export function CustomTable({ columns, data }) {
           // to the render a checkbox
           Cell: ({ row }) => (
             <Center>
-              {_.includes(tokenAddresses, row.cells[1].value[0]) ? (
+              {row.cells[1].value[3] ? (
+                <Badge colorScheme="green">Signed</Badge>
+              ) : _.includes(tokenAddresses, row.cells[1].value[0]) ? (
                 <IndeterminateCheckbox
                   colorScheme="purple"
                   {...row.getToggleRowSelectedProps()}
@@ -133,7 +141,14 @@ export function CustomTable({ columns, data }) {
                         {...cell.getCellProps()}
                         key={i}
                       >
+                        {/* {_.includes(
+                          signedTokens?.map((token) => token.name),
+                          cell.row.cells[1].value[0]
+                        ) ? (
+                          <Text>Signed</Text>
+                        ) : ( */}
                         {cell.render("Cell")}
+                        {/* )} */}
                       </Td>
                     ) : (
                       <Td {...cell.getCellProps()} key={i}>
@@ -179,7 +194,16 @@ export function CustomTable({ columns, data }) {
       >
         Approve Selected Tokens
       </Button>
-      <ApprovalModal {...{ isOpen, onOpen, onClose, selectedFlatRows }} />
+      <ApprovalModal
+        {...{
+          isOpen,
+          onOpen,
+          onClose,
+          selectedFlatRows,
+          signedTokens,
+          signedTokensCallback,
+        }}
+      />
     </VStack>
   );
 }

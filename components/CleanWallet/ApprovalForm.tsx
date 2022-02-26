@@ -1,11 +1,12 @@
 import _ from "lodash";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { Button, Center, VStack } from "@chakra-ui/react";
 import BalanceTable from "./BalanceTable";
 import tokensData from "./tokens.json";
 
 export function ApprovalForm(props) {
   const { covalentData } = props;
+  const [signedTokens, setSignedTokens] = useState([]);
   const balances = useMemo(() => {
     const items = _.get(covalentData, "balance.data.items", []);
     const validBalances = _.filter(items, (i) => {
@@ -26,12 +27,16 @@ export function ApprovalForm(props) {
     });
     const data = sortedItems.map((asset) => {
       if (asset.contract_ticker_symbol !== "ETH") {
+        const signed = _.includes(
+          signedTokens?.map((token) => token.name),
+          asset.contract_ticker_symbol
+        );
         return {
           symbol: [
             asset.contract_ticker_symbol,
             asset.logo_url,
             asset.contract_address,
-            null,
+            signed,
           ],
           quote_rate: asset.quote_rate,
           last_transferred_at: asset.last_transferred_at,
@@ -48,12 +53,18 @@ export function ApprovalForm(props) {
         };
       }
     });
+
     return data.filter((a) => a);
-  }, [covalentData]);
-  console.log(balances);
+  }, [covalentData, signedTokens]);
+  const signedTokensCallback = useCallback((hash) => {
+    setSignedTokens(hash);
+  }, []);
+  // console.log(balances);
   return (
     <Center>
-      <BalanceTable {...{ balances }} />
+      <BalanceTable {...{ balances, signedTokens, signedTokensCallback }} />
+      {/* <pre>{JSON.stringify(signedTokens?.map((token) => token.name))}</pre> */}
+      {/* {console.log(signedTokens)} */}
     </Center>
   );
 }
