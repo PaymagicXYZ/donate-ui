@@ -11,7 +11,13 @@ import {
 import { ApproveTokenInSteps } from "./Steps/ApproveTokenInSteps";
 
 export function ApprovalModal(props) {
-  const { isOpen, onClose, selectedFlatRows } = props;
+  const {
+    isOpen,
+    onClose,
+    selectedFlatRows,
+    signedTokens,
+    signedTokensCallback,
+  } = props;
   return (
     <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -19,7 +25,14 @@ export function ApprovalModal(props) {
         <ModalHeader>Approve Tokens</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <ApproveTokenInSteps {...{ selectedFlatRows, onClose }} />
+          <ApproveTokenInSteps
+            {...{
+              selectedFlatRows,
+              onClose,
+              signedTokens,
+              signedTokensCallback,
+            }}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>

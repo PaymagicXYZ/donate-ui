@@ -14,6 +14,8 @@ import { useWeb3React } from "@web3-react/core";
 import { DUSTSWEEPER_ADDRESS } from "../../../utils/constants";
 
 export const ApproveIndividualToken = ({
+  signedTokens,
+  signedTokensCallback,
   token,
   i,
   nextStep,
@@ -44,6 +46,9 @@ export const ApproveIndividualToken = ({
     setLoading(false);
     setError("");
     // console.log(result);
+    signedTokensCallback([...signedTokens, { name: symbol, hash: result }]);
+    // console.log({ name: symbol, hash: result });
+    console.log(signedTokens);
     result.hash ? setSigned(result.hash) : setError(result.message);
   }
 
