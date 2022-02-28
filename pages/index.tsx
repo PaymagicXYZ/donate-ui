@@ -67,7 +67,7 @@ export default function Page() {
             <TabList>
               <Tab>Clean Wallet</Tab>
               <Tab>View Opportunities</Tab>
-              <Tab>Dashboard</Tab>
+              {/* <Tab>Dashboard</Tab> */}
             </TabList>
           </Center>
           <TabPanels>
@@ -77,9 +77,9 @@ export default function Page() {
             <TabPanel>
               <ApprovalTable toggle={true} />
             </TabPanel>
-            <TabPanel>
+            {/* <TabPanel>
               <Dashboard {...{ account, covalentData }} />
-            </TabPanel>
+            </TabPanel> */}
           </TabPanels>
         </Tabs>
         {false && <ModalWarning />}
