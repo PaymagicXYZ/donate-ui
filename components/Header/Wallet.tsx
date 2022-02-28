@@ -11,6 +11,14 @@ import {
   Flex,
   Text,
   HStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
@@ -32,6 +40,7 @@ import { ethers } from "ethers";
 export default function Wallet() {
   const context = useWeb3React();
   const { account, library, activate, chainId, deactivate } = context;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
@@ -85,9 +94,29 @@ export default function Wallet() {
     // console.log("chainId", chainId);
     if (!library) {
       return (
-        <Button colorScheme="purple" onClick={() => activate(injected)}>
-          Connect Wallet
-        </Button>
+        <>
+          <Button colorScheme="purple" onClick={onOpen}>
+            Connect Wallet
+          </Button>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Please select a wallet to connect to</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Button colorScheme="purple" onClick={() => activate(injected)}>
+                  Metamask
+                </Button>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
       );
     }
     return (
