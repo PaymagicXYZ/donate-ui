@@ -91,11 +91,11 @@ export default function Transactor(provider, cb, gasPrice, etherscan) {
         //     placement: "topRight",
         //   });
         // }
-        cb(result);
+        cb(["txSuccess", result]);
         return result;
       } catch (e) {
         // console.log(e);
-        cb(e);
+        cb(["txFailed", e]);
         // notification.error({
         //   message: "Transaction Error",
         //   description: e.message,

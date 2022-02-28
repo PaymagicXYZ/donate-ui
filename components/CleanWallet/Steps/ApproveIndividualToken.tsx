@@ -14,8 +14,8 @@ import { useWeb3React } from "@web3-react/core";
 import { DUSTSWEEPER_ADDRESS } from "../../../utils/constants";
 
 export const ApproveIndividualToken = ({
-  signedTokens,
-  signedTokensCallback,
+  signedTx,
+  setSignedTx,
   token,
   i,
   nextStep,
@@ -42,14 +42,18 @@ export const ApproveIndividualToken = ({
   const [loading, setLoading] = useState(false);
   const [signed, setSigned] = useState("");
   const [error, setError] = useState("");
-  function afterMine(result) {
+  function afterMine([txStatus, txData]) {
     setLoading(false);
     setError("");
-    // console.log(result);
-    signedTokensCallback([...signedTokens, { name: symbol, hash: result }]);
+    if (txStatus === "txSuccess") {
+      setSigned(txData.hash);
+      // console.log(result);
+      setSignedTx([...signedTx, { name: symbol, hash: txData }]);
+    } else if (txStatus === "txFailed") {
+      setError(txData.message);
+    }
     // console.log({ name: symbol, hash: result });
-    console.log(signedTokens);
-    result.hash ? setSigned(result.hash) : setError(result.message);
+    console.log(signedTx);
   }
 
   async function handleApproval() {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Button, Center, HStack, Text } from "@chakra-ui/react";
 import { useSteps } from "./Hook/useStepsHook";
 import { Steps } from "./Steps";
@@ -12,13 +13,19 @@ export const ApproveTokenInSteps = ({
     initialStep: 0,
   });
 
+  const [signedTx, setSignedTx] = useState([]);
+
+  function updateAndClose() {
+    signedTokensCallback([...signedTx]);
+    onClose();
+  }
   return (
     <Box mx="auto" maxW="2xl" py="10" px={{ base: "6", md: "8" }} minH="400px">
       <Steps activeStep={activeStep}>
         {selectedFlatRows?.map((row, i) => {
           return (
             <ApproveIndividualToken
-              {...{ activeStep, signedTokens, signedTokensCallback }}
+              {...{ activeStep, signedTx, setSignedTx }}
               length={selectedFlatRows.length}
               nextStep={nextStep}
               token={row.cells}
@@ -41,7 +48,7 @@ export const ApproveTokenInSteps = ({
       <Center
         display={activeStep === selectedFlatRows?.length ? "flex" : "none"}
       >
-        <Button onClick={onClose}>Back to home</Button>
+        <Button onClick={updateAndClose}>Back to home</Button>
       </Center>
     </Box>
   );
