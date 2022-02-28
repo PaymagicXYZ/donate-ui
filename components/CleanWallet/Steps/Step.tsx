@@ -18,7 +18,7 @@ interface StepProps extends BoxProps {
 
 export const Step = (props: StepProps) => {
   const { title, children, ...boxProps } = props;
-  const { isActive, isCompleted, step } = useStep();
+  const { isActive, isCompleted, step, txData } = useStep();
 
   const accentColor = useColorModeValue("purple.500", "purple.300");
   const mutedColor = useColorModeValue("gray.600", "whiteAlpha.800");
