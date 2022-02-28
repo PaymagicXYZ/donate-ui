@@ -29,9 +29,9 @@ export const walletconnect = new WalletConnectConnector({
 
 export const walletlink = new WalletLinkConnector({
   url: RPC[1],
-  appName: "SushiSwap",
+  appName: "DustSweeper",
   appLogoUrl:
-    "https://raw.githubusercontent.com/sushiswap/art/master/sushi/logo-256x256.png",
+    "https://dustsweeper.xyz/logo-square.png",
 });
 
 export interface WalletInfo {
