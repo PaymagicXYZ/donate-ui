@@ -94,13 +94,15 @@ export default function Wallet() {
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Please select a wallet to connect to</ModalHeader>
+              <ModalHeader>Please select a wallet to connect</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Button
                   width="100%"
                   height="55px"
-                  colorScheme="yellow"
+                  // colorScheme="yellow"
+                  variant="outline"
+                  mt="2"
                   onClick={() => activate(injected)}
                 >
                   <Avatar src="/metamask.jpeg" />
@@ -110,7 +112,9 @@ export default function Wallet() {
                 <Button
                   width="100%"
                   height="55px"
-                  colorScheme="teal"
+                  // colorScheme="teal"
+                  variant="outline"
+                  mt="2"
                   onClick={() => activate(walletconnect)}
                 >
                   <Avatar src="/walletconnect.png" />
@@ -120,19 +124,15 @@ export default function Wallet() {
                 <Button
                   width="100%"
                   height="55px"
-                  colorScheme="blue"
+                  // colorScheme="blue"
+                  variant="outline"
+                  mt="2"
                   onClick={() => activate(walletlink)}
                 >
                   <Avatar src="/walletlink.svg" />
                   &nbsp;Walletlink
                 </Button>
               </ModalBody>
-
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
             </ModalContent>
           </Modal>
         </>
