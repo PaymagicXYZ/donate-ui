@@ -3,14 +3,15 @@ import {
   Button,
   ButtonGroup,
   Spacer,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
-  Box,
-  Flex,
-  Text,
   HStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useWeb3React } from "@web3-react/core";
@@ -18,7 +19,7 @@ import { useWeb3React } from "@web3-react/core";
 // import { BigNumber } from "@ethersproject/bignumber";
 import { useEagerConnect } from "../../hooks/useEagerConnect";
 import { useInactiveListener } from "../../hooks/useInactiveListener";
-import { injected } from "../../connectors";
+import { injected, walletconnect, walletlink } from "../../connectors";
 // import { translateChainId } from "../../utils";
 import NetworkMenu from "./NetworkMenu";
 import { MoreItems } from "./MoreItems";
@@ -32,6 +33,7 @@ import { ethers } from "ethers";
 export default function Wallet() {
   const context = useWeb3React();
   const { account, library, activate, chainId, deactivate } = context;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
@@ -85,9 +87,55 @@ export default function Wallet() {
     // console.log("chainId", chainId);
     if (!library) {
       return (
-        <Button colorScheme="purple" onClick={() => activate(injected)}>
-          Connect Wallet
-        </Button>
+        <>
+          <Button colorScheme="purple" onClick={onOpen}>
+            Connect Wallet
+          </Button>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Please select a wallet to connect</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Button
+                  width="100%"
+                  height="55px"
+                  // colorScheme="yellow"
+                  variant="outline"
+                  mt="2"
+                  onClick={() => activate(injected)}
+                >
+                  <Avatar src="/metamask.jpeg" />
+                  &nbsp;Metamask
+                </Button>
+                <br />
+                <Button
+                  width="100%"
+                  height="55px"
+                  // colorScheme="teal"
+                  variant="outline"
+                  mt="2"
+                  onClick={() => activate(walletconnect)}
+                >
+                  <Avatar src="/walletconnect.png" />
+                  &nbsp;WalletConnect
+                </Button>
+                <br />
+                <Button
+                  width="100%"
+                  height="55px"
+                  // colorScheme="blue"
+                  variant="outline"
+                  mt="2"
+                  onClick={() => activate(walletlink)}
+                >
+                  <Avatar src="/walletlink.svg" />
+                  &nbsp;Walletlink
+                </Button>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </>
       );
     }
     return (
