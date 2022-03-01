@@ -49,7 +49,7 @@ export function ApprovalForm(props) {
           balanceETH:
             asset.contract_ticker_symbol == "ETH"
               ? null
-              : [asset.quote * 0.9, (asset.quote * 0.9) / ethPrice],
+              : [asset.quote * 0.7, (asset.quote * 0.7) / ethPrice],
         };
       }
     });

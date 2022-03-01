@@ -3,6 +3,9 @@ import Head from "next/head";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { theme } from "../styles/theme"
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-44648226-14');
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);

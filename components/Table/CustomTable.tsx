@@ -115,7 +115,7 @@ export function CustomTable({
                     )}
                     {column.Header === "YOU RECEIVE IN ETH" && (
                       <Tooltip
-                        label="Token Balance at ChainLink Market Price with 10% discount"
+                        label="Token Balance at Chainlink Market Price with 30% discount"
                         fontSize="md"
                       >
                         <InfoIcon w={4} h={4} ml="1" />
