@@ -108,7 +108,7 @@ export const ApproveIndividualToken = ({
             )}
           </HStack>
           {error && <Box color="red.500">{error}</Box>}
-          <Link href={`https://etherscan.io/tx/${signed}`}>
+          <Link href={`https://etherscan.io/tx/${signed}`} isExternal>
             {signed && "View Transaction"}
           </Link>
         </Stack>
