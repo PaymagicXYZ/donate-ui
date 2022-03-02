@@ -13,11 +13,12 @@ import {
   displayISODatetime,
 } from "../../utils";
 
+const viewOnEtherScan = (address) => `https://etherscan.io/address/${address}`;
 export const cols = [
   {
     Header: "YOU GET",
     accessor: "balance",
-    Cell: ({ value }) => <Text>{value}</Text>,
+    Cell: ({ value }) => <Text fontWeight="medium">{value}</Text>,
   },
   {
     Header: "TOKEN",
@@ -27,6 +28,6 @@ export const cols = [
   {
     Header: "MAKER",
     accessor: "maker",
-    Cell: ({ value }) => <Text>{value}</Text>,
+    Cell: ({ value }) => <Link href={viewOnEtherScan(value)}>{value}</Link>,
   },
 ];
