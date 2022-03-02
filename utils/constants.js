@@ -1,7 +1,8 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-export const DUSTSWEEPER_ADDRESS = process.env.REACT_APP_DUSTSWEEPER || '0xbbCB5065C3C3963f9f149E441e66b673fC0c0e40'
-
+export const DUSTSWEEPER_ADDRESS =
+  process.env.REACT_APP_DUSTSWEEPER ||
+  "0xbbCB5065C3C3963f9f149E441e66b673fC0c0e40";
 
 export const env = process.env.REACT_APP_APP_ENV || "test"; // defaulting to after ||
 export const NETWORK =
@@ -62,7 +63,7 @@ export const ZERION_API_KEY =
   "Paymagic.pBHI7DOsXaHAuHE7fFQQoBKkejC6ERUy";
 
 export const COVALENT_API_KEY =
-  process.env.REACT_APP_COVALENT_API_KEY || "ckey_49d9fd231cef43db9e77ed26450";
+  process.env.REACT_APP_COVALENT_API_KEY || "ckey_b2a03fc7e5834457b82017bcd36";
 export const CovalentNetworkForID = {
   eth: "1",
   mainnet: "1",
