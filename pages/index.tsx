@@ -20,7 +20,7 @@ import ApprovalTable from "../components/Opportunities/ApprovalTable";
 import PageContainer from "../components/PageContainer/PageContainer";
 // import { HeadingGroup } from "../components/Forms/HeadingGroup";
 import ModalWarning from "../components/ModalWarning";
-import { Dashboard } from "../components/Holdings/Dashboard";
+// import { Dashboard } from "../components/Holdings/Dashboard";
 import { CleanWallet } from "../components/CleanWallet/CleanWallet";
 
 import { useCovalent } from "../hooks/useCovalent";
@@ -66,7 +66,7 @@ export default function Page() {
           <Center>
             <TabList>
               <Tab>Clean Wallet</Tab>
-              <Tab>View Opportunities</Tab>
+              <Tab>View Orders</Tab>
               {/* <Tab>Dashboard</Tab> */}
             </TabList>
           </Center>
