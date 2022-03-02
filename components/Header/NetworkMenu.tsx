@@ -30,8 +30,7 @@ const NetworkMenu = () => {
         colorScheme="red"
         onClick={() => switchToNetwork(library, 1)}
       >
-        DustSweeper is only supported on Mainnet at the moment. Switch to
-        Mainnet
+        Please switch to Mainnet
       </MenuButton>
     );
   };

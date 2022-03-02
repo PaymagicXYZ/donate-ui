@@ -13,6 +13,12 @@ export default function Footer() {
         <Text>
           |
         </Text>
+        <ChakraLink href="https://airtable.com/shrL21KLg8NQHuDWH" isExternal>
+          Report Bugs or Feedback
+        </ChakraLink>
+        <Text>
+          |
+        </Text>
         <ChakraLink href="https://discord.gg/CjeeqMeAGc" isExternal>
           Discord
         </ChakraLink>
