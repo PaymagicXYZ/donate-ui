@@ -17,27 +17,16 @@ export const cols = [
   {
     Header: "YOU GET",
     accessor: "balance",
-    Cell: function Cell(data: any) {
-      return <Text>{data.balance}</Text>;
-    },
+    Cell: ({ value }) => <Text>{value}</Text>,
   },
   {
     Header: "TOKEN",
     accessor: "symbol",
-    Cell: function Cell(data: any) {
-      return (
-        <>
-          <TokenDisplay symbol={data.symbol[0]} imageUrl={data.symbol[1]} />
-          {/* <Text>{data.address}</Text> */}
-        </>
-      );
-    },
+    Cell: ({ value }) => <TokenDisplay symbol={value[0]} imageUrl={value[1]} />,
   },
   {
     Header: "MAKER",
     accessor: "maker",
-    Cell: function Cell(data: any) {
-      return <Text>{shortenAddress(data.maker, 12)}</Text>;
-    },
+    Cell: ({ value }) => <Text>{value}</Text>,
   },
 ];
