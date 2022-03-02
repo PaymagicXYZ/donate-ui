@@ -19,6 +19,23 @@ export function ApprovalForm(props) {
       },
     ]);
 
+    const Txs = covalentData.transactions?.data.items
+      .map((Tx) => [Tx.log_events])
+      .flat(2)
+      .map((e) => [
+        e.decoded.name,
+        e.decoded.params[1].value,
+        e.sender_contract_ticker_symbol,
+        e.tx_hash,
+      ])
+      .filter(
+        (e) =>
+          e[0] === "Approval" &&
+          e[1] === "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
+      );
+    console.log(Txs);
+    // console.log(covalentData.transactions);
+
     let ethPrice;
     sortedItems.forEach((item) => {
       if (item.contract_ticker_symbol === "ETH") {
@@ -27,10 +44,11 @@ export function ApprovalForm(props) {
     });
     const data = sortedItems.map((asset) => {
       if (asset.contract_ticker_symbol !== "ETH") {
-        const signed = _.includes(
+        let signed = _.includes(
           signedTokens?.map((token) => token.name),
           asset.contract_ticker_symbol
         );
+        signed = signed || _.includes(Txs.flat(), asset.contract_ticker_symbol);
         return {
           symbol: [
             asset.contract_ticker_symbol,
