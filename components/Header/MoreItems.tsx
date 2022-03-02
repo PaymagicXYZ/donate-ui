@@ -6,7 +6,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import { BiInfoCircle } from "react-icons/bi";
+import { BiInfoCircle, BiBug } from "react-icons/bi";
 import { SiDiscord, SiTwitter } from "react-icons/si";
 
 export const MoreItems = () => {
@@ -34,6 +34,14 @@ export const MoreItems = () => {
           icon={<BiInfoCircle size="18" />}
         >
           About
+        </MenuItem>
+        <MenuItem
+          as="a"
+          href="https://airtable.com/shrL21KLg8NQHuDWH"
+          target="_blank"
+          icon={<BiBug size="18" />}
+        >
+          Report Bugs or Feedback
         </MenuItem>
         <MenuItem
           as="a"
