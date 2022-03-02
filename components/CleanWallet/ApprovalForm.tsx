@@ -6,6 +6,7 @@ import tokensData from "./tokens.json";
 
 export function ApprovalForm(props) {
   const { covalentData } = props;
+  console.log(covalentData);
   const [signedTokens, setSignedTokens] = useState([]);
   const balances = useMemo(() => {
     const items = _.get(covalentData, "balance.data.items", []);
@@ -18,22 +19,29 @@ export function ApprovalForm(props) {
         return !_.includes(tokenAddresses, o.contract_address);
       },
     ]);
+    let Txs;
+    try {
+      if (covalentData.transactions.data.items) {
+        Txs = covalentData.transactions?.data.items
+          .map((Tx) => [Tx.log_events])
+          .flat(2)
+          .map((e) => [
+            e.decoded.name,
+            e.decoded.params[1].value,
+            e.sender_contract_ticker_symbol,
+            e.tx_hash,
+          ])
+          .filter(
+            (e) =>
+              e[0] === "Approval" &&
+              e[1] === "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
+          );
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
-    const Txs = covalentData.transactions?.data.items
-      .map((Tx) => [Tx.log_events])
-      .flat(2)
-      .map((e) => [
-        e.decoded.name,
-        e.decoded.params[1].value,
-        e.sender_contract_ticker_symbol,
-        e.tx_hash,
-      ])
-      .filter(
-        (e) =>
-          e[0] === "Approval" &&
-          e[1] === "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
-      );
-    console.log(Txs);
+    // console.log(Txs);
     // console.log(covalentData.transactions);
 
     let ethPrice;
@@ -48,7 +56,7 @@ export function ApprovalForm(props) {
           signedTokens?.map((token) => token.name),
           asset.contract_ticker_symbol
         );
-        signed = signed || _.includes(Txs.flat(), asset.contract_ticker_symbol);
+        // signed = signed || _.includes(Txs.flat(), asset.contract_ticker_symbol);
         return {
           symbol: [
             asset.contract_ticker_symbol,

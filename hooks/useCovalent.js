@@ -28,7 +28,7 @@ function get(params, chainId) {
 }
 //api.covalenthq.com/v1/1/address/0x197e3eCCD00F07B18205753C638c3E59013A92bf/transfers_v2/?contract-address=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&key=
 export const getBalance = get("balances_v2");
-export const getHistory = get("portfolio_v2");
+// export const getHistory = get("portfolio_v2");
 //https://api.covalenthq.com/v1/1/address/0xCFF4C7EAF2d708Da1b68C767340446E4193F2706/transactions_v2/?quote-currency=USD&format=JSON&block-signed-at-asc=false&no-logs=false&key=
 export const getTransaction = get("transactions_v2");
 // export async function getHistory(address) {
@@ -49,18 +49,18 @@ export function useCovalent(address, _chainId) {
   chainId = _chainId ? _chainId : chainId;
   const [data, setData] = useState({
     loading: true,
-    history: null,
+    // history: null,
     balance: null,
     transactions: null,
   });
   useEffect(() => {
     async function getData(address, chainId) {
-      const history = await getHistory(address);
+      // const history = await getHistory(address);
       const balance = await getBalance(address);
       const transactions = await getTransaction(address);
       setData({
         loading: false,
-        history: history,
+        // history: history,
         balance: balance,
         transactions: transactions,
       });
