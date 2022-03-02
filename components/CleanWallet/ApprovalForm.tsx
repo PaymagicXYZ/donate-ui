@@ -19,7 +19,7 @@ export function ApprovalForm(props) {
         return !_.includes(tokenAddresses, o.contract_address);
       },
     ]);
-    let Txs;
+    let Txs = [];
     try {
       if (covalentData.transactions.data.items) {
         Txs = covalentData.transactions?.data.items
@@ -56,7 +56,12 @@ export function ApprovalForm(props) {
           signedTokens?.map((token) => token.name),
           asset.contract_ticker_symbol
         );
-        // signed = signed || _.includes(Txs.flat(), asset.contract_ticker_symbol);
+        try {
+          signed =
+            signed || _.includes(Txs.flat(), asset.contract_ticker_symbol);
+        } catch (error) {
+          console.log(error);
+        }
         return {
           symbol: [
             asset.contract_ticker_symbol,
