@@ -1,108 +1,86 @@
 import { useState, useMemo, useEffect } from "react";
 import _ from "lodash";
 import { ethers } from "ethers";
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Center, Spinner } from "@chakra-ui/react";
 
 import { ApprovalTableContent } from "./ApprovalTableContent";
-import { WalletChecker } from "../WalletChecker";
-import { useCovalent } from "../../hooks/useCovalent";
-import { useWeb3React } from "@web3-react/core";
+import { WalletChecker } from "../../components/WalletChecker";
 import ERC20Contract from "../../artifacts/contracts/TestERC20.sol/TestERC20.json";
 import tokenData from "../CleanWallet/tokens.json";
 import { DUSTSWEEPER_ADDRESS } from "../../utils/constants";
 
 export default function TransactionTable(props) {
-  const { library, account, chainId } = useWeb3React();
   const [loading, setLoading] = useState(true);
   const [approvalList, setApprovalList] = useState([]);
 
   useEffect(() => {
-    let toggle = localStorage.getItem("toggle");
-
-    console.log("toggle");
-    console.log(toggle);
-
-    if (toggle === "true") {
-      console.log("values");
-      setApprovalList([]);
-      localStorage.setItem("toggle", "false");
-    } else {
-      console.log("no values");
-      setApprovalList([]);
-      localStorage.setItem("toggle", "true");
-    }
-
-    setLoading(false);
+    (async () => {
+      const provider = ethers.getDefaultProvider(
+        "https://mainnet.infura.io/v3/f3c58d461e4e4bc7860f2a562ca71f10"
+      );
+      const tokenAddressesMap = {};
+      const tokenList = tokenData.tokens;
+      tokenList.forEach((token) => {
+        tokenAddressesMap[token.address] = [token.symbol, token.logoURI];
+      });
+      const tokenAddresses = [];
+      tokenData.tokens.forEach((tokens) => {
+        tokenAddresses.push(tokens.address);
+      });
+      let eventArray = [];
+      try {
+        for (let i = 0; i < tokenAddresses.length; i++) {
+          const contract = new ethers.Contract(
+            tokenAddresses[i],
+            ERC20Contract.abi,
+            provider
+          );
+          const filter = contract?.filters.Approval(
+            null,
+            "0xbbCB5065C3C3963f9f149E441e66b673fC0c0e40"
+          );
+          const events = await contract.queryFilter(filter, 14309300, "latest");
+          eventArray.push(events);
+        }
+        const flatArray = eventArray.flat();
+        //filter out approvals for 0 amount
+        const filteredArray = flatArray.filter(function (el) {
+          return Number(el.args[2].toString()) > 0;
+        });
+        //shortened to last 200 approve events
+        // const sortArray = filteredArray
+        //   .sort(function (a, b) {
+        //     if (a.blockNumber === b.blockNumber) {
+        //       return b.transactionIndex - a.transactionIndex;
+        //     }
+        //     return a.blockNumber < b.blockNumber ? 1 : -1;
+        //   })
+        //   .slice(0, 200);
+        setApprovalList(
+          filteredArray.map((el) => {
+            return {
+              balance: ethers.utils.formatEther(el.args[2].toString()),
+              symbol: tokenAddressesMap[el.address.toLowerCase()],
+              maker: el.args[0],
+            };
+          })
+        );
+        setLoading(false);
+      } catch (err) {
+        setApprovalList(null);
+      }
+    })();
   }, []);
 
-  // useEffect(() => {
-
-  //   async function getData() {
-  //     console.log('Running getData')
-  //     let tmpApprovalList = []
-  //     let erc20 = new ethers.Contract(
-  //       tokenData.tokens[0].address,
-  //       ERC20Contract.abi,
-  //       library
-  //     );
-
-  //     for (let i = 0; i < tokenData.length; i++) {
-  //       console.log(tokenData.tokens[i].address)
-  //       erc20 = erc20.attach(tokenData.tokens[i].address)
-
-  //       console.log(erc20)
-  //       // event Approval(address indexed owner, address indexed spender, uint256 value);
-  //       const filterSpender = erc20.filters.Approval(null, DUSTSWEEPER_ADDRESS);
-  //       // const filterOwner = erc20.filters.Approval('0xe549b42e6df97e02f8efc8bc4e21794b5d7bfb59');
-  //       // const filterOwner = erc20.filters.Approval();
-
-  //       const logsFrom = await erc20.queryFilter(filterSpender, -5000, "latest");
-
-  //       for (let j = 0; j < logsFrom.length; j++) {
-  //         const owner = _.get(logsFrom[j], 'args.owner')
-  //         const spender = _.get(logsFrom[j], 'args.spender')
-  //         // const spender = DUSTSWEEPER_ADDRESS
-
-  //         try {
-  //           const allowance = await erc20.allowance(owner, spender)
-
-  //           if(allowance.gt('0')) {
-  //             let approval = logsFrom[j]
-  //             const symbol = await erc20.symbol()
-  //             const decimals = await erc20.decimals()
-
-  //             console.log(allowance)
-  //             console.log(decimals)
-  //             approval.owner = owner
-  //             approval.spender = spender
-  //             approval.symbol = symbol
-  //             approval.allowance = allowance
-  //             approval.decimals = decimals
-  //             tmpApprovalList.push(approval)
-  //           }
-  //         } catch (err) {
-  //           console.error(err);
-  //         }
-  //       }
-  //     }
-  //     setApprovalList(tmpApprovalList)
-  //     setLoading(false)
-  //   }
-
-  //   if(library) {
-  //     getData();
-  //   }
-  // }, [library]);
-
-  console.log(approvalList);
-
   return (
-    <WalletChecker loading={loading} account={account}>
-      <Center>
+    <Center>
+      {loading ? (
+        <Spinner size="xl" />
+      ) : (
         <Box py={{ base: "2", md: "4" }}>
           <ApprovalTableContent approvalList={approvalList} />
         </Box>
-      </Center>
-    </WalletChecker>
+      )}
+    </Center>
   );
 }
