@@ -74,7 +74,7 @@ export function CustomTable({
           Cell: ({ row }) => (
             <Center>
               {row.cells[1].value[3] ? (
-                <Badge colorScheme="green">Signed</Badge>
+                <Badge colorScheme="green">Approved</Badge>
               ) : _.includes(tokenAddresses, row.cells[1].value[0]) ? (
                 <IndeterminateCheckbox
                   colorScheme="purple"
