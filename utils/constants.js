@@ -34,6 +34,7 @@ export const infuraProvider = new JsonRpcProvider(INFURA_LINK);
 
 export const BLOCK_EXPLORER_LINK = {
   production: `https://etherscan.io`,
+  development: `https://etherscan.io`,
   mainnet: `https://etherscan.io`,
   kovan: `https://kovan.etherscan.io`,
   polygon: `https://polygonscan.com`,

@@ -6,7 +6,7 @@ import tokensData from "./tokens.json";
 
 export function ApprovalForm(props) {
   const { covalentData } = props;
-  console.log(covalentData);
+  // console.log(covalentData);
   const [signedTokens, setSignedTokens] = useState([]);
   const balances = useMemo(() => {
     const items = _.get(covalentData, "balance.data.items", []);

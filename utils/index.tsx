@@ -38,7 +38,7 @@ export function translateChainId(chainId) {
 }
 
 export function getBlockExplorerLink(data, type) {
-  const prefix = BLOCK_EXPLORER_LINK[env];
+  const prefix = BLOCK_EXPLORER_LINK["mainnet"];
 
   switch (type) {
     case "transaction": {
