@@ -75,7 +75,7 @@ export default function Page() {
               <CleanWallet {...{ account, covalentData }} />
             </TabPanel>
             <TabPanel>
-              <ApprovalTable toggle={true} />
+              <ApprovalTable toggle={true} {...{ account, covalentData }} />
             </TabPanel>
             {/* <TabPanel>
               <Dashboard {...{ account, covalentData }} />

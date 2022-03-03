@@ -13,12 +13,18 @@ import {
   displayISODatetime,
 } from "../../utils";
 
-const viewOnEtherScan = (address) => `https://etherscan.io/address/${address}`;
 export const cols = [
+  {
+    Header: "TIME",
+    accessor: "time",
+    Cell: ({ value }) => (
+      <Text fontWeight="medium">{displayISODatetime(value)}</Text>
+    ),
+  },
   {
     Header: "YOU GET",
     accessor: "balance",
-    Cell: ({ value }) => <Text fontWeight="medium">{value}</Text>,
+    Cell: ({ value }) => <Text fontWeight="medium">{Number(value)}</Text>,
   },
   {
     Header: "TOKEN",
@@ -26,8 +32,21 @@ export const cols = [
     Cell: ({ value }) => <TokenDisplay symbol={value[0]} imageUrl={value[1]} />,
   },
   {
+    Header: "TX",
+    accessor: "tx",
+    Cell: ({ value }) => (
+      <Link isExternal href={getBlockExplorerLink(value, "transaction")}>
+        {shortenTx(value)}
+      </Link>
+    ),
+  },
+  {
     Header: "MAKER",
     accessor: "maker",
-    Cell: ({ value }) => <Link href={viewOnEtherScan(value)}>{value}</Link>,
+    Cell: ({ value }) => (
+      <Link isExternal href={getBlockExplorerLink(value, "address")}>
+        {shortenAddress(value)}
+      </Link>
+    ),
   },
 ];
