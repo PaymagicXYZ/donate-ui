@@ -21,7 +21,7 @@ import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import { Pagination } from "./Pagination";
 import tokensData from "../CleanWallet/tokens.json";
-import { ApprovalModal } from "../CleanWallet/ApprovalModal";
+import { useTranslation } from "react-i18next";
 
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 
@@ -52,6 +52,7 @@ export function SimpleTable({ columns, data }) {
     useSortBy,
     usePagination
   );
+  const { t, i18n } = useTranslation();
   return (
     <VStack>
       <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>

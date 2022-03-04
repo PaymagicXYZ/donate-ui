@@ -35,40 +35,32 @@ export default function Page() {
   const covalentData = useMemo(() => {
     return fetchCovalentData;
   }, [fetchCovalentData]);
+  const { t, i18n } = useTranslation();
 
   return (
     <PageContainer>
       <Box w={["97%", "90%", "70%"]} mx="auto">
         <VStack mt="8" mb="3">
           <Heading as="h3" size="md">
-            🧹 DustSweeper DEX
+            {t("title")}
           </Heading>
-          <Text size="md">
-            Clean out small token balances and swap for ETH with minimal gas!
-          </Text>
+          <Text size="md">{t("subtitle")}</Text>
           <VStack mt="8">
             <Heading as="h5" size="sm" mt="8">
-              How to use:
+              {t("howToUse")}
             </Heading>
             <OrderedList>
-              <ListItem fontSize="md">
-                ⛽ Approve tokens to swap costing ~$10 each.
-              </ListItem>
-              <ListItem fontSize="md">
-                🤖 Bots swap the tokens for ETH at a discount and pay the gas.
-              </ListItem>
-              <ListItem fontSize="md">
-                💰 You receive ETH in your wallet once done, usually within
-                24hrs.
-              </ListItem>
+              <ListItem fontSize="md">{t("description.part1")}</ListItem>
+              <ListItem fontSize="md">{t("description.part2")}</ListItem>
+              <ListItem fontSize="md">{t("description.part3")}</ListItem>
             </OrderedList>
           </VStack>
         </VStack>
         <Tabs variant="soft-rounded" colorScheme="purple" mt="8">
           <Center>
             <TabList>
-              <Tab>Clean Wallet</Tab>
-              <Tab>View Orders</Tab>
+              <Tab>{t("clean.title")}</Tab>
+              <Tab>{t("order.title")}</Tab>
               {/* <Tab>Dashboard</Tab> */}
             </TabList>
           </Center>

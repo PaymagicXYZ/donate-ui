@@ -1,0 +1,36 @@
+{
+  "title": "🧹 DustSweeper DEX",
+  "subtitle": "Bereinigen Sie kleine Token-Guthaben und tauschen Sie sie mit minimalem Gas in ETH!",
+  "alert": " ⚠️⚠️⚠️ We are in **Test Mode**. You could lose your tokens or pay super high fees! Use at your own risk! ⚠️⚠️⚠️",
+  "howToUse": "How to use:",
+  "description": {
+    "part1": "⛽ Approve tokens to swap costing ~$10 each.",
+    "part2": "🤖 Bots swap the tokens for ETH at a discount and pay the gas.",
+    "part3": "💰 You receive ETH in your wallet once done, usually within 24hrs."
+  },
+  "clean": {
+    "title": "Clean Wallet",
+    "cols": {
+      "token": "TOKEN",
+      "price": "PRICE",
+      "lastTransferred": "LAST TRANSFERRED",
+      "balance": "BALANCE",
+      "youReceiveInETH": "YOU RECEIVE IN ETH"
+    },
+    "toolTips": "Token Balance at Chainlink Market Price with 30% discount. This fee is high right now. It will come during the next app release.",
+    "badges": {
+      "notSupported": "Not Supported",
+      "approved": "Approved"
+    }
+  },
+  "order": {
+    "title": "View Orders",
+    "cols": {
+      "time": "TIME",
+      "youGet": "YOU GET",
+      "token": "TOKEN",
+      "tx": "TX",
+      "maker": "MAKER"
+    }
+  }
+}
