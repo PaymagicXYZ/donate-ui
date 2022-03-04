@@ -1,15 +1,15 @@
 {
   "title": "🧹 DustSweeper DEX",
   "subtitle": "Bereinigen Sie kleine Token-Guthaben und tauschen Sie sie mit minimalem Gas in ETH!",
-  "alert": " ⚠️⚠️⚠️ We are in **Test Mode**. You could lose your tokens or pay super high fees! Use at your own risk! ⚠️⚠️⚠️",
-  "howToUse": "How to use:",
+  "alert": " ⚠️⚠️⚠️ Wir sind im **Testmodus**. Sie könnten Ihre Token verlieren oder sehr hohe Gebühren zahlen! Nutzung auf eigene Gefahr! ⚠️⚠️⚠️",
+  "howToUse": "Wie zu benutzen:",
   "description": {
-    "part1": "⛽ Approve tokens to swap costing ~$10 each.",
-    "part2": "🤖 Bots swap the tokens for ETH at a discount and pay the gas.",
-    "part3": "💰 You receive ETH in your wallet once done, usually within 24hrs."
+    "part1": "⛽ Genehmigen Sie den Tausch von Wertmarken zu einem Stückpreis von ~$10.",
+    "part2": "🤖 Bots tauschen die Token mit einem Abschlag in ETH und bezahlen das Gas.",
+    "part3": "💰 Sie erhalten ETH in Ihrem Wallet, sobald dies geschehen ist, normalerweise innerhalb von 24 Stunden."
   },
   "clean": {
-    "title": "Clean Wallet",
+    "title": "Saubere Brieftasche",
     "cols": {
       "token": "TOKEN",
       "price": "PRICE",
@@ -24,7 +24,7 @@
     }
   },
   "order": {
-    "title": "View Orders",
+    "title": "Bestellungen ansehen",
     "cols": {
       "time": "TIME",
       "youGet": "YOU GET",
