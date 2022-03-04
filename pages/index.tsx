@@ -25,6 +25,7 @@ import { CleanWallet } from "../components/CleanWallet/CleanWallet";
 
 import { useCovalent } from "../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
+import "./i18n";
 
 export default function Page() {
   const { library, account, chainId } = useWeb3React();
