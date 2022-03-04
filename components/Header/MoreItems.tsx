@@ -8,6 +8,7 @@ import {
 import { BsThreeDots } from "react-icons/bs";
 import { BiInfoCircle, BiBug } from "react-icons/bi";
 import { SiDiscord, SiTwitter } from "react-icons/si";
+import { Language } from "./Language";
 
 export const MoreItems = () => {
   return (
@@ -27,6 +28,7 @@ export const MoreItems = () => {
         }}
       />
       <MenuList borderRadius="xl">
+        <Language />
         <MenuItem
           as="a"
           href="https://launch.mirror.xyz/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk"
