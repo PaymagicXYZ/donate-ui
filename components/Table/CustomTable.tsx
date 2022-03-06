@@ -25,7 +25,7 @@ import IndeterminateCheckbox from "./Checkbox";
 import { InfoIcon } from "@chakra-ui/icons";
 import tokensData from "../CleanWallet/tokens.json";
 import { ApprovalModal } from "../CleanWallet/ApprovalModal";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 
 export function CustomTable({

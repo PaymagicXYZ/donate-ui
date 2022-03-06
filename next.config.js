@@ -1,4 +1,6 @@
+const { i18n } = require("./next-i18next.config");
 module.exports = {
+  i18n,
   reactStrictMode: true,
   typescript: {
     // !! WARN !!
@@ -6,5 +8,5 @@ module.exports = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-  }
-}
+  },
+};

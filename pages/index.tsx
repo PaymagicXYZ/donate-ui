@@ -25,8 +25,10 @@ import { CleanWallet } from "../components/CleanWallet/CleanWallet";
 
 import { useCovalent } from "../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
-import "./i18n";
-import { useTranslation } from "react-i18next";
+// import "./i18n";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Page() {
   const { library, account, chainId } = useWeb3React();
@@ -35,7 +37,7 @@ export default function Page() {
   const covalentData = useMemo(() => {
     return fetchCovalentData;
   }, [fetchCovalentData]);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <PageContainer>
@@ -81,3 +83,9 @@ export default function Page() {
     </PageContainer>
   );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});

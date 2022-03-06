@@ -2,8 +2,9 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
-import { theme } from "../styles/theme"
-import Script from 'next/script'
+import { theme } from "../styles/theme";
+import Script from "next/script";
+import { appWithTranslation } from "next-i18next";
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -31,11 +32,11 @@ function MyApp({ Component, pageProps }) {
             ga('send', 'pageview');
           `}
         </Script>
-        
+
         <Component {...pageProps} />
       </Web3ReactProvider>
     </ChakraProvider>
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
