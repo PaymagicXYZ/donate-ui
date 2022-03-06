@@ -26,7 +26,6 @@ import { CleanWallet } from "../components/CleanWallet/CleanWallet";
 import { useCovalent } from "../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
 // import "./i18n";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
