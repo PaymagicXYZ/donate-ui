@@ -25,8 +25,8 @@ import IndeterminateCheckbox from "./Checkbox";
 import { InfoIcon } from "@chakra-ui/icons";
 import tokensData from "../CleanWallet/tokens.json";
 import { ApprovalModal } from "../CleanWallet/ApprovalModal";
-import { useTranslation } from "next-i18next";
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
+import { useTranslation } from "next-i18next";
 
 export function CustomTable({
   columns,
@@ -35,6 +35,7 @@ export function CustomTable({
   signedTokens,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { t } = useTranslation("common");
   const {
     getTableProps,
     getTableBodyProps,
@@ -90,7 +91,6 @@ export function CustomTable({
       ]);
     }
   );
-  const { t, i18n } = useTranslation();
 
   return (
     <VStack>

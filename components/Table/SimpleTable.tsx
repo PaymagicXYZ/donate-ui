@@ -16,17 +16,17 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiSend, FiToggleLeft } from "react-icons/fi";
+// import { FiSend, FiToggleLeft } from "react-icons/fi";
 import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import { Pagination } from "./Pagination";
-import tokensData from "../CleanWallet/tokens.json";
-import { useTranslation } from "react-i18next";
+// import tokensData from "../CleanWallet/tokens.json";
+// import { useTranslation } from "react-i18next";
 
-const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
+// const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 
 export function SimpleTable({ columns, data }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,7 +52,6 @@ export function SimpleTable({ columns, data }) {
     useSortBy,
     usePagination
   );
-  const { t, i18n } = useTranslation();
   return (
     <VStack>
       <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>

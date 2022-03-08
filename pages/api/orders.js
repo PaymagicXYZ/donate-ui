@@ -18,17 +18,6 @@ async function getApproval() {
   }
 }
 const approvals = await getApproval();
-const contract = new ethers.Contract(
-  "0x111111111117dc0aa78b770fa6a738034120c302",
-  ERC20ABI,
-  provider
-);
-const balanceOf = await contract.balanceOf(
-  "0x46ca0311e86d1086d4e14d1bd61472b844cfad75"
-);
-// const tx = await provider.getTransaction(
-//   "0x8af111284edf727075a8aec5c184bdbf1bd597f7f9532f311eb75601b08c1a78"
-// );
 
 const cleanedApprovals = await Promise.all(
   approvals.data.items
@@ -43,11 +32,12 @@ const cleanedApprovals = await Promise.all(
       return {
         balance: balance,
         // amount: ethers.utils.formatUnits(amount),
-        symbol: e.sender_contract_ticker_symbol,
+        symbol: [e.sender_contract_ticker_symbol, e.sender_logo_url],
         contract: e.sender_address,
         maker: e.decoded.params[0].value,
         time: e.block_signed_at,
-        tx: await provider.getTransaction(e.tx_hash),
+        // tx: await provider.getTransaction(e.tx_hash),
+        tx: e.tx_hash,
       };
     })
 );
