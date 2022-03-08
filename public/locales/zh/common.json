@@ -1,0 +1,36 @@
+{
+  "title": "🧹 DustSweeper DEX",
+  "subtitle": "小额代币低价清理！",
+  "alert": " ⚠️⚠️⚠️ 我们仍处于 **测试模式**。若出现代币丢失或高额费用，后果自负。  ⚠️⚠️⚠️",
+  "howToUse": "使用方法:",
+  "description": {
+    "part1": "⛽ 批准所需要的代币兑换的代币，每个代币的成本约为¥60",
+    "part2": "🤖 机器人会以折扣价收购代币并代支付费用。",
+    "part3": "💰 以太币会在交易完成时汇入钱包。整个流程通常情况下会在一天内完成。"
+  },
+  "clean": {
+    "title": "清理钱包",
+    "cols": {
+      "token": "TOKEN",
+      "price": "PRICE",
+      "lastTransferred": "LAST TRANSFERRED",
+      "balance": "BALANCE",
+      "youReceiveInETH": "YOU RECEIVE IN ETH"
+    },
+    "toolTips": "Token Balance at Chainlink Market Price with 30% discount. This fee is high right now. It will come during the next app release.",
+    "badges": {
+      "notSupported": "Not Supported",
+      "approved": "Approved"
+    }
+  },
+  "order": {
+    "title": "查看订单",
+    "cols": {
+      "time": "TIME",
+      "youGet": "YOU GET",
+      "token": "TOKEN",
+      "tx": "TX",
+      "maker": "MAKER"
+    }
+  }
+}

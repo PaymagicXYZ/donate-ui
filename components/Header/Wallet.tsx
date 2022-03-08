@@ -60,19 +60,21 @@ export default function Wallet() {
     };
 
     const getENSname = async (address) => {
-      try {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const name = await provider?.lookupAddress(address);
-        if (name) {
-          setENSname(name);
-          // const resolver = await provider.getResolver(name);
-          // const avatar = await resolver.getText("avatar");
-          // setENSAvatar(avatar);
-          // console.log(avatar);
+      if (account) {
+        try {
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const name = await provider?.lookupAddress(address);
+          if (name) {
+            setENSname(name);
+            // const resolver = await provider.getResolver(name);
+            // const avatar = await resolver.getText("avatar");
+            // setENSAvatar(avatar);
+            // console.log(avatar);
+          }
+        } catch (error) {
+          //It will send an error if the address is not registered on the ENS or the network is not supported
+          console.log(error);
         }
-      } catch (error) {
-        //It will send an error if the address is not registered on the ENS or the network is not supported
-        console.log(error);
       }
     };
 

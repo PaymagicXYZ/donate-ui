@@ -25,8 +25,8 @@ import IndeterminateCheckbox from "./Checkbox";
 import { InfoIcon } from "@chakra-ui/icons";
 import tokensData from "../CleanWallet/tokens.json";
 import { ApprovalModal } from "../CleanWallet/ApprovalModal";
-
 const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
+import { useTranslation } from "next-i18next";
 
 export function CustomTable({
   columns,
@@ -35,6 +35,7 @@ export function CustomTable({
   signedTokens,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { t } = useTranslation("common");
   const {
     getTableProps,
     getTableBodyProps,
@@ -90,6 +91,7 @@ export function CustomTable({
       ]);
     }
   );
+
   return (
     <VStack>
       <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>
@@ -114,10 +116,7 @@ export function CustomTable({
                       ""
                     )}
                     {column.Header === "YOU RECEIVE IN ETH" && (
-                      <Tooltip
-                        label="Token Balance at Chainlink Market Price with 30% discount. This fee is high right now. It will come during the next app release."
-                        fontSize="md"
-                      >
+                      <Tooltip label={t("toolTips")} fontSize="md">
                         <InfoIcon w={4} h={4} ml="1" />
                       </Tooltip>
                     )}
