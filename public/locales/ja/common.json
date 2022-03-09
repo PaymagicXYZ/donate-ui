@@ -4,33 +4,34 @@
   "alert": " ⚠️⚠️⚠️ 今はまだテストモードです。トークンを紛失したり、超高い手数料を支払ったりする可能性があります!注意して使用してください! ⚠️⚠️⚠️",
   "howToUse": "使用方法:",
   "description": {
-    "part1": "⛽ 各コインを承認する必要な手数料は10ドルです.",
-    "part2": "🤖 ボットは割引でETHのトークンを交換し、ガスを支払う.",
+    "part1": "⛽ 各コインを承認する必要な手数料は10ドルです",
+    "part2": "🤖 ボットは割引でトークンをETHに交換し、ガスを支払う.",
     "part3": "💰 通常24時間以内に、ETHを受け取ります."
   },
   "clean": {
     "title": "財布　清潔",
     "cols": {
-      "token": "TOKEN",
-      "price": "PRICE",
-      "lastTransferred": "LAST TRANSFERRED",
-      "balance": "BALANCE",
-      "youReceiveInETH": "YOU RECEIVE IN ETH"
+      "token": "トークン",
+      "price": "価格",
+      "lastTransferred": "最後に転送された",
+      "balance": "バランス",
+      "youReceiveInETH": "あなたはETHで受け取ります"
     },
-    "toolTips": "チェーンリンク市場価格よりトークンバランスは30%割引。この料金は今まだ高いです。次のアプリのリリース中に解決します",
+    "toolTips": "チェーンリンク市場価格よりトークンバランスは30%割引。この料金は今まだ高いです。それは次のアプリの中に解決します.",
     "badges": {
-      "notSupported": "Not Supported",
-      "approved": "Approved"
-    }
+      "notSupported": "サポートされていません",
+      "approved": "承認"
+    },
+    "SELECT": "SELECT"
   },
   "order": {
     "title": "注文の表示",
     "cols": {
-      "time": "TIME",
-      "youGet": "YOU GET",
-      "token": "TOKEN",
+      "time": "時間",
+      "youGet": "得る",
+      "token": "トークン",
       "tx": "TX",
-      "maker": "MAKER"
+      "maker": "メーカー"
     }
   }
 }

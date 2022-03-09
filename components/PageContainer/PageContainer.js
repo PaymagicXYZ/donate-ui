@@ -8,9 +8,9 @@ import {
   Link,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 export default function PageContainer(props) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation("common");
   return (
     <>
       <Header />

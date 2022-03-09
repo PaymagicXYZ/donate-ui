@@ -32,8 +32,7 @@ const cleanedApprovals = await Promise.all(
       return {
         balance: balance,
         // amount: ethers.utils.formatUnits(amount),
-        symbol: [e.sender_contract_ticker_symbol, e.sender_logo_url],
-        contract: e.sender_address,
+        token: [e.sender_contract_ticker_symbol, e.sender_address],
         maker: e.decoded.params[0].value,
         time: e.block_signed_at,
         // tx: await provider.getTransaction(e.tx_hash),
@@ -44,7 +43,7 @@ const cleanedApprovals = await Promise.all(
 
 const checkedApprovals = await Promise.all(
   cleanedApprovals.map(async (e) => {
-    const contract = new ethers.Contract(e.contract, ERC20ABI, provider);
+    const contract = new ethers.Contract(e.token[1], ERC20ABI, provider);
     const amount = ethers.utils.formatUnits(await contract.balanceOf(e.maker));
     return [e, amount >= e.balance];
   })

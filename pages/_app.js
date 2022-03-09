@@ -18,7 +18,10 @@ function MyApp({ Component, pageProps }) {
       <Web3ReactProvider getLibrary={getLibrary}>
         <Head>
           <title>DustSweeper</title>
-          <meta name="description" content="Fill in" />
+          <meta
+            name="description"
+            content="Clean out small token balances and swap for ETH with minimal gas! ⛽ Approve tokens to swap costing ~$10 each.🤖 Bots swap the tokens for ETH at a discount and pay the gas.💰 You receive ETH in your wallet once done, usually within 24hrs."
+          />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Script id="google-analytics" strategy="afterInteractive">

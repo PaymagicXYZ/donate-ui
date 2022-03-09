@@ -69,20 +69,20 @@ export function CustomTable({
           id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          Header: "SELECT",
+          Header: t("clean.SELECT"),
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
           Cell: ({ row }) => (
             <Center>
               {row.cells[1].value[3] ? (
-                <Badge colorScheme="green">Approved</Badge>
+                <Badge colorScheme="green">{t("clean.badges.approved")}</Badge>
               ) : _.includes(tokenAddresses, row.cells[1].value[0]) ? (
                 <IndeterminateCheckbox
                   colorScheme="purple"
                   {...row.getToggleRowSelectedProps()}
                 />
               ) : (
-                <Badge>Not Supported</Badge>
+                <Badge>{t("clean.badges.notSupported")}</Badge>
               )}
             </Center>
           ),

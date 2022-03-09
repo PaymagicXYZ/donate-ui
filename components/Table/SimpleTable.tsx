@@ -21,7 +21,6 @@ import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import { Pagination } from "./Pagination";
 // import tokensData from "../CleanWallet/tokens.json";
-// import { useTranslation } from "react-i18next";
 
 // const tokenAddresses = tokensData.tokens.map((i) => i.symbol);
 

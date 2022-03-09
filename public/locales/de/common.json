@@ -17,16 +17,17 @@
       "balance": "BALANCE",
       "youReceiveInETH": "YOU RECEIVE IN ETH"
     },
-    "toolTips": "Token Balance at Chainlink Market Price with 30% discount. This fee is high right now. It will come during the next app release.",
+    "toolTips": "Token-Guthaben zum Chainlink-Marktpreis mit 30% Rabatt. Diese Gebühr ist im Moment noch hoch. Sie wird bei der nächsten Veröffentlichung der App kommen.",
     "badges": {
       "notSupported": "Not Supported",
       "approved": "Approved"
-    }
+    },
+    "SELECT": "Auswählen"
   },
   "order": {
     "title": "Bestellungen ansehen",
     "cols": {
-      "time": "TIME",
+      "time": "ZEIT",
       "youGet": "YOU GET",
       "token": "TOKEN",
       "tx": "TX",

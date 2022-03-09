@@ -1,36 +1,37 @@
 {
   "title": "🧹 DustSweeper DEX",
   "subtitle": "작은 토큰 잔액을 처리하고 최소한의 가스로 ETH로 교체합니다!",
-  "alert": " ⚠️⚠️⚠️ 우리는 아직 테스트 모드중입니다. 당신은 당신의 토큰을 잃거나 아주 높은 수수료를 지불 할수 있습니다! 조심스럽게 사용!!! ⚠️⚠️⚠️",
+  "alert": " ⚠️⚠️⚠️ 우리는 아직 테스트 모드중입니다. 당신은 당신의 토큰을 잃거나 아주 높은 수수료를 지불 할수 있습니다! 조심스럽게 사용! ⚠️⚠️⚠️",
   "howToUse": "사용 방법:",
   "description": {
-    "part1": "⛽ 토큰을 승인하는데 비용 $10 필요함.",
+    "part1": "⛽ 토큰을 승인하는데 토큰당 비용 $10 필요함.",
     "part2": "🤖 로봇은 할인된 가격으로 ETH토큰을 교환하고 가스를 지불합니다.",
     "part3": "💰 일반적으로 24시간 내에 지갑에 ETH를 받으실수 있습니다."
   },
   "clean": {
     "title": "지갑 처리",
     "cols": {
-      "token": "TOKEN",
-      "price": "PRICE",
-      "lastTransferred": "LAST TRANSFERRED",
-      "balance": "BALANCE",
-      "youReceiveInETH": "YOU RECEIVE IN ETH"
+      "token": "토큰",
+      "price": "가격",
+      "lastTransferred": "마지막 전송됨",
+      "balance": "잔액",
+      "youReceiveInETH": "ETH획득"
     },
     "toolTips": "체인링크 시장 가격의 토큰 밸런스 30% 할인. 지금 수수료는 높아요. 그것은 다음 응용 프로그램 릴리스 기간 올것이다.",
     "badges": {
-      "notSupported": "Not Supported",
-      "approved": "Approved"
-    }
+      "notSupported": "지지되지 않음",
+      "approved": "승인"
+    },
+    "SELECT": "SELECT"
   },
   "order": {
     "title": "주문 보기",
     "cols": {
-      "time": "TIME",
-      "youGet": "YOU GET",
-      "token": "TOKEN",
+      "time": "시간",
+      "youGet": "획득",
+      "token": "토큰",
       "tx": "TX",
-      "maker": "MAKER"
+      "maker": "메이커"
     }
   }
 }

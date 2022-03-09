@@ -11,26 +11,27 @@
   "clean": {
     "title": "清理钱包",
     "cols": {
-      "token": "TOKEN",
-      "price": "PRICE",
-      "lastTransferred": "LAST TRANSFERRED",
-      "balance": "BALANCE",
-      "youReceiveInETH": "YOU RECEIVE IN ETH"
+      "token": "代币",
+      "price": "价格",
+      "lastTransferred": "上次交易",
+      "balance": "余额",
+      "youReceiveInETH": "兑换为以太币折合"
     },
-    "toolTips": "Token Balance at Chainlink Market Price with 30% discount. This fee is high right now. It will come during the next app release.",
+    "toolTips": "以Chainlink市场价30%折扣收购。测试版费用较高手续费会在下一版本推出后降低。",
     "badges": {
-      "notSupported": "Not Supported",
-      "approved": "Approved"
-    }
+      "notSupported": "不支持",
+      "approved": "已批准"
+    },
+    "SELECT": "选择"
   },
   "order": {
     "title": "查看订单",
     "cols": {
-      "time": "TIME",
-      "youGet": "YOU GET",
-      "token": "TOKEN",
-      "tx": "TX",
-      "maker": "MAKER"
+      "time": "时间",
+      "youGet": "所得",
+      "token": "代币",
+      "tx": "交易",
+      "maker": "客户"
     }
   }
 }

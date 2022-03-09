@@ -21,7 +21,8 @@
     "badges": {
       "notSupported": "Not Supported",
       "approved": "Approved"
-    }
+    },
+    "SELECT": "SELECT"
   },
   "order": {
     "title": "View Orders",
