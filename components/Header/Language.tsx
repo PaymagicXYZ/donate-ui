@@ -12,11 +12,6 @@ import { useRouter } from "next/router";
 
 export function Language() {
   const router = useRouter();
-  //   const { t, i18n } = useTranslation();
-
-  //   const changeLanguage = (lng) => {
-  //     i18n.changeLanguage(lng);
-  //   };
   return (
     <Menu>
       {({ isOpen }) => (
@@ -30,21 +25,21 @@ export function Language() {
             {isOpen ? "Back" : router.locale}
           </MenuButton>
           <MenuList>
-            <MenuItem>
-              <Link href="/">English</Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/zh">中文</Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/de">Deutsch</Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/ko">한글</Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/ja">日本語</Link>
-            </MenuItem>
+            <Link href="/">
+              <MenuItem>English</MenuItem>
+            </Link>
+            <Link href="/zh">
+              <MenuItem>中文</MenuItem>
+            </Link>
+            <Link href="/de">
+              <MenuItem>Deutsch</MenuItem>
+            </Link>
+            <Link href="/ko">
+              <MenuItem>한글</MenuItem>
+            </Link>
+            <Link href="/ja">
+              <MenuItem>日本語</MenuItem>
+            </Link>
           </MenuList>
         </>
       )}
