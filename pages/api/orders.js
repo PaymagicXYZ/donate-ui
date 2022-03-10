@@ -45,7 +45,16 @@ const checkedApprovals = await Promise.all(
   cleanedApprovals.map(async (e) => {
     const contract = new ethers.Contract(e.token[1], ERC20ABI, provider);
     const amount = ethers.utils.formatUnits(await contract.balanceOf(e.maker));
-    return [e, amount >= e.balance];
+    // const filter = contract.filters.Approval(
+    //   e.maker,
+    //   "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
+    // );
+    // const filtered = await contract.queryFilter(filter, 14000000, "latest");
+    const allowance = await contract.allowance(
+      e.maker,
+      "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
+    );
+    return [e, amount >= e.balance && allowance != 0];
   })
 );
 
