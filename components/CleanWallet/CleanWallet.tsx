@@ -4,7 +4,7 @@ export function CleanWallet(props) {
   const { covalentData, account } = props;
   return (
     <WalletChecker loading={covalentData.loading} account={account}>
-      <ApprovalForm {...{ covalentData }} />
+      <ApprovalForm {...{ covalentData, account }} />
     </WalletChecker>
   );
 }
