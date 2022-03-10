@@ -10,7 +10,7 @@ const RPC = {
 };
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 1337],
+  // supportedChainIds: [1, 1337],
 });
 
 export const network = new NetworkConnector({
