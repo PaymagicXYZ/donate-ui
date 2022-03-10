@@ -66,10 +66,10 @@ export default function Page() {
             </TabList>
           </Center>
           <TabPanels>
-            <TabPanel>
+            <TabPanel width="760px">
               <CleanWallet {...{ account, covalentData }} />
             </TabPanel>
-            <TabPanel>
+            <TabPanel width="780px">
               <ApprovalTable toggle={true} {...{ account, covalentData }} />
             </TabPanel>
             {/* <TabPanel>

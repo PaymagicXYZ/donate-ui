@@ -115,8 +115,8 @@ export function CustomTable({
                     ) : (
                       ""
                     )}
-                    {column.Header === "YOU RECEIVE IN ETH" && (
-                      <Tooltip label={t("toolTips")} fontSize="md">
+                    {i + 1 == headerGroup.headers.length && (
+                      <Tooltip label={t("clean.toolTips")} fontSize="md">
                         <InfoIcon w={4} h={4} ml="1" />
                       </Tooltip>
                     )}
@@ -133,8 +133,7 @@ export function CustomTable({
               return (
                 <Tr {...row.getRowProps()} key={i}>
                   {row.cells.map((cell, i) => {
-                    return cell.column.Header === "YOU RECEIVE IN ETH" &&
-                      cell.value ? (
+                    return cell.column.id === "balanceETH" && cell.value ? (
                       <Td
                         backgroundColor="green.100"
                         {...cell.getCellProps()}
