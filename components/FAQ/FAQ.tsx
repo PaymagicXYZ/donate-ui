@@ -24,7 +24,7 @@ const FAQItem = (props) => (
 export function FAQ() {
   const { t } = useTranslation("common");
   return (
-    <Accordion>
+    <Accordion allowToggle>
       <FAQItem
         title={t("faq.title1")}
         des={
