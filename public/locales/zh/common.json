@@ -33,5 +33,16 @@
       "tx": "交易",
       "maker": "客户"
     }
+  },
+  "faq": {
+    "title": "常见问题",
+    "title1": "哪些代币可以被清理？",
+    "des1": "目前我们仅支持 <a  href='https://docs.chain.link/docs/ethereum-addresses/'>Chainlink</a>上的代币。计划在后续版本支持其他代币。",
+    "title2": "代币如何定价？",
+    "des2": "每个代币都会按照<a   href='https://docs.chain.link/docs/ethereum-addresses/'>Chainlink</a>价格给出折扣价。折扣价包含了手续费和各种使用费用。折扣比例和协议费用会在discord频道上更新，我们的目标是随着时间尽量减少到零。",
+    "title3": "我们的服务在别的链上吗？",
+    "des3": "目前我们仅在以太坊主链上部署，若您想在别处使用 <a  href=https://airtable.com/shrL21KLg8NQHuDWH>请在此提出要求</a>.",
+    "title4": "我如何才能跟进并了解更多此项目?",
+    "des4": "加入我们的<a  href=https://discord.com/invite/y63TtsqXqE>Discord</a>，或关注我们的 <a  href=https://twitter.com/DustSweeperDAO>Twitter</a>, 亦可阅读 <a  href=https://launch.mirror.xyz/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk>我们在Mirror上的初始介绍</a>。"
   }
 }

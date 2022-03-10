@@ -33,5 +33,16 @@
       "tx": "TX",
       "maker": "MAKER"
     }
+  },
+  "faq": {
+    "title": "FAQs",
+    "title1": "What tokens are supported and not supported?",
+    "des1": "Currently, the app only supports any token with a <a  href='https://docs.chain.link/docs/ethereum-addresses/'>Chainlink price feed</a>. We’re planning to broaden token support significantly in version 2.",
+    "title2": "How are the tokens priced?",
+    "des2": "Each token is priced based on its <a   href='https://docs.chain.link/docs/ethereum-addresses/'>Chainlink price feed</a> with a Taker Discount, so they can cover gas costs, and a Protocol Fee for using the service. The Taker Discount and Protocol Fee are dynamic so check our Discord for the latest numbers. We are working hard to bring these numbers down close to zero of time.",
+    "title3": "Is Dustsweeper available on other chains?",
+    "des3": "Dustsweeper is only deployed to Ethereum mainnet at the moment. If you’d like to use the app on another chain, <a  href=https://airtable.com/shrL21KLg8NQHuDWH>please request it here</a>.",
+    "title4": "How do I learn more about the DustSweeper project?",
+    "des4": "Join our <a  href=https://discord.com/invite/y63TtsqXqE>Discord</a>, follow us on <a  href=https://twitter.com/DustSweeperDAO>Twitter</a>, or read the <a  href=https://launch.mirror.xyz/EwldfOSzRyv2uwOg8hCctXdvfps4LygGZnIR2j_mrJk>original write-up on Mirror</a>."
   }
 }

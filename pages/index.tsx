@@ -22,6 +22,7 @@ import PageContainer from "../components/PageContainer/PageContainer";
 import ModalWarning from "../components/ModalWarning";
 // import { Dashboard } from "../components/Holdings/Dashboard";
 import { CleanWallet } from "../components/CleanWallet/CleanWallet";
+import { FAQ } from "../components/FAQ/FAQ";
 
 import { useCovalent } from "../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
@@ -62,15 +63,19 @@ export default function Page() {
             <TabList>
               <Tab>{t("clean.title")}</Tab>
               <Tab>{t("order.title")}</Tab>
+              <Tab>{t("faq.title")}</Tab>
               {/* <Tab>Dashboard</Tab> */}
             </TabList>
           </Center>
           <TabPanels>
-            <TabPanel>
+            <TabPanel minWidth="760px">
               <CleanWallet {...{ account, covalentData }} />
             </TabPanel>
-            <TabPanel>
+            <TabPanel minWidth="780px">
               <ApprovalTable toggle={true} {...{ account, covalentData }} />
+            </TabPanel>
+            <TabPanel>
+              <FAQ />
             </TabPanel>
             {/* <TabPanel>
               <Dashboard {...{ account, covalentData }} />
