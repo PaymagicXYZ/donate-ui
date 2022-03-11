@@ -3,9 +3,14 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { Button, Center, VStack } from "@chakra-ui/react";
 import BalanceTable from "./BalanceTable";
 import tokensData from "./tokens.json";
+const ethers = require("ethers");
+import ERC20ABI from "../../artifacts/contracts/TestERC20.sol/ERC20.json";
+const provider = ethers.getDefaultProvider(
+  "https://mainnet.infura.io/v3/f3c58d461e4e4bc7860f2a562ca71f10"
+);
 
 export function ApprovalForm(props) {
-  const { covalentData } = props;
+  const { covalentData, account } = props;
   // console.log(covalentData);
   const [signedTokens, setSignedTokens] = useState([]);
   const balances = useMemo(() => {
@@ -87,6 +92,16 @@ export function ApprovalForm(props) {
 
     return data.filter((a) => a);
   }, [covalentData, signedTokens]);
+
+  balances.map(async (data) => {
+    const contract = new ethers.Contract(data.symbol[2], ERC20ABI, provider);
+    const allowance = await contract.allowance(
+      account,
+      "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
+    );
+    data.symbol[3] = allowance != 0;
+  });
+
   const signedTokensCallback = useCallback((hash) => {
     setSignedTokens(hash);
   }, []);
