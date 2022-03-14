@@ -68,10 +68,10 @@ export default function Page() {
             </TabList>
           </Center>
           <TabPanels>
-            <TabPanel minWidth="760px">
+            <TabPanel>
               <CleanWallet {...{ account, covalentData }} />
             </TabPanel>
-            <TabPanel minWidth="780px">
+            <TabPanel>
               <ApprovalTable toggle={true} {...{ account, covalentData }} />
             </TabPanel>
             <TabPanel>

@@ -20,6 +20,7 @@ import {
 import { FiSend, FiToggleLeft } from "react-icons/fi";
 import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
+import { useSticky } from "react-table-sticky";
 import { Pagination } from "./Pagination";
 import IndeterminateCheckbox from "./Checkbox";
 import { InfoIcon } from "@chakra-ui/icons";
@@ -42,6 +43,8 @@ export function CustomTable({
     headerGroups,
     rows,
     prepareRow,
+    allColumns,
+    getToggleHideAllColumnsProps,
     page,
     canPreviousPage,
     canNextPage,
@@ -62,6 +65,8 @@ export function CustomTable({
     useSortBy,
     usePagination,
     useRowSelect,
+    // useBlockLayout,
+    useSticky,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
@@ -72,6 +77,7 @@ export function CustomTable({
           Header: t("clean.SELECT"),
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
+          // sticky: "left",
           Cell: ({ row }) => (
             <Center>
               {row.cells[1].value[3] ? (
@@ -93,115 +99,128 @@ export function CustomTable({
   );
 
   return (
-    <VStack>
-      <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>
-        <Thead bg={mode("gray.50", "gray.800")}>
-          {headerGroups.map((headerGroup, i) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
-              {headerGroup.headers.map((column, i) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  key={i}
-                >
-                  {column.render("Header")}
-                  {/* Add a sort direction indicator */}
-                  <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <ArrowDownIcon />
+    <>
+      <VStack width="760px" overflow="scroll">
+        {/* {allColumns.map((column) => (
+        <div key={column.id}>
+          <label>
+            {console.log(column.getToggleHiddenProps())}
+            <input type="checkbox" {...column.getToggleHiddenProps()} />{" "}
+            {column.id}
+          </label>
+        </div>
+      ))} */}
+        <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>
+          <Thead bg={mode("gray.50", "gray.800")}>
+            {headerGroups.map((headerGroup, i) => (
+              <Tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                {headerGroup.headers.map((column, i) => (
+                  <Th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    key={i}
+                  >
+                    {column.render("Header")}
+                    {/* Add a sort direction indicator */}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ArrowDownIcon />
+                        ) : (
+                          <ArrowUpIcon />
+                        )
                       ) : (
-                        <ArrowUpIcon />
-                      )
-                    ) : (
-                      ""
-                    )}
-                    {i + 1 == headerGroup.headers.length && (
-                      <Tooltip label={t("clean.toolTips")} fontSize="md">
-                        <InfoIcon w={4} h={4} ml="1" />
-                      </Tooltip>
-                    )}
-                  </span>
-                </Th>
-              ))}
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.length > 0 ? (
-            page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <Tr {...row.getRowProps()} key={i}>
-                  {row.cells.map((cell, i) => {
-                    return cell.column.id === "balanceETH" && cell.value ? (
-                      <Td
-                        backgroundColor="green.100"
-                        {...cell.getCellProps()}
-                        key={i}
-                      >
-                        {/* {_.includes(
+                        ""
+                      )}
+                      {i + 1 == headerGroup.headers.length && (
+                        <Tooltip label={t("clean.toolTips")} fontSize="md">
+                          <InfoIcon w={4} h={4} ml="1" />
+                        </Tooltip>
+                      )}
+                    </span>
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+          </Thead>
+          <Tbody {...getTableBodyProps()}>
+            {page.length > 0 ? (
+              page.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <Tr {...row.getRowProps()} key={i}>
+                    {row.cells.map((cell, i) => {
+                      return cell.column.id === "balanceETH" && cell.value ? (
+                        <Td
+                          backgroundColor="green.100"
+                          {...cell.getCellProps()}
+                          key={i}
+                        >
+                          {/* {_.includes(
                           signedTokens?.map((token) => token.name),
                           cell.row.cells[1].value[0]
                         ) ? (
                           <Text>Signed</Text>
                         ) : ( */}
-                        {cell.render("Cell")}
-                        {/* )} */}
-                      </Td>
-                    ) : (
-                      <Td {...cell.getCellProps()} key={i}>
-                        {cell.render("Cell")}
-                      </Td>
-                    );
-                  })}
-                </Tr>
-              );
-            })
-          ) : (
-            <Center p={6}>
-              <Text as="i">No data found</Text>
-            </Center>
-          )}
-        </Tbody>
-      </Table>
-      <Pagination
-        {...{
-          canPreviousPage,
-          canNextPage,
-          pageOptions,
-          pageCount,
-          gotoPage,
-          nextPage,
-          previousPage,
-          setPageSize,
-          pageIndex,
-          pageSize,
-        }}
-      />
-      <Button
-        size="lg"
-        fontWeight="normal"
-        colorScheme="purple"
-        type="submit"
-        value="Submit"
-        leftIcon={<FiToggleLeft />}
-        isDisabled={isOpen || _.isEmpty(selectedRowIds)}
-        isLoading={isOpen}
-        loadingText="Sign txs"
-        onClick={onOpen}
-      >
-        Approve Selected Tokens
-      </Button>
-      <ApprovalModal
-        {...{
-          isOpen,
-          onOpen,
-          onClose,
-          selectedFlatRows,
-          signedTokens,
-          signedTokensCallback,
-        }}
-      />
-    </VStack>
+                          {cell.render("Cell")}
+                          {/* )} */}
+                        </Td>
+                      ) : (
+                        <Td {...cell.getCellProps()} key={i}>
+                          {cell.render("Cell")}
+                        </Td>
+                      );
+                    })}
+                  </Tr>
+                );
+              })
+            ) : (
+              <Center p={6}>
+                <Text as="i">No data found</Text>
+              </Center>
+            )}
+          </Tbody>
+        </Table>
+        <Pagination
+          {...{
+            canPreviousPage,
+            canNextPage,
+            pageOptions,
+            pageCount,
+            gotoPage,
+            nextPage,
+            previousPage,
+            setPageSize,
+            pageIndex,
+            pageSize,
+          }}
+        />
+      </VStack>
+      <Center position="sticky" left="0" marginTop="10px">
+        <Button
+          size="lg"
+          fontWeight="normal"
+          colorScheme="purple"
+          type="submit"
+          value="Submit"
+          leftIcon={<FiToggleLeft />}
+          isDisabled={isOpen || _.isEmpty(selectedRowIds)}
+          isLoading={isOpen}
+          loadingText="Sign txs"
+          onClick={onOpen}
+        >
+          Approve Selected Tokens
+        </Button>
+        <ApprovalModal
+          {...{
+            isOpen,
+            onOpen,
+            onClose,
+            selectedFlatRows,
+            signedTokens,
+            signedTokensCallback,
+          }}
+        />
+      </Center>
+    </>
   );
 }
