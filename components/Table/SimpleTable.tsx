@@ -52,7 +52,7 @@ export function SimpleTable({ columns, data }) {
     usePagination
   );
   return (
-    <VStack>
+    <VStack width="780px" overflow="scroll">
       <Table borderWidth="1px" fontSize="sm" {...getTableProps()}>
         <Thead bg={mode("gray.50", "gray.800")}>
           {headerGroups.map((headerGroup, i) => (

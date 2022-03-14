@@ -14,6 +14,7 @@ export default function BalanceTable(props) {
     {
       Header: t("clean.cols.token"),
       accessor: "symbol",
+      // sticky: "left",
       Cell: ({ value }) => (
         <TokenDisplay imageUrl={value[1]} symbol={String(value[0])} />
       ),
@@ -56,7 +57,7 @@ export default function BalanceTable(props) {
   ];
 
   return (
-    <Box py={{ base: "2", md: "4" }}>
+    <Box width="760px" overflow="scroll" py={{ base: "2", md: "4" }}>
       <CustomTable
         columns={cols}
         data={balances}
