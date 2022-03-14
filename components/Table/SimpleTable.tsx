@@ -107,7 +107,16 @@ export function SimpleTable({ columns, data }) {
             })
           ) : (
             <Center p={6}>
-              <Text as="i">No data found</Text>
+              <Text as="i">
+                Wow! It seems all the dusts are gone. <br />
+                Come back later or take a look at our{" "}
+                <Link
+                  href="https://dune.xyz/corbpage/DustSweeper-Tracker"
+                  isExternal
+                >
+                  <strong>tracker.</strong>
+                </Link>
+              </Text>
             </Center>
           )}
         </Tbody>
