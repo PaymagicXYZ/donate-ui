@@ -4,9 +4,9 @@
   "alert": " ⚠️⚠️⚠️ We are in **Test Mode**. You could lose your tokens or pay super high fees! Use at your own risk! ⚠️⚠️⚠️",
   "howToUse": "How to use:",
   "description": {
-    "part1": "⛽ Approve tokens to swap costing ~$10 each.",
-    "part2": "🤖 Bots swap the tokens for ETH at a discount and pay the gas.",
-    "part3": "💰 You receive ETH in your wallet once done, usually within 24hrs."
+    "part1": "⛽ Approve tokens costing ~$8 each. Super low cost.",
+    "part2": "🤖 Sit back and wait a few hours. Swaps do NOT happen immediately.",
+    "part3": "💰 Bots will swap your tokens, paying the gas, and you'll receive ETH in your wallet!"
   },
   "clean": {
     "title": "Clean Wallet",
