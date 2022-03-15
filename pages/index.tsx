@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import {
   Heading,
   Text,
@@ -26,7 +27,6 @@ import { FAQ } from "../components/FAQ/FAQ";
 
 import { useCovalent } from "../hooks/useCovalent";
 import { useWeb3React } from "@web3-react/core";
-// import "./i18n";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -38,9 +38,14 @@ export default function Page() {
     return fetchCovalentData;
   }, [fetchCovalentData]);
   const { t } = useTranslation("common");
-
+  const { query } = useRouter();
+  const [tab, setTab] = useState(0);
+  useEffect(() => {
+    setTab(Number(query.tab));
+  }, [query]);
   return (
     <PageContainer>
+      {/* {console.log(tab)} */}
       <Box w={["97%", "90%", "70%"]} mx="auto">
         <VStack mt="8" mb="3">
           <Heading as="h3" size="md">
@@ -58,7 +63,13 @@ export default function Page() {
             </OrderedList>
           </VStack>
         </VStack>
-        <Tabs variant="soft-rounded" colorScheme="purple" mt="8">
+        <Tabs
+          isLazy
+          index={tab}
+          variant="soft-rounded"
+          colorScheme="purple"
+          mt="8"
+        >
           <Center>
             <TabList>
               <Tab>{t("clean.title")}</Tab>
