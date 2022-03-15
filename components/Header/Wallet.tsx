@@ -30,7 +30,8 @@ import { shortenAddress } from "../../utils";
 import { getNativeToken } from "../../utils";
 import { ethers } from "ethers";
 
-export default function Wallet() {
+export default function Wallet(props) {
+  const noMore = !props.noMore;
   const context = useWeb3React();
   const { account, library, activate, chainId, deactivate } = context;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -210,7 +211,7 @@ export default function Wallet() {
       <Spacer />
       {library && library.provider.isMetaMask && <NetworkMenu />}
       <Account />
-      <MoreItems />
+      {noMore && <MoreItems />}
     </HStack>
   );
 }

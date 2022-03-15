@@ -54,7 +54,7 @@ export default function TransactionTable(props) {
       {loading ? (
         <Spinner size="xl" />
       ) : (
-        <Box width="780px" overflow="scroll" py={{ base: "2", md: "4" }}>
+        <Box overflow={{ base: "scroll", md: "visible" }}>
           {/* {console.log(approvalList)} */}
           <ApprovalTableContent approvalList={approvalList} />
         </Box>

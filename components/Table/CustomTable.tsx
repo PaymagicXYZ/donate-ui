@@ -100,7 +100,7 @@ export function CustomTable({
 
   return (
     <>
-      <VStack width="760px" overflow="scroll">
+      <VStack minWidth="770px" overflow="scroll">
         {/* {allColumns.map((column) => (
         <div key={column.id}>
           <label>

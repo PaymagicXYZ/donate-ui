@@ -18,7 +18,10 @@ export const WalletChecker = (props) => {
     return (
       <Center p="10">
         <Text as="i">
-          Please connect your wallet to continue <Wallet />
+          Please connect your wallet to continue
+          <Center marginTop="15px">
+            <Wallet noMore />
+          </Center>
         </Text>
       </Center>
     );

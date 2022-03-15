@@ -57,7 +57,10 @@ export default function BalanceTable(props) {
   ];
 
   return (
-    <Box width="760px" overflow="scroll" py={{ base: "2", md: "4" }}>
+    <Box
+      overflow={{ base: "scroll", md: "visible" }}
+      py={{ base: "2", md: "4" }}
+    >
       <CustomTable
         columns={cols}
         data={balances}
