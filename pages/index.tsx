@@ -41,8 +41,11 @@ export default function Page() {
   const { query } = useRouter();
   const [tab, setTab] = useState(0);
   useEffect(() => {
-    setTab(Number(query.tab));
+    setTab(Number(query.tab) == (1 || 2 || 3) ? Number(query.tab) : 0);
   }, [query]);
+  const handleTabsChange = (index) => {
+    setTab(index);
+  };
   return (
     <PageContainer>
       {/* {console.log(tab)} */}
@@ -69,6 +72,7 @@ export default function Page() {
           variant="soft-rounded"
           colorScheme="purple"
           mt="8"
+          onChange={handleTabsChange}
         >
           <Center>
             <TabList>
