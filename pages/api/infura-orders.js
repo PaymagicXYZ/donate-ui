@@ -6,6 +6,11 @@ const provider = ethers.getDefaultProvider(
 import tokenData from "../../components/CleanWallet/tokens.json";
 
 const tokens = tokenData.tokens;
+const tokenAddressesMap = {};
+tokens.forEach((token) => {
+  tokenAddressesMap[token.address] = [token.symbol, token.name, token.logoURI];
+});
+
 const orders = await Promise.all(
   tokens.map(async (token) => {
     const contract = new ethers.Contract(token.address, ERC20ABI, provider);
@@ -26,19 +31,37 @@ const openOrders = await Promise.all(
       "0xbbcb5065c3c3963f9f149e441e66b673fc0c0e40"
     );
     const balance = await contract.balanceOf(order.args[0]);
+    const time = await provider.getBlock(order.blockNumber);
     return [
       order,
       order.args[2],
       allowance,
       balance,
-      allowance >= order.args[2] && allowance != 0,
+      balance >= allowance &&
+        balance >= order.args[2] &&
+        allowance >= order.args[2] &&
+        allowance != 0,
+      time,
     ];
   })
 );
 
-const filteredOpenOrders = openOrders
-  .filter((order) => order[4])
-  .map((order) => order[0]);
+const filteredOpenOrders = await Promise.all(
+  openOrders
+    .filter((order) => order[4])
+    .map(async (order) => {
+      const address = order[0].address.toLowerCase();
+      const symbol = tokenAddressesMap[address][0];
+      const time = new Date(order[5].timestamp * 1000);
+      return {
+        balance: ethers.utils.formatUnits(order[0].args[2]),
+        token: [symbol, address],
+        maker: order[0].args[0],
+        time: time,
+        tx: order[0].transactionHash,
+      };
+    })
+);
 
 export default function handler(req, res) {
   res.status(200).json(filteredOpenOrders);

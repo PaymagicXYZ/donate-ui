@@ -41,7 +41,7 @@ export default function Page() {
   const { query } = useRouter();
   const [tab, setTab] = useState(0);
   useEffect(() => {
-    setTab(Number(query.tab) == (1 || 2 || 3) ? Number(query.tab) : 0);
+    setTab(Number(query.tab));
   }, [query]);
   const handleTabsChange = (index) => {
     setTab(index);
