@@ -13,7 +13,7 @@ export const ApproveTokenInSteps = ({
     initialStep: 0,
   });
 
-  const [signedTx, setSignedTx] = useState([]);
+  const [signedTx, setSignedTx] = useState([signedTokens]);
 
   function updateAndClose() {
     signedTokensCallback([...signedTx]);

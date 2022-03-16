@@ -53,7 +53,7 @@ export const ApproveIndividualToken = ({
       setError(txData.message);
     }
     // console.log({ name: symbol, hash: result });
-    console.log(signedTx);
+    // console.log(signedTx);
   }
 
   async function handleApproval() {

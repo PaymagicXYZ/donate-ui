@@ -13,6 +13,12 @@ export function ApprovalForm(props) {
   const { covalentData, account } = props;
   // console.log(covalentData);
   const [signedTokens, setSignedTokens] = useState([]);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("signedTokens"))) {
+      setSignedTokens(JSON.parse(localStorage.getItem("signedTokens")));
+      console.log(signedTokens);
+    }
+  }, []);
   const balances = useMemo(() => {
     const items = _.get(covalentData, "balance.data.items", []);
     const validBalances = _.filter(items, (i) => {
@@ -104,8 +110,8 @@ export function ApprovalForm(props) {
 
   const signedTokensCallback = useCallback((hash) => {
     setSignedTokens(hash);
+    localStorage.setItem("signedTokens", JSON.stringify(hash));
   }, []);
-  // console.log(balances);
   return (
     <Center>
       <BalanceTable {...{ balances, signedTokens, signedTokensCallback }} />

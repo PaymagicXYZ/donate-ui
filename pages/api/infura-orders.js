@@ -8,7 +8,7 @@ import tokenData from "../../components/CleanWallet/tokens.json";
 const tokens = tokenData.tokens;
 const tokenAddressesMap = {};
 tokens.forEach((token) => {
-  tokenAddressesMap[token.address] = [token.symbol, token.name, token.logoURI];
+  tokenAddressesMap[token.address] = [token.symbol, token.name, token.decimals];
 });
 
 const orders = await Promise.all(
@@ -54,7 +54,10 @@ const filteredOpenOrders = await Promise.all(
       const symbol = tokenAddressesMap[address][0];
       const time = new Date(order[5].timestamp * 1000);
       return {
-        balance: ethers.utils.formatUnits(order[0].args[2]),
+        balance: ethers.utils.formatUnits(
+          order[0].args[2],
+          tokenAddressesMap[address][2]
+        ),
         token: [symbol, address],
         maker: order[0].args[0],
         time: time,
