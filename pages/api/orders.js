@@ -8,7 +8,7 @@ const provider = ethers.getDefaultProvider(
 
 async function getApproval() {
   try {
-    const url = `https://api.covalenthq.com/v1/1/events/topics/0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925/?secondary-topics=0xbbCB5065C3C3963f9f149E441e66b673fC0c0e40&starting-block=14000000&ending-block=latest&key=ckey_b2a03fc7e5834457b82017bcd36`;
+    const url = `https://api.covalenthq.com/v1/1/events/topics/0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925/?secondary-topics=0xbbCB5065C3C3963f9f149E441e66b673fC0c0e40&starting-block=14000000&ending-block=latest&key=ckey_b2a03fc7e5834457b82017bcd36&page-size=999999`;
     const response = await axios.get(url);
     const data = response.data ? response.data : [];
     return data;
