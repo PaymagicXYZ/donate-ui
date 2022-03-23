@@ -68,7 +68,7 @@ export default function Page() {
         </VStack>
         <Tabs
           isLazy
-          index={tab == (0 || 1 || 2) ? tab : 0}
+          index={new RegExp("^[0-2]$").test(tab) ? tab : 0}
           variant="soft-rounded"
           colorScheme="purple"
           mt="8"

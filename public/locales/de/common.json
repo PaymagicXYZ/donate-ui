@@ -5,7 +5,7 @@
   "howToUse": "Wie zu benutzen:",
   "description": {
     "part1": "⛽ Genehmigen Sie den Tausch von Wertmarken zu einem Stückpreis von ~$10.",
-    "part2": "🤖 Bots tauschen die Token mit einem Abschlag in ETH und bezahlen das Gas.",
+    "part2": "⏱️  Bots tauschen die Token mit einem Abschlag in ETH und bezahlen das Gas.",
     "part3": "💰 Sie erhalten ETH in Ihrem Wallet, sobald dies geschehen ist, normalerweise innerhalb von 24 Stunden."
   },
   "clean": {
