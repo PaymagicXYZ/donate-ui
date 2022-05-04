@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useEthers } from "@usedapp/core";
+import { utils } from "ethers";
 import _ from "lodash";
 import axios from "axios";
 import {
@@ -12,8 +14,8 @@ const covalentApiKey = COVALENT_API_KEY;
 let chainId = 1;
 // let chainId = CovalentNetworkForID[NETWORK];
 
-function get(params, chainId) {
-  return async function (address, chainId = 1) {
+function get(params) {
+  return async function (address, chainId) {
     try {
       const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/${params}/?key=${covalentApiKey}`;
       const response = await axios.get(url);
@@ -40,33 +42,42 @@ export async function getApproval() {
   }
 }
 
-export function useCovalent(address, _chainId) {
-  chainId = _chainId ? _chainId : chainId;
+export function useCovalent() {
+  const { chainId, account } = useEthers();
   const [data, setData] = useState({
     loading: true,
     // history: null,
-    balance: null,
+    balances: null,
     transactions: null,
     // approvals: null,
   });
   useEffect(() => {
-    async function getData(address, chainId) {
-      // const history = await getHistory(address);
-      const balance = await getBalance(address);
-      const transactions = await getTransaction(address);
+    async function getData(address) {
+      const transactions = await get("balances_v2")(address, chainId);
+      const balance = await get("balances_v2")(address, chainId);
+      const balances = _.get(balance, "data.items", []).reduce(
+        (memo, item, i) => {
+          if (i > 0) {
+            const numTokens = Number(
+              utils.formatUnits(item.balance, item.contract_decimals)
+            );
+            memo[item.contract_address.toLowerCase()] = numTokens;
+          }
+          return memo;
+        },
+        {}
+      );
       setData({
         loading: false,
-        // history: history,
-        balance: balance,
-        transactions: transactions,
-        // approvals: await getApproval(),
+        balances,
+        transactions,
       });
     }
 
-    if (!_.isUndefined(address) && !_.isUndefined(chainId)) {
-      getData(address, chainId);
+    if (!_.isUndefined(account) && !_.isUndefined(chainId)) {
+      getData(account, chainId);
     }
-  }, [address, _chainId]);
+  }, [account, chainId]);
 
   return data;
 }

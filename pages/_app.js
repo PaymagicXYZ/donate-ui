@@ -1,27 +1,28 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
-import { Web3ReactProvider } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
 import { theme } from "../styles/theme";
 import Script from "next/script";
 import { appWithTranslation } from "next-i18next";
 
-function getLibrary(provider) {
-  const library = new Web3Provider(provider);
-  // library.pollingInterval = 12000;
-  return library;
+import {
+  Mainnet,
+  DAppProvider,
+} from '@usedapp/core'
+import { getDefaultProvider } from 'ethers'
+
+const config = {
+  readOnlyChainId: Mainnet.chainId,
+  readOnlyUrls: {
+    [Mainnet.chainId]: getDefaultProvider('mainnet'),
+  },
 }
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
-      <Web3ReactProvider getLibrary={getLibrary}>
+       <DAppProvider config={{}}>
         <Head>
-          <title>DustSweeper</title>
-          <meta
-            name="description"
-            content="Clean out small token balances and swap for ETH with minimal gas! ⛽ Approve tokens to swap costing ~$10 each.🤖 Bots swap the tokens for ETH at a discount and pay the gas.💰 You receive ETH in your wallet once done, usually within 24hrs."
-          />
+          <title>Ethereum Supports Me</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Script id="google-analytics" strategy="afterInteractive">
@@ -37,7 +38,7 @@ function MyApp({ Component, pageProps }) {
         </Script>
 
         <Component {...pageProps} />
-      </Web3ReactProvider>
+      </DAppProvider>
     </ChakraProvider>
   );
 }

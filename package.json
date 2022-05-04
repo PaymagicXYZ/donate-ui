@@ -14,7 +14,9 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@openzeppelin/contracts": "^4.3.2",
+    "@reduxjs/toolkit": "^1.8.1",
     "@unstoppabledomains/resolution": "^7.1.2",
+    "@usedapp/core": "^1.0.1",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/network-connector": "^6.1.9",
@@ -49,7 +51,7 @@
   "devDependencies": {
     "eslint": "7",
     "eslint-config-next": "11.1.2",
-    "ethers": "^5.5.1",
+    "ethers": "^5.6.4",
     "typescript": "^4.4.4"
   },
   "packageManager": "yarn@3.1.1"

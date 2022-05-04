@@ -86,12 +86,10 @@ export default function Wallet(props) {
   useInactiveListener(!triedEager);
 
   const Account = () => {
-    // console.log("account", account);
-    // console.log("chainId", chainId);
     if (!library) {
       return (
         <>
-          <Button colorScheme="purple" onClick={onOpen}>
+          <Button colorScheme="purple" onClick={onOpen} {...props.btnProps}>
             Connect Wallet
           </Button>
           <Modal isOpen={isOpen} onClose={onClose}>
@@ -207,11 +205,10 @@ export default function Wallet(props) {
   // };
 
   return (
-    <HStack spacing={4}>
-      <Spacer />
+    <HStack spacing={4} width="full">
+      {/* <Spacer /> */}
       {library && library.provider.isMetaMask && <NetworkMenu />}
       <Account />
-      {noMore && <MoreItems />}
     </HStack>
   );
 }

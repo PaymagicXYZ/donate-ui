@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Logo } from "./Logo";
-import Wallet from "./Wallet";
+import Account from "../Account";
 import {
   Center,
-  Container,
   useColorModeValue as mode,
   Flex,
   HStack,
@@ -29,7 +28,6 @@ export const Header = () => {
         py={4}
         px={{ base: 4, md: 6, lg: 8 }}
         bg={useColorModeValue("purple.50", "purple.800")}
-        boxShadow={useColorModeValue("md", "none")}
         borderBottomWidth={useColorModeValue("none", "1px")}
       >
         <Center marginEnd="10">
@@ -38,7 +36,7 @@ export const Header = () => {
         <HStack spacing={3} display={{ base: "none", md: "flex" }}></HStack>
         <Spacer />
         <HStack display={{ base: "none", md: "flex" }} spacing={3}>
-          <Wallet />
+          <Account />
         </HStack>
         <IconButton
           display={{ base: "flex", md: "none" }}
@@ -54,7 +52,7 @@ export const Header = () => {
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
             <DrawerBody>
-              <Wallet />
+              <Account />
             </DrawerBody>
           </DrawerContent>
         </Drawer>
