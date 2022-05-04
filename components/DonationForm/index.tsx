@@ -70,7 +70,12 @@ export default function Page() {
       const { logoURI, symbol } = tokens[tokenId];
       return (
         <HStack w="full" justify="space-around" alignItems="center">
-          <Image borderRadius="15px" boxSize="25px" src={logoURI} />
+          <Image
+            alt={symbol}
+            borderRadius="15px"
+            boxSize="25px"
+            src={logoURI}
+          />
           <Text justifyContent="center">{symbol}</Text>
           <ChevronDownIcon fontSize="27px" />
         </HStack>
@@ -137,6 +142,7 @@ export default function Page() {
           <Button py={2} px={4} borderRadius={15} background="gray.200">
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://rinkeby.etherscan.io/address/0x7e3BB75E8f6dA85f3049758BCE20a31Ea2dc5a0e"
             >
               Stani Kulechov

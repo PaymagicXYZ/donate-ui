@@ -1,28 +1,23 @@
+import { Avatar, Button, HStack } from "@chakra-ui/react";
 import {
-  Avatar,
-  Button,
-  HStack,
-} from "@chakra-ui/react";
-import { useEthers, useLookupAddress, ChainId, useEtherBalance, Mainnet } from '@usedapp/core';
-import { SmallCloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { useInactiveListener } from "../../hooks/useInactiveListener";
-import ConnectWallet from '../ConnectWallet';
-import { useEffect, useState } from "react";
+  useEthers,
+  useLookupAddress,
+  useEtherBalance,
+  Mainnet,
+} from "@usedapp/core";
+import { SmallCloseIcon } from "@chakra-ui/icons";
+import ConnectWallet from "../ConnectWallet";
 import { formatEther } from "@ethersproject/units";
 import { shortenAddress } from "../../utils";
-import { getNativeToken } from "../../utils";
-import { ethers } from "ethers";
 
-export default (props) => {
+export default function Account(props) {
   const { account, deactivate } = useEthers();
   const ENSname = useLookupAddress();
-  const balance = useEtherBalance(account, {chainId: Mainnet.chainId});
+  const balance = useEtherBalance(account, { chainId: Mainnet.chainId });
 
   const Account = () => {
     if (!account) {
-      return (
-        <ConnectWallet/>
-      );
+      return <ConnectWallet />;
     }
     return (
       <HStack spacing={-4}>
@@ -44,8 +39,7 @@ export default (props) => {
               cursor: "default",
             }}
           >
-            {Number(formatEther(balance)).toFixed(5)}{" "}
-            ETH
+            {Number(formatEther(balance)).toFixed(5)} ETH
           </Button>
         ) : null}
 

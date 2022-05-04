@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useNotifications } from "@usedapp/core";
 import { useToast, ToastId } from "@chakra-ui/react";
 
-export default () => {
+export default function Notifications() {
   const pendingTxRef = useRef<ToastId>();
   const toast = useToast();
   const { notifications } = useNotifications();
@@ -29,18 +29,7 @@ export default () => {
         });
       }
     }
-  }, [notifications]);
+  }, [notifications, toast]);
 
-  // useEffect(() => {
-  //   const { status } = state;
-  //   if (["None", "Success"].includes(status)) {
-  //     setLoading(false);
-  //     if (pendingTxRef.current) {
-  //       toast.close(pendingTxRef.current);
-  //       setAmount("");
-  //       setTokenId(0);
-  //     }
-  //   } else setLoading(true);
-  // }, [state]);
   return <></>;
-};
+}

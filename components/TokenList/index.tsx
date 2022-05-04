@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { useCovalent } from "../../hooks/useCovalent";
 import { useTokenList } from "../../hooks";
 import {
   Modal,
@@ -23,7 +22,7 @@ interface Props {
   balances: { string: number };
 }
 
-export default (props: Props) => {
+export default function TokenList(props: Props) {
   const { isOpen, onClose, onSelect, balances } = props;
   const tokens = useTokenList();
 
@@ -60,6 +59,7 @@ export default (props: Props) => {
                 boxSize="25px"
                 src={token.logoURI}
                 borderRadius="100px"
+                alt={token.symbol}
               />
               <VStack alignItems="start" spacing="0px">
                 <Text fontSize="md">{token.symbol}</Text>
@@ -75,4 +75,4 @@ export default (props: Props) => {
       </ModalContent>
     </Modal>
   );
-};
+}
