@@ -77,11 +77,11 @@ export default function Page() {
     else {
       const { logoURI, symbol } = tokens[tokenId];
       return (
-        <Flex w="full">
-          <Image boxSize="35px" src={logoURI} />
-          <Spacer />
+        <HStack w="full" justify="space-around" alignItems="center">
+          <Image borderRadius="15px" boxSize="25px" src={logoURI} />
           <Text justifyContent="center">{symbol}</Text>
-        </Flex>
+          <ChevronDownIcon fontSize="27px" />
+        </HStack>
       );
     }
   };
@@ -132,6 +132,7 @@ export default function Page() {
                   bg="blue.100"
                   value={tokenId}
                   onClick={onOpen}
+                  px="30px"
                 >
                   {getBtnContent()}
                 </Button>
