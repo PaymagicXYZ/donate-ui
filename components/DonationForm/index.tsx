@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useEthers, useContractFunction } from "@usedapp/core";
+import { useEthers, useContractFunction, useNetwork } from "@usedapp/core";
 import { useTokenList, useCovalent, useTokenContract } from "../../hooks";
 import { utils } from "ethers";
 import {
@@ -29,6 +29,7 @@ export default function Page() {
   const tokens = useTokenList();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { account } = useEthers();
+  const { network } = useNetwork();
 
   const token = tokens[tokenId];
   const tokenContract = useTokenContract(token?.address);
@@ -36,6 +37,10 @@ export default function Page() {
     tokenContract,
     "transfer"
   );
+
+  useEffect(() => {
+    setTokenId(null);
+  }, [network]);
 
   useEffect(() => {
     if (state.status === "Success") {
