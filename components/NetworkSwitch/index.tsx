@@ -6,16 +6,15 @@ import {
   MenuList,
   Text,
   MenuItem,
+  Spacer,
   Box,
 } from "@chakra-ui/react";
+import { useNetwork, useEthers } from "@usedapp/core";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-// import ethLogo from './assets/eth_logo.png'
-import { FC } from "react";
-import NextLink from "next/link";
 import ethereumLogo from "./assets/eth_logo.png";
 import polygonLogo from "./assets/polygon_logo.png";
 import avalancheLogo from "./assets/avalanche_logo.png";
-import styled from "@emotion/styled";
+import optimismLogo from "./assets/optimism_logo.svg";
 
 import Image, { ImageProps } from "next/image";
 
@@ -25,55 +24,74 @@ const NetworkLogo = (props: ImageProps) => (
   </Flex>
 );
 
-const LocaleLink: FC<{ locale: string }> = ({ locale, children }) => {
+const NETWORKS = {
+  1: {
+    name: "Ethereum",
+    logo: ethereumLogo,
+  },
+  10: {
+    name: "Optimism",
+    logo: optimismLogo,
+  },
+  42: {
+    name: "Kovan",
+    logo: ethereumLogo,
+  },
+  43114: {
+    name: "Avalanche",
+    logo: avalancheLogo,
+  },
+  137: {
+    name: "Polygon",
+    logo: polygonLogo,
+  },
+};
+
+const getMenuBtnContent = (chainId: number) => {
+  const chain = NETWORKS[chainId];
   return (
-    <NextLink href="#" passHref locale={locale}>
-      {children}
-    </NextLink>
+    chain && (
+      <Flex alignItems="center">
+        <NetworkLogo src={chain.logo} />
+        <Text>{chain.name}</Text>
+        <ChevronDownIcon className="w-6 h-6 ml-2" />
+      </Flex>
+    )
   );
 };
 
 const NetworkMenu = () => {
+  const { network } = useNetwork();
+  const { switchNetwork } = useEthers();
+  const getHandler = (chainId: number) => () => {
+    switchNetwork(chainId);
+  };
   return (
-    /* Language Menu */
     <Menu>
       <MenuButton
         as={Button}
-        // bg="ukraineYellow"
+        bg="purple.100"
         color="black"
-        _hover={{
-          bg: "darkYellow",
-        }}
-        _active={{
-          bg: "darkYellow",
-        }}
-        rounded="full"
+        borderRadius="15px"
         py="3"
+        w="full"
       >
-        <Flex alignItems="center">
-          <Text>Ethereum</Text>
-          <ChevronDownIcon className="w-6 h-6 ml-2" />
-        </Flex>
+        {getMenuBtnContent(network.chainId)}
       </MenuButton>
-      <MenuList bg="ukraineYellow" color="black">
-        <LocaleLink locale="en">
-          <MenuItem>
-            <NetworkLogo src={ethereumLogo} />
-            <Text>Ethereum</Text>
+      <MenuList borderRadius="15px">
+        <Text py="7px" px="20px" color="gray">
+          Select a network
+        </Text>
+        {Object.entries(NETWORKS).map(([chainId, chainInfo]) => (
+          <MenuItem key={chainId} onClick={getHandler(Number(chainId))}>
+            <NetworkLogo src={chainInfo.logo} />
+            <Text>{chainInfo.name}</Text>
+            <Spacer />
+            {Number(chainId) === network.chainId && (
+              <Box bg="green.400" w="8px" h="8px" rounded="full" />
+            )}
           </MenuItem>
-        </LocaleLink>
-        <LocaleLink locale="fr">
-          <MenuItem>
-            <NetworkLogo src={polygonLogo} />
-            <Text>Polygon</Text>
-          </MenuItem>
-        </LocaleLink>
-        <LocaleLink locale="de">
-          <MenuItem>
-            <NetworkLogo src={avalancheLogo} />
-            <Text>Avalanche</Text>
-          </MenuItem>
-        </LocaleLink>
+        ))}
       </MenuList>
     </Menu>
   );
