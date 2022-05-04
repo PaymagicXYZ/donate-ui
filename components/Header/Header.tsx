@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Logo } from "./Logo";
 import Account from "../Account";
+// import NetworkSwitch from "../NetworkSwitch";
 import {
   Center,
   useColorModeValue as mode,
@@ -36,6 +37,7 @@ export const Header = () => {
         <HStack spacing={3} display={{ base: "none", md: "flex" }}></HStack>
         <Spacer />
         <HStack display={{ base: "none", md: "flex" }} spacing={3}>
+          {/* <NetworkSwitch /> */}
           <Account />
         </HStack>
         <IconButton
