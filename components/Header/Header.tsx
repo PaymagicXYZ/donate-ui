@@ -11,13 +11,11 @@ import {
   Spacer,
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerOverlay,
   DrawerContent,
   DrawerHeader,
   useColorModeValue,
   useDisclosure,
-  CloseButton,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useNetwork } from "@usedapp/core";
