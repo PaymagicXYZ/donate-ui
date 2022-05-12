@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CauseData } from "../../types/cause";
 import { useEthers, useContractFunction, useNetwork } from "@usedapp/core";
 import { useTokenList, useCovalent, useTokenContract } from "../../hooks";
 import { utils } from "ethers";
@@ -21,7 +22,7 @@ import CauseBanner from "./CauseBanner";
 
 const TEST_DONATION_ADDRESS = "0x7c8f8593049eE994E1fAEdf677F0F5a494545224";
 
-export default function Page() {
+export default function Page({ causeData }: { causeData: CauseData }) {
   const [amount, setAmount] = useState("");
   const [tokenId, setTokenId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -109,7 +110,7 @@ export default function Page() {
 
   return (
     <VStack justifyContent="center">
-      <CauseBanner />
+      <CauseBanner causeData={causeData} />
       <VStack p="2" bg="gray.100" borderRadius="25px" w="full">
         <InputContainer>
           <VStack>
@@ -148,9 +149,9 @@ export default function Page() {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://rinkeby.etherscan.io/address/0x7e3BB75E8f6dA85f3049758BCE20a31Ea2dc5a0e"
+              href={`https://rinkeby.etherscan.io/address/${causeData.recipient.address}`}
             >
-              Stani Kulechov
+              {causeData?.recipient.name}
             </a>
           </Button>
         </InputContainer>

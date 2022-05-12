@@ -7,11 +7,9 @@ import {
   HStack,
   Button,
 } from "@chakra-ui/react";
+import { CauseData } from "../../types/cause";
 
-const LEARN_MORE_LINK =
-  "https://twitter.com/fcmartinelli/status/1519609111935127553?s=21&t=h8tZQnOqyFTZtbpqiYILfg";
-
-export default function CauseBanner() {
+export default function CauseBanner({ causeData }: { causeData: CauseData }) {
   return (
     <VStack w="full" p="3">
       <HStack borderRadius={25} backgroundColor="purple.100" w="full" py="20px">
@@ -19,11 +17,10 @@ export default function CauseBanner() {
           <GridItem colSpan={2}>
             <VStack alignItems="flex-start">
               <Text px="20px" fontSize="lg">
-                Donate to Stani
+                {causeData.title}
               </Text>
               <Text lineHeight="15px" px="20px" fontSize="xs" my={0}>
-                Help Stani Kulechov regain his Twitter voice! and then some more
-                text yahooo
+                {causeData.blurb}
               </Text>
             </VStack>
           </GridItem>
@@ -32,7 +29,7 @@ export default function CauseBanner() {
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href={LEARN_MORE_LINK}
+                href={causeData.learnMoreLink}
               >
                 Learn More
               </a>
