@@ -149,7 +149,7 @@ export default function Page({ causeData }: { causeData: CauseData }) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://rinkeby.etherscan.io/address/${causeData.recipient.address}`}
+              href={`https://rinkeby.etherscan.io/address/${causeData?.recipient.address}`}
             >
               {causeData?.recipient.name}
             </a>

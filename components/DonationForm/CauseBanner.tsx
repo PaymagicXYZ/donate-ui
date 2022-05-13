@@ -17,10 +17,10 @@ export default function CauseBanner({ causeData }: { causeData: CauseData }) {
           <GridItem colSpan={2}>
             <VStack alignItems="flex-start">
               <Text px="20px" fontSize="lg">
-                {causeData.title}
+                {causeData?.title}
               </Text>
               <Text lineHeight="15px" px="20px" fontSize="xs" my={0}>
-                {causeData.blurb}
+                {causeData?.blurb}
               </Text>
             </VStack>
           </GridItem>
@@ -29,7 +29,7 @@ export default function CauseBanner({ causeData }: { causeData: CauseData }) {
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href={causeData.learnMoreLink}
+                href={causeData?.learnMoreLink}
               >
                 Learn More
               </a>
