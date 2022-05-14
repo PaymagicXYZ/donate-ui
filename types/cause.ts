@@ -3,7 +3,7 @@ interface Recipient {
   address: string;
 }
 
-export interface CauseData {
+export interface Cause {
   title: string;
   blurb: string;
   learnMoreLink: string;
@@ -11,5 +11,5 @@ export interface CauseData {
 }
 
 export interface AllCauses {
-  [key: string]: CauseData;
+  [key: string]: Cause;
 }
