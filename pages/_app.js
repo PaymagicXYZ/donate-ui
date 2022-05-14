@@ -1,26 +1,24 @@
 import { ChakraProvider } from "@chakra-ui/react";
+
 import Head from "next/head";
 import { theme } from "../styles/theme";
 import Script from "next/script";
 import { appWithTranslation } from "next-i18next";
 
-import {
-  Mainnet,
-  DAppProvider,
-} from '@usedapp/core'
-import { getDefaultProvider } from 'ethers'
+import { Mainnet, DAppProvider } from "@usedapp/core";
+import { getDefaultProvider } from "ethers";
 
 const config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: getDefaultProvider('mainnet'),
+    [Mainnet.chainId]: getDefaultProvider("mainnet"),
   },
-}
+};
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
-       <DAppProvider config={{}}>
+      <DAppProvider config={{}}>
         <Head>
           <title>Ethereum Supports Me</title>
           <link rel="icon" href="/favicon.ico" />

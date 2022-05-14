@@ -52,7 +52,7 @@ const getMenuBtnContent = (chainId: number) => {
   return (
     chain && (
       <Flex alignItems="center">
-        <NetworkLogo src={chain.logo} />
+        <NetworkLogo src={chain.logo} alt={chain.name} />
         <Text>{chain.name}</Text>
         <ChevronDownIcon className="w-6 h-6 ml-2" />
       </Flex>
