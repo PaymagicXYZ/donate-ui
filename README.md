@@ -1,13 +1,11 @@
-# DustSweeper - ETHDenver 2022 Hackathon
+# EthGives.to
 
-Backend Repo: https://github.com/PaymagicXYZ/dustsweeper-backend
-
-React, NextJS and Chakra-UI
+React, NextJS, Ceramic and Chakra-UI
 
 ### 📦 Install
 
 ```
-$ git clone https://github.com/PaymagicXYZ/dustsweeper-ui
+$ git clone https://github.com/PaymagicXYZ/donate-ui
 
 $ yarn install
 ```
@@ -37,5 +35,3 @@ Runs next build and export which exports a files in a `out` folder to deploy
 ```bash
 $ yarn deploy
 ```
-
-
