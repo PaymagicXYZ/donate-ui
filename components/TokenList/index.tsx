@@ -19,20 +19,15 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (tokenId: number) => void;
-  balances: { string: number };
 }
 
 export default function TokenList(props: Props) {
-  const { isOpen, onClose, onSelect, balances } = props;
+  const { isOpen, onClose, onSelect } = props;
   const tokens = useTokenList();
 
   const handleSelect = (tokenId: number) => {
     onSelect(tokenId);
     onClose();
-  };
-
-  const getBalance = (address = "") => {
-    if (balances) return balances[address.toLowerCase()] || 0;
   };
 
   return (
@@ -66,7 +61,7 @@ export default function TokenList(props: Props) {
                 <Text fontSize="xs">{token.name}</Text>
               </VStack>
               <Spacer />
-              <Text>{getBalance(token.address)}</Text>
+              <Text>{token.balance}</Text>
             </HStack>
           ))}
         </ModalBody>

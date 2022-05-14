@@ -26,7 +26,6 @@ export default function Page({ causeData }: { causeData: Cause }) {
   const [amount, setAmount] = useState("");
   const [tokenId, setTokenId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const { balances } = useCovalent();
   const tokens = useTokenList();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { account } = useEthers();
@@ -89,11 +88,8 @@ export default function Page({ causeData }: { causeData: Cause }) {
     }
   };
 
-  const getBalance = (address = "") => {
-    if (balances) return balances[address.toLowerCase()] || 0;
-  };
-  const balance = getBalance(tokens[tokenId]?.address);
-  const insufficientBalance = balance < amount;
+  const balance = tokens[tokenId]?.balance;
+  const insufficientBalance = balance < Number(amount);
 
   const submitBtnText = loading ? (
     <Spinner />
@@ -167,12 +163,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
         ) : (
           <ConnectWallet {...btnStyles} />
         )}
-        <TokenList
-          isOpen={isOpen}
-          onClose={onClose}
-          onSelect={setTokenId}
-          balances={balances}
-        />
+        <TokenList isOpen={isOpen} onClose={onClose} onSelect={setTokenId} />
       </VStack>
     </VStack>
   );
