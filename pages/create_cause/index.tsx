@@ -19,7 +19,7 @@ const CauseInputWrapper = (props) => (
   </Box>
 );
 
-export default function () {
+const CreatePage = () => {
   const [formState, setFormState] = useState(INITIAL_STATE);
   const [loading, setLoading] = useState(false);
 
@@ -133,4 +133,6 @@ export default function () {
       </Container>
     </PageContainer>
   );
-}
+};
+
+export default CreatePage;
