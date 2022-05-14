@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { Container } from "@chakra-ui/react";
+import { Container, Spinner } from "@chakra-ui/react";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import DonationForm from "../../components/DonationForm";
 import Notifications from "../../components/Notifications";
@@ -28,7 +28,7 @@ export default function Page() {
         ) : data ? (
           <DonationForm causeData={data} />
         ) : (
-          <h3>Loading</h3>
+          <Spinner size="lg">Loading</Spinner>
         )}
       </Container>
       <Notifications />
