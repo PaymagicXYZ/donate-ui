@@ -5,7 +5,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Image,
@@ -65,8 +64,6 @@ export default function TokenList(props: Props) {
             </HStack>
           ))}
         </ModalBody>
-
-        <ModalFooter>Footer</ModalFooter>
       </ModalContent>
     </Modal>
   );
