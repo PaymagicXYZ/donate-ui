@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { Cause } from "../../types/cause";
-import { useEthers, useContractFunction, useNetwork } from "@usedapp/core";
-import { useTokenList, useCovalent, useTokenContract } from "../../hooks";
+import {
+  useEthers,
+  useContractFunction,
+  useNetwork,
+  useSendTransaction,
+} from "@usedapp/core";
+import { useTokenList, useTokenContract, useLocalCurrency } from "../../hooks";
 import { utils } from "ethers";
 import {
   Text,
@@ -20,8 +25,6 @@ import TokenList from "../TokenList";
 import InputContainer from "./InputContainer";
 import CauseBanner from "./CauseBanner";
 
-const TEST_DONATION_ADDRESS = "0x7c8f8593049eE994E1fAEdf677F0F5a494545224";
-
 export default function Page({ causeData }: { causeData: Cause }) {
   const [amount, setAmount] = useState("");
   const [tokenId, setTokenId] = useState<number | null>(null);
@@ -29,18 +32,27 @@ export default function Page({ causeData }: { causeData: Cause }) {
   const tokens = useTokenList();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { account } = useEthers();
+  const localCurrency = useLocalCurrency();
   const { network } = useNetwork();
 
-  const token = tokens[tokenId];
-  const tokenContract = useTokenContract(token?.address);
-  const { state, send: transfer } = useContractFunction(
+  const isSendingLocalCurrency = tokenId === -1;
+  const selectedToken = isSendingLocalCurrency
+    ? localCurrency
+    : tokens[tokenId];
+  const { sendTransaction, state: localCurrencyState } = useSendTransaction();
+  const tokenContract = useTokenContract(selectedToken?.address);
+  const { state: tokenState, send: transferToken } = useContractFunction(
     tokenContract,
     "transfer"
   );
-
-  useEffect(() => {
-    setTokenId(null);
-  }, [network]);
+  let state, send;
+  if (isSendingLocalCurrency) {
+    send = sendTransaction;
+    state = localCurrencyState;
+  } else {
+    send = transferToken;
+    state = tokenState;
+  }
 
   useEffect(() => {
     if (state.status === "Success") {
@@ -49,12 +61,25 @@ export default function Page({ causeData }: { causeData: Cause }) {
     }
   }, [state]);
 
-  const transferToken = async () => {
-    setLoading(true);
-    transfer(
-      TEST_DONATION_ADDRESS,
-      utils.parseUnits(amount, tokens[tokenId]?.decimals)
+  useEffect(() => {
+    setTokenId(null);
+  }, [network]);
+
+  const transferERC20 = async () => {
+    send(
+      causeData.recipient.address,
+      utils.parseUnits(amount, selectedToken?.decimals)
     );
+  };
+
+  const sendLocalCurrency = async () => {
+    send({ to: causeData.recipient.address, value: utils.parseEther(amount) });
+  };
+
+  const sendDonation = async () => {
+    setLoading(true);
+    if (isSendingLocalCurrency) sendLocalCurrency();
+    else transferERC20();
   };
 
   const handleChangeAmount = ({ target: { value } }) => {
@@ -72,7 +97,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
   const getBtnContent = () => {
     if (tokenId === null) return "Select a token";
     else {
-      const { logoURI, symbol } = tokens[tokenId];
+      const { logoURI, symbol } = selectedToken;
       return (
         <HStack w="full" justify="space-around" alignItems="center">
           <Image
@@ -88,7 +113,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
     }
   };
 
-  const balance = tokens[tokenId]?.balance;
+  const balance = selectedToken?.balance;
   const insufficientBalance = balance < Number(amount);
 
   const submitBtnText = loading ? (
@@ -98,7 +123,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
   ) : !amount ? (
     "Enter an amount"
   ) : insufficientBalance ? (
-    `Insufficient ${token.symbol} balance`
+    `Insufficient ${selectedToken.symbol} balance`
   ) : (
     "Send"
   );
@@ -154,7 +179,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
         {account ? (
           <Button
             {...btnStyles}
-            onClick={transferToken}
+            onClick={sendDonation}
             bg="blue.100"
             disabled={submitBtnDisabled}
           >

@@ -25,7 +25,7 @@ export const useTokenList = () => {
   };
 
   useEffect(() => {
-    if (tokens && balances) {
+    if (tokens && balances && chainId) {
       const sortedTokens = tokens.sort((a, b) =>
         getBalance(a.address) > getBalance(b.address) ? -1 : 1
       );

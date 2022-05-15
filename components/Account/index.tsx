@@ -1,19 +1,14 @@
 import { Avatar, Button, HStack } from "@chakra-ui/react";
-import {
-  useEthers,
-  useLookupAddress,
-  useEtherBalance,
-  Mainnet,
-} from "@usedapp/core";
+import { useEthers, useLookupAddress } from "@usedapp/core";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import ConnectWallet from "../ConnectWallet";
-import { formatEther } from "@ethersproject/units";
 import { shortenAddress } from "../../utils";
+import { useLocalCurrency } from "../../hooks";
 
-export default function Account(props) {
+export default function Account() {
   const { account, deactivate } = useEthers();
+  const localCurrency = useLocalCurrency();
   const ENSname = useLookupAddress();
-  const balance = useEtherBalance(account, { chainId: Mainnet.chainId });
 
   const Account = () => {
     if (!account) {
@@ -21,7 +16,7 @@ export default function Account(props) {
     }
     return (
       <HStack spacing={-4}>
-        {balance ? (
+        {localCurrency ? (
           <Button
             isDisabled
             size="md"
@@ -39,7 +34,7 @@ export default function Account(props) {
               cursor: "default",
             }}
           >
-            {Number(formatEther(balance)).toFixed(5)} ETH
+            {localCurrency.balance.toFixed(5)} {localCurrency.symbol}
           </Button>
         ) : null}
 

@@ -33,17 +33,17 @@ const NETWORKS = {
     name: "Optimism",
     logo: optimismLogo,
   },
-  42: {
-    name: "Kovan",
-    logo: ethereumLogo,
+  42161: {
+    name: "Arbitrum",
+    logo: arbitrumLogo,
   },
   137: {
     name: "Polygon",
     logo: polygonLogo,
   },
-  42161: {
-    name: "Arbitrum",
-    logo: arbitrumLogo,
+  42: {
+    name: "Kovan",
+    logo: ethereumLogo,
   },
 };
 
