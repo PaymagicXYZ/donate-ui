@@ -13,8 +13,8 @@ import { useNetwork, useEthers } from "@usedapp/core";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import ethereumLogo from "./assets/eth_logo.png";
 import polygonLogo from "./assets/polygon_logo.png";
-import avalancheLogo from "./assets/avalanche_logo.png";
 import optimismLogo from "./assets/optimism_logo.svg";
+import arbitrumLogo from "./assets/arbitrum_logo.svg";
 
 import Image, { ImageProps } from "next/image";
 
@@ -37,13 +37,13 @@ const NETWORKS = {
     name: "Kovan",
     logo: ethereumLogo,
   },
-  43114: {
-    name: "Avalanche",
-    logo: avalancheLogo,
-  },
   137: {
     name: "Polygon",
     logo: polygonLogo,
+  },
+  42161: {
+    name: "Arbitrum",
+    logo: arbitrumLogo,
   },
 };
 
