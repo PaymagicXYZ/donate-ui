@@ -6,6 +6,7 @@ import { useCovalent } from "./useCovalent";
 const TOKEN_LISTS: { [chainID: string]: string } = {
   1: "https://gateway.ipfs.io/ipns/tokens.uniswap.org",
   10: "https://static.optimism.io/optimism.tokenlist.json",
+  42: "https://gateway.ipfs.io/ipns/tokens.uniswap.org",
   137: "https://gateway.ipfs.io/ipns/tokens.uniswap.org",
   42161: "https://bridge.arbitrum.io/token-list-42161.json",
 };
