@@ -9,6 +9,7 @@ import {
 import { useTokenList, useTokenContract, useLocalCurrency } from "../../hooks";
 import { utils } from "ethers";
 import {
+  Box,
   Text,
   VStack,
   HStack,
@@ -114,6 +115,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
   };
 
   const balance = selectedToken?.balance;
+  const formattedBalance = balance ? balance.toFixed(5) : balance;
   const insufficientBalance = balance < Number(amount);
 
   const submitBtnText = loading ? (
@@ -128,6 +130,11 @@ export default function Page({ causeData }: { causeData: Cause }) {
     "Send"
   );
   const submitBtnDisabled = tokenId === null || !amount || loading;
+
+  const hasMaxBtn = balance?.toString() !== amount && !isSendingLocalCurrency;
+  const setMaxAmount = () => {
+    if (hasMaxBtn) setAmount(balance.toString());
+  };
 
   return (
     <VStack justifyContent="center">
@@ -156,9 +163,23 @@ export default function Page({ causeData }: { causeData: Cause }) {
             </HStack>
             {tokenId !== null && (
               <HStack w="full" justify="flex-end">
-                <Text color="gray" fontSize="sm">
-                  Balance: {balance}
-                </Text>
+                <HStack cursor="pointer" onClick={setMaxAmount}>
+                  <Text color="gray" fontSize="sm">
+                    Balance: {formattedBalance}
+                  </Text>
+                  {hasMaxBtn && (
+                    <Text
+                      rounded="full"
+                      px="5px"
+                      py="2px"
+                      backgroundColor="blue.100"
+                      color="blue"
+                      fontSize="xs"
+                    >
+                      MAX
+                    </Text>
+                  )}
+                </HStack>
               </HStack>
             )}
           </VStack>
