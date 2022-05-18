@@ -11,10 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useNetwork, useEthers } from "@usedapp/core";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import ethereumLogo from "./assets/eth_logo.png";
-import polygonLogo from "./assets/polygon_logo.png";
-import optimismLogo from "./assets/optimism_logo.svg";
-import arbitrumLogo from "./assets/arbitrum_logo.svg";
+import { SUPPORTED_NETWORKS } from "../../utils/constants";
 
 import Image, { ImageProps } from "next/image";
 
@@ -24,31 +21,8 @@ const NetworkLogo = (props: ImageProps) => (
   </Flex>
 );
 
-const NETWORKS = {
-  1: {
-    name: "Ethereum",
-    logo: ethereumLogo,
-  },
-  10: {
-    name: "Optimism",
-    logo: optimismLogo,
-  },
-  42161: {
-    name: "Arbitrum",
-    logo: arbitrumLogo,
-  },
-  137: {
-    name: "Polygon",
-    logo: polygonLogo,
-  },
-  42: {
-    name: "Kovan",
-    logo: ethereumLogo,
-  },
-};
-
 const getMenuBtnContent = (chainId: number) => {
-  const chain = NETWORKS[chainId];
+  const chain = SUPPORTED_NETWORKS[chainId];
   return (
     chain && (
       <Flex alignItems="center">
@@ -82,7 +56,7 @@ const NetworkMenu = () => {
         <Text py="7px" px="20px" color="gray">
           Select a network
         </Text>
-        {Object.entries(NETWORKS).map(([chainId, chainInfo]) => (
+        {Object.entries(SUPPORTED_NETWORKS).map(([chainId, chainInfo]) => (
           <MenuItem key={chainId} onClick={getHandler(Number(chainId))}>
             <NetworkLogo src={chainInfo.logo} />
             <Text>{chainInfo.name}</Text>

@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useEthers } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
-import ethLogo from "../components/NetworkSwitch/assets/eth_logo.png";
-import polygonLogo from "../components/NetworkSwitch/assets/polygon_logo.png";
-import { StaticImageData } from "next/image";
+import ethLogo from "../assets/eth_logo.png";
+import polygonLogo from "../assets/polygon_logo.png";
 
 interface LocalCurrencyData {
   symbol: string;

@@ -1,4 +1,7 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
+import ethereumLogo from "../assets/eth_logo.png";
+import polygonLogo from "../assets/polygon_logo.png";
+import optimismLogo from "../assets/optimism_logo.svg";
+import arbitrumLogo from "../assets/arbitrum_logo.svg";
 
 export const DUSTSWEEPER_ADDRESS =
   process.env.REACT_APP_DUSTSWEEPER ||
@@ -86,3 +89,48 @@ export const AIRDROP_FACTORY_MAINNET = "0x"; // Not deployed yet
 export const AIRDROP_FACTORY_POLYGON = "0x"; // Not deployed yet
 export const AIRDROP_FACTORY_KOVAN =
   "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";
+
+const PROD_NETWORKS = {
+  1: {
+    name: "Ethereum",
+    logo: ethereumLogo,
+  },
+  10: {
+    name: "Optimism",
+    logo: optimismLogo,
+  },
+  42161: {
+    name: "Arbitrum",
+    logo: arbitrumLogo,
+  },
+  137: {
+    name: "Polygon",
+    logo: polygonLogo,
+  },
+};
+
+const TEST_NETWORKS = {
+  42: {
+    name: "Kovan",
+    logo: ethereumLogo,
+  },
+  80001: {
+    name: "Mumbai",
+    logo: polygonLogo,
+  },
+};
+
+export const TOKEN_LISTS: { [chainID: string]: string } = {
+  1: "https://gateway.ipfs.io/ipns/tokens.uniswap.org",
+  3: "https://ipfs.io/ipfs/Qmc7fw3vNiWUGQnmZS58fEUyHWomgyimtzE6ayHDMskhUc",
+  4: "https://ipfs.io/ipfs/Qmc7fw3vNiWUGQnmZS58fEUyHWomgyimtzE6ayHDMskhUc",
+  10: "https://static.optimism.io/optimism.tokenlist.json",
+  42: "https://test-token-list.herokuapp.com/tokenlist.json",
+  137: "https://gateway.ipfs.io/ipns/tokens.uniswap.org",
+  42161: "https://bridge.arbitrum.io/token-list-42161.json",
+  80001: "https://test-token-list.herokuapp.com/tokenlist.json",
+};
+
+const DEBUG = true;
+
+export const SUPPORTED_NETWORKS = DEBUG ? TEST_NETWORKS : PROD_NETWORKS;
