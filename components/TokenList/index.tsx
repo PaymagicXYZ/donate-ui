@@ -86,7 +86,9 @@ export default function TokenList(props: Props) {
               </VStack>
               <Spacer />
               <Text>
-                {token.balance ? token.balance.toFixed(5) : token.balance}
+                {!token.balance || Number.isInteger(token.balance)
+                  ? token.balance
+                  : token.balance.toFixed(5)}
               </Text>
             </HStack>
           ))}
