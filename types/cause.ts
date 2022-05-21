@@ -1,13 +1,9 @@
-interface Recipient {
-  name: string;
-  address: string;
-}
-
 export interface Cause {
   title: string;
   blurb: string;
-  learnMoreLink: string;
-  recipient: Recipient;
+  learn_more_link: string;
+  donation_address: string;
+  donation_name: string;
 }
 
 export interface AllCauses {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
 import { SiweMessage } from "siwe";
 import Layout from "../components/Layout";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import Link from "next/link";
 import {
   Text,
@@ -16,9 +16,10 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { supabaseClient as supabase } from "./supabaseClient";
 
 export default function HomePage() {
-  const [causeList, setCauseList] = useState<string[]>([]);
+  const [causeList, setCauseList] = useState<{ url: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
@@ -27,17 +28,9 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAllCauses = async () => {
       setLoading(true);
-      try {
-        const { data: allCauses } = await axios.get("/api/causes");
-        setCauseList(allCauses);
-      } catch (e) {
-        toast({
-          title: "Couldn't fetch causes",
-          description: e.message,
-          status: "error",
-          position: "bottom-left",
-        });
-      }
+      const { data, error } = await supabase.from("cause").select("url");
+      console.log(data);
+      setCauseList(data);
       setLoading(false);
     };
     fetchAllCauses();
@@ -52,7 +45,7 @@ export default function HomePage() {
         address: account,
         statement: "Sign in with Ethereum to EthGives",
         version: "1",
-        chainId: chainId,
+        chainId,
         nonce,
       });
       const message = messageData.prepareMessage();
@@ -62,25 +55,34 @@ export default function HomePage() {
         message: message,
         signature,
       });
+      await supabase.auth.setAuth(data.token);
+      const { data: user, error } = await supabase.from("user").select("*");
+      console.log(user);
     }
   };
 
   const goToCreatePage = () => {
     router.push("/create_cause");
   };
+
+  const goToMyCausesPage = () => {
+    router.push("/my_causes");
+  };
+
   return (
     <Layout>
       <HStack>
         <Text fontSize="2xl">All Causes</Text>
         <Spacer />
+        <Button onClick={goToMyCausesPage}>View my Causes</Button>
         <Button onClick={goToCreatePage}>Create Cause</Button>
       </HStack>
       {loading && <Spinner />}
       <List>
-        {causeList.map((cause) => (
-          <ListItem key={cause} my="20px">
+        {causeList.map(({ url }) => (
+          <ListItem key={url} my="20px">
             <Tag>
-              <Link href={`/${cause}`}>{cause}</Link>
+              <Link href={`/${url}`}>{url}</Link>
             </Tag>
           </ListItem>
         ))}

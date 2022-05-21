@@ -1,5 +1,5 @@
 import type { NextApiHandler } from "next";
-import { generateNonce, SiweMessage } from "siwe";
+import { generateNonce } from "siwe";
 import { withSession } from "../../../utils/withSession";
 
 const nonceHandler: NextApiHandler = async (req, res) => {

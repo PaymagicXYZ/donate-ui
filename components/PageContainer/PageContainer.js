@@ -1,8 +1,5 @@
 import { Header } from "../../components/Header/Header";
-import {
-  Box,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { Box, useColorModeValue as mode } from "@chakra-ui/react";
 export default function PageContainer(props) {
   return (
     <Box
@@ -12,7 +9,7 @@ export default function PageContainer(props) {
       bg={mode("purple.50", "purple.800")}
     >
       <Header />
-      <Box>{props.children}</Box>
+      <Box marginTop="10vh">{props.children}</Box>
     </Box>
   );
 }

@@ -68,13 +68,13 @@ export default function Page({ causeData }: { causeData: Cause }) {
 
   const transferERC20 = async () => {
     send(
-      causeData.recipient.address,
+      causeData.donation_address,
       utils.parseUnits(amount, selectedToken?.decimals)
     );
   };
 
   const sendLocalCurrency = async () => {
-    send({ to: causeData.recipient.address, value: utils.parseEther(amount) });
+    send({ to: causeData.donation_address, value: utils.parseEther(amount) });
   };
 
   const sendDonation = async () => {
@@ -191,9 +191,9 @@ export default function Page({ causeData }: { causeData: Cause }) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://rinkeby.etherscan.io/address/${causeData?.recipient.address}`}
+              href={`https://rinkeby.etherscan.io/address/${causeData?.donation_address}`}
             >
-              {causeData.recipient.name}
+              {causeData.donation_name}
             </a>
           </Button>
         </InputContainer>
