@@ -64,6 +64,8 @@ interface Donation {
   from: string;
   value: string;
   symbol: string;
+  time: string;
+  transactionHash: string;
 }
 
 function get(params) {
@@ -112,16 +114,18 @@ const filterDonations = (
       }
       for (const log of transaction.log_events) {
         if (
-          log.decoded.params[1].value.toLowerCase() ===
+          log.decoded?.params[1].value.toLowerCase() ===
           recipentAddress.toLowerCase()
         ) {
           const donationData = {
             from: log.decoded.params[0].value,
             value: utils.formatUnits(
-              log.decoded.params[2].value,
+              log.decoded.params[2].value || 0,
               log.sender_contract_decimals
             ),
             symbol: log.sender_contract_ticker_symbol,
+            time: log.block_signed_at,
+            transactionHash: log.tx_hash,
           };
           return [...pastDonations, donationData];
         }
@@ -131,13 +135,13 @@ const filterDonations = (
     []
   );
 
-export function usePastDonations(recipientAddress: string) {
+export function usePastDonations(donationAddress: string) {
   const [pastDonations, setPastDonations] = useState<Donation[]>([]);
 
   const getAllDonations = async () => {
     const transactionRequests: Promise<CovalentResponse>[] = Object.keys(
       SUPPORTED_NETWORKS
-    ).map((chainId) => get("transactions_v2")(recipientAddress, chainId));
+    ).map((chainId) => get("transactions_v2")(donationAddress, chainId));
     const responses = await Promise.all(transactionRequests);
     const itemsFromAllChains: TransactionData[] = responses.reduce(
       (allItems, response) => {
@@ -145,15 +149,15 @@ export function usePastDonations(recipientAddress: string) {
       },
       []
     );
-    const donations = filterDonations(itemsFromAllChains, recipientAddress);
+    const donations = filterDonations(itemsFromAllChains, donationAddress);
     setPastDonations(donations);
   };
 
   useEffect(() => {
-    if (recipientAddress) {
+    if (donationAddress) {
       getAllDonations();
     }
-  }, [recipientAddress]);
+  }, [donationAddress]);
 
   return pastDonations;
 }
@@ -170,21 +174,24 @@ export function useCovalent() {
   useEffect(() => {
     async function getData(address) {
       const balance = await get("balances_v2")(address, chainId);
-      const balances = _.get(balance, "data.items", []).reduce(
-        (memo, item, i) => {
-          if (i > 0) {
-            const numTokens = Number(
-              utils.formatUnits(item.balance, item.contract_decimals)
-            );
-            memo[item.contract_address.toLowerCase()] = numTokens;
-          }
-          return memo;
-        },
-        {}
-      );
+      // const balances = _.get(balance, "data.items", []).reduce(
+      //   (memo, item, i) => {
+      //     if (i > 0) {
+      //       const numTokens = Number(
+      //         utils.formatUnits(item.balance, item.contract_decimals)
+      //       );
+      //       memo[item.contract_address.toLowerCase()] = {
+      //         amount: numTokens,
+      //         price: item.quote_rate,
+      //       };
+      //     }
+      //     return memo;
+      //   },
+      //   {}
+      // );
       setData({
         loading: false,
-        balances,
+        balances: _.get(balance, "data.items", []),
       });
     }
 
@@ -194,4 +201,26 @@ export function useCovalent() {
   }, [account, chainId]);
 
   return data;
+}
+
+export function useTotalFundsRaised(donationAddress: string) {
+  const [total, setTotal] = useState(0);
+  const getBalances = async () => {
+    const transactionRequests: Promise<CovalentResponse>[] = Object.keys(
+      SUPPORTED_NETWORKS
+    ).map((chainId) => get("balances_v2")(donationAddress, chainId));
+    const responses = await Promise.all(transactionRequests);
+    const itemsFromAllChains = responses.reduce((allItems, response) => {
+      return allItems.concat(response.data.items);
+    }, []);
+    const newTotal = itemsFromAllChains.reduce(
+      (total, tokenData) => (total += tokenData.quote),
+      0
+    );
+    setTotal(newTotal);
+  };
+  useEffect(() => {
+    if (donationAddress) getBalances();
+  }, [donationAddress]);
+  return total;
 }

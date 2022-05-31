@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 const INITIAL_STATE = {
+  logo: null,
   url: "unchain",
   title: "Donate to my Thing!",
   blurb: "Help me for xyz reasons",
@@ -62,6 +63,8 @@ const CreateEditForm = () => {
   return (
     <FormControl>
       <CauseInputWrapper>
+        <FormLabel htmlFor="url">Logo</FormLabel>
+        <Input id="logo" name="logo" onChange={handleChange} type="file" />
         <FormLabel htmlFor="url">URL</FormLabel>
         <Input
           onChange={handleChange}

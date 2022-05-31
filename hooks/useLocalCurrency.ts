@@ -4,7 +4,7 @@ import { formatEther } from "@ethersproject/units";
 import ethLogo from "../assets/eth_logo.png";
 import polygonLogo from "../assets/polygon_logo.png";
 
-interface LocalCurrencyData {
+export interface LocalCurrencyData {
   symbol: string;
   name: string;
   balance: number;

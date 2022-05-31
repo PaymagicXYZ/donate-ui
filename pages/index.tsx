@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
 import { SiweMessage } from "siwe";
+import DonationForm from "../components/DonationForm";
 import Layout from "../components/Layout";
 import axios from "axios";
 import Link from "next/link";
@@ -14,9 +15,14 @@ import {
   Tag,
   Spacer,
   HStack,
+  VStack,
+  Box,
+  Container,
+  Flex,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { supabaseClient as supabase } from "./supabaseClient";
+import { supabaseClient as supabase } from "../supabaseClient";
+import Account from "../components/Account";
 
 export default function HomePage() {
   const [causeList, setCauseList] = useState<{ url: string }[]>([]);
@@ -70,6 +76,26 @@ export default function HomePage() {
   };
 
   return (
+    // <HStack w="full" h="full" spacing="0">
+    //   <Box
+    //     w="55vw"
+    //     p="0"
+    //     m="0"
+    //     h="100vh"
+    //     bgGradient="radial(63.39% 55.09% at 50% 46.23%, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.07) 0.01%, rgba(0, 0, 0, 0.1) 130%, #FFFFFF 130%)"
+    //   ></Box>
+    //   <Box w="45vw" p="0" m="0" h="100vh" bg="rightPannel">
+    //     <Container my="60px" px="140px">
+    //       <VStack h="50vh" spacing="0" m="0" p="0">
+    //         <HStack w="full" justifyContent="flex-end">
+    //           <Account />
+    //         </HStack>
+    //         <DonationForm />
+    //       </VStack>
+    //     </Container>
+    //   </Box>
+    // </HStack>
+
     <Layout>
       <HStack>
         <Text fontSize="2xl">All Causes</Text>

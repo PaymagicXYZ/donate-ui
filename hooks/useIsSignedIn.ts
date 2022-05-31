@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { supabaseClient } from "../pages/supabaseClient";
+import { useState } from "react";
+import { supabaseClient } from "../supabaseClient";
 
 export const useIsSignedIn = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);

@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useEthers, useTokenList as useTokens } from "@usedapp/core";
+import { utils } from "ethers";
 import { TokenInfo } from "@uniswap/token-lists";
 import { useCovalent } from "./useCovalent";
 import { TOKEN_LISTS } from "../utils/constants";
 
-interface UserTokenData extends TokenInfo {
+export interface UserTokenData extends TokenInfo {
   balance: number;
+  price: number;
 }
 
 export const useTokenList = () => {
@@ -14,18 +16,51 @@ export const useTokenList = () => {
   const [tokenList, setTokenList] = useState<UserTokenData[]>([]);
   const { tokens } = useTokens(TOKEN_LISTS[chainId]) || {};
   const getBalance = (address = "") => {
-    if (balances) return balances[address.toLowerCase()] || 0;
+    if (balances) return balances[address.toLowerCase()]?.amount || 0;
+  };
+  const getPrice = (address = "") => {
+    if (balances) return balances[address.toLowerCase()]?.price || 0;
   };
 
   useEffect(() => {
     if (tokens && balances && chainId) {
-      const sortedTokens = tokens.sort((a, b) =>
-        getBalance(a.address) > getBalance(b.address) ? -1 : 1
-      );
-      const userTokenList: UserTokenData[] = sortedTokens.map((token) => ({
-        ...token,
-        balance: getBalance(token.address),
-      }));
+      const addressesWithBalance = {};
+      const tokensWithBalance = [];
+      for (const tokenData of balances) {
+        const balance = Number(
+          utils.formatUnits(tokenData.balance, tokenData.contract_decimals)
+        );
+        addressesWithBalance[tokenData.contract_address] = true;
+        tokensWithBalance.push({
+          price: tokenData.quote_rate,
+          address: tokenData.contract_address,
+          name: tokenData.contract_name,
+          decimals: tokenData.contract_decimals,
+          symbol: tokenData.contract_ticker_symbol,
+          logoURI: tokenData.logo_url,
+          chainId,
+          balance,
+        });
+      }
+      // const tokensWithNoBalance = tokens.filter(
+      //   ({ address }) => !addressesWithBalance[address]
+      // );
+      const tokensWithNoBalance = tokens.reduce((memo, curr) => {
+        if (addressesWithBalance && !addressesWithBalance[curr.address]) {
+          return [...memo, { ...curr, balance: 0, price: 0 }];
+        }
+        return memo;
+      }, []);
+
+      const userTokenList = tokensWithBalance.concat(tokensWithNoBalance);
+      // const sortedTokens = tokens.sort((a, b) =>
+      //   getBalance(a.address) > getBalance(b.address) ? -1 : 1
+      // );
+      // const userTokenList: UserTokenData[] = sortedTokens.map((token) => ({
+      //   ...token,
+      //   balance: getBalance(token.address),
+      //   price: getPrice(token.address),
+      // }));
       setTokenList(userTokenList);
     }
   }, [tokens, balances, chainId]);

@@ -2,6 +2,8 @@ import ethereumLogo from "../assets/eth_logo.png";
 import polygonLogo from "../assets/polygon_logo.png";
 import optimismLogo from "../assets/optimism_logo.svg";
 import arbitrumLogo from "../assets/arbitrum_logo.svg";
+import avalancheLogo from "../assets/avalanche_logo.png";
+import gnosisLogo from "../assets/gnosis_logo.png";
 
 export const DUSTSWEEPER_ADDRESS =
   process.env.REACT_APP_DUSTSWEEPER ||
@@ -90,6 +92,16 @@ export const AIRDROP_FACTORY_POLYGON = "0x"; // Not deployed yet
 export const AIRDROP_FACTORY_KOVAN =
   "0x08A9E551e14BFD1C94E5e3a3F669A458d3F5E403";
 
+export const BLOCK_EXPLORERS = {
+  1: "https://etherscan.io",
+  10: "https://optimistic.etherscan.io",
+  42161: "https://arbiscan.io",
+  137: "https://polygonscan.com",
+  43114: "https://snowtrace.io",
+  42: "https://kovan.etherscan.io",
+  80001: "https://mumbai.polygonscan.com",
+};
+
 const PROD_NETWORKS = {
   1: {
     name: "Ethereum",
@@ -103,9 +115,17 @@ const PROD_NETWORKS = {
     name: "Arbitrum",
     logo: arbitrumLogo,
   },
+  // 100: {
+  //   name: "Gnosis Chain",
+  //   logo: gnosisLogo,
+  // },
   137: {
     name: "Polygon",
     logo: polygonLogo,
+  },
+  43114: {
+    name: "Avalanche",
+    logo: avalancheLogo,
   },
 };
 

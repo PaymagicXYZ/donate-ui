@@ -1,3 +1,7 @@
+import "@fontsource/inter";
+import "@fontsource/poppins";
+import "./styles.css";
+
 import { ChakraProvider } from "@chakra-ui/react";
 
 import Head from "next/head";
