@@ -1,10 +1,10 @@
 import { useEthers } from "@usedapp/core";
-import { Button } from "@chakra-ui/react";
+import Button from "../Button";
 
-export default function ConnectWallet(props) {
+export default function ConnectWallet() {
   const { activateBrowserWallet } = useEthers();
   return (
-    <Button color="primary" {...props} onClick={activateBrowserWallet}>
+    <Button onClick={activateBrowserWallet} borderRadius="accountBtn">
       Connect Wallet
     </Button>
   );
