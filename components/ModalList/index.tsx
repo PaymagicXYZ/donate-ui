@@ -27,7 +27,7 @@ interface ModalListItem {
 const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
+      <ModalOverlay style={{ filter: "blur(10px)" }} />
       <ModalContent
         bg="modal.active"
         color="text"
@@ -43,10 +43,10 @@ const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items }) => {
             onClick={() => onClick(id)}
             _hover={{
               cursor: "pointer",
-              bg: "#1f1f1f",
+              bg: "modalList.hover",
             }}
             key={id}
-            bg="#272727"
+            bg="modalList.active"
             borderRadius="networkOption"
             p="16px"
             mx="24px"
