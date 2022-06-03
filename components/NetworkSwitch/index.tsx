@@ -18,6 +18,7 @@ const NetworkMenu = () => {
       SUPPORTED_NETWORKS[network.chainId] ||
       SUPPORTED_NETWORKS[defaultNetworkId];
     setSelectedNetwork(networkData);
+    console.log(networkData);
   }, [network]);
   const handleOfflineChange = (chainId: number) => {
     setSelectedNetwork(SUPPORTED_NETWORKS[chainId]);
@@ -29,7 +30,7 @@ const NetworkMenu = () => {
         onClick={onOpen}
         value={selectedNetwork?.name}
         logoURI={selectedNetwork?.logo.src}
-        placeHolderText="Pick a network"
+        placeHolderText="Unsupported network"
       />
       <NetworkList
         isOpen={isOpen}
