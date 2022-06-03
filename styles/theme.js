@@ -8,6 +8,7 @@ export const theme = extendTheme({
   radii: {
     accountBtn: "115px",
     input: "6px",
+    networkOption: "16px",
   },
   sizes: {
     logo: {
@@ -59,11 +60,19 @@ export const theme = extendTheme({
       100: props.colorMode === "dark" ? "#000000" : "#000000",
       200: props.colorMode === "dark" ? "#FFFFFF" : "#FFFFFF",
     }),
-
     rightPannel: "#121212",
     brand: {
       100: "#f7fafc",
       900: "#1a202c",
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _focus: {
+          boxShadow: "none",
+        },
+      },
     },
   },
 });
