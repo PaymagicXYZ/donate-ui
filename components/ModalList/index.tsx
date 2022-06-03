@@ -8,16 +8,23 @@ import {
   Flex,
   Center,
 } from "@chakra-ui/react";
-import { SUPPORTED_NETWORKS } from "../../utils/constants";
-import Image from "next/image";
-import { useEthers } from "@usedapp/core";
+import Image, { StaticImageData } from "next/image";
+import { FC } from "react";
 
-const NetworkList = ({ isOpen, onClose, offlineClick }) => {
-  const { switchNetwork, active } = useEthers();
-  const getHandler = (chainId: number) => () => {
-    active ? switchNetwork(chainId) : offlineClick(chainId);
-    onClose();
-  };
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  onClick: (id: number) => void;
+  items: ModalListItem[];
+}
+
+interface ModalListItem {
+  id: number;
+  name: string;
+  logo: StaticImageData;
+}
+
+const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -31,24 +38,24 @@ const NetworkList = ({ isOpen, onClose, offlineClick }) => {
           Select Network
           <ModalCloseButton _focus={{ boxShadow: "none" }} />
         </ModalHeader>
-        {Object.entries(SUPPORTED_NETWORKS).map(([chainId, chainInfo]) => (
+        {items.map(({ id, name, logo }) => (
           <Flex
-            onClick={getHandler(+chainId)}
+            onClick={() => onClick(id)}
             _hover={{
               cursor: "pointer",
               bg: "#1f1f1f",
             }}
-            key={chainId}
+            key={id}
             bg="#272727"
             borderRadius="networkOption"
             p="16px"
             mx="24px"
             marginBottom="16px"
           >
-            <Image src={chainInfo.logo} width={38} height={38} />
+            <Image src={logo} width={38} height={38} />
             <Center>
               <Text fontWeight="bold" marginLeft="16px">
-                {chainInfo.name}
+                {name}
               </Text>
             </Center>
           </Flex>
@@ -58,4 +65,4 @@ const NetworkList = ({ isOpen, onClose, offlineClick }) => {
   );
 };
 
-export default NetworkList;
+export default ModalList;
