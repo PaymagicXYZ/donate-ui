@@ -4,6 +4,7 @@ import optimismLogo from "../assets/optimism_logo.svg";
 import arbitrumLogo from "../assets/arbitrum_logo.svg";
 import avalancheLogo from "../assets/avalanche_logo.png";
 import gnosisLogo from "../assets/gnosis_logo.png";
+import { StaticImageData } from "next/image";
 
 export const DUSTSWEEPER_ADDRESS =
   process.env.REACT_APP_DUSTSWEEPER ||
@@ -102,7 +103,16 @@ export const BLOCK_EXPLORERS = {
   80001: "https://mumbai.polygonscan.com",
 };
 
-const PROD_NETWORKS = {
+export interface Network {
+  name: string;
+  logo: StaticImageData;
+}
+
+interface NetworkData {
+  [key: number]: Network;
+}
+
+const PROD_NETWORKS: NetworkData = {
   1: {
     name: "Ethereum",
     logo: ethereumLogo,
