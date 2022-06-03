@@ -12,6 +12,7 @@ import Image, { StaticImageData } from "next/image";
 import { FC } from "react";
 
 interface Props {
+  title: string;
   isOpen: boolean;
   onClose: () => void;
   onClick: (id: number) => void;
@@ -24,10 +25,10 @@ interface ModalListItem {
   logo: StaticImageData;
 }
 
-const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items }) => {
+const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items, title }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay style={{ filter: "blur(10px)" }} />
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <ModalOverlay />
       <ModalContent
         bg="modal.active"
         color="text"
@@ -35,7 +36,7 @@ const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items }) => {
         paddingBottom="24px"
       >
         <ModalHeader py="16px">
-          Select Network
+          {title}
           <ModalCloseButton _focus={{ boxShadow: "none" }} />
         </ModalHeader>
         {items.map(({ id, name, logo }) => (

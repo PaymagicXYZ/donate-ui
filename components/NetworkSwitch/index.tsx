@@ -47,6 +47,7 @@ const NetworkMenu = () => {
         placeHolderText="Unsupported network"
       />
       <ModalList
+        title="Select Network"
         items={networkOptions}
         isOpen={isOpen}
         onClose={onClose}
