@@ -6,14 +6,6 @@ import { DEBUG, Network, SUPPORTED_NETWORKS } from "../../utils/constants";
 import Select from "../Select";
 import ModalList from "../ModalList";
 
-const networkOptions = Object.entries(SUPPORTED_NETWORKS).map(
-  ([chainId, chainInfo]) => ({
-    id: +chainId,
-    name: chainInfo.name,
-    logo: chainInfo.logo,
-  })
-);
-
 const defaultNetworkId = DEBUG ? 42 : 1;
 
 const NetworkMenu = () => {
@@ -25,10 +17,17 @@ const NetworkMenu = () => {
   const handleOfflineChange = (chainId: number) => {
     setSelectedNetwork(SUPPORTED_NETWORKS[chainId]);
   };
-  const handleClick = (chainId: number) => {
-    active ? switchNetwork(chainId) : handleOfflineChange(chainId);
-    onClose();
-  };
+
+  const networkOptions = Object.entries(SUPPORTED_NETWORKS).map(
+    ([chainId, chainInfo]) => ({
+      name: chainInfo.name,
+      logo: chainInfo.logo,
+      onClick: () => {
+        active ? switchNetwork(+chainId) : handleOfflineChange(+chainId);
+        onClose();
+      },
+    })
+  );
 
   useEffect(() => {
     const networkData =
@@ -51,7 +50,6 @@ const NetworkMenu = () => {
         items={networkOptions}
         isOpen={isOpen}
         onClose={onClose}
-        onClick={handleClick}
       />
     </>
   );
