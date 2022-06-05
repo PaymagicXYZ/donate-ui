@@ -32,6 +32,10 @@ export const theme = extendTheme({
     pastDonation: "14px",
   },
   colors: {
+    modalList: {
+      hover: "#1A1A1A",
+      active: "#272727",
+    },
     badge: {
       active: "rgba(28, 28, 28, 0.5)",
       inactive: "rgba(28, 28, 28, 0.25)",
