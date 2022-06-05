@@ -3,7 +3,6 @@ import polygonLogo from "../assets/polygon_logo.png";
 import optimismLogo from "../assets/optimism_logo.svg";
 import arbitrumLogo from "../assets/arbitrum_logo.svg";
 import avalancheLogo from "../assets/avalanche_logo.png";
-import gnosisLogo from "../assets/gnosis_logo.png";
 import { StaticImageData } from "next/image";
 
 export const DUSTSWEEPER_ADDRESS =
@@ -125,10 +124,6 @@ const PROD_NETWORKS: NetworkData = {
     name: "Arbitrum",
     logo: arbitrumLogo,
   },
-  // 100: {
-  //   name: "Gnosis Chain",
-  //   logo: gnosisLogo,
-  // },
   137: {
     name: "Polygon",
     logo: polygonLogo,
