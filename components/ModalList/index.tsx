@@ -7,6 +7,8 @@ import {
   Text,
   Flex,
   Center,
+  Spinner,
+  Spacer,
 } from "@chakra-ui/react";
 import Image, { StaticImageData } from "next/image";
 import { FC } from "react";
@@ -15,17 +17,17 @@ interface Props {
   title: string;
   isOpen: boolean;
   onClose: () => void;
-  onClick: (id: number) => void;
   items: ModalListItem[];
 }
 
 interface ModalListItem {
-  id: number;
   name: string;
   logo: StaticImageData;
+  isLoading?: boolean;
+  onClick: () => void;
 }
 
-const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items, title }) => {
+const ModalList: FC<Props> = ({ isOpen, onClose, items, title }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
@@ -39,14 +41,14 @@ const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items, title }) => {
           {title}
           <ModalCloseButton _focus={{ boxShadow: "none" }} />
         </ModalHeader>
-        {items.map(({ id, name, logo }) => (
+        {items.map(({ name, logo, onClick, isLoading }) => (
           <Flex
-            onClick={() => onClick(id)}
+            onClick={onClick}
             _hover={{
               cursor: "pointer",
               bg: "modalList.hover",
             }}
-            key={id}
+            key={name}
             bg="modalList.active"
             borderRadius="networkOption"
             p="16px"
@@ -59,6 +61,12 @@ const ModalList: FC<Props> = ({ isOpen, onClose, onClick, items, title }) => {
                 {name}
               </Text>
             </Center>
+            <Spacer />
+            {isLoading && (
+              <Center>
+                <Spinner />
+              </Center>
+            )}
           </Flex>
         ))}
       </ModalContent>
