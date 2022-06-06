@@ -5,3 +5,4 @@ export * from "./useLocalCurrency";
 export * from "./useIsSignedIn";
 export * from "./useTotalFundsRaised";
 export * from "./useWalletConnectors";
+export * from "./useSwitchNetwork";

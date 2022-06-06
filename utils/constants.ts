@@ -156,6 +156,6 @@ export const TOKEN_LISTS: { [chainID: string]: string } = {
   80001: "https://test-token-list.herokuapp.com/tokenlist.json",
 };
 
-const DEBUG = false;
+export const DEBUG = false;
 
 export const SUPPORTED_NETWORKS = DEBUG ? TEST_NETWORKS : PROD_NETWORKS;

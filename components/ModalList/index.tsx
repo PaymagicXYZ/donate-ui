@@ -23,7 +23,7 @@ interface Props {
 interface ModalListItem {
   name: string;
   logo: StaticImageData;
-  isLoading?: boolean;
+  adornment: JSX.Element;
   onClick: () => void;
 }
 
@@ -41,7 +41,7 @@ const ModalList: FC<Props> = ({ isOpen, onClose, items, title }) => {
           {title}
           <ModalCloseButton _focus={{ boxShadow: "none" }} />
         </ModalHeader>
-        {items.map(({ name, logo, onClick, isLoading }) => (
+        {items.map(({ name, logo, onClick, adornment }) => (
           <Flex
             onClick={onClick}
             _hover={{
@@ -62,11 +62,7 @@ const ModalList: FC<Props> = ({ isOpen, onClose, items, title }) => {
               </Text>
             </Center>
             <Spacer />
-            {isLoading && (
-              <Center>
-                <Spinner />
-              </Center>
-            )}
+            {adornment && <Center>{adornment}</Center>}
           </Flex>
         ))}
       </ModalContent>

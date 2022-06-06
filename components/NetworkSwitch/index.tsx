@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
-import { useDisclosure } from "@chakra-ui/react";
+import { Spinner, useDisclosure, Box } from "@chakra-ui/react";
 import { useNetwork, useEthers } from "@usedapp/core";
 import { DEBUG, Network, SUPPORTED_NETWORKS } from "../../utils/constants";
 
 import Select from "../Select";
 import ModalList from "../ModalList";
+import { useSwitchNetwork } from "../../hooks";
 
 const defaultNetworkId = DEBUG ? 42 : 1;
 
 const NetworkMenu = () => {
+  const [networkLoading, setNetworkLoading] = useState<string>();
   const { network } = useNetwork();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { switchNetwork, active } = useEthers();
+  const { account } = useEthers();
+  const { switchNetwork, isLoading } = useSwitchNetwork();
   const [selectedNetwork, setSelectedNetwork] = useState<Network>();
 
   const handleOfflineChange = (chainId: number) => {
@@ -19,14 +22,27 @@ const NetworkMenu = () => {
   };
 
   const networkOptions = Object.entries(SUPPORTED_NETWORKS).map(
-    ([chainId, chainInfo]) => ({
-      name: chainInfo.name,
-      logo: chainInfo.logo,
-      onClick: () => {
-        active ? switchNetwork(+chainId) : handleOfflineChange(+chainId);
-        onClose();
-      },
-    })
+    ([chainId, chainInfo]) => {
+      const adornment =
+        chainId === networkLoading && isLoading ? (
+          <Spinner />
+        ) : chainInfo.name === selectedNetwork?.name ? (
+          <Box h="12px" w="12px" borderRadius="10px" bg="success" />
+        ) : null;
+      return {
+        name: chainInfo.name,
+        logo: chainInfo.logo,
+        adornment,
+        onClick: async () => {
+          setNetworkLoading(chainId);
+          account
+            ? await switchNetwork(+chainId)
+            : handleOfflineChange(+chainId);
+          setNetworkLoading(null);
+          onClose();
+        },
+      };
+    }
   );
 
   useEffect(() => {

@@ -5,7 +5,6 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 
 export const useMetaMaskWallet = () => {
   const { activateBrowserWallet, isLoading, library } = useEthers();
-  console.log({ library });
   return {
     connect: activateBrowserWallet,
     isLoading,

@@ -32,6 +32,7 @@ export const theme = extendTheme({
     pastDonation: "14px",
   },
   colors: {
+    success: "#58C573",
     modalList: {
       hover: "#1A1A1A",
       active: "#272727",

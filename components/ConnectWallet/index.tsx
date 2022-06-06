@@ -1,4 +1,5 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Spinner, useDisclosure } from "@chakra-ui/react";
 import metamaskLogo from "../../assets/metamask_logo.png";
 import walletconnectLogo from "../../assets/walletconnect_logo.png";
 import coinbaseLogo from "../../assets/coinbasewallet_logo.png";
@@ -21,6 +22,7 @@ interface WalletConnectorInfo {
 
 export default function ConnectWallet() {
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const [selectedWallet, setSelectedWallet] = useState<string>();
 
   const { connect: connectMetaMask, isLoading: isMetaMaskLoading } =
     useMetaMaskWallet();
@@ -28,6 +30,9 @@ export default function ConnectWallet() {
     useWalletConnectWallet();
   const { connect: connectCoinbase, isLoading: isCoinbaseLoading } =
     useCoinbaseWallet();
+
+  const getAdornment = (isLoading: boolean, name: string) =>
+    isLoading && selectedWallet === name ? <Spinner /> : null;
 
   const walletConnectors: WalletConnectorInfo[] = [
     {
@@ -57,6 +62,15 @@ export default function ConnectWallet() {
     },
   ];
 
+  const walletOptions = walletConnectors.map((connector) => ({
+    ...connector,
+    adornment: getAdornment(connector.isLoading, connector.name),
+    onClick: () => {
+      setSelectedWallet(connector.name);
+      connector.onClick();
+    },
+  }));
+
   return (
     <>
       <Button onClick={onOpen} borderRadius="accountBtn">
@@ -66,7 +80,7 @@ export default function ConnectWallet() {
         title="Connect Wallet"
         isOpen={isOpen}
         onClose={onClose}
-        items={walletConnectors}
+        items={walletOptions}
       />
     </>
   );
