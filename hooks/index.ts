@@ -6,3 +6,4 @@ export * from "./useIsSignedIn";
 export * from "./useTotalFundsRaised";
 export * from "./useWalletConnectors";
 export * from "./useSwitchNetwork";
+export * from "./useIsSupportedNetwork";
