@@ -78,7 +78,26 @@ export default function Page() {
         </Container>
       </Box>
 
-      <Box w="45vw" p="0" m="0" h="100vh" bg="rightPannel">
+      <Box
+        overflowY="auto"
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "0px",
+          },
+          // "&::-webkit-scrollbar-track": {
+          //   width: "6px",
+          // },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#ffffff21",
+            borderRadius: "24px",
+          },
+        }}
+        w="45vw"
+        p="0"
+        m="0"
+        h="100vh"
+        bg="rightPannel"
+      >
         <Container my="60px" px="100px">
           <Flex h="50vh" m="0" p="0" align="flex-start" direction="column">
             <HStack w="full" justifyContent="flex-end">

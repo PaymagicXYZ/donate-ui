@@ -227,7 +227,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
         Donate
       </Button>
 
-      <VStack w="full" paddingTop="40px">
+      <VStack w="full" py="40px">
         <HStack w="full">
           <DonationDetailText opacity={0.5} color="text">
             Donation wallet
