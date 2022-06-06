@@ -3,11 +3,12 @@ import { useNetwork } from "@usedapp/core";
 import { useEffect, useState } from "react";
 
 export const useIsSupportedNetwork = () => {
-  const [isSupportedNetwork, setIsSupportedNetwork] = useState(false);
+  const [isSupportedNetwork, setIsSupportedNetwork] = useState(true);
   const { network } = useNetwork();
 
   useEffect(() => {
-    setIsSupportedNetwork(network.chainId?.toString() in SUPPORTED_NETWORKS);
+    if (network.chainId)
+      setIsSupportedNetwork(network.chainId.toString() in SUPPORTED_NETWORKS);
   }, [network]);
 
   return isSupportedNetwork;

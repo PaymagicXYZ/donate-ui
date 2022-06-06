@@ -2,6 +2,7 @@ import _ from "lodash";
 import {
   useTokenList,
   useLocalCurrency,
+  useIsSupportedNetwork,
   UserTokenData,
   LocalCurrencyData,
 } from "../../hooks";
@@ -33,6 +34,7 @@ interface Props {
 export default function TokenList(props: Props) {
   const { onSelect, selectedToken } = props;
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const isSupportedNetwork = useIsSupportedNetwork();
   const { account } = useEthers();
   const tokens = useTokenList();
   const localCurrency = useLocalCurrency();
@@ -45,7 +47,7 @@ export default function TokenList(props: Props) {
   return (
     <>
       <Select
-        disabled={!account}
+        disabled={!account || !isSupportedNetwork}
         value={selectedToken?.name}
         logoURI={selectedToken?.logoURI}
         placeHolderText="Pick a token"

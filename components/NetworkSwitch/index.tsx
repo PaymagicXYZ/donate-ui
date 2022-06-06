@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Spinner, useDisclosure, Box } from "@chakra-ui/react";
 import { useNetwork, useEthers } from "@usedapp/core";
 import { DEBUG, Network, SUPPORTED_NETWORKS } from "../../utils/constants";
+import { useIsSupportedNetwork } from "../../hooks";
 
 import Select from "../Select";
 import ModalList from "../ModalList";
@@ -10,7 +11,7 @@ import { useSwitchNetwork } from "../../hooks";
 const defaultNetworkId = DEBUG ? 42 : 1;
 
 const NetworkMenu = () => {
-  const [isUnsupportedChain, setUnsupportedChain] = useState(false);
+  const isSupportedNetwork = useIsSupportedNetwork();
   const [networkLoading, setNetworkLoading] = useState<string>();
   const { network } = useNetwork();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -47,35 +48,30 @@ const NetworkMenu = () => {
   );
 
   useEffect(() => {
-    const unsupportedChain = !(
-      network.chainId?.toString() in SUPPORTED_NETWORKS
-    );
-    if (network.chainId && unsupportedChain) {
-      setUnsupportedChain(true);
+    if (!isSupportedNetwork) {
       setSelectedNetwork(null);
     } else {
       const networkData =
         SUPPORTED_NETWORKS[network.chainId] ||
         SUPPORTED_NETWORKS[defaultNetworkId];
-      setUnsupportedChain(false);
       setSelectedNetwork(networkData);
     }
-  }, [network]);
+  }, [network, isSupportedNetwork]);
 
-  const name = isUnsupportedChain
+  const name = !isSupportedNetwork
     ? "Unsupported Network"
     : selectedNetwork?.name;
-  const logo = isUnsupportedChain ? null : selectedNetwork?.logo.src;
+  const logo = !isSupportedNetwork ? null : selectedNetwork?.logo.src;
 
   return (
     <>
       <Select
-        errorMessage={isUnsupportedChain && "Connect to a supported network."}
+        errorMessage={!isSupportedNetwork && "Connect to a supported network."}
         disabled={false}
         onClick={onOpen}
         value={name}
         logoURI={logo}
-        placeHolderText="Unsupported network"
+        placeHolderText="Pick a network"
       />
       <ModalList
         title="Select Network"

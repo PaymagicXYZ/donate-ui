@@ -75,6 +75,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
 
   useEffect(() => {
     setTokenId(null);
+    setAmount("");
   }, [network]);
 
   const transferERC20 = async () => {
