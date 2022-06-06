@@ -48,7 +48,7 @@ export default function TokenList(props: Props) {
     <>
       <Select
         disabled={!account || !isSupportedNetwork}
-        value={selectedToken?.name}
+        value={selectedToken?.symbol}
         logoURI={selectedToken?.logoURI}
         placeHolderText="Pick a token"
         onClick={onOpen}
