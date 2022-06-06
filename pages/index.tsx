@@ -35,7 +35,6 @@ export default function HomePage() {
     const fetchAllCauses = async () => {
       setLoading(true);
       const { data, error } = await supabase.from("cause").select("url");
-      console.log(data);
       setCauseList(data);
       setLoading(false);
     };
@@ -63,7 +62,6 @@ export default function HomePage() {
       });
       await supabase.auth.setAuth(data.token);
       const { data: user, error } = await supabase.from("user").select("*");
-      console.log(user);
     }
   };
 

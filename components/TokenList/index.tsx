@@ -67,8 +67,8 @@ export default function TokenList(props: Props) {
                 color="text"
                 aria-label="Close modal"
                 icon={<CloseIcon fontSize={10} />}
-              />{" "}
-            </HStack>{" "}
+              />
+            </HStack>
             <Input
               border="0"
               h="input"
@@ -82,37 +82,6 @@ export default function TokenList(props: Props) {
             />
           </ModalHeader>
           <ModalBody overflowY="scroll" maxH="60vh" px="0px">
-            {/* <HStack
-              w="full"
-              px="20px"
-              py="10px"
-              transitionDuration="100ms"
-              onClick={() => handleSelect(-1)}
-              borderBottom="1px"
-              borderColor="modal.border"
-              _hover={{
-                background: "modal.hover",
-                cursor: "pointer",
-              }}
-            >
-              <Image
-                marginRight="5px"
-                boxSize="25px"
-                src={localCurrency.logoURI}
-                borderRadius="100px"
-                alt={localCurrency.symbol}
-              />
-              <VStack alignItems="start" spacing="0px">
-                <Text color="text" fontSize="md">
-                  {localCurrency.symbol}
-                </Text>
-                <Text color="text" fontSize="xs">
-                  {localCurrency.name}
-                </Text>
-              </VStack>
-              <Spacer />
-              <Text color="text">{localCurrency.balance.toFixed(5)}</Text>
-            </HStack> */}
             {tokens.map((token, i) => (
               <HStack
                 key={token.address}

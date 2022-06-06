@@ -33,7 +33,6 @@ export default function Page() {
       .from("cause")
       .select("*")
       .eq("url", cause);
-    console.log({ data, error });
     if (data.length) setCauseData(data[0]);
     else {
       setError(true);

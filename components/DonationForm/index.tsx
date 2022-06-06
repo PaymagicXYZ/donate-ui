@@ -26,8 +26,6 @@ import {
   VStack,
   HStack,
   Spacer,
-  Flex,
-  Image,
   Divider,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
@@ -36,6 +34,7 @@ import Badge from "../Badge";
 import Button from "../Button";
 import DonationDetailText from "../DonationDetailText";
 import { BLOCK_EXPLORERS } from "../../utils/constants";
+import { useTokenPrice } from "../../hooks";
 
 export default function Page({ causeData }: { causeData: Cause }) {
   const [amount, setAmount] = useState("");
@@ -115,7 +114,10 @@ export default function Page({ causeData }: { causeData: Cause }) {
     const newAmount = balance * (percent / 100);
     setAmount(newAmount.toString());
   };
-  const dollarValue = (selectedToken?.price * +amount).toFixed(2) || "";
+
+  const spotPrice = useTokenPrice(selectedToken?.symbol);
+  const dollarValue = (spotPrice * +amount).toFixed(2) || "";
+
   const formatedTotalFundsRaised = totalFundsRaised.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
