@@ -33,6 +33,7 @@ export const theme = extendTheme({
   },
   colors: {
     success: "#58C573",
+    error: "#F6677C",
     modalList: {
       hover: "#1A1A1A",
       active: "#272727",

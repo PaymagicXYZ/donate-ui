@@ -13,9 +13,15 @@ import { FC } from "react";
 interface Props {
   onClick: () => void;
   disabled: boolean;
+  errorMessage?: string;
 }
 
-const InputContainer: FC<Props> = ({ disabled, onClick, children }) => {
+const InputContainer: FC<Props> = ({
+  disabled,
+  onClick,
+  children,
+  errorMessage,
+}) => {
   return (
     <Center
       transition="200ms"
@@ -31,8 +37,10 @@ const InputContainer: FC<Props> = ({ disabled, onClick, children }) => {
       opacity={disabled ? 0.5 : 1}
       bg={disabled ? "input.inactive" : "input.active"}
       borderRadius="input"
+      border={errorMessage && "1px solid"}
+      borderColor="error"
       w="full"
-      m="8px"
+      my="8px"
     >
       <HStack w="full" px="14px">
         {children}

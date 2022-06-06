@@ -10,6 +10,7 @@ import { useSwitchNetwork } from "../../hooks";
 const defaultNetworkId = DEBUG ? 42 : 1;
 
 const NetworkMenu = () => {
+  const [isUnsupportedChain, setUnsupportedChain] = useState(false);
   const [networkLoading, setNetworkLoading] = useState<string>();
   const { network } = useNetwork();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -46,19 +47,34 @@ const NetworkMenu = () => {
   );
 
   useEffect(() => {
-    const networkData =
-      SUPPORTED_NETWORKS[network.chainId] ||
-      SUPPORTED_NETWORKS[defaultNetworkId];
-    setSelectedNetwork(networkData);
+    const unsupportedChain = !(
+      network.chainId?.toString() in SUPPORTED_NETWORKS
+    );
+    if (network.chainId && unsupportedChain) {
+      setUnsupportedChain(true);
+      setSelectedNetwork(null);
+    } else {
+      const networkData =
+        SUPPORTED_NETWORKS[network.chainId] ||
+        SUPPORTED_NETWORKS[defaultNetworkId];
+      setUnsupportedChain(false);
+      setSelectedNetwork(networkData);
+    }
   }, [network]);
+
+  const name = isUnsupportedChain
+    ? "Unsupported Network"
+    : selectedNetwork?.name;
+  const logo = isUnsupportedChain ? null : selectedNetwork?.logo.src;
 
   return (
     <>
       <Select
+        errorMessage={isUnsupportedChain && "Connect to a supported network."}
         disabled={false}
         onClick={onOpen}
-        value={selectedNetwork?.name}
-        logoURI={selectedNetwork?.logo.src}
+        value={name}
+        logoURI={logo}
         placeHolderText="Unsupported network"
       />
       <ModalList
