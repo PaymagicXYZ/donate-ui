@@ -224,3 +224,24 @@ export function useTotalFundsRaised(donationAddress: string) {
   }, [donationAddress]);
   return total;
 }
+
+export function useTokenPrice(symbol: string) {
+  const [price, setPrice] = useState<number>();
+  const getPrice = async () => {
+    try {
+      const url = `https://api.covalenthq.com/v1/pricing/tickers/?quote-currency=USD&format=JSON&tickers=${symbol}&key=${COVALENT_API_KEY}`;
+      const response = await axios.get(url);
+      const data = response.data.data;
+      if (data.items.length) setPrice(data.items[0].quote_rate);
+      else setPrice(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (symbol) getPrice();
+  }, [symbol]);
+
+  return price;
+}
