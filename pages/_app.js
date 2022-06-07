@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
       <DAppProvider config={{}}>
         <SupabaseProvider>
           <Head>
-            <title>Ethereum Supports Me</title>
+            <title>Eth Gives</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <Script id="google-analytics" strategy="afterInteractive">
