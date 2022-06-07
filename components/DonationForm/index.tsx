@@ -116,7 +116,13 @@ export default function Page({ causeData }: { causeData: Cause }) {
   };
 
   const spotPrice = useTokenPrice(selectedToken?.symbol);
-  const dollarValue = (spotPrice * +amount).toFixed(2) || "";
+  const dollarValue = spotPrice * +amount || "";
+  const formatedDollarValue = dollarValue
+    ? dollarValue.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    : dollarValue;
 
   const formatedTotalFundsRaised = totalFundsRaised.toLocaleString("en-US", {
     style: "currency",
@@ -150,7 +156,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
         />
         <InputRightElement w="fit-content" my="16px" mx="14px">
           <Text fontSize="small" opacity={0.4} color="text">
-            {amount && dollarValue} - USD
+            {amount && formatedDollarValue} - USD
           </Text>
         </InputRightElement>
       </InputGroup>
