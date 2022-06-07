@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useEthers } from "@usedapp/core";
+import { useEthers, useBlockNumber } from "@usedapp/core";
 import { utils } from "ethers";
 import _ from "lodash";
 import axios from "axios";
@@ -205,6 +205,7 @@ export function useCovalent() {
 
 export function useTotalFundsRaised(donationAddress: string) {
   const [total, setTotal] = useState(0);
+  const blockNum = useBlockNumber();
   const getBalances = async () => {
     const transactionRequests: Promise<CovalentResponse>[] = Object.keys(
       SUPPORTED_NETWORKS
@@ -221,7 +222,7 @@ export function useTotalFundsRaised(donationAddress: string) {
   };
   useEffect(() => {
     if (donationAddress) getBalances();
-  }, [donationAddress]);
+  }, [donationAddress, blockNum]);
   return total;
 }
 
