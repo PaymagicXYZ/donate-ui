@@ -27,13 +27,14 @@ import {
   HStack,
   Spacer,
   Divider,
+  StatHelpText,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import TokenList from "../TokenList";
 import Badge from "../Badge";
 import Button from "../Button";
 import DonationDetailText from "../DonationDetailText";
-import { BLOCK_EXPLORERS } from "../../utils/constants";
+import { BLOCK_EXPLORERS, TRANSACTION_STATUS } from "../../utils/constants";
 import { useTokenPrice } from "../../hooks";
 
 export default function Page({ causeData }: { causeData: Cause }) {
@@ -42,30 +43,30 @@ export default function Page({ causeData }: { causeData: Cause }) {
   const [loading, setLoading] = useState(false);
   const tokens = useTokenList();
   const { chainId, account } = useEthers();
-  const localCurrency = useLocalCurrency();
   const { network } = useNetwork();
   const totalFundsRaised = useTotalFundsRaised(causeData?.donation_address);
 
-  const isSendingLocalCurrency = tokenId === -1;
-  const selectedToken = isSendingLocalCurrency
-    ? localCurrency
-    : tokens[tokenId];
-  const { sendTransaction, state: localCurrencyState } = useSendTransaction();
+  const isSendingLocalCurrency = tokenId === 0;
+  const selectedToken = tokens[tokenId];
+  const {
+    sendTransaction,
+    state: localCurrencyState,
+    resetState,
+  } = useSendTransaction();
   const tokenContract = useTokenContract(selectedToken?.address);
   const { state: tokenState, send: transferToken } = useContractFunction(
     tokenContract,
     "transfer"
   );
-  let state, send;
+  let state;
   if (isSendingLocalCurrency) {
-    send = sendTransaction;
     state = localCurrencyState;
   } else {
-    send = transferToken;
     state = tokenState;
   }
 
   useEffect(() => {
+    console.log({ state });
     if (state.status === "Success") {
       setAmount("");
       setLoading(false);
@@ -78,14 +79,17 @@ export default function Page({ causeData }: { causeData: Cause }) {
   }, [network]);
 
   const transferERC20 = async () => {
-    send(
+    transferToken(
       causeData.donation_address,
       utils.parseUnits(amount, selectedToken?.decimals)
     );
   };
 
   const sendLocalCurrency = async () => {
-    send({ to: causeData.donation_address, value: utils.parseEther(amount) });
+    sendTransaction({
+      to: causeData.donation_address,
+      value: utils.parseEther(amount),
+    });
   };
 
   const sendDonation = async () => {
@@ -182,7 +186,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
       </Box>
 
       <Button onClick={sendDonation} w="full" isDisabled={donateBtnDisabled}>
-        Donate
+        {state.status === TRANSACTION_STATUS.pending ? "Please Sign" : "Donate"}
       </Button>
 
       <VStack w="full" py="40px">
