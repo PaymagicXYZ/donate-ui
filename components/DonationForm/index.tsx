@@ -180,19 +180,6 @@ export default function Page({ causeData }: { causeData: Cause }) {
       <Box py="20px" w="full">
         <Divider opacity={0.1} />
       </Box>
-      <HStack
-        w="full"
-        paddingBottom="12px"
-        opacity={donateBtnDisabled ? 0.5 : 1}
-      >
-        <Text opacity={0.5} color="text">
-          Network
-        </Text>
-        <Spacer />
-        <Text opacity={0.9} color="networkSpeed.fast" fontWeight={700}>
-          Fast
-        </Text>
-      </HStack>
 
       <Button onClick={sendDonation} w="full" isDisabled={donateBtnDisabled}>
         Donate
