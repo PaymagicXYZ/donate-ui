@@ -32,7 +32,18 @@ const CauseLink: FC<Props> = ({ slug }) => {
     <HStack w="full" opacity={0.2} spacing={4}>
       <HStack>
         <Text fontFamily="donate" fontSize="link" color="text">
-          ethgives.to
+          <Link
+            _hover={{
+              textDecoration: "none",
+              color: "gray",
+            }}
+            _focus={{
+              boxShadow: "none",
+            }}
+            href="/"
+          >
+            ethgives.to
+          </Link>
         </Text>
         <Text fontWeight={700} fontFamily="donate" fontSize="link" color="text">
           /
