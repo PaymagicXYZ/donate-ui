@@ -10,8 +10,6 @@ import {
 import {
   useTokenList,
   useTokenContract,
-  useLocalCurrency,
-  usePastDonations,
   useTotalFundsRaised,
 } from "../../hooks";
 import { shortenAddress } from "../../utils";
@@ -27,22 +25,24 @@ import {
   HStack,
   Spacer,
   Divider,
-  StatHelpText,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import TokenList from "../TokenList";
 import Badge from "../Badge";
 import Button from "../Button";
 import DonationDetailText from "../DonationDetailText";
+import TransactionModal from "../TransactionModal";
 import { BLOCK_EXPLORERS, TRANSACTION_STATUS } from "../../utils/constants";
 import { useTokenPrice } from "../../hooks";
 
 export default function Page({ causeData }: { causeData: Cause }) {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const [amount, setAmount] = useState("");
   const [tokenId, setTokenId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
   const tokens = useTokenList();
-  const { chainId, account } = useEthers();
+  const toast = useToast();
+  const { chainId } = useEthers();
   const { network } = useNetwork();
   const totalFundsRaised = useTotalFundsRaised(causeData?.donation_address);
 
@@ -58,20 +58,30 @@ export default function Page({ causeData }: { causeData: Cause }) {
     tokenContract,
     "transfer"
   );
-  let state;
+  let transactionState;
   if (isSendingLocalCurrency) {
-    state = localCurrencyState;
+    transactionState = localCurrencyState;
   } else {
-    state = tokenState;
+    transactionState = tokenState;
   }
 
+  const onCloseTransactionModal = () => {
+    setAmount("");
+    onClose();
+  };
+
   useEffect(() => {
-    console.log({ state });
-    if (state.status === "Success") {
-      setAmount("");
-      setLoading(false);
+    if (transactionState.status === TRANSACTION_STATUS.exception) {
+      onClose();
+      toast({
+        title: "Transaction Cancelled",
+        description: transactionState.errorMessage,
+        status: "error",
+        position: "bottom-right",
+      });
+      resetState();
     }
-  }, [state]);
+  }, [transactionState]);
 
   useEffect(() => {
     setTokenId(null);
@@ -93,7 +103,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
   };
 
   const sendDonation = async () => {
-    setLoading(true);
+    onOpen();
     if (isSendingLocalCurrency) sendLocalCurrency();
     else transferERC20();
   };
@@ -108,7 +118,7 @@ export default function Page({ causeData }: { causeData: Cause }) {
     ? balance
     : balance?.toFixed(5);
   const insufficientBalance = balance < Number(amount);
-  const donateBtnDisabled = tokenId === null || !amount || loading;
+  const donateBtnDisabled = tokenId === null || !amount;
 
   const hasMaxBtn = balance?.toString() !== amount && !isSendingLocalCurrency;
   const setMaxAmount = () => {
@@ -136,6 +146,13 @@ export default function Page({ causeData }: { causeData: Cause }) {
 
   return (
     <VStack direction="column" w="full">
+      <TransactionModal
+        transactionState={transactionState}
+        isOpen={isOpen}
+        onClose={onCloseTransactionModal}
+        tokenSymbol={selectedToken?.symbol}
+        amountToDonate={amount}
+      />
       <NetworkSwitch />
       <TokenList selectedToken={selectedToken} onSelect={setTokenId} />
       <InputGroup justifyContent="center" alignContent="center">
@@ -186,7 +203,9 @@ export default function Page({ causeData }: { causeData: Cause }) {
       </Box>
 
       <Button onClick={sendDonation} w="full" isDisabled={donateBtnDisabled}>
-        {state.status === TRANSACTION_STATUS.pending ? "Please Sign" : "Donate"}
+        {transactionState.status === TRANSACTION_STATUS.pending
+          ? "Please Sign"
+          : "Donate"}
       </Button>
 
       <VStack w="full" py="40px">

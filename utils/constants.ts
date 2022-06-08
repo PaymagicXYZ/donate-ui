@@ -162,4 +162,7 @@ export const SUPPORTED_NETWORKS = DEBUG ? TEST_NETWORKS : PROD_NETWORKS;
 
 export const TRANSACTION_STATUS = {
   pending: "PendingSignature",
+  mining: "Mining",
+  success: "Success",
+  exception: "Exception",
 };
