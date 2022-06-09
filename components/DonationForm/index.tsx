@@ -212,10 +212,13 @@ export default function Page({
         <Divider opacity={0.1} />
       </Box>
 
-      <Button onClick={sendDonation} w="full" isDisabled={donateBtnDisabled}>
-        {transactionState.status === TRANSACTION_STATUS.pending
-          ? "Please Sign"
-          : "Donate"}
+      <Button
+        fontWeight={600}
+        onClick={sendDonation}
+        w="full"
+        isDisabled={donateBtnDisabled}
+      >
+        Donate
       </Button>
 
       <VStack w="full" py="40px">
