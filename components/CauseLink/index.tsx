@@ -19,15 +19,7 @@ const CauseLink: FC<Props> = ({ slug }) => {
     );
   });
 
-  const activateSlug = () => {
-    setSlugActive(true);
-    setTimeout(() => {
-      setSlugActive(false);
-    }, 150);
-  };
-
   const copyToClipBoard = async () => {
-    activateSlug();
     await navigator.clipboard.writeText(window.location.href);
     toast({
       title: "Copied",
@@ -69,6 +61,7 @@ const CauseLink: FC<Props> = ({ slug }) => {
           ref={ref}
           fontWeight={700}
           fontFamily="donate"
+          transition="100ms"
           fontSize="link"
           color="text"
           bgGradient={
@@ -80,10 +73,16 @@ const CauseLink: FC<Props> = ({ slug }) => {
           {slug}
         </Text>
       </HStack>
-      <CopyIcon onClick={copyToClipBoard} opacity={0.2} />
+      <CopyIcon
+        onMouseDown={() => setSlugActive(true)}
+        onMouseUp={() => setSlugActive(false)}
+        onClick={copyToClipBoard}
+        opacity={0.2}
+      />
       <Link
+        onMouseDown={() => setSlugActive(true)}
+        onMouseUp={() => setSlugActive(false)}
         href={twitterLink}
-        onClick={activateSlug}
         isExternal
         _focus={{ boxShadow: "none" }}
         opacity={0.2}
