@@ -1,23 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import Account from "../../components/Account";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
 import {
   Container,
   HStack,
-  VStack,
+  Grid,
+  GridItem,
   Box,
-  Spinner,
-  Spacer,
   Text,
   Flex,
-  Switch,
   Center,
 } from "@chakra-ui/react";
-import PageContainer from "../../components/PageContainer/PageContainer";
 import DonationForm from "../../components/DonationForm";
-import Notifications from "../../components/Notifications";
 import History from "../../components/History";
 import CauseLink from "../../components/CauseLink";
 import CauseInfo from "../../components/CauseInfo";
@@ -47,13 +42,18 @@ export default function Page() {
   useEffect(() => {
     if (cause) fetchCause();
   }, [cause]);
+
   return (
-    <HStack w="full" h="full" spacing="0">
-      <Box
-        w="55vw"
+    <Grid
+      templateColumns="repeat(100, 1fr)"
+      w="100vw"
+      h={["full", "full", "full", "100vh"]}
+    >
+      <GridItem
+        colSpan={[100, 100, 100, 55]}
         p="0"
         m="0"
-        h="100vh"
+        // h="100vh"
         bg="rgb(45, 45, 45)"
         overflowY="auto"
         css={{
@@ -80,9 +80,9 @@ export default function Page() {
             />
           </Flex>
         </Container>
-      </Box>
+      </GridItem>
 
-      <Box
+      <GridItem
         overflowY="auto"
         css={{
           "&::-webkit-scrollbar": {
@@ -96,7 +96,7 @@ export default function Page() {
             borderRadius: "24px",
           },
         }}
-        w="45vw"
+        colSpan={[100, 100, 100, 45]}
         p="0"
         m="0"
         h="100vh"
@@ -134,20 +134,7 @@ export default function Page() {
             )}
           </Flex>
         </Container>
-      </Box>
-    </HStack>
-    // <PageContainer>
-    //   {error ? (
-    //     <h1>Cause not found</h1>
-    //   ) : causeData ? (
-    //     <HStack justify="space-around" alignContent="flex-start">
-    //       <History recipentAddress={causeData.donation_address} />
-    //       <DonationForm causeData={causeData} />
-    //     </HStack>
-    //   ) : (
-    //     <Spinner size="lg">Loading</Spinner>
-    //   )}
-    //   <Notifications />
-    // </PageContainer>
+      </GridItem>
+    </Grid>
   );
 }
