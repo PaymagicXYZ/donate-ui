@@ -27,6 +27,8 @@ import {
   Divider,
   useDisclosure,
   useToast,
+  FormControl,
+  FormHelperText,
 } from "@chakra-ui/react";
 import TokenList from "../TokenList";
 import Badge from "../Badge";
@@ -165,32 +167,48 @@ export default function Page({
       />
       <NetworkSwitch />
       <TokenList selectedToken={selectedToken} onSelect={setTokenId} />
-      <InputGroup justifyContent="center" alignContent="center">
-        <Input
-          my="8px"
-          bg="input.active"
-          border="0"
-          value={amount}
-          isDisabled={!selectedToken}
-          onChange={handleChangeAmount}
-          h="input"
-          color="text"
-          opacity={0.9}
-          placeholder="Amount"
-          _disabled={{
-            bg: "input.inactive",
-            opacity: 0.4,
-          }}
-          _hover={{
-            bg: "input.hover",
-          }}
-        />
-        <InputRightElement w="fit-content" my="16px" mx="14px">
-          <Text fontSize="small" opacity={0.4} color="text">
-            {amount && formatedDollarValue} - USD
-          </Text>
-        </InputRightElement>
-      </InputGroup>
+      <FormControl isInvalid={insufficientBalance}>
+        <InputGroup justifyContent="center" alignContent="center">
+          <Input
+            _focus={{
+              boxShadow: "none",
+            }}
+            errorBorderColor="error"
+            my="8px"
+            bg="input.active"
+            border="0"
+            value={amount}
+            isDisabled={!selectedToken}
+            onChange={handleChangeAmount}
+            h="input"
+            color="text"
+            opacity={0.9}
+            placeholder="Amount"
+            _disabled={{
+              bg: "input.inactive",
+              opacity: 0.4,
+            }}
+            _hover={{
+              bg: "input.hover",
+            }}
+          />
+          <InputRightElement w="fit-content" my="16px" mx="14px">
+            <Text fontSize="small" opacity={0.4} color="text" lineHeight="16px">
+              {amount && formatedDollarValue} - USD
+            </Text>
+          </InputRightElement>
+        </InputGroup>
+        {insufficientBalance && (
+          <FormHelperText
+            marginTop="0px"
+            fontWeight={700}
+            fontSize="pastDonation"
+            color="error"
+          >
+            Amount entered is greater than wallet balance.
+          </FormHelperText>
+        )}
+      </FormControl>
       <HStack w="full" opacity={selectedToken ? 1 : 0.5}>
         <Text color="text" fontSize="sm" opacity={0.4}>
           Available: {formattedBalance ?? "-"}

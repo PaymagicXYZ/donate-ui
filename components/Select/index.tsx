@@ -39,7 +39,13 @@ export default function Select(props: Props) {
         <Spacer />
         <ChevronDownIcon color="text" fontSize={23} />
       </InputContainer>
-      <Text w="full" fontWeight={700} fontSize="pastDonation" color="error">
+      <Text
+        w="full"
+        fontWeight={700}
+        fontSize="pastDonation"
+        color="error"
+        lineHeight="16px"
+      >
         {errorMessage}
       </Text>
     </Box>
