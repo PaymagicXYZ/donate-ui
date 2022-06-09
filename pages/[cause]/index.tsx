@@ -102,8 +102,8 @@ export default function Page() {
         h="100vh"
         bg="rightPannel"
       >
-        <Container my="60px" px="100px" h="full">
-          <Flex h="70vh" m="0" p="0" align="flex-start" direction="column">
+        <Container my="60px" px="100px" h="calc(100% - 120px)">
+          <Flex h="full" m="0" p="0" align="flex-start" direction="column">
             <HStack w="full" justifyContent="flex-end">
               {process.env.NEXT_PUBLIC_DEBUG && <DevModeSwitch />}
               <Account />
@@ -111,8 +111,12 @@ export default function Page() {
             {donationMade ? (
               <DonationSuccess />
             ) : (
-              <>
-                <Box marginBottom="16px" marginTop="45px">
+              <Center w="full" h="full" flexDirection="column">
+                <Box
+                  marginBottom="16px"
+                  marginTop="45px"
+                  alignSelf="flex-start"
+                >
                   <Text
                     fontWeight={700}
                     fontFamily="donate"
@@ -126,7 +130,7 @@ export default function Page() {
                   causeData={causeData}
                   setDonationMade={setDonationMade}
                 />
-              </>
+              </Center>
             )}
           </Flex>
         </Container>
