@@ -105,7 +105,7 @@ export default function Page() {
         <Container my="60px" px="100px" h="full">
           <Flex h="70vh" m="0" p="0" align="flex-start" direction="column">
             <HStack w="full" justifyContent="flex-end">
-              <DevModeSwitch />
+              {process.env.NEXT_PUBLIC_DEBUG && <DevModeSwitch />}
               <Account />
             </HStack>
             {donationMade ? (
