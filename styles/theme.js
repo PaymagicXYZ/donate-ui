@@ -32,6 +32,7 @@ export const theme = extendTheme({
     pastDonation: "14px",
   },
   colors: {
+    twitter: "#00ACEE",
     success: "#58C573",
     error: "#F6677C",
     modalList: {

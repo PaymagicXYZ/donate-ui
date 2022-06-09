@@ -13,6 +13,7 @@ import {
   Text,
   Flex,
   Switch,
+  Center,
 } from "@chakra-ui/react";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import DonationForm from "../../components/DonationForm";
@@ -21,13 +22,15 @@ import History from "../../components/History";
 import CauseLink from "../../components/CauseLink";
 import CauseInfo from "../../components/CauseInfo";
 import { Cause } from "../../types/cause";
-import TestNetSwitch from "../../components/TestNetSwitch";
+import DevModeSwitch from "../../components/DevModeSwitch";
+import DonationSuccess from "../../components/DonationSuccess";
 
 export default function Page() {
   const supabase = useContext(SupabaseContext);
   const {
     query: { cause },
   } = useRouter();
+  const [donationMade, setDonationMade] = useState(false);
   const [causeData, setCauseData] = useState<Cause>();
   const [error, setError] = useState(false);
   const fetchCause = async () => {
@@ -99,23 +102,32 @@ export default function Page() {
         h="100vh"
         bg="rightPannel"
       >
-        <Container my="60px" px="100px">
-          <Flex h="50vh" m="0" p="0" align="flex-start" direction="column">
+        <Container my="60px" px="100px" h="full">
+          <Flex h="70vh" m="0" p="0" align="flex-start" direction="column">
             <HStack w="full" justifyContent="flex-end">
-              <TestNetSwitch />
+              <DevModeSwitch />
               <Account />
             </HStack>
-            <Box marginBottom="16px" marginTop="45px">
-              <Text
-                fontWeight={700}
-                fontFamily="donate"
-                color="text"
-                fontSize="donate"
-              >
-                Donate
-              </Text>
-            </Box>
-            <DonationForm causeData={causeData} />
+            {donationMade ? (
+              <DonationSuccess />
+            ) : (
+              <>
+                <Box marginBottom="16px" marginTop="45px">
+                  <Text
+                    fontWeight={700}
+                    fontFamily="donate"
+                    color="text"
+                    fontSize="donate"
+                  >
+                    Donate
+                  </Text>
+                </Box>
+                <DonationForm
+                  causeData={causeData}
+                  setDonationMade={setDonationMade}
+                />
+              </>
+            )}
           </Flex>
         </Container>
       </Box>

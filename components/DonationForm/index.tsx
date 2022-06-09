@@ -36,7 +36,13 @@ import TransactionModal from "../TransactionModal";
 import { BLOCK_EXPLORERS, TRANSACTION_STATUS } from "../../utils/constants";
 import { useTokenPrice } from "../../hooks";
 
-export default function Page({ causeData }: { causeData: Cause }) {
+export default function Page({
+  causeData,
+  setDonationMade,
+}: {
+  causeData: Cause;
+  setDonationMade: (wasMade: boolean) => void;
+}) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [amount, setAmount] = useState("");
   const [tokenId, setTokenId] = useState<number | null>(null);
@@ -79,6 +85,10 @@ export default function Page({ causeData }: { causeData: Cause }) {
         status: "error",
         position: "bottom-right",
       });
+      resetState();
+    }
+    if (transactionState.status === TRANSACTION_STATUS.success) {
+      setDonationMade(true);
       resetState();
     }
   }, [transactionState]);

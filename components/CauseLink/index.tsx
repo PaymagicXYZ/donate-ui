@@ -20,16 +20,15 @@ const CauseLink: FC<Props> = ({ slug }) => {
   const copyToClipBoard = async () => {
     await navigator.clipboard.writeText(window.location.href);
     toast({
-      title: "Copied.",
+      title: "Copied",
       description: "The link was copied to your clipboard.",
       status: "success",
       position: "bottom-left",
-      duration: 1000,
     });
   };
 
   return (
-    <HStack w="full" opacity={0.2} spacing={4}>
+    <HStack w="full" opacity={0.2} spacing={4} transition="200ms">
       <HStack>
         <Text fontFamily="donate" fontSize="link" color="text">
           <Link
@@ -53,7 +52,7 @@ const CauseLink: FC<Props> = ({ slug }) => {
         </Text>
       </HStack>
       <CopyIcon onClick={copyToClipBoard} />
-      <Link href={twitterLink} isExternal>
+      <Link href={twitterLink} isExternal _focus={{ boxShadow: "none" }}>
         <TwitterIcon />
       </Link>
     </HStack>
