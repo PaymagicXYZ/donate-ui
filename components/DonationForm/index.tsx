@@ -130,12 +130,9 @@ export default function Page({
     ? balance
     : balance?.toFixed(5);
   const insufficientBalance = balance < Number(amount);
-  const donateBtnDisabled = tokenId === null || !amount;
+  const donateBtnDisabled = tokenId === null || !amount || insufficientBalance;
 
   const hasMaxBtn = balance?.toString() !== amount && !isSendingLocalCurrency;
-  const setMaxAmount = () => {
-    if (hasMaxBtn) setAmount(balance.toString());
-  };
   const getPercentAmountHandler = (percent: number) => () => {
     const newAmount = balance * (percent / 100);
     setAmount(newAmount.toString());
