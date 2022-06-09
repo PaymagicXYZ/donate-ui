@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 export const DevModeContext = createContext({
   isDevMode: false,
-  setDevMode: () => {},
+  setDevMode: (isDevMode: boolean) => {},
 });
 
 export const useDevMode = () => {
