@@ -107,11 +107,11 @@ export interface Network {
   logo: StaticImageData;
 }
 
-interface NetworkData {
+export interface NetworkData {
   [key: number]: Network;
 }
 
-const PROD_NETWORKS: NetworkData = {
+export const PROD_NETWORKS: NetworkData = {
   1: {
     name: "Ethereum",
     logo: ethereumLogo,
@@ -134,7 +134,7 @@ const PROD_NETWORKS: NetworkData = {
   },
 };
 
-const TEST_NETWORKS = {
+export const TEST_NETWORKS = {
   42: {
     name: "Kovan",
     logo: ethereumLogo,
@@ -157,8 +157,6 @@ export const TOKEN_LISTS: { [chainID: string]: string } = {
 };
 
 export const DEBUG = true;
-
-export const SUPPORTED_NETWORKS = DEBUG ? TEST_NETWORKS : PROD_NETWORKS;
 
 export const TRANSACTION_STATUS = {
   pending: "PendingSignature",

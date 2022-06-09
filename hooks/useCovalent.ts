@@ -3,11 +3,8 @@ import { useEthers, useBlockNumber } from "@usedapp/core";
 import { utils } from "ethers";
 import _ from "lodash";
 import axios from "axios";
-import {
-  COVALENT_API_KEY,
-  CovalentNetworkForID,
-  SUPPORTED_NETWORKS,
-} from "../utils/constants";
+import { COVALENT_API_KEY } from "../utils/constants";
+import { useSupportedNetworks } from "./useSupportedNetworks";
 
 export interface CovalentResponse {
   error: boolean;
@@ -137,10 +134,11 @@ const filterDonations = (
 
 export function usePastDonations(donationAddress: string) {
   const [pastDonations, setPastDonations] = useState<Donation[]>([]);
+  const supportedNetworks = useSupportedNetworks();
 
   const getAllDonations = async () => {
     const transactionRequests: Promise<CovalentResponse>[] = Object.keys(
-      SUPPORTED_NETWORKS
+      supportedNetworks
     ).map((chainId) => get("transactions_v2")(donationAddress, chainId));
     const responses = await Promise.all(transactionRequests);
     const itemsFromAllChains: TransactionData[] = responses.reduce(
@@ -204,11 +202,12 @@ export function useCovalent() {
 }
 
 export function useTotalFundsRaised(donationAddress: string) {
+  const supportedNetworks = useSupportedNetworks();
   const [total, setTotal] = useState(0);
   const blockNum = useBlockNumber();
   const getBalances = async () => {
     const transactionRequests: Promise<CovalentResponse>[] = Object.keys(
-      SUPPORTED_NETWORKS
+      supportedNetworks
     ).map((chainId) => get("balances_v2")(donationAddress, chainId));
     const responses = await Promise.all(transactionRequests);
     const itemsFromAllChains = responses.reduce((allItems, response) => {

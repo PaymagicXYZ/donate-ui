@@ -12,6 +12,7 @@ import {
   Spacer,
   Text,
   Flex,
+  Switch,
 } from "@chakra-ui/react";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import DonationForm from "../../components/DonationForm";
@@ -20,6 +21,7 @@ import History from "../../components/History";
 import CauseLink from "../../components/CauseLink";
 import CauseInfo from "../../components/CauseInfo";
 import { Cause } from "../../types/cause";
+import TestNetSwitch from "../../components/TestNetSwitch";
 
 export default function Page() {
   const supabase = useContext(SupabaseContext);
@@ -100,6 +102,7 @@ export default function Page() {
         <Container my="60px" px="100px">
           <Flex h="50vh" m="0" p="0" align="flex-start" direction="column">
             <HStack w="full" justifyContent="flex-end">
+              <TestNetSwitch />
               <Account />
             </HStack>
             <Box marginBottom="16px" marginTop="45px">

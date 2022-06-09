@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { Spinner, useDisclosure, Box } from "@chakra-ui/react";
 import { useNetwork, useEthers } from "@usedapp/core";
-import { DEBUG, Network, SUPPORTED_NETWORKS } from "../../utils/constants";
-import { useIsSupportedNetwork } from "../../hooks";
+import { Network } from "../../utils/constants";
+import {
+  useDevMode,
+  useIsSupportedNetwork,
+  useSupportedNetworks,
+} from "../../hooks";
 
 import Select from "../Select";
 import ModalList from "../ModalList";
 import { useSwitchNetwork } from "../../hooks";
 
-const defaultNetworkId = DEBUG ? 42 : 1;
-
 const NetworkMenu = () => {
+  const { isDevMode } = useDevMode();
   const isSupportedNetwork = useIsSupportedNetwork();
   const [networkLoading, setNetworkLoading] = useState<string>();
   const { network } = useNetwork();
@@ -18,12 +21,15 @@ const NetworkMenu = () => {
   const { account } = useEthers();
   const { switchNetwork, isLoading } = useSwitchNetwork();
   const [selectedNetwork, setSelectedNetwork] = useState<Network>();
+  const supportedNetworks = useSupportedNetworks();
+
+  const defaultNetworkId = isDevMode ? 42 : 1;
 
   const handleOfflineChange = (chainId: number) => {
-    setSelectedNetwork(SUPPORTED_NETWORKS[chainId]);
+    setSelectedNetwork(supportedNetworks[chainId]);
   };
 
-  const networkOptions = Object.entries(SUPPORTED_NETWORKS).map(
+  const networkOptions = Object.entries(supportedNetworks).map(
     ([chainId, chainInfo]) => {
       const adornment =
         chainId === networkLoading && isLoading ? (
@@ -52,8 +58,8 @@ const NetworkMenu = () => {
       setSelectedNetwork(null);
     } else {
       const networkData =
-        SUPPORTED_NETWORKS[network.chainId] ||
-        SUPPORTED_NETWORKS[defaultNetworkId];
+        supportedNetworks[network.chainId] ||
+        supportedNetworks[defaultNetworkId];
       setSelectedNetwork(networkData);
     }
   }, [network, isSupportedNetwork]);
