@@ -1,7 +1,7 @@
 import { Switch, FormControl, FormLabel } from "@chakra-ui/react";
 import { useDevMode } from "../../hooks";
 
-export default () => {
+const DevModeSwitch = () => {
   const { isDevMode, setDevMode } = useDevMode();
   return (
     <FormControl
@@ -21,3 +21,5 @@ export default () => {
     </FormControl>
   );
 };
+
+export default DevModeSwitch;
