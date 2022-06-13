@@ -1,4 +1,4 @@
-import { Text, HStack, Link, useToast } from "@chakra-ui/react";
+import { Box, Text, HStack, Link, useToast } from "@chakra-ui/react";
 import { useState, FC, useEffect, useRef } from "react";
 import CopyIcon from "./CopyIcon";
 import TwitterIcon from "./TwitterIcon";
@@ -32,22 +32,46 @@ const CauseLink: FC<Props> = ({ slug }) => {
   return (
     <HStack w="full" spacing={4}>
       <HStack>
-        <Text fontFamily="donate" fontSize="link" color="text">
-          <Link
+        <Link
+          fontFamily="donate"
+          fontSize="link"
+          position="relative"
+          _focus={{
+            boxShadow: "none",
+          }}
+          href="/"
+        >
+          <Text opacity={0} color="text">
+            ethgives.to
+          </Text>
+          <Text
             _hover={{
-              bgGradient: "linear(90deg, #F46B47 0%, #F763B0 100%);",
-              bgClip: "text",
-              opacity: 1,
+              opacity: 0,
             }}
-            _focus={{
-              boxShadow: "none",
-            }}
+            position="absolute"
+            top={0}
+            left={0}
+            color="text"
             opacity={0.2}
-            href="/"
           >
             ethgives.to
-          </Link>
-        </Text>
+          </Text>
+          <Text
+            bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+            bgClip="text"
+            position="absolute"
+            top={0}
+            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
+            transitionDuration="200ms"
+            left={0}
+            _hover={{
+              opacity: 1,
+            }}
+            opacity={0}
+          >
+            ethgives.to
+          </Text>
+        </Link>
         <Text
           opacity={0.2}
           fontWeight={700}
@@ -57,11 +81,42 @@ const CauseLink: FC<Props> = ({ slug }) => {
         >
           /
         </Text>
-        <Text
+        <Box position="relative" fontFamily="donate" fontSize="link">
+          <Text opacity={0} color="text">
+            {slug}
+          </Text>
+          <Text
+            fontWeight={700}
+            _hover={{
+              opacity: 0,
+            }}
+            position="absolute"
+            top={0}
+            left={0}
+            color="text"
+            opacity={slugActive ? 0 : 0.2}
+            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
+            transitionDuration="200ms"
+          >
+            {slug}
+          </Text>
+          <Text
+            fontWeight={700}
+            bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+            bgClip="text"
+            position="absolute"
+            top={0}
+            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
+            transitionDuration="200ms"
+            left={0}
+            opacity={slugActive ? 1 : 0}
+          >
+            {slug}
+          </Text>
+          {/* <Text
           ref={ref}
           fontWeight={700}
           fontFamily="donate"
-          transition="100ms"
           fontSize="link"
           color="text"
           bgGradient={
@@ -69,19 +124,21 @@ const CauseLink: FC<Props> = ({ slug }) => {
           }
           bgClip={slugActive ? "text" : ""}
           opacity={slugActive ? 1 : 0.2}
+          // transitionTimingFunction="cubic-bezier(0, 0, .58, 1)"
         >
           {slug}
-        </Text>
+        </Text> */}
+        </Box>
       </HStack>
       <CopyIcon
-        onMouseDown={() => setSlugActive(true)}
-        onMouseUp={() => setSlugActive(false)}
+        onMouseEnter={() => setSlugActive(true)}
+        onMouseLeave={() => setSlugActive(false)}
         onClick={copyToClipBoard}
         opacity={0.2}
       />
       <Link
-        onMouseDown={() => setSlugActive(true)}
-        onMouseUp={() => setSlugActive(false)}
+        onMouseEnter={() => setSlugActive(true)}
+        onMouseLeave={() => setSlugActive(false)}
         href={twitterLink}
         isExternal
         _focus={{ boxShadow: "none" }}
