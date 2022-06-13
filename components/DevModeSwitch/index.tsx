@@ -10,11 +10,11 @@ const DevModeSwitch = () => {
       justifyContent="center"
       w="15"
     >
-      <FormLabel htmlFor="email-alerts" mb="0" color="text">
+      <FormLabel htmlFor="dev-mode-switch" mb="0" color="text">
         Use testnets?
       </FormLabel>
       <Switch
-        id="email-alerts"
+        id="dev-mode-switch"
         isChecked={isDevMode}
         onChange={(e) => setDevMode(e.target.checked)}
       />
