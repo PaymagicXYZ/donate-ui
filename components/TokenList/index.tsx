@@ -73,15 +73,31 @@ export default function TokenList(props: Props) {
               border="0"
               h="input"
               marginTop="24px"
+              _placeholder={{
+                color: "input.placeholder",
+              }}
               opacity={0.3}
               _focus={{
-                opacity: 1,
+                opacity: 0.1,
               }}
               placeholder="Search name or paste address"
               bg="modal.input"
             />
           </ModalHeader>
-          <ModalBody overflowY="scroll" maxH="60vh" px="0px">
+          <ModalBody
+            overflowY="scroll"
+            maxH="60vh"
+            px="0px"
+            css={{
+              "&::-webkit-scrollbar": {
+                width: "0px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "#ffffff21",
+                borderRadius: "24px",
+              },
+            }}
+          >
             {tokens.map((token, i) => (
               <HStack
                 key={token.address}

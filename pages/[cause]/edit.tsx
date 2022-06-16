@@ -70,7 +70,6 @@ const EditCause = () => {
         position: "bottom-left",
       });
     }
-    console.log({ data, error });
     setLoading(false);
   };
   return (

@@ -211,7 +211,7 @@ export function useTotalFundsRaised(donationAddress: string) {
     ).map((chainId) => get("balances_v2")(donationAddress, chainId));
     const responses = await Promise.all(transactionRequests);
     const itemsFromAllChains = responses.reduce((allItems, response) => {
-      return allItems.concat(response.data.items);
+      return allItems.concat(response?.data?.items);
     }, []);
     const newTotal = itemsFromAllChains.reduce(
       (total, tokenData) => (total += tokenData.quote),

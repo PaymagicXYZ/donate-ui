@@ -28,7 +28,7 @@ const CauseInfo: FC<Props> = ({ causeData }) => {
       <Button
         marginTop="24px"
         opacity={0.9}
-        color="text"
+        color="learnMore.text"
         _hover={{
           bg: "learnMore.hover",
         }}

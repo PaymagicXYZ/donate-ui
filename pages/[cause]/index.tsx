@@ -3,6 +3,7 @@ import Account from "../../components/Account";
 import { useRouter } from "next/router";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
 import {
+  Spacer,
   Container,
   HStack,
   Grid,
@@ -11,7 +12,12 @@ import {
   Text,
   Flex,
   Center,
+  Switch,
+  FormControl,
+  FormLabel,
+  useColorMode,
 } from "@chakra-ui/react";
+import { useConfig } from "../../hooks/useConfig";
 import DonationForm from "../../components/DonationForm";
 import History from "../../components/History";
 import CauseLink from "../../components/CauseLink";
@@ -22,6 +28,13 @@ import DonationSuccess from "../../components/DonationSuccess";
 
 export default function Page() {
   const supabase = useContext(SupabaseContext);
+  const { toggleColorMode, colorMode } = useColorMode();
+  const { isDarkMode, setDarkMode: setMode } = useConfig();
+  console.log({ colorMode });
+  const toggleDarkMode = () => {
+    setMode(!isDarkMode);
+    // toggleColorMode();
+  };
   const {
     query: { cause },
   } = useRouter();
@@ -54,7 +67,7 @@ export default function Page() {
         p="0"
         m="0"
         // h="100vh"
-        bg="rgb(45, 45, 45)"
+        bg="leftPanel"
         overflowY="auto"
         css={{
           "&::-webkit-scrollbar": {
@@ -100,10 +113,16 @@ export default function Page() {
         p="0"
         m="0"
         h="100vh"
-        bg="rightPannel"
+        bg="rightPanel"
       >
         <Container my="60px" px="100px" h="calc(100% - 120px)">
-          <Flex h="full" m="0" p="0" align="flex-start" direction="column">
+          <Flex
+            h="full"
+            marginBottom="10px"
+            p="0"
+            align="flex-start"
+            direction="column"
+          >
             <HStack w="full" justifyContent="flex-end">
               {process.env.NEXT_PUBLIC_DEBUG && <DevModeSwitch />}
               <Account />
@@ -132,6 +151,21 @@ export default function Page() {
                 />
               </Center>
             )}
+            <FormControl
+              paddingBottom="10px"
+              display="flex"
+              alignContent="center"
+              justifyContent="flex-end"
+            >
+              <FormLabel fontSize="small" opacity={0.3} color="text">
+                Darkmode
+              </FormLabel>
+              <Switch
+                onChange={toggleDarkMode}
+                isChecked={isDarkMode}
+                colorScheme="twitter"
+              />
+            </FormControl>
           </Flex>
         </Container>
       </GridItem>

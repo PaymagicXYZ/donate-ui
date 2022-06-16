@@ -181,6 +181,10 @@ export default function Page({
             color="text"
             opacity={0.9}
             placeholder="Amount"
+            _placeholder={{
+              color: "text",
+              opacity: 0.6,
+            }}
             _disabled={{
               bg: "input.inactive",
               opacity: 0.4,
@@ -214,17 +218,17 @@ export default function Page({
         {[10, 25, 50, 100].map((percent) => (
           <Badge
             key={percent}
-            disabled={false}
+            disabled={!selectedToken}
             onClick={getPercentAmountHandler(percent)}
           >
-            <Text fontSize="small">
+            <Text fontSize="small" color="text">
               {percent === 100 ? "MAX" : `${percent}%`}
             </Text>
           </Badge>
         ))}
       </HStack>
       <Box py="20px" w="full">
-        <Divider opacity={0.1} />
+        <Divider bg="divider" opacity={0.1} />
       </Box>
 
       <Button
@@ -236,7 +240,7 @@ export default function Page({
         Donate
       </Button>
 
-      <VStack w="full" py="40px">
+      <VStack w="full" py="20px">
         <HStack w="full">
           <DonationDetailText opacity={0.5} color="text">
             Donation wallet

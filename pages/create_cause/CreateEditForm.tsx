@@ -51,7 +51,6 @@ const CreateEditForm = () => {
     };
 
     setLoading(true);
-    console.log(supabase.auth);
     const { data, error } = await supabase
       .from("cause")
       .insert(causeToCreate)

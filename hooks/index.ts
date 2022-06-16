@@ -7,5 +7,5 @@ export * from "./useTotalFundsRaised";
 export * from "./useWalletConnectors";
 export * from "./useSwitchNetwork";
 export * from "./useIsSupportedNetwork";
-export * from "./useDevMode";
+export * from "./useConfig";
 export * from "./useSupportedNetworks";

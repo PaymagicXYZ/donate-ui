@@ -14,16 +14,15 @@ const BadgeComponent: FC<Props> = ({ onClick, disabled, children }) => {
       borderRadius="input"
       color="text"
       transition="200ms"
-      bg="badge.selected"
-      opacity={0.5}
-      _disabled={{
-        opacity: 0.25,
-      }}
-      _hover={{
-        cursor: "pointer",
-        opacity: 1,
-      }}
-      onClick={onClick}
+      bg="badge"
+      opacity={disabled ? 0.25 : 0.5}
+      _hover={
+        !disabled && {
+          cursor: "pointer",
+          opacity: 0.9,
+        }
+      }
+      onClick={disabled ? () => {} : onClick}
     >
       {children}
     </Badge>

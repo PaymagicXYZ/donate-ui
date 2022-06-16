@@ -3,7 +3,7 @@ import { Spinner, useDisclosure, Box } from "@chakra-ui/react";
 import { useNetwork, useEthers } from "@usedapp/core";
 import { Network } from "../../utils/constants";
 import {
-  useDevMode,
+  useConfig,
   useIsSupportedNetwork,
   useSupportedNetworks,
 } from "../../hooks";
@@ -13,7 +13,7 @@ import ModalList from "../ModalList";
 import { useSwitchNetwork } from "../../hooks";
 
 const NetworkMenu = () => {
-  const { isDevMode } = useDevMode();
+  const { isDevMode } = useConfig();
   const isSupportedNetwork = useIsSupportedNetwork();
   const [networkLoading, setNetworkLoading] = useState<string>();
   const { network } = useNetwork();

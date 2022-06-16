@@ -73,7 +73,7 @@ export default function ConnectWallet() {
 
   return (
     <>
-      <Button onClick={onOpen} borderRadius="accountBtn">
+      <Button onClick={onOpen} borderRadius="accountBtn" fontWeight={700}>
         Connect Wallet
       </Button>
       <ModalList

@@ -36,7 +36,6 @@ const CreatePage = () => {
   useEffect(() => {
     if (isSignedIn) fetchUserCauses();
   }, [isSignedIn]);
-  console.log("cause", causes);
   return (
     <Layout>
       {isSignedIn ? (

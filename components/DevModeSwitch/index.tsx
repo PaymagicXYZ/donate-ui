@@ -1,8 +1,8 @@
 import { Switch, FormControl, FormLabel } from "@chakra-ui/react";
-import { useDevMode } from "../../hooks";
+import { useConfig } from "../../hooks";
 
 const DevModeSwitch = () => {
-  const { isDevMode, setDevMode } = useDevMode();
+  const { isDevMode, setDevMode } = useConfig();
   return (
     <FormControl
       display="flex"

@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useDevMode } from "./useDevMode";
+import { useConfig } from "./useConfig";
 import { TEST_NETWORKS, PROD_NETWORKS, NetworkData } from "../utils/constants";
 
 export const useSupportedNetworks = () => {
-  const { isDevMode } = useDevMode();
+  const { isDevMode } = useConfig();
   const [supportedNetworks, setSupportedNetworks] =
     useState<NetworkData>(PROD_NETWORKS);
 
   useEffect(() => {
-    console.log("CHAING");
     setSupportedNetworks(isDevMode ? TEST_NETWORKS : PROD_NETWORKS);
   }, [isDevMode]);
 

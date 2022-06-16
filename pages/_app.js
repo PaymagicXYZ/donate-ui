@@ -3,16 +3,20 @@ import "@fontsource/poppins";
 import "./styles.css";
 
 import { useState } from "react";
-import { ChakraProvider } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 import Head from "next/head";
-import { theme } from "../styles/theme";
+import { lightTheme, darkTheme } from "../styles/theme";
 import Script from "next/script";
 import { appWithTranslation } from "next-i18next";
 
 import { Mainnet, DAppProvider } from "@usedapp/core";
 import { SupabaseProvider } from "../lib/SupabaseProvider";
-import { DevModeContext } from "../hooks";
+import { ConfigContext } from "../hooks";
 import { getDefaultProvider } from "ethers";
 
 const config = {
@@ -24,15 +28,20 @@ const config = {
 
 function MyApp({ Component, pageProps }) {
   const [isDevMode, setDevMode] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(true);
+  const theme = isDarkMode ? darkTheme : lightTheme;
   return (
     <ChakraProvider theme={theme}>
       <DAppProvider config={{}}>
         <SupabaseProvider>
-          <DevModeContext.Provider value={{ isDevMode, setDevMode }}>
+          <ConfigContext.Provider
+            value={{ isDevMode, setDevMode, isDarkMode, setDarkMode }}
+          >
             <Head>
               <title>Eth Gives</title>
               <link rel="icon" href="/favicon.ico" />
             </Head>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <Script id="google-analytics" strategy="afterInteractive">
               {`
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -46,7 +55,7 @@ function MyApp({ Component, pageProps }) {
             </Script>
 
             <Component {...pageProps} />
-          </DevModeContext.Provider>
+          </ConfigContext.Provider>
         </SupabaseProvider>
       </DAppProvider>
     </ChakraProvider>

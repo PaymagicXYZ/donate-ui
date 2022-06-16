@@ -1,7 +1,7 @@
 import { Spacer, HStack, Text, Flex, Box, Link } from "@chakra-ui/react";
 import Address from "./Address";
 import { format } from "timeago.js";
-import { usePastDonations } from "../../hooks";
+import { usePastDonations, useConfig } from "../../hooks";
 import ExternalLink from "../Icons/ExternalLink";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 const History = (props: Props) => {
   const pastDonations = usePastDonations(props.recipentAddress);
+  const { isDarkMode } = useConfig();
   return (
     <Flex
       color="text"
@@ -61,7 +62,8 @@ const History = (props: Props) => {
                 href={`https://kovan.etherscan.io/tx/${donation.transactionHash}`}
                 isExternal
               >
-                {format(donation.time)} <ExternalLink />
+                {format(donation.time)}{" "}
+                <ExternalLink color={isDarkMode ? "white" : "black"} />
               </Link>
             </Text>
           </HStack>
