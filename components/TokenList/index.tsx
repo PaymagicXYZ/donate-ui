@@ -1,10 +1,14 @@
+import { useState, useEffect } from "react";
 import _ from "lodash";
+import Fuse from "fuse.js";
+import { useEthers } from "@usedapp/core";
 import {
   useTokenList,
   useLocalCurrency,
   useIsSupportedNetwork,
   UserTokenData,
   LocalCurrencyData,
+  useFilteredTokens,
 } from "../../hooks";
 import {
   IconButton,
@@ -21,10 +25,12 @@ import {
   Text,
   useDisclosure,
   Input,
+  Center,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+
 import Select from "../Select";
-import { useEthers } from "@usedapp/core";
+import SearchBar from "./SearchBar";
 
 interface Props {
   onSelect: (tokenId: number) => void;
@@ -36,11 +42,36 @@ export default function TokenList(props: Props) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const isSupportedNetwork = useIsSupportedNetwork();
   const { account } = useEthers();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredTokens, setFilteredTokens] = useState([]);
   const tokens = useTokenList();
-  const localCurrency = useLocalCurrency();
+  const fuse = new Fuse(tokens, {
+    keys: ["name", "address", "symbol"],
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    const formattedTokens = tokens.map((token, i) => ({
+      item: token,
+      refIndex: i,
+    }));
+    setFilteredTokens(formattedTokens);
+  }, [tokens]);
+
+  useEffect(() => {
+    let searchResults = fuse.search(searchTerm);
+    if (!searchResults.length && !searchTerm.length) {
+      searchResults = tokens.map((token, i) => ({ item: token, refIndex: i }));
+    }
+    setFilteredTokens(searchResults);
+  }, [searchTerm]);
 
   const handleSelect = (tokenId: number) => {
     onSelect(tokenId);
+    handleClose();
+  };
+  const handleClose = () => {
+    setSearchTerm("");
     onClose();
   };
 
@@ -53,7 +84,7 @@ export default function TokenList(props: Props) {
         placeHolderText="Pick a token"
         onClick={onOpen}
       />
-      <Modal isOpen={isOpen} onClose={onClose} w="modal.width">
+      <Modal isOpen={isOpen} onClose={handleClose} w="modal.width">
         <ModalOverlay blur="2px" filter="auto" />{" "}
         <ModalContent bg="modal.active">
           <ModalHeader p="24px" color="text">
@@ -69,20 +100,7 @@ export default function TokenList(props: Props) {
                 icon={<CloseIcon fontSize={10} />}
               />
             </HStack>
-            <Input
-              border="0"
-              h="input"
-              marginTop="24px"
-              _placeholder={{
-                color: "input.placeholder",
-              }}
-              opacity={0.3}
-              _focus={{
-                opacity: 0.1,
-              }}
-              placeholder="Search name or paste address"
-              bg="modal.input"
-            />
+            <SearchBar setSearchTerm={setSearchTerm} />
           </ModalHeader>
           <ModalBody
             overflowY="scroll"
@@ -98,15 +116,17 @@ export default function TokenList(props: Props) {
               },
             }}
           >
-            {tokens.map((token, i) => (
+            {filteredTokens.map(({ item, refIndex }) => (
               <HStack
-                key={token.address}
+                key={item.address}
                 px="20px"
                 py="10px"
                 transitionDuration="100ms"
-                borderBottom={i < tokens.length - 1 ? "1px" : ""}
-                borderColor={i < tokens.length - 1 ? "modal.border" : ""}
-                onClick={() => handleSelect(i)}
+                borderBottom={refIndex < filteredTokens.length - 1 ? "1px" : ""}
+                borderColor={
+                  refIndex < filteredTokens.length - 1 ? "modal.border" : ""
+                }
+                onClick={() => handleSelect(refIndex)}
                 _hover={{
                   background: "modal.hover",
                   cursor: "pointer",
@@ -115,26 +135,33 @@ export default function TokenList(props: Props) {
                 <Image
                   marginRight="5px"
                   boxSize="25px"
-                  src={token.logoURI}
+                  src={item.logoURI}
                   borderRadius="100px"
-                  // alt={token.symbol}
+                  // alt={item.symbol}
                 />
                 <VStack alignItems="start" spacing="0px">
                   <Text color="text" fontSize="md">
-                    {token.symbol}
+                    {item.symbol}
                   </Text>
                   <Text color="text" fontSize="xs">
-                    {token.name}
+                    {item.name}
                   </Text>
                 </VStack>
                 <Spacer />
                 <Text color="text">
-                  {!token.balance || Number.isInteger(token.balance)
-                    ? token.balance
-                    : token.balance.toFixed(5)}
+                  {!item.balance || Number.isInteger(item.balance)
+                    ? item.balance
+                    : item.balance.toFixed(5)}
                 </Text>
               </HStack>
             ))}
+            {filteredTokens.length === 0 && (
+              <Center>
+                <HStack px="20px" py="10px">
+                  <Text>No results found.</Text>
+                </HStack>
+              </Center>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
