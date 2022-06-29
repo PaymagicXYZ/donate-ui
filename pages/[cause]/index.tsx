@@ -30,7 +30,6 @@ export default function Page() {
   const supabase = useContext(SupabaseContext);
   const { toggleColorMode, colorMode } = useColorMode();
   const { isDarkMode, setDarkMode: setMode } = useConfig();
-  console.log({ colorMode });
   const toggleDarkMode = () => {
     setMode(!isDarkMode);
     // toggleColorMode();
