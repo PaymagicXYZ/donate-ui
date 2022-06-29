@@ -101,7 +101,7 @@ export default function HomePage() {
         <Button onClick={goToMyCausesPage}>View my Causes</Button>
         <Button onClick={goToCreatePage}>Create Cause</Button>
       </HStack>
-      {loading && <Spinner />}
+      {loading && <Spinner speed="2s" />}
       <List>
         {causeList.map(({ url }) => (
           <ListItem key={url} my="20px">

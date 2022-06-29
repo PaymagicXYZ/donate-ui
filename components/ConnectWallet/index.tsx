@@ -32,7 +32,7 @@ export default function ConnectWallet() {
     useCoinbaseWallet();
 
   const getAdornment = (isLoading: boolean, name: string) =>
-    isLoading && selectedWallet === name ? <Spinner /> : null;
+    isLoading && selectedWallet === name ? <Spinner speed="2s" /> : null;
 
   const walletConnectors: WalletConnectorInfo[] = [
     {

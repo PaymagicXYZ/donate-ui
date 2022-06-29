@@ -33,7 +33,7 @@ const NetworkMenu = () => {
     ([chainId, chainInfo]) => {
       const adornment =
         chainId === networkLoading && isLoading ? (
-          <Spinner />
+          <Spinner speed="2s" />
         ) : chainInfo.name === selectedNetwork?.name ? (
           <Box h="12px" w="12px" borderRadius="10px" bg="success" />
         ) : null;

@@ -86,7 +86,7 @@ const TransactionModal: FC<Props> = ({
           <Spacer />
           <Center>
             {isPending || isMining ? (
-              <Spinner />
+              <Spinner speed="2s" />
             ) : isComplete ? (
               <CheckCircleIcon fontSize="23px" color="success" />
             ) : null}

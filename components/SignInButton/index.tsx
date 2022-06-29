@@ -40,7 +40,7 @@ const SignInButton = () => {
 
   return account ? (
     <Button my={10} onClick={handleSignIn}>
-      {loading ? <Spinner /> : "Sign In With Ethereum"}
+      {loading ? <Spinner speed="2s" /> : "Sign In With Ethereum"}
     </Button>
   ) : (
     <ConnectWallet my={10} />

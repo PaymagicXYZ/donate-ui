@@ -41,7 +41,7 @@ const CreatePage = () => {
       {isSignedIn ? (
         <>
           <Text fontSize="2xl">My Causes</Text>
-          {loading && <Spinner />}
+          {loading && <Spinner speed="2s" />}
           <List>
             {causes.map(({ url }) => (
               <ListItem key={url} my="20px" w="300px">
