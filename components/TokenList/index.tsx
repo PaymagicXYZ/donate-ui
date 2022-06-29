@@ -187,7 +187,7 @@ export default function TokenList(props: Props) {
             {hasNoResults && (
               <Center>
                 <HStack px="20px" py="10px">
-                  <Text>No results found.</Text>
+                  <Text color="text">No results found.</Text>
                 </HStack>
               </Center>
             )}
