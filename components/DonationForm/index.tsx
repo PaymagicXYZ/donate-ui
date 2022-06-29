@@ -8,9 +8,9 @@ import {
   useSendTransaction,
 } from "@usedapp/core";
 import {
-  useTokenList,
   useTokenContract,
   useTotalFundsRaised,
+  UserTokenData,
 } from "../../hooks";
 import { shortenAddress } from "../../utils";
 import { utils } from "ethers";
@@ -35,7 +35,11 @@ import Badge from "../Badge";
 import Button from "../Button";
 import DonationDetailText from "../DonationDetailText";
 import TransactionModal from "../TransactionModal";
-import { BLOCK_EXPLORERS, TRANSACTION_STATUS } from "../../utils/constants";
+import {
+  BLOCK_EXPLORERS,
+  TRANSACTION_STATUS,
+  NATIVE_CURRENCIES,
+} from "../../utils/constants";
 import { useTokenPrice } from "../../hooks";
 
 export default function Page({
@@ -47,15 +51,15 @@ export default function Page({
 }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [amount, setAmount] = useState("");
-  const [tokenId, setTokenId] = useState<number | null>(null);
-  const tokens = useTokenList();
+  const [selectedToken, setSelectedToken] = useState<UserTokenData>();
   const toast = useToast();
   const { chainId } = useEthers();
   const { network } = useNetwork();
   const totalFundsRaised = useTotalFundsRaised(causeData?.donation_address);
 
-  const isSendingLocalCurrency = tokenId === 0;
-  const selectedToken = tokens[tokenId];
+  const isSendingNativeCurrency = NATIVE_CURRENCIES.includes(
+    selectedToken?.symbol
+  );
   const {
     sendTransaction,
     state: localCurrencyState,
@@ -67,7 +71,7 @@ export default function Page({
     "transfer"
   );
   let transactionState;
-  if (isSendingLocalCurrency) {
+  if (isSendingNativeCurrency) {
     transactionState = localCurrencyState;
   } else {
     transactionState = tokenState;
@@ -96,7 +100,7 @@ export default function Page({
   }, [transactionState]);
 
   useEffect(() => {
-    setTokenId(null);
+    setSelectedToken(null);
     setAmount("");
   }, [network]);
 
@@ -116,7 +120,7 @@ export default function Page({
 
   const sendDonation = async () => {
     onOpen();
-    if (isSendingLocalCurrency) sendLocalCurrency();
+    if (isSendingNativeCurrency) sendLocalCurrency();
     else transferERC20();
   };
 
@@ -130,9 +134,8 @@ export default function Page({
     ? balance
     : balance?.toFixed(5);
   const insufficientBalance = balance < Number(amount);
-  const donateBtnDisabled = tokenId === null || !amount || insufficientBalance;
+  const donateBtnDisabled = !selectedToken || !amount || insufficientBalance;
 
-  const hasMaxBtn = balance?.toString() !== amount && !isSendingLocalCurrency;
   const getPercentAmountHandler = (percent: number) => () => {
     const newAmount = balance * (percent / 100);
     setAmount(newAmount.toString());
@@ -163,7 +166,7 @@ export default function Page({
         amountToDonate={amount}
       />
       <NetworkSwitch />
-      <TokenList selectedToken={selectedToken} onSelect={setTokenId} />
+      <TokenList selectedToken={selectedToken} onSelect={setSelectedToken} />
       <FormControl isInvalid={insufficientBalance}>
         <InputGroup justifyContent="center" alignContent="center">
           <Input

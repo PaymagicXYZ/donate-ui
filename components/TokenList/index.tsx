@@ -4,11 +4,10 @@ import Fuse from "fuse.js";
 import { useEthers } from "@usedapp/core";
 import {
   useTokenList,
-  useLocalCurrency,
   useIsSupportedNetwork,
   UserTokenData,
   LocalCurrencyData,
-  useFilteredTokens,
+  useCustomToken,
 } from "../../hooks";
 import {
   IconButton,
@@ -17,23 +16,20 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalCloseButton,
   HStack,
   VStack,
   Image,
   Spacer,
   Text,
   useDisclosure,
-  Input,
   Center,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-
 import Select from "../Select";
 import SearchBar from "./SearchBar";
 
 interface Props {
-  onSelect: (tokenId: number) => void;
+  onSelect: (token: UserTokenData) => void;
   selectedToken?: UserTokenData | LocalCurrencyData;
 }
 
@@ -49,25 +45,23 @@ export default function TokenList(props: Props) {
     keys: ["name", "address", "symbol"],
     threshold: 0.1,
   });
+  const customToken = useCustomToken(searchTerm);
+  const hasNoResults = !customToken && filteredTokens.length === 0;
 
   useEffect(() => {
-    const formattedTokens = tokens.map((token, i) => ({
-      item: token,
-      refIndex: i,
-    }));
-    setFilteredTokens(formattedTokens);
+    setFilteredTokens(tokens);
   }, [tokens]);
 
   useEffect(() => {
-    let searchResults = fuse.search(searchTerm);
+    let searchResults = fuse.search(searchTerm).map(({ item }) => item);
     if (!searchResults.length && !searchTerm.length) {
-      searchResults = tokens.map((token, i) => ({ item: token, refIndex: i }));
+      searchResults = tokens;
     }
     setFilteredTokens(searchResults);
   }, [searchTerm]);
 
-  const handleSelect = (tokenId: number) => {
-    onSelect(tokenId);
+  const handleSelect = (token: UserTokenData) => {
+    onSelect(token);
     handleClose();
   };
   const handleClose = () => {
@@ -116,17 +110,17 @@ export default function TokenList(props: Props) {
               },
             }}
           >
-            {filteredTokens.map(({ item, refIndex }) => (
+            {filteredTokens.map((token, i) => (
               <HStack
-                key={item.address}
+                key={token.address}
                 px="20px"
                 py="10px"
                 transitionDuration="100ms"
-                borderBottom={refIndex < filteredTokens.length - 1 ? "1px" : ""}
+                borderBottom={i < filteredTokens.length - 1 ? "1px" : ""}
                 borderColor={
-                  refIndex < filteredTokens.length - 1 ? "modal.border" : ""
+                  i < filteredTokens.length - 1 ? "modal.border" : ""
                 }
-                onClick={() => handleSelect(refIndex)}
+                onClick={() => handleSelect(token)}
                 _hover={{
                   background: "modal.hover",
                   cursor: "pointer",
@@ -135,27 +129,62 @@ export default function TokenList(props: Props) {
                 <Image
                   marginRight="5px"
                   boxSize="25px"
-                  src={item.logoURI}
+                  src={token.logoURI}
                   borderRadius="100px"
-                  // alt={item.symbol}
+                  // alt={token.symbol}
                 />
                 <VStack alignItems="start" spacing="0px">
                   <Text color="text" fontSize="md">
-                    {item.symbol}
+                    {token.symbol}
                   </Text>
                   <Text color="text" fontSize="xs">
-                    {item.name}
+                    {token.name}
                   </Text>
                 </VStack>
                 <Spacer />
                 <Text color="text">
-                  {!item.balance || Number.isInteger(item.balance)
-                    ? item.balance
-                    : item.balance.toFixed(5)}
+                  {!token.balance || Number.isInteger(token.balance)
+                    ? token.balance
+                    : token.balance.toFixed(5)}
                 </Text>
               </HStack>
             ))}
-            {filteredTokens.length === 0 && (
+            {!!customToken && !filteredTokens.length && (
+              <HStack
+                key={customToken.address}
+                px="20px"
+                py="10px"
+                transitionDuration="100ms"
+                onClick={() => handleSelect(customToken)}
+                _hover={{
+                  background: "modal.hover",
+                  cursor: "pointer",
+                }}
+              >
+                <Image
+                  marginRight="5px"
+                  boxSize="25px"
+                  src={customToken.logoURI}
+                  borderRadius="100px"
+                  // alt={customToken.symbol}
+                />
+                <VStack alignItems="start" spacing="0px">
+                  <Text color="text" fontSize="md">
+                    {customToken.symbol}
+                  </Text>
+                  <Text color="text" fontSize="xs">
+                    {customToken.name}
+                  </Text>
+                </VStack>
+                <Spacer />
+                <Text color="text">
+                  {!customToken.balance || Number.isInteger(customToken.balance)
+                    ? customToken.balance
+                    : customToken.balance.toFixed(5)}
+                </Text>
+              </HStack>
+            )}
+            {hasNoResults && (
               <Center>
                 <HStack px="20px" py="10px">
                   <Text>No results found.</Text>

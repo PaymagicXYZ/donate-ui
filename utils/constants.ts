@@ -164,3 +164,5 @@ export const TRANSACTION_STATUS = {
   success: "Success",
   exception: "Exception",
 };
+
+export const NATIVE_CURRENCIES = ["ETH", "MATIC"];
