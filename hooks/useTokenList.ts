@@ -8,7 +8,7 @@ import { TOKEN_LISTS } from "../utils/constants";
 
 export interface UserTokenData extends TokenInfo {
   balance: number;
-  price: number;
+  price?: number;
 }
 
 export const useTokenList = () => {
@@ -51,13 +51,12 @@ export const useTokenList = () => {
   return tokenList;
 };
 
-
 interface FilteredToken {
   item: UserTokenData;
-  refIndex: number
+  refIndex: number;
 }
 export const useFilteredTokens = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredTokens, setFilteredTokens] = useState<FilteredToken[]>([]);
   const tokens = useTokenList();
   const fuse = new Fuse(tokens, {
@@ -65,19 +64,22 @@ export const useFilteredTokens = () => {
   });
 
   useEffect(() => {
-    const formattedTokens = tokens.map((token, i) => ({ item: token, refIndex: i }))
-    setFilteredTokens(formattedTokens)
-    console.log('resetting')
-  }, [tokens])
+    const formattedTokens = tokens.map((token, i) => ({
+      item: token,
+      refIndex: i,
+    }));
+    setFilteredTokens(formattedTokens);
+    console.log("resetting");
+  }, [tokens]);
 
   useEffect(() => {
-    const searchResults = fuse.search(searchTerm)
+    const searchResults = fuse.search(searchTerm);
     setFilteredTokens(searchResults);
-    console.log('updating ', searchResults)
-  }, [searchTerm])
+    console.log("updating ", searchResults);
+  }, [searchTerm]);
 
   return {
     setSearchTerm,
-    filteredTokens
-  }
-}
+    filteredTokens,
+  };
+};
