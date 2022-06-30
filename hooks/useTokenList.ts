@@ -15,7 +15,7 @@ export const useTokenList = () => {
   const { chainId } = useEthers();
   const { balances } = useCovalent();
   const [tokenList, setTokenList] = useState<UserTokenData[]>([]);
-  const { tokens } = useTokens(TOKEN_LISTS[chainId]) || {};
+  const { tokens } = useTokens(TOKEN_LISTS[chainId || 1]) || {};
 
   useEffect(() => {
     if (tokens && balances && chainId) {

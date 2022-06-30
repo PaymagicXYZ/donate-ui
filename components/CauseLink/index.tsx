@@ -61,7 +61,6 @@ const CauseLink: FC<Props> = ({ slug }) => {
             bgClip="text"
             position="absolute"
             top={0}
-            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
             transitionDuration="200ms"
             left={0}
             _hover={{
@@ -95,7 +94,6 @@ const CauseLink: FC<Props> = ({ slug }) => {
             left={0}
             color="text"
             opacity={slugActive ? 0 : 0.2}
-            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
             transitionDuration="200ms"
           >
             {slug}
@@ -106,7 +104,6 @@ const CauseLink: FC<Props> = ({ slug }) => {
             bgClip="text"
             position="absolute"
             top={0}
-            transitionDurationTimingFunction="cubic-bezier(0, 0, .58, 1)"
             transitionDuration="200ms"
             left={0}
             opacity={slugActive ? 1 : 0}
