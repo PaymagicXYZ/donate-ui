@@ -4,6 +4,8 @@ import optimismLogo from "../assets/optimism_logo.svg";
 import arbitrumLogo from "../assets/arbitrum_logo.svg";
 import avalancheLogo from "../assets/avalanche_logo.png";
 import { StaticImageData } from "next/image";
+import { TokenInfo } from "@uniswap/token-lists";
+import { Token } from "@usedapp/core";
 
 export const DUSTSWEEPER_ADDRESS =
   process.env.REACT_APP_DUSTSWEEPER ||
@@ -166,3 +168,67 @@ export const TRANSACTION_STATUS = {
 };
 
 export const NATIVE_CURRENCIES = ["ETH", "MATIC"];
+
+const genericNativeCurrencyData = {
+  address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  decimals: 18,
+};
+
+export const NATIVE_CURRENCY_BY_CHAIN: { [key: number]: TokenInfo } = {
+  1: {
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+    logoURI: ethereumLogo.src,
+    chainId: 1,
+  },
+  10: {
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+    logoURI: ethereumLogo.src,
+    chainId: 10,
+  },
+  42: {
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+    logoURI: ethereumLogo.src,
+    chainId: 42,
+  },
+  42161: {
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+    logoURI: ethereumLogo.src,
+    chainId: 42161,
+  },
+  43114: {
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    decimals: 18,
+    name: "Avalanche Coin",
+    symbol: "AVAX",
+    logoURI: avalancheLogo.src,
+    chainId: 43114,
+  },
+  137: {
+    address: "0x0000000000000000000000000000000000001010",
+    decimals: 18,
+    name: "Matic Token",
+    symbol: "MATIC",
+    logoURI: polygonLogo.src,
+    chainId: 137,
+  },
+  80001: {
+    address: "0x0000000000000000000000000000000000001010",
+    decimals: 18,
+    name: "Matic Token",
+    symbol: "MATIC",
+    logoURI: polygonLogo.src,
+    chainId: 80001,
+  },
+};

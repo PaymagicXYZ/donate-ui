@@ -4,7 +4,7 @@ import { utils } from "ethers";
 import { TokenInfo } from "@uniswap/token-lists";
 import { useCovalent } from "./useCovalent";
 import Fuse from "fuse.js";
-import { TOKEN_LISTS } from "../utils/constants";
+import { NATIVE_CURRENCY_BY_CHAIN, TOKEN_LISTS } from "../utils/constants";
 
 export interface UserTokenData extends TokenInfo {
   balance: number;
@@ -16,35 +16,32 @@ export const useTokenList = () => {
   const { balances } = useCovalent();
   const [tokenList, setTokenList] = useState<UserTokenData[]>([]);
   const { tokens } = useTokens(TOKEN_LISTS[chainId || 1]) || {};
+  const nativeCurrency = NATIVE_CURRENCY_BY_CHAIN[chainId];
 
   useEffect(() => {
     if (tokens && balances && chainId) {
-      const addressesWithBalance = {};
-      const tokensWithBalance = [];
-      for (const tokenData of balances) {
+      const balancesData = balances?.reduce((memo, tokenData) => {
         const balance = Number(
           utils.formatUnits(tokenData.balance, tokenData.contract_decimals)
         );
-        addressesWithBalance[tokenData.contract_address] = true;
-        tokensWithBalance.push({
-          address: tokenData.contract_address,
-          name: tokenData.contract_name,
-          decimals: tokenData.contract_decimals,
-          symbol: tokenData.contract_ticker_symbol,
-          logoURI: tokenData.logo_url,
-          chainId,
-          balance,
-        });
-      }
-      const tokensWithNoBalance = tokens.reduce((memo, curr) => {
-        if (addressesWithBalance && !addressesWithBalance[curr.address]) {
-          return [...memo, { ...curr, balance: 0, price: 0 }];
-        }
+        memo[tokenData.contract_address.toLowerCase()] = balance;
         return memo;
-      }, []);
+      }, {});
 
-      const userTokenList = tokensWithBalance.concat(tokensWithNoBalance);
-      setTokenList(userTokenList);
+      const tokensWithBalance = tokens.map((token) => ({
+        ...token,
+        balance: balancesData[token.address.toLowerCase()] || 0,
+      }));
+
+      const sortedTokens = tokensWithBalance.sort((a, b) =>
+        a.balance > b.balance ? -1 : 1
+      );
+      const nativeCurrencyWithBalance = {
+        ...nativeCurrency,
+        balance: balancesData[nativeCurrency.address.toLowerCase()] || 0,
+      };
+
+      setTokenList([nativeCurrencyWithBalance, ...sortedTokens]);
     }
   }, [tokens, balances, chainId]);
 
