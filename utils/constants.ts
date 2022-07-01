@@ -232,3 +232,5 @@ export const NATIVE_CURRENCY_BY_CHAIN: { [key: number]: TokenInfo } = {
     chainId: 80001,
   },
 };
+
+export const IPFS_GATEWAY = "https://ipfs.io/ipfs";

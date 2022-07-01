@@ -7,6 +7,7 @@ import axios from "axios";
 import { getAddress as getAddressEthers } from "@ethersproject/address";
 import BalanceTree from "./merkleTrees/balance-tree";
 import { BigNumber, utils } from "ethers";
+import { IPFS_GATEWAY } from "./constants";
 
 import { BLOCK_EXPLORER_LINK } from "./constants";
 
@@ -190,3 +191,14 @@ export function getNativeToken(chainId) {
 //       decimals
 //     )).format('0,0.0000')
 // }
+
+export function formatUrl(url: string) {
+  if (url) {
+    const { protocol, pathname } = new URL(url);
+    if (protocol === "ipfs:") {
+      const contentId = pathname.slice(2);
+      return `${IPFS_GATEWAY}/${contentId}`;
+    }
+  }
+  return url;
+}

@@ -5,6 +5,7 @@ import { TokenInfo } from "@uniswap/token-lists";
 import { useCovalent } from "./useCovalent";
 import Fuse from "fuse.js";
 import { NATIVE_CURRENCY_BY_CHAIN, TOKEN_LISTS } from "../utils/constants";
+import { formatUrl } from "../utils";
 
 export interface UserTokenData extends TokenInfo {
   balance: number;
@@ -28,12 +29,13 @@ export const useTokenList = () => {
         return memo;
       }, {});
 
-      const tokensWithBalance = tokens.map((token) => ({
+      const formattedTokens = tokens.map((token) => ({
         ...token,
         balance: balancesData[token.address.toLowerCase()] || 0,
+        logoURI: formatUrl(token.logoURI),
       }));
 
-      const sortedTokens = tokensWithBalance.sort((a, b) =>
+      const sortedTokens = formattedTokens.sort((a, b) =>
         a.balance > b.balance ? -1 : 1
       );
       const nativeCurrencyWithBalance = {
