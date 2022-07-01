@@ -3,6 +3,7 @@ import Address from "./Address";
 import { format } from "timeago.js";
 import { usePastDonations, useConfig } from "../../hooks";
 import ExternalLink from "../Icons/ExternalLink";
+import { BLOCK_EXPLORERS } from "../../utils/constants";
 
 interface Props {
   recipentAddress: string;
@@ -59,7 +60,9 @@ const History = (props: Props) => {
             <Text fontSize="small">
               <Link
                 textDecoration="none"
-                href={`https://kovan.etherscan.io/tx/${donation.transactionHash}`}
+                href={`${BLOCK_EXPLORERS[donation.chainId]}/tx/${
+                  donation.transactionHash
+                }`}
                 isExternal
               >
                 {format(donation.time)}{" "}

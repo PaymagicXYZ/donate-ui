@@ -8,7 +8,8 @@ export const useSupportedNetworks = () => {
     useState<NetworkData>(PROD_NETWORKS);
 
   useEffect(() => {
-    setSupportedNetworks(isDevMode ? TEST_NETWORKS : PROD_NETWORKS);
+    // setSupportedNetworks(isDevMode ? TEST_NETWORKS : PROD_NETWORKS);
+    setSupportedNetworks(TEST_NETWORKS);
   }, [isDevMode]);
 
   return supportedNetworks;

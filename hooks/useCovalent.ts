@@ -63,6 +63,7 @@ interface Donation {
   symbol: string;
   time: string;
   transactionHash: string;
+  chainId: string;
 }
 
 function get(params) {
@@ -94,37 +95,44 @@ export async function getApproval() {
 }
 
 const filterDonations = (
-  transactions: TransactionData[],
+  chainTransactions: ChainTransactions[],
   recipentAddress: string
 ) =>
-  transactions.reduce(
-    (pastDonations: Donation[], transaction: TransactionData) => {
-      if (
-        transaction?.to_address.toLowerCase() === recipentAddress.toLowerCase()
-      ) {
-        const donationData = {
-          from: transaction.from_address,
-          value: utils.formatEther(transaction.value),
-          symbol: "ETH",
-        };
-        return [...pastDonations, donationData];
-      }
-      for (const log of transaction.log_events) {
+  chainTransactions.reduce(
+    (pastDonations: Donation[], { transactions, chainId }) => {
+      for (const transaction of transactions) {
         if (
-          log.decoded?.params[1].value.toLowerCase() ===
+          transaction?.to_address.toLowerCase() ===
           recipentAddress.toLowerCase()
         ) {
           const donationData = {
-            from: log.decoded.params[0].value,
-            value: utils.formatUnits(
-              log.decoded.params[2].value || 0,
-              log.sender_contract_decimals
-            ),
-            symbol: log.sender_contract_ticker_symbol,
-            time: log.block_signed_at,
-            transactionHash: log.tx_hash,
+            from: transaction.from_address,
+            value: utils.formatEther(transaction.value),
+            symbol: "ETH",
+            time: transaction.block_signed_at,
+            transactionHash: transaction.tx_hash,
+            chainId,
           };
-          return [...pastDonations, donationData];
+          pastDonations.push(donationData);
+        }
+        for (const log of transaction.log_events) {
+          if (
+            log.decoded?.params[1].value.toLowerCase() ===
+            recipentAddress.toLowerCase()
+          ) {
+            const donationData = {
+              from: log.decoded.params[0].value,
+              value: utils.formatUnits(
+                log.decoded.params[2].value || 0,
+                log.sender_contract_decimals
+              ),
+              symbol: log.sender_contract_ticker_symbol,
+              time: log.block_signed_at,
+              transactionHash: log.tx_hash,
+              chainId,
+            };
+            pastDonations.push(donationData);
+          }
         }
       }
       return pastDonations;
@@ -132,6 +140,10 @@ const filterDonations = (
     []
   );
 
+interface ChainTransactions {
+  chainId: string;
+  transactions: TransactionData[];
+}
 export function usePastDonations(donationAddress: string) {
   const [pastDonations, setPastDonations] = useState<Donation[]>([]);
   const supportedNetworks = useSupportedNetworks();
@@ -141,14 +153,19 @@ export function usePastDonations(donationAddress: string) {
       supportedNetworks
     ).map((chainId) => get("transactions_v2")(donationAddress, chainId));
     const responses = await Promise.all(transactionRequests);
-    const itemsFromAllChains: TransactionData[] = responses.reduce(
-      (allItems, response) => {
-        return allItems.concat(response.data.items);
-      },
+    const itemsFromAllChains: ChainTransactions[] = responses.reduce(
+      (allItems, response) =>
+        allItems.concat({
+          chainId: response.data.chain_id,
+          transactions: response.data.items,
+        }),
       []
     );
     const donations = filterDonations(itemsFromAllChains, donationAddress);
-    setPastDonations(donations);
+    const sortedDonations = donations.sort((a, b) =>
+      new Date(a.time) > new Date(b.time) ? -1 : 1
+    );
+    setPastDonations(sortedDonations);
   };
 
   useEffect(() => {
