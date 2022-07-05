@@ -63,7 +63,7 @@ interface Donation {
   symbol: string;
   time: string;
   transactionHash: string;
-  chainId: string;
+  chainId: number;
 }
 
 function get(params) {
@@ -105,10 +105,11 @@ const filterDonations = (
           transaction?.to_address.toLowerCase() ===
           recipentAddress.toLowerCase()
         ) {
+          console.log({ chainId });
           const donationData = {
             from: transaction.from_address,
             value: utils.formatEther(transaction.value),
-            symbol: "ETH",
+            symbol: [137, 80001].includes(chainId) ? "MATIC" : "ETH",
             time: transaction.block_signed_at,
             transactionHash: transaction.tx_hash,
             chainId,
@@ -141,7 +142,7 @@ const filterDonations = (
   );
 
 interface ChainTransactions {
-  chainId: string;
+  chainId: number;
   transactions: TransactionData[];
 }
 export function usePastDonations(donationAddress: string) {
