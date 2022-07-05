@@ -4,6 +4,7 @@ import { format } from "timeago.js";
 import { usePastDonations, useConfig } from "../../hooks";
 import ExternalLink from "../Icons/ExternalLink";
 import { BLOCK_EXPLORERS } from "../../utils/constants";
+import { formatAmount } from "../../utils";
 
 interface Props {
   recipentAddress: string;
@@ -52,7 +53,7 @@ const History = (props: Props) => {
             </Text>
             <Text>donated</Text>
             <Text fontWeight={600}>
-              {donation.value} {donation.symbol}
+              {formatAmount(donation.value)} {donation.symbol}
             </Text>
             <Text>to</Text>
             <Text fontWeight={600}>{props.causeTitle}</Text>

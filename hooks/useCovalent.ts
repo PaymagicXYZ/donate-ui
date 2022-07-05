@@ -105,7 +105,6 @@ const filterDonations = (
           transaction?.to_address.toLowerCase() ===
           recipentAddress.toLowerCase()
         ) {
-          console.log({ chainId });
           const donationData = {
             from: transaction.from_address,
             value: utils.formatEther(transaction.value),

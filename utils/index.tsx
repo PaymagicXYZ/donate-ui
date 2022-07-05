@@ -202,3 +202,9 @@ export function formatUrl(url: string) {
   }
   return url;
 }
+
+export function formatAmount(amount: string, decimals = 4) {
+  const num = Number(amount);
+  if (Number.isInteger(num)) return num.toFixed(0);
+  return Number(num.toFixed(decimals));
+}

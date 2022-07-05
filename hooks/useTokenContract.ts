@@ -49,7 +49,7 @@ export const useCustomToken = (tokenAddress: string) => {
   const [name, symbol, decimals, totalSupply, balance] = useCalls(args);
   const formattedBalance =
     balance && decimals
-      ? Number(utils.formatUnits(balance.value[0], decimals?.value[0]))
+      ? utils.formatUnits(balance.value[0], decimals?.value[0])
       : null;
 
   useEffect(() => {

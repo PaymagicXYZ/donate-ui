@@ -27,6 +27,7 @@ import {
 import { CloseIcon } from "@chakra-ui/icons";
 import Select from "../Select";
 import SearchBar from "./SearchBar";
+import { formatAmount } from "../../utils";
 
 interface Props {
   onSelect: (token: UserTokenData) => void;
@@ -142,11 +143,7 @@ export default function TokenList(props: Props) {
                   </Text>
                 </VStack>
                 <Spacer />
-                <Text color="text">
-                  {!token.balance || Number.isInteger(token.balance)
-                    ? token.balance
-                    : token.balance.toFixed(5)}
-                </Text>
+                <Text color="text">{formatAmount(token.balance, 5)}</Text>
               </HStack>
             ))}
             {!!customToken && !filteredTokens.length && (
@@ -177,11 +174,7 @@ export default function TokenList(props: Props) {
                   </Text>
                 </VStack>
                 <Spacer />
-                <Text color="text">
-                  {!customToken.balance || Number.isInteger(customToken.balance)
-                    ? customToken.balance
-                    : customToken.balance.toFixed(5)}
-                </Text>
+                <Text color="text">{formatAmount(customToken.balance, 5)}</Text>
               </HStack>
             )}
             {hasNoResults && (
