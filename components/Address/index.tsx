@@ -12,7 +12,7 @@ interface Props extends TextProps {
 const Address = (props: Props) => {
   const { address, chainId, ...textProps } = props;
   const { chainId: currentChainId } = useEthers();
-  const blockExplorerLink = BLOCK_EXPLORERS[chainId || currentChainId];
+  const blockExplorerLink = BLOCK_EXPLORERS[chainId || currentChainId || 10];
   const [ensName, setENSName] = useState<string>();
   const { library } = useEthers();
 
