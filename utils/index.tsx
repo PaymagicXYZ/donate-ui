@@ -184,14 +184,6 @@ export function getNativeToken(chainId) {
   }
 }
 
-// export function formatTokenAmount(amountBN, decimals=18) {
-//   return numeral(
-//     ethers.utils.formatUnits(
-//       amountBN,
-//       decimals
-//     )).format('0,0.0000')
-// }
-
 export function formatUrl(url: string) {
   if (url) {
     const { protocol, pathname } = new URL(url);
@@ -203,8 +195,13 @@ export function formatUrl(url: string) {
   return url;
 }
 
-export function formatAmount(amount: string, decimals = 4) {
-  const num = Number(amount);
-  if (Number.isInteger(num)) return num.toFixed(0);
-  return Number(num.toFixed(decimals));
+export function formatAmount(amount: string | number, decimals = 4) {
+  const isString = typeof amount === "string";
+  if (amount) {
+    const num = isString ? Number(amount) : amount;
+    if (Number.isInteger(num))
+      return isString ? num.toFixed(0) : Number(num.toFixed(0));
+    return isString ? num.toFixed(decimals) : Number(num.toFixed(decimals));
+  }
+  return isString ? "0" : 0;
 }

@@ -12,7 +12,7 @@ import {
   useTotalFundsRaised,
   UserTokenData,
 } from "../../hooks";
-import { shortenAddress } from "../../utils";
+import { formatAmount, shortenAddress } from "../../utils";
 import { utils } from "ethers";
 import {
   Link,
@@ -35,6 +35,7 @@ import Badge from "../Badge";
 import Button from "../Button";
 import DonationDetailText from "../DonationDetailText";
 import TransactionModal from "../TransactionModal";
+import Address from "../Address";
 import {
   BLOCK_EXPLORERS,
   TRANSACTION_STATUS,
@@ -130,9 +131,11 @@ export default function Page({
   };
 
   const balance = selectedToken?.balance;
-  const formattedBalance = Number.isInteger(balance)
-    ? balance
-    : balance?.toFixed(5);
+  const formattedBalance = formatAmount(balance);
+
+  // Number.isInteger(balance)
+  //   ? balance
+  //   : balance?.toFixed(5);
   const insufficientBalance = balance < Number(amount);
   const donateBtnDisabled = !selectedToken || !amount || insufficientBalance;
 
@@ -249,14 +252,7 @@ export default function Page({
             Donation wallet
           </DonationDetailText>
           <Spacer />
-          <Text fontWeight={700} opacity={0.9} color="text">
-            <Link
-              isExternal
-              href={`${blockExplorerLink}/address/${causeData?.donation_address}`}
-            >
-              {shortenAddress(causeData?.donation_address || "")}
-            </Link>
-          </Text>
+          <Address address={causeData?.donation_address} />
         </HStack>
         <HStack w="full">
           <DonationDetailText opacity={0.5} color="text">

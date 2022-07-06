@@ -1,5 +1,5 @@
 import { Spacer, HStack, Text, Flex, Box, Link } from "@chakra-ui/react";
-import Address from "./Address";
+import Address from "../Address";
 import { format } from "timeago.js";
 import { usePastDonations, useConfig } from "../../hooks";
 import ExternalLink from "../Icons/ExternalLink";
@@ -14,7 +14,7 @@ interface Props {
 const History = (props: Props) => {
   const pastDonations = usePastDonations(props.recipentAddress);
   const { isDarkMode } = useConfig();
-  return (
+  return pastDonations.length ? (
     <Flex
       color="text"
       direction="column"
@@ -48,15 +48,25 @@ const History = (props: Props) => {
             my="16px"
             color="text"
           >
-            <Text fontWeight={600}>
-              <Address address={donation.from} />
-            </Text>
+            {" "}
+            <Address
+              fontWeight={600}
+              address={donation.from}
+              chainId={donation.chainId}
+            />
             <Text>donated</Text>
-            <Text fontWeight={600}>
+            <Text fontWeight={600} textOverflow="ellipsis">
               {formatAmount(donation.value)} {donation.symbol}
             </Text>
             <Text>to</Text>
-            <Text fontWeight={600}>{props.causeTitle}</Text>
+            <Text
+              textOverflow="ellipsis"
+              fontWeight={600}
+              whiteSpace="nowrap"
+              maxW="5px"
+            >
+              {props.causeTitle}
+            </Text>
             <Spacer />
             <Text fontSize="small">
               <Link
@@ -74,6 +84,8 @@ const History = (props: Props) => {
         ))}
       </Box>
     </Flex>
+  ) : (
+    <div />
   );
 };
 
