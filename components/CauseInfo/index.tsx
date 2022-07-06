@@ -40,7 +40,7 @@ const CauseInfo: FC<Props> = ({ causeData }) => {
       >
         Learn More
       </Button>
-      <Divider opacity={0.05} my="32px" />
+      <Divider opacity={0.4} my="32px" />
     </Flex>
   );
 };

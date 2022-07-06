@@ -234,7 +234,7 @@ export default function Page({
         ))}
       </HStack>
       <Box py="20px" w="full">
-        <Divider bg="divider" opacity={0.1} />
+        <Divider bg="divider" opacity={0.4} />
       </Box>
 
       <Button
