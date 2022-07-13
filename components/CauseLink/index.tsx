@@ -1,17 +1,17 @@
 import { Box, Text, HStack, Link, useToast } from "@chakra-ui/react";
 import { useState, FC, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import CopyIcon from "./CopyIcon";
 import TwitterIcon from "./TwitterIcon";
 
-interface Props {
-  slug: string;
-}
-
-const CauseLink: FC<Props> = ({ slug }) => {
+const CauseLink = () => {
   const [twitterLink, setTwitterLink] = useState("");
   const [slugActive, setSlugActive] = useState(false);
   const toast = useToast();
   const ref = useRef(null);
+  const {
+    query: { cause },
+  } = useRouter();
 
   useEffect(() => {
     setTwitterLink(
@@ -71,46 +71,48 @@ const CauseLink: FC<Props> = ({ slug }) => {
             ethgives.to
           </Text>
         </Link>
-        <Text
-          opacity={0.2}
-          fontWeight={700}
-          fontFamily="donate"
-          fontSize="link"
-          color="text"
-        >
-          /
-        </Text>
-        <Box position="relative" fontFamily="donate" fontSize="link">
-          <Text opacity={0} color="text">
-            {slug}
-          </Text>
-          <Text
-            fontWeight={700}
-            _hover={{
-              opacity: 0,
-            }}
-            position="absolute"
-            top={0}
-            left={0}
-            color="text"
-            opacity={slugActive ? 0 : 0.2}
-            transitionDuration="200ms"
-          >
-            {slug}
-          </Text>
-          <Text
-            fontWeight={700}
-            bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
-            bgClip="text"
-            position="absolute"
-            top={0}
-            transitionDuration="200ms"
-            left={0}
-            opacity={slugActive ? 1 : 0}
-          >
-            {slug}
-          </Text>
-          {/* <Text
+        {!!cause && (
+          <>
+            <Text
+              opacity={0.2}
+              fontWeight={700}
+              fontFamily="donate"
+              fontSize="link"
+              color="text"
+            >
+              /
+            </Text>
+            <Box position="relative" fontFamily="donate" fontSize="link">
+              <Text opacity={0} color="text">
+                {cause}
+              </Text>
+              <Text
+                fontWeight={700}
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                opacity={slugActive ? 0 : 0.2}
+                transitionDuration="200ms"
+              >
+                {cause}
+              </Text>
+              <Text
+                fontWeight={700}
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                bgClip="text"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={slugActive ? 1 : 0}
+              >
+                {cause}
+              </Text>
+              {/* <Text
           ref={ref}
           fontWeight={700}
           fontFamily="donate"
@@ -123,26 +125,28 @@ const CauseLink: FC<Props> = ({ slug }) => {
           opacity={slugActive ? 1 : 0.2}
           // transitionTimingFunction="cubic-bezier(0, 0, .58, 1)"
         >
-          {slug}
+          {cause}
         </Text> */}
-        </Box>
+            </Box>
+            <CopyIcon
+              onMouseEnter={() => setSlugActive(true)}
+              onMouseLeave={() => setSlugActive(false)}
+              onClick={copyToClipBoard}
+              opacity={0.2}
+            />
+            <Link
+              onMouseEnter={() => setSlugActive(true)}
+              onMouseLeave={() => setSlugActive(false)}
+              href={twitterLink}
+              isExternal
+              _focus={{ boxShadow: "none" }}
+              opacity={0.2}
+            >
+              <TwitterIcon />
+            </Link>
+          </>
+        )}
       </HStack>
-      <CopyIcon
-        onMouseEnter={() => setSlugActive(true)}
-        onMouseLeave={() => setSlugActive(false)}
-        onClick={copyToClipBoard}
-        opacity={0.2}
-      />
-      <Link
-        onMouseEnter={() => setSlugActive(true)}
-        onMouseLeave={() => setSlugActive(false)}
-        href={twitterLink}
-        isExternal
-        _focus={{ boxShadow: "none" }}
-        opacity={0.2}
-      >
-        <TwitterIcon />
-      </Link>
     </HStack>
   );
 };

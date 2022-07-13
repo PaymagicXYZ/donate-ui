@@ -205,3 +205,7 @@ export function formatAmount(amount: string | number, decimals = 4) {
   }
   return isString ? "0" : 0;
 }
+
+export function slugifyString(string: string) {
+  return string.toLocaleLowerCase().replace(/ /g, "-");
+}

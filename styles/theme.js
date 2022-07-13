@@ -32,6 +32,7 @@ const createTheme = (mode) => {
       link: "24px",
       donate: "32px",
       small: "12px",
+      medium: "16px",
       title: "40px",
       pastDonation: "14px",
     },
@@ -47,7 +48,7 @@ const createTheme = (mode) => {
         active: isDarkMode ? "#3A3A3A" : "rgba(251, 251, 251, 1)",
         hover: isDarkMode ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.05)",
         border: isDarkMode ? "#444444" : "rgba(230, 230, 230, 1)",
-        input: isDarkMode ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.07)",
+        input: isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.15)",
       },
       badge: isDarkMode ? "#1C1C1C" : "rgba(0, 0, 0, 0.1)",
       networkSpeed: {
