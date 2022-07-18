@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useMemo } from "react";
+import { useEthers } from "@usedapp/core";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
 import { debounce } from "lodash";
 import CheckCircleIcon from "../../components/Icons/CheckCircle";
@@ -14,10 +15,10 @@ import {
   Text,
   Flex,
   Center,
-  useDisclosure,
   Spacer,
   Spinner,
 } from "@chakra-ui/react";
+import CreateEditForm from "./CreateEditForm";
 import CauseLink from "../../components/CauseLink";
 import DevModeSwitch from "../../components/DevModeSwitch";
 import Button from "../../components/Button";
@@ -29,8 +30,16 @@ export default function Page() {
   const [causeSlug, setCauseSlug] = useState("");
   const [loading, setLoading] = useState(false);
   const [nameTaken, setNameTaken] = useState(false);
+  const { account } = useEthers();
 
   const supabase = useContext(SupabaseContext);
+
+  // const createCause = async () => {
+  //   const { data, error } = await supabase
+  //     .from("cause")
+  //     .insert({ url: slugifyString(causeSlug) });
+  //   console.log({ data, error });
+  // };
 
   const fetchCause = async (slug: string) => {
     const { data, error } = await supabase
@@ -54,6 +63,8 @@ export default function Page() {
     setLoading(true);
     debouncedFetchCause(slugifyString(causeSlug));
   }, [causeSlug]);
+
+  const canCreate = !!causeSlug && !nameTaken && !loading && !!account;
 
   return (
     <Grid
@@ -80,6 +91,7 @@ export default function Page() {
         <Container my="60px" px="30px">
           <Flex direction="column">
             <CauseLink />
+            <CreateEditForm />
           </Flex>
         </Container>
       </GridItem>
@@ -173,7 +185,12 @@ export default function Page() {
                   )}
                 </Flex>
               </Flex>
-              <Button marginTop="24px" w="full" onClick={() => fetchCause()}>
+              <Button
+                marginTop="24px"
+                w="full"
+                onClick={() => {}}
+                isDisabled={!canCreate}
+              >
                 Create
               </Button>
             </Center>

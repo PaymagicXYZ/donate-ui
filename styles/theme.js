@@ -29,6 +29,7 @@ const createTheme = (mode) => {
     },
     fontSizes: {
       select: "18px",
+      input: "18px",
       link: "24px",
       donate: "32px",
       small: "12px",
