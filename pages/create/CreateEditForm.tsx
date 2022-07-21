@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
 import {
@@ -12,8 +12,8 @@ import {
   Flex,
   Textarea,
   Spacer,
+  Image,
 } from "@chakra-ui/react";
-// import { AddIcon } from "@chakra-ui/icons";
 import AddIcon from "../../components/Icons/Plus";
 import { useEthers } from "@usedapp/core";
 
@@ -61,6 +61,7 @@ const CauseInputWrapper = (props) => (
 );
 
 const CreateEditForm = () => {
+  const fileRef = useRef(null);
   const supabase = useContext(SupabaseContext);
   const router = useRouter();
   const { account } = useEthers();
@@ -100,6 +101,14 @@ const CreateEditForm = () => {
     // setLoading(false);
     // if (data) router.push(`/${data.url}`);
   };
+  const handleFileClick = () => {
+    fileRef.current.click();
+  };
+
+  const handleInputChange = (e) => {
+    setFormState({ ...formState, logo: e.target.files[0] });
+  };
+
   return (
     <FormControl>
       <CauseInputWrapper>
@@ -114,13 +123,38 @@ const CreateEditForm = () => {
           </Text>
         </Flex>
         <FormLabel htmlFor="logo">Add a logo</FormLabel>
-        <IconButton
-          icon={<AddIcon h="28.58px" w="28.58px" opacity={0.5} />}
-          isRound
-          aria-label="add logo"
-          h="96px"
-          w="96px"
+        <input
+          onChange={handleInputChange}
+          ref={fileRef}
+          type="file"
+          style={{ display: "none" }}
         />
+
+        {!!formState.logo ? (
+          <IconButton
+            borderRadius="full"
+            h="96px"
+            w="96px"
+            onClick={handleFileClick}
+            aria-label="add logo"
+          >
+            <Image
+              borderRadius="full"
+              h="96px"
+              w="96px"
+              src={URL.createObjectURL(formState.logo)}
+            />
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={handleFileClick}
+            icon={<AddIcon h="28.58px" w="28.58px" opacity={0.5} />}
+            isRound
+            aria-label="add logo"
+            h="96px"
+            w="96px"
+          />
+        )}
       </CauseInputWrapper>
       <CauseInputWrapper>
         <FormLabel htmlFor="description">Description</FormLabel>
