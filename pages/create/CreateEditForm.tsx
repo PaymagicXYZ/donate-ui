@@ -196,7 +196,7 @@ const CreateEditForm = () => {
           <FormLabel htmlFor="recipientAddress">Recipient address</FormLabel>
           <Spacer />
           <Text
-            paddingTop="4px"
+            paddingTop="25px"
             transition="0.2s"
             onClick={() => setCustomWallet(true)}
             _hover={{
@@ -210,7 +210,7 @@ const CreateEditForm = () => {
             Custom
           </Text>
           <Text
-            paddingTop="4px"
+            paddingTop="25px"
             transition="0.2s"
             onClick={() => setCustomWallet(false)}
             _hover={{
