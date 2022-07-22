@@ -17,7 +17,7 @@ const CauseList = (props) => {
   return (
     <Grid templateColumns={`repeat(${props.col || 4}, 1fr)`} gap={4} py="50px">
       {causeList.map((cause) => (
-        <CauseCard cause={cause} />
+        <CauseCard key={cause.id} cause={cause} />
       ))}
     </Grid>
   );
