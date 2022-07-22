@@ -3,7 +3,7 @@ import { useEthers, useLookupAddress } from "@usedapp/core";
 import ConnectWallet from "../ConnectWallet";
 import { shortenAddress } from "../../utils";
 
-export default function Account() {
+export default function Account(props) {
   const { account, deactivate } = useEthers();
   const ENSname = useLookupAddress();
 
@@ -27,6 +27,7 @@ export default function Account() {
         bg: "black",
       }}
       onClick={deactivate}
+      {...props}
     >
       {ENSname ? (
         <>

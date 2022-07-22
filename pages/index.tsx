@@ -24,6 +24,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { supabaseClient as supabase } from "../supabaseClient";
 import Account from "../components/Account";
+import CauseList from "../components/CauseList";
 
 export default function HomePage() {
   const [causeList, setCauseList] = useState<{ url: string }[]>([]);
@@ -77,6 +78,10 @@ export default function HomePage() {
   return (
     <VStack>
       <Header />
+      <Box py="50px"></Box>
+      <Box px="140px" w="full">
+        <CauseList />
+      </Box>
     </VStack>
   );
 }

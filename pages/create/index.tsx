@@ -24,6 +24,7 @@ import DevModeSwitch from "../../components/DevModeSwitch";
 import Button from "../../components/Button";
 import { slugifyString } from "../../utils";
 import { useRouter } from "next/router";
+import CauseList from "../../components/CauseList";
 
 const DEBOUNCE_TIME = 300;
 
@@ -91,6 +92,7 @@ export default function Page() {
           <Flex direction="column">
             <CauseLink />
             {/* <CreateEditForm /> */}
+            <CauseList col={2} />
           </Flex>
         </Container>
       </GridItem>
@@ -189,6 +191,7 @@ export default function Page() {
                 w="full"
                 onClick={createCause}
                 isDisabled={!canCreate}
+                fontWeight={600}
               >
                 Create
               </Button>

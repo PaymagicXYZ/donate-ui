@@ -21,7 +21,7 @@ import DevModeSwitch from "../../../components/DevModeSwitch";
 import { slugifyString, unSlugifyString } from "../../../utils";
 import { useRouter } from "next/router";
 
-const DEBOUNCE_TIME = 300;
+const DEBOUNCE_TIME = 600;
 
 const CreatePage = () => {
   const [causeSlug, setCauseSlug] = useState("");

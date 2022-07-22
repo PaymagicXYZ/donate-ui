@@ -5,6 +5,7 @@ import _ from "lodash";
 import axios from "axios";
 import { COVALENT_API_KEY } from "../utils/constants";
 import { useSupportedNetworks } from "./useSupportedNetworks";
+import { useConfig } from "./useConfig";
 
 export interface CovalentResponse {
   error: boolean;
@@ -102,7 +103,7 @@ const filterDonations = (
     (pastDonations: Donation[], { transactions, chainId }) => {
       for (const transaction of transactions) {
         if (
-          transaction?.to_address.toLowerCase() ===
+          transaction?.to_address?.toLowerCase() ===
           recipentAddress.toLowerCase()
         ) {
           const donationData = {
@@ -117,13 +118,13 @@ const filterDonations = (
         }
         for (const log of transaction.log_events) {
           if (
-            log.decoded?.params[1].value.toLowerCase() ===
+            log.decoded?.params[1]?.value.toLowerCase() ===
             recipentAddress.toLowerCase()
           ) {
             const donationData = {
               from: log.decoded.params[0].value,
               value: utils.formatUnits(
-                log.decoded.params[2].value || 0,
+                log.decoded.params[2]?.value || 0,
                 log.sender_contract_decimals
               ),
               symbol: log.sender_contract_ticker_symbol,
@@ -145,6 +146,7 @@ interface ChainTransactions {
   transactions: TransactionData[];
 }
 export function usePastDonations(donationAddress: string) {
+  const { isDevMode } = useConfig();
   const [pastDonations, setPastDonations] = useState<Donation[]>([]);
   const supportedNetworks = useSupportedNetworks();
 
@@ -156,8 +158,8 @@ export function usePastDonations(donationAddress: string) {
     const itemsFromAllChains: ChainTransactions[] = responses.reduce(
       (allItems, response) =>
         allItems.concat({
-          chainId: response.data.chain_id,
-          transactions: response.data.items,
+          chainId: response.data?.chain_id,
+          transactions: response.data?.items || [],
         }),
       []
     );
@@ -172,7 +174,7 @@ export function usePastDonations(donationAddress: string) {
     if (donationAddress) {
       getAllDonations();
     }
-  }, [donationAddress]);
+  }, [donationAddress, isDevMode]);
 
   return pastDonations;
 }
@@ -231,7 +233,7 @@ export function useTotalFundsRaised(donationAddress: string) {
       return allItems.concat(response?.data?.items);
     }, []);
     const newTotal = itemsFromAllChains.reduce(
-      (total, tokenData) => (total += tokenData.quote),
+      (total, tokenData) => (total += tokenData?.quote),
       0
     );
     setTotal(newTotal);
@@ -239,7 +241,7 @@ export function useTotalFundsRaised(donationAddress: string) {
   useEffect(() => {
     if (donationAddress) getBalances();
   }, [donationAddress, blockNum]);
-  return total;
+  return total || 0;
 }
 
 export function useTokenPrice(symbol: string) {

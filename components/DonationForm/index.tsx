@@ -269,7 +269,7 @@ export default function Page({
           </DonationDetailText>
           <Spacer />
           <Text fontWeight={700} opacity={0.9} color="text">
-            websurfer.eth
+            <Address address={causeData?.creator_address} />
           </Text>
         </HStack>
       </VStack>
