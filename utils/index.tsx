@@ -209,3 +209,13 @@ export function formatAmount(amount: string | number, decimals = 4) {
 export function slugifyString(string: string) {
   return string.toLocaleLowerCase().replace(/ /g, "-");
 }
+
+export function unSlugifyString(slug: string) {
+  if (slug)
+    return slug
+      .split("-")
+      .reduce(
+        (memo, curr) => memo + " " + curr[0].toUpperCase() + curr.slice(1),
+        ""
+      );
+}

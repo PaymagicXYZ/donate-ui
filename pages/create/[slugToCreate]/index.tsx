@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext, useMemo } from "react";
 import { useEthers } from "@usedapp/core";
-import { SupabaseContext } from "../../lib/SupabaseProvider";
+import { SupabaseContext } from "../../../lib/SupabaseProvider";
 import { debounce } from "lodash";
-import CheckCircleIcon from "../../components/Icons/CheckCircle";
-import CloseCircleIcon from "../../components/Icons/CloseCircle";
-import Account from "../../components/Account";
+import CheckCircleIcon from "../../../components/Icons/CheckCircle";
+import CloseCircleIcon from "../../../components/Icons/CloseCircle";
+import Account from "../../../components/Account";
 import {
   Input,
   Container,
@@ -18,27 +18,26 @@ import {
   Spacer,
   Spinner,
 } from "@chakra-ui/react";
-import CreateEditForm from "./CreateEditForm";
-import CauseLink from "../../components/CauseLink";
-import DevModeSwitch from "../../components/DevModeSwitch";
-import Button from "../../components/Button";
-import { slugifyString } from "../../utils";
+import CreateEditForm from "../CreateEditForm";
+import CauseLink from "../../../components/CauseLink";
+import DevModeSwitch from "../../../components/DevModeSwitch";
+import Button from "../../../components/Button";
+import { slugifyString, unSlugifyString } from "../../../utils";
 import { useRouter } from "next/router";
 
 const DEBOUNCE_TIME = 300;
 
-export default function Page() {
+const CreatePage = () => {
   const [causeSlug, setCauseSlug] = useState("");
   const [loading, setLoading] = useState(false);
   const [nameTaken, setNameTaken] = useState(false);
-  const router = useRouter();
+  const {
+    query: { slugToCreate },
+  } = useRouter();
   const { account } = useEthers();
+  const title = unSlugifyString(slugToCreate as string);
 
   const supabase = useContext(SupabaseContext);
-
-  const createCause = async () => {
-    router.push(`/create/${slugifyString(causeSlug)}`);
-  };
 
   const fetchCause = async (slug: string) => {
     const { data, error } = await supabase
@@ -89,8 +88,10 @@ export default function Page() {
       >
         <Container my="60px" px="30px">
           <Flex direction="column">
-            <CauseLink />
-            {/* <CreateEditForm /> */}
+            <Text fontWeight={700} fontSize="donate">
+              {title}
+            </Text>
+            <CreateEditForm />
           </Flex>
         </Container>
       </GridItem>
@@ -151,7 +152,8 @@ export default function Page() {
                   opacity: 1,
                 }}
                 bg="modal.input"
-                value={causeSlug}
+                isDisabled
+                value={title}
                 onChange={(e) => setCauseSlug(e.target.value)}
                 placeholder="Your Cause"
               />
@@ -167,35 +169,19 @@ export default function Page() {
                   /
                 </Text>
                 <Text fontWeight={700} opacity={!!causeSlug ? 0.5 : 0.2}>
-                  {slugifyString(causeSlug) || "your-cause"}
+                  {slugToCreate}
                 </Text>
                 <Spacer />
                 <Flex direction="column" justify="center">
-                  {causeSlug.length ? (
-                    loading ? (
-                      <Spinner />
-                    ) : nameTaken ? (
-                      <CloseCircleIcon />
-                    ) : (
-                      <CheckCircleIcon />
-                    )
-                  ) : (
-                    ""
-                  )}
+                  <CheckCircleIcon />
                 </Flex>
               </Flex>
-              <Button
-                marginTop="24px"
-                w="full"
-                onClick={createCause}
-                isDisabled={!canCreate}
-              >
-                Create
-              </Button>
             </Center>
           </Flex>
         </Container>
       </GridItem>
     </Grid>
   );
-}
+};
+
+export default CreatePage;

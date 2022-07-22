@@ -13,14 +13,14 @@ const ButtonComponent: FC<Props> = (props) => {
         background:
           "linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(270deg, #F6677C 0%, #F58C61 100%);",
       }}
-      w="204px"
-      h="48px"
       px="24px"
       py="10px"
       color="white"
       fontSize="18px"
       lineHeight="28px"
       {...props}
+      // w="204px"
+      h="48px"
       onClick={props.onClick}
       _disabled={{
         cursor: "initial",

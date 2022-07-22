@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
 import {
   Box,
-  Button,
+  Button as ChakraButton,
   FormControl,
   FormLabel as ChakraFormLabel,
   IconButton,
@@ -15,15 +15,16 @@ import {
   Image,
 } from "@chakra-ui/react";
 import AddIcon from "../../components/Icons/Plus";
+import Button from "../../components/Button";
 import { useEthers } from "@usedapp/core";
+import { unSlugifyString } from "../../utils";
 
 const INITIAL_STATE = {
   logo: null,
-  url: "unchain",
+  slug: "unchain",
   title: "",
   description: "",
   learnMoreLink: "",
-  donationName: "",
   recipientAddress: "",
 };
 
@@ -63,7 +64,9 @@ const CauseInputWrapper = (props) => (
 const CreateEditForm = () => {
   const fileRef = useRef(null);
   const supabase = useContext(SupabaseContext);
-  const router = useRouter();
+  const {
+    query: { slugToCreate },
+  } = useRouter();
   const { account } = useEthers();
   const [isCustomWallet, setCustomWallet] = useState(false);
   const [formState, setFormState] = useState(INITIAL_STATE);
@@ -74,8 +77,19 @@ const CreateEditForm = () => {
   };
 
   useEffect(() => {
+    setFormState({
+      ...formState,
+      slug: slugToCreate as string,
+      title: unSlugifyString(slugToCreate as string),
+    });
+  }, [slugToCreate]);
+
+  useEffect(() => {
     if (!!account && !isCustomWallet)
       setFormState({ ...formState, recipientAddress: account });
+    else {
+      setFormState({ ...formState, recipientAddress: "" });
+    }
   }, [account, isCustomWallet]);
 
   const handleSubmit = async () => {
@@ -109,6 +123,8 @@ const CreateEditForm = () => {
     setFormState({ ...formState, logo: e.target.files[0] });
   };
 
+  const canPublish = Object.values(formState).every((field) => !!field);
+
   return (
     <FormControl>
       <CauseInputWrapper>
@@ -119,7 +135,7 @@ const CreateEditForm = () => {
             /
           </Text>
           <Text fontWeight={700} opacity={0.5}>
-            your-cause
+            {formState.slug}
           </Text>
         </Flex>
         <FormLabel htmlFor="logo">Add a logo</FormLabel>
@@ -229,11 +245,24 @@ const CreateEditForm = () => {
           placeholder="0x2hD02...."
           id="recipientAddress"
           name="recipientAddress"
+          disabled={!isCustomWallet}
         />
       </CauseInputWrapper>
-      <Button isFullWidth onClick={handleSubmit}>
-        {loading ? "Loading" : "Submit"}
-      </Button>
+      <Flex>
+        <ChakraButton h="48px" variant="ghost" marginRight="18px">
+          <Text opacity={0.6} fontWeight={500}>
+            Discard
+          </Text>
+        </ChakraButton>
+        <Button
+          isDisabled={!canPublish}
+          w="full"
+          onClick={handleSubmit}
+          fontWeight={600}
+        >
+          {loading ? "Loading" : "Publish Page"}
+        </Button>
+      </Flex>
     </FormControl>
   );
 };
