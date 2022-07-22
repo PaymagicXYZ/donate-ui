@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   logo: null,
   url: "unchain",
   title: "Donate to my Thing!",
-  blurb: "Help me for xyz reasons",
+  description: "Help me for xyz reasons",
   learnMoreLink:
     "https://app.supabase.io/project/vkjkosfjwlqfxzxlftsg/editor/17599",
   donationName: "Unchain Fund",
@@ -39,14 +39,20 @@ const CreateEditForm = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const { url, title, blurb, learnMoreLink, donationAddress, donationName } =
-      formState;
+    const {
+      url,
+      title,
+      description,
+      learnMoreLink,
+      donationAddress,
+      donationName,
+    } = formState;
     const causeToCreate = {
       url,
       title,
-      blurb,
+      description,
       learn_more_link: learnMoreLink,
-      donation_address: donationAddress,
+      recipient_address: donationAddress,
       donation_name: donationName,
     };
 
@@ -87,13 +93,13 @@ const CreateEditForm = () => {
         />
       </CauseInputWrapper>
       <CauseInputWrapper>
-        <FormLabel htmlFor="blurb">Blurb</FormLabel>
+        <FormLabel htmlFor="description">description</FormLabel>
         <Input
           onChange={handleChange}
-          value={formState.blurb}
+          value={formState.description}
           placeholder="Help me raise funds for x reasons"
-          id="blurb"
-          name="blurb"
+          id="description"
+          name="description"
         />
       </CauseInputWrapper>
       <CauseInputWrapper>

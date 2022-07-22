@@ -1,13 +1,23 @@
-import { Container } from "@chakra-ui/react";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import {
+  Container,
+  Grid,
+  GridItem,
+  Flex,
+  HStack,
+  Text,
+  Center,
+  FormControl,
+  FormLabel,
+  Switch,
+} from "@chakra-ui/react";
+import Header from "../Header";
 
 const Layout = ({ children }) => {
   return (
-    <PageContainer>
-      <Container maxW="container.sm" py="50px" px="80px">
-        {children}
-      </Container>
-    </PageContainer>
+    <>
+      <Header />
+      {children}
+    </>
   );
 };
 

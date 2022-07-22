@@ -20,7 +20,7 @@ interface WalletConnectorInfo {
   isLoading: boolean;
 }
 
-export default function ConnectWallet() {
+export default function ConnectWallet(props) {
   const { onOpen, isOpen, onClose } = useDisclosure();
   const [selectedWallet, setSelectedWallet] = useState<string>();
 
@@ -73,7 +73,12 @@ export default function ConnectWallet() {
 
   return (
     <>
-      <Button onClick={onOpen} borderRadius="accountBtn" fontWeight={700}>
+      <Button
+        onClick={onOpen}
+        borderRadius="accountBtn"
+        fontWeight={700}
+        {...props}
+      >
         Connect Wallet
       </Button>
       <ModalList

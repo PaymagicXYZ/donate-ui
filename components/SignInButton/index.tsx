@@ -3,8 +3,9 @@ import { SupabaseContext } from "../../lib/SupabaseProvider";
 import { SiweMessage } from "siwe";
 import axios from "axios";
 import { Spinner } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
+// import { Button } from "@chakra-ui/react";
 import ConnectWallet from "../../components/ConnectWallet";
+import Button from "../../components/Button";
 
 import { useEthers } from "@usedapp/core";
 
@@ -21,7 +22,7 @@ const SignInButton = () => {
         domain: window.location.host,
         uri: window.location.origin,
         address: account,
-        statement: "Sign in with Ethereum to EthGives",
+        statement: "Sign this message to publish your page with EthGives",
         version: "1",
         chainId,
         nonce,

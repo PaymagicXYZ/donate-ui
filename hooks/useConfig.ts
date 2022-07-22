@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 export const ConfigContext = createContext({
-  isDevMode: false,
+  isDevMode: true,
   isDarkMode: false,
   setDevMode: (isDevMode: boolean) => {},
   setDarkMode: (isDarkMode: boolean) => {},

@@ -68,13 +68,11 @@ export const useFilteredTokens = () => {
       refIndex: i,
     }));
     setFilteredTokens(formattedTokens);
-    console.log("resetting");
   }, [tokens]);
 
   useEffect(() => {
     const searchResults = fuse.search(searchTerm);
     setFilteredTokens(searchResults);
-    console.log("updating ", searchResults);
   }, [searchTerm]);
 
   return {

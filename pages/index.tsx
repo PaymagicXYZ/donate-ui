@@ -4,6 +4,7 @@ import { useEthers } from "@usedapp/core";
 import { SiweMessage } from "siwe";
 import DonationForm from "../components/DonationForm";
 import Layout from "../components/Layout";
+import Header from "../components/Header";
 import axios from "axios";
 import Link from "next/link";
 import {
@@ -23,6 +24,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { supabaseClient as supabase } from "../supabaseClient";
 import Account from "../components/Account";
+import CauseList from "../components/CauseList";
 
 export default function HomePage() {
   const [causeList, setCauseList] = useState<{ slug: string }[]>([]);
@@ -74,46 +76,12 @@ export default function HomePage() {
   };
 
   return (
-    // <HStack w="full" h="full" spacing="0">
-    //   <Box
-    //     w="55vw"
-    //     p="0"
-    //     m="0"
-    //     h="100vh"
-    //     bgGradient="radial(63.39% 55.09% at 50% 46.23%, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.07) 0.01%, rgba(0, 0, 0, 0.1) 130%, #FFFFFF 130%)"
-    //   ></Box>
-    //   <Box w="45vw" p="0" m="0" h="100vh" bg="rightPannel">
-    //     <Container my="60px" px="140px">
-    //       <VStack h="50vh" spacing="0" m="0" p="0">
-    //         <HStack w="full" justifyContent="flex-end">
-    //           <Account />
-    //         </HStack>
-    //         <DonationForm />
-    //       </VStack>
-    //     </Container>
-    //   </Box>
-    // </HStack>
-
-    <Layout>
-      <HStack>
-        <Text fontSize="2xl">All Causes</Text>
-        <Spacer />
-        <Button onClick={goToMyCausesPage}>View my Causes</Button>
-        <Button onClick={goToCreatePage}>Create Cause</Button>
-      </HStack>
-      {loading && <Spinner speed="2s" />}
-      <List>
-        {causeList.map(({ slug }) => (
-          <ListItem key={slug} my="20px">
-            <Tag>
-              <Link href={`/${slug}`}>{slug}</Link>
-            </Tag>
-          </ListItem>
-        ))}
-      </List>
-      {/* <Button onClick={handleSignIn}>
-        Sign In With Ethereum to Create Cause
-      </Button> */}
-    </Layout>
+    <VStack>
+      <Header />
+      <Box py="50px"></Box>
+      <Box px="140px" w="full">
+        <CauseList />
+      </Box>
+    </VStack>
   );
 }

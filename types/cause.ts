@@ -1,9 +1,9 @@
 export interface Cause {
   title: string;
-  blurb: string;
+  logo: string;
+  description: string;
   learn_more_link: string;
-  donation_address: string;
-  donation_name: string;
+  recipient_address: string;
 }
 
 export interface AllCauses {

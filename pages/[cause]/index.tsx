@@ -38,15 +38,24 @@ export default function Page() {
     query: { cause },
   } = useRouter();
   const [donationMade, setDonationMade] = useState(false);
+  const [logoURL, setLogoURL] = useState("");
   const [causeData, setCauseData] = useState<Cause>();
   const [error, setError] = useState(false);
+
+  const fetchLogo = async () => {
+    const { data, error } = await supabase.storage
+      .from("logos")
+      .getPublicUrl(causeData.logo.slice(6));
+    setLogoURL(data.publicURL);
+  };
   const fetchCause = async () => {
     const { data, error } = await supabase
       .from("cause")
       .select("*")
-      .eq("url", cause);
-    if (data.length) setCauseData(data[0]);
-    else {
+      .eq("slug", cause);
+    if (data?.length) {
+      setCauseData(data[0]);
+    } else {
       setError(true);
       console.error(error);
     }
@@ -54,6 +63,10 @@ export default function Page() {
   useEffect(() => {
     if (cause) fetchCause();
   }, [cause]);
+
+  useEffect(() => {
+    if (causeData) fetchLogo();
+  }, [causeData]);
 
   return (
     <Grid
@@ -85,9 +98,9 @@ export default function Page() {
         <Container my="60px" px="30px">
           <Flex direction="column">
             <CauseLink slug={cause} />
-            <CauseInfo causeData={causeData} />
+            <CauseInfo causeData={{ ...causeData, logoURL }} />
             <History
-              recipentAddress={causeData?.donation_address}
+              recipentAddress={causeData?.recipient_address}
               causeTitle={causeData?.title}
             />
           </Flex>
