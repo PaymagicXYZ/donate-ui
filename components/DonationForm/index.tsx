@@ -56,7 +56,7 @@ export default function Page({
   const toast = useToast();
   const { chainId } = useEthers();
   const { network } = useNetwork();
-  const totalFundsRaised = useTotalFundsRaised(causeData?.donation_address);
+  const totalFundsRaised = useTotalFundsRaised(causeData?.recipient_address);
 
   const isSendingNativeCurrency = NATIVE_CURRENCIES.includes(
     selectedToken?.symbol
@@ -107,14 +107,14 @@ export default function Page({
 
   const transferERC20 = async () => {
     transferToken(
-      causeData.donation_address,
+      causeData.recipient_address,
       utils.parseUnits(amount, selectedToken?.decimals)
     );
   };
 
   const sendLocalCurrency = async () => {
     sendTransaction({
-      to: causeData.donation_address,
+      to: causeData.recipient_address,
       value: utils.parseEther(amount),
     });
   };
@@ -252,7 +252,7 @@ export default function Page({
             Donation wallet
           </DonationDetailText>
           <Spacer />
-          <Address address={causeData?.donation_address} />
+          <Address address={causeData?.recipient_address} />
         </HStack>
         <HStack w="full">
           <DonationDetailText opacity={0.5} color="text">

@@ -2,6 +2,9 @@ const { i18n } = require("./next-i18next.config");
 module.exports = {
   i18n,
   reactStrictMode: true,
+  images: {
+    domains: ["vkjkosfjwlqfxzxlftsg.supabase.co"],
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

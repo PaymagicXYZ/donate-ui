@@ -16,10 +16,10 @@ import Layout from "../../components/Layout";
 const INITIAL_STATE = {
   url: "",
   title: "",
-  blurb: "",
+  description: "",
   learn_more_link: "",
   donation_name: "",
-  donation_address: "",
+  recipient_address: "",
 };
 
 const CauseInputWrapper = (props) => (
@@ -99,13 +99,13 @@ const EditCause = () => {
           />
         </CauseInputWrapper>
         <CauseInputWrapper>
-          <FormLabel htmlFor="blurb">Blurb</FormLabel>
+          <FormLabel htmlFor="description">description</FormLabel>
           <Input
             onChange={handleChange}
-            value={formState.blurb}
+            value={formState.description}
             placeholder="Help me raise funds for x reasons"
-            id="blurb"
-            name="blurb"
+            id="description"
+            name="description"
           />
         </CauseInputWrapper>
         <CauseInputWrapper>
@@ -129,13 +129,13 @@ const EditCause = () => {
           />
         </CauseInputWrapper>
         <CauseInputWrapper>
-          <FormLabel htmlFor="donation_address">Recipient Address</FormLabel>
+          <FormLabel htmlFor="recipient_address">Recipient Address</FormLabel>
           <Input
             onChange={handleChange}
-            value={formState.donation_address}
+            value={formState.recipient_address}
             placeholder="0x2hD02...."
-            id="donation_address"
-            name="donation_address"
+            id="recipient_address"
+            name="recipient_address"
           />
         </CauseInputWrapper>
         <Button isFullWidth onClick={handleSubmit}>

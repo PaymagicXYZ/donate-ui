@@ -44,8 +44,8 @@ export default function Page() {
     const { data, error } = await supabase
       .from("cause")
       .select("*")
-      .eq("url", slug);
-    if (data.length) {
+      .eq("slug", slug);
+    if (data?.length) {
       setNameTaken(true);
     } else {
       setNameTaken(false);

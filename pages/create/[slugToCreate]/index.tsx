@@ -3,7 +3,6 @@ import { useEthers } from "@usedapp/core";
 import { SupabaseContext } from "../../../lib/SupabaseProvider";
 import { debounce } from "lodash";
 import CheckCircleIcon from "../../../components/Icons/CheckCircle";
-import CloseCircleIcon from "../../../components/Icons/CloseCircle";
 import Account from "../../../components/Account";
 import {
   Input,
@@ -16,12 +15,9 @@ import {
   Flex,
   Center,
   Spacer,
-  Spinner,
 } from "@chakra-ui/react";
 import CreateEditForm from "../CreateEditForm";
-import CauseLink from "../../../components/CauseLink";
 import DevModeSwitch from "../../../components/DevModeSwitch";
-import Button from "../../../components/Button";
 import { slugifyString, unSlugifyString } from "../../../utils";
 import { useRouter } from "next/router";
 
@@ -44,7 +40,7 @@ const CreatePage = () => {
       .from("cause")
       .select("*")
       .eq("url", slug);
-    if (data.length) {
+    if (data?.length) {
       setNameTaken(true);
     } else {
       setNameTaken(false);

@@ -21,7 +21,7 @@ export default function CauseBanner({ causeData }: { causeData: Cause }) {
                 {causeData?.title}
               </Text>
               <Text lineHeight="15px" px="20px" fontSize="xs" my={0}>
-                {causeData?.blurb}
+                {causeData?.description}
               </Text>
             </VStack>
           </GridItem>

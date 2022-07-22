@@ -1,5 +1,6 @@
 import { Divider, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { Box } from "@chakra-ui/react";
 import { FC } from "react";
 import { Cause } from "../../types/cause";
 import logo from "./Logo.png";
@@ -12,7 +13,9 @@ interface Props {
 const CauseInfo: FC<Props> = ({ causeData }) => {
   return (
     <Flex direction="column" marginTop="80px" w="full" alignItems="flex-start">
-      <Image src={logo} height="96px" width="96px" />
+      <Box borderRadius="full" overflow="hidden">
+        <Image src={causeData?.logoURL || logo} height="96px" width="96px" />
+      </Box>
       <Text marginTop="24px" fontSize="title" fontWeight="700" color="text">
         {causeData?.title}
       </Text>
@@ -23,7 +26,7 @@ const CauseInfo: FC<Props> = ({ causeData }) => {
         opacity={0.6}
         lineHeight="description"
       >
-        {causeData?.blurb}
+        {causeData?.description}
       </Text>
       <Button
         marginTop="24px"

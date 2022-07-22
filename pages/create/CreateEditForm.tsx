@@ -1,6 +1,7 @@
 import { useRef, useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
+import { v4 as uuid } from "uuid";
 import {
   Box,
   Button as ChakraButton,
@@ -18,10 +19,11 @@ import AddIcon from "../../components/Icons/Plus";
 import Button from "../../components/Button";
 import { useEthers } from "@usedapp/core";
 import { unSlugifyString } from "../../utils";
+import { useSignIn } from "../../hooks";
 
 const INITIAL_STATE = {
   logo: null,
-  slug: "unchain",
+  slug: "",
   title: "",
   description: "",
   learnMoreLink: "",
@@ -64,25 +66,29 @@ const CauseInputWrapper = (props) => (
 const CreateEditForm = () => {
   const fileRef = useRef(null);
   const supabase = useContext(SupabaseContext);
-  const {
-    query: { slugToCreate },
-  } = useRouter();
+  const { signIn } = useSignIn();
+  const router = useRouter();
   const { account } = useEthers();
   const [isCustomWallet, setCustomWallet] = useState(false);
   const [formState, setFormState] = useState(INITIAL_STATE);
   const [loading, setLoading] = useState(false);
+  const {
+    query: { slugToCreate },
+  } = router;
 
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    setFormState({
-      ...formState,
-      slug: slugToCreate as string,
-      title: unSlugifyString(slugToCreate as string),
-    });
-  }, [slugToCreate]);
+    if (!formState.slug.length) {
+      setFormState({
+        ...formState,
+        slug: slugToCreate as string,
+        title: unSlugifyString(slugToCreate as string),
+      });
+    }
+  });
 
   useEffect(() => {
     if (!!account && !isCustomWallet)
@@ -92,28 +98,38 @@ const CreateEditForm = () => {
     }
   }, [account, isCustomWallet]);
 
+  const uploadLogo = async () => {
+    const { logo } = formState;
+    const { data, error } = await supabase.storage
+      .from("logos")
+      .upload(`${uuid()}-${logo.name}`, logo);
+    if (data) return data.Key;
+  };
+
   const handleSubmit = async () => {
-    console.log(formState);
-    // setLoading(true);
-    // const { url, title, blurb, learnMoreLink, recipientAddress, donationName } =
-    //   formState;
-    // const causeToCreate = {
-    //   url,
-    //   title,
-    //   blurb,
-    //   learn_more_link: learnMoreLink,
-    //   donation_address: recipientAddress,
-    //   donation_name: donationName,
-    // };
+    setLoading(true);
+    const logoURL = await uploadLogo();
+    await signIn();
+    const { slug, title, description, learnMoreLink, recipientAddress } =
+      formState;
+    const causeToCreate = {
+      slug,
+      title,
+      description,
+      learn_more_link: learnMoreLink,
+      recipient_address: recipientAddress,
+      creator_address: account,
+      logo: logoURL,
+    };
 
-    // setLoading(true);
-    // const { data, error } = await supabase
-    //   .from("cause")
-    //   .insert(causeToCreate)
-    //   .single();
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("cause")
+      .insert(causeToCreate)
+      .single();
 
-    // setLoading(false);
-    // if (data) router.push(`/${data.url}`);
+    setLoading(false);
+    if (data) router.push(`/${data.slug}`);
   };
   const handleFileClick = () => {
     fileRef.current.click();
@@ -255,7 +271,7 @@ const CreateEditForm = () => {
           </Text>
         </ChakraButton>
         <Button
-          isDisabled={!canPublish}
+          // isDisabled={!canPublish}
           w="full"
           onClick={handleSubmit}
           fontWeight={600}
