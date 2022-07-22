@@ -163,7 +163,7 @@ export default function Page() {
                 />
               </Center>
             )}
-            <FormControl
+            {/* <FormControl
               paddingBottom="10px"
               display="flex"
               alignContent="center"
@@ -177,7 +177,7 @@ export default function Page() {
                 isChecked={isDarkMode}
                 colorScheme="twitter"
               />
-            </FormControl>
+            </FormControl> */}
           </Flex>
         </Container>
       </GridItem>

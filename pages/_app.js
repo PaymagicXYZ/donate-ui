@@ -28,10 +28,10 @@ const config = {
 
 function MyApp({ Component, pageProps }) {
   const [isDevMode, setDevMode] = useState(false);
-  const [isDarkMode, setDarkMode] = useState(true);
+  const [isDarkMode, setDarkMode] = useState(false);
   const theme = isDarkMode ? darkTheme : lightTheme;
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={darkTheme}>
       <DAppProvider config={{}}>
         <SupabaseProvider>
           <ConfigContext.Provider
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
               <title>Eth Gives</title>
               <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
             <Script id="google-analytics" strategy="afterInteractive">
               {`
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

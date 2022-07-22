@@ -4,7 +4,6 @@ const createTheme = (mode) => {
   const isDarkMode = mode === "dark";
   return extendTheme({
     initialColorMode: "dark",
-    useSystemColorMode: true,
     fonts: {
       donate: "'Poppins'",
       body: `'Inter', sans-serif`,
