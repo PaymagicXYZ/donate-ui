@@ -25,7 +25,7 @@ import { supabaseClient as supabase } from "../supabaseClient";
 import Account from "../components/Account";
 
 export default function HomePage() {
-  const [causeList, setCauseList] = useState<{ url: string }[]>([]);
+  const [causeList, setCauseList] = useState<{ slug: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchAllCauses = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from("cause").select("url");
+      const { data, error } = await supabase.from("cause").select("slug");
       setCauseList(data);
       setLoading(false);
     };
@@ -103,10 +103,10 @@ export default function HomePage() {
       </HStack>
       {loading && <Spinner speed="2s" />}
       <List>
-        {causeList.map(({ url }) => (
-          <ListItem key={url} my="20px">
+        {causeList.map(({ slug }) => (
+          <ListItem key={slug} my="20px">
             <Tag>
-              <Link href={`/${url}`}>{url}</Link>
+              <Link href={`/${slug}`}>{slug}</Link>
             </Tag>
           </ListItem>
         ))}
