@@ -3,7 +3,6 @@ import { extendTheme } from "@chakra-ui/react";
 const createTheme = (mode) => {
   const isDarkMode = mode === "dark";
   return extendTheme({
-    initialColorMode: "dark",
     fonts: {
       donate: "'Poppins'",
       body: `'Inter', sans-serif`,

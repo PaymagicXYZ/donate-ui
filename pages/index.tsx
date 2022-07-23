@@ -76,7 +76,7 @@ export default function HomePage() {
   };
 
   return (
-    <VStack>
+    <VStack bg="rgba(33, 32, 36, 1)" h="100vh">
       <Header />
       <Box py="50px"></Box>
       <Box px="140px" w="full">

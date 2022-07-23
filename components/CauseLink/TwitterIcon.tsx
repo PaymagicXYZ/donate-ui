@@ -2,7 +2,7 @@ import { Icon } from "@chakra-ui/react";
 import { useConfig } from "../../hooks";
 
 const TwitterIcon = () => {
-  const { isDarkMode } = useConfig();
+  const isDarkMode = true;
   return (
     <Icon fontSize="24px" viewBox="0 0 24 24" fillOpacity={0}>
       <path

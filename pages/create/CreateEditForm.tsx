@@ -53,6 +53,7 @@ const Input = (props) => (
     }}
     borderRadius="6px"
     fontSize="input"
+    color="text"
     {...props}
   />
 );
@@ -144,17 +145,23 @@ const CreateEditForm = () => {
   return (
     <FormControl>
       <CauseInputWrapper>
-        <FormLabel htmlFor="url">Your link</FormLabel>
+        <FormLabel color="text" htmlFor="url">
+          Your link
+        </FormLabel>
         <Flex>
-          <Text opacity={0.2}>ethgives.to </Text>
-          <Text opacity={0.2} mx="8px" fontWeight={700}>
+          <Text opacity={0.2} color="text">
+            ethgives.to{" "}
+          </Text>
+          <Text opacity={0.2} mx="8px" fontWeight={700} color="text">
             /
           </Text>
-          <Text fontWeight={700} opacity={0.5}>
+          <Text fontWeight={700} opacity={0.5} color="text">
             {formState.slug}
           </Text>
         </Flex>
-        <FormLabel htmlFor="logo">Add a logo</FormLabel>
+        <FormLabel color="text" htmlFor="logo">
+          Add a logo
+        </FormLabel>
         <input
           onChange={handleInputChange}
           ref={fileRef}
@@ -179,6 +186,11 @@ const CreateEditForm = () => {
           </IconButton>
         ) : (
           <IconButton
+            color="text"
+            bg="rgba(255, 255, 255, 0.07)"
+            _hover={{
+              bg: "rgba(255, 255, 255, 0.15)",
+            }}
             onClick={handleFileClick}
             icon={<AddIcon h="28.58px" w="28.58px" opacity={0.5} />}
             isRound
@@ -189,8 +201,11 @@ const CreateEditForm = () => {
         )}
       </CauseInputWrapper>
       <CauseInputWrapper>
-        <FormLabel htmlFor="description">Description</FormLabel>
+        <FormLabel htmlFor="description" color="text">
+          Description
+        </FormLabel>
         <Textarea
+          color="text"
           resize="none"
           p="14px"
           _placeholder={{
@@ -214,7 +229,9 @@ const CreateEditForm = () => {
         />
       </CauseInputWrapper>
       <CauseInputWrapper>
-        <FormLabel htmlFor="learnMoreLink">Learn more link</FormLabel>
+        <FormLabel color="text" htmlFor="learnMoreLink">
+          Learn more link
+        </FormLabel>
         <Input
           onChange={handleChange}
           value={formState.learnMoreLink}
@@ -225,9 +242,12 @@ const CreateEditForm = () => {
       </CauseInputWrapper>
       <CauseInputWrapper>
         <Flex>
-          <FormLabel htmlFor="recipientAddress">Recipient address</FormLabel>
+          <FormLabel color="text" htmlFor="recipientAddress">
+            Recipient address
+          </FormLabel>
           <Spacer />
           <Text
+            color="text"
             paddingTop="25px"
             transition="0.2s"
             onClick={() => setCustomWallet(true)}
@@ -242,6 +262,7 @@ const CreateEditForm = () => {
             Custom
           </Text>
           <Text
+            color="text"
             paddingTop="25px"
             transition="0.2s"
             onClick={() => setCustomWallet(false)}
@@ -265,13 +286,21 @@ const CreateEditForm = () => {
         />
       </CauseInputWrapper>
       <Flex>
-        <ChakraButton h="48px" variant="ghost" marginRight="18px">
-          <Text opacity={0.6} fontWeight={500}>
+        <ChakraButton
+          onClick={() => router.push("/create")}
+          h="48px"
+          variant="ghost"
+          marginRight="18px"
+          _hover={{
+            bg: "rgb(61,61,61)",
+          }}
+        >
+          <Text opacity={0.6} fontWeight={500} color="text">
             Discard
           </Text>
         </ChakraButton>
         <Button
-          // isDisabled={!canPublish}
+          isDisabled={!canPublish}
           w="full"
           onClick={handleSubmit}
           fontWeight={600}

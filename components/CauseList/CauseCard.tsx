@@ -55,10 +55,11 @@ const CauseCard = (cause: CauseData) => {
         >
           {!!logoURL && <Image height="96px" width="96px" src={logoURL} />}
         </Box>
-        <Text fontSize="20px" fontWeight={700}>
+        <Text fontSize="20px" fontWeight={700} color="text">
           {cause.cause.title}
         </Text>
         <Text
+          color="text"
           fontSize="16px"
           fontWeight={700}
           opacity={0.2}
@@ -66,7 +67,7 @@ const CauseCard = (cause: CauseData) => {
         >
           / {cause.cause.slug}
         </Text>
-        <Text fontSize="16px" fontWeight={700} opacity={0.9}>
+        <Text fontSize="16px" fontWeight={700} opacity={0.9} color="text">
           ${totalFundsRaised}
         </Text>
       </Flex>

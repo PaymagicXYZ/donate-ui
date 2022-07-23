@@ -3,11 +3,7 @@ import "@fontsource/poppins";
 import "./styles.css";
 
 import { useState } from "react";
-import {
-  ChakraProvider,
-  ColorModeScript,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import Head from "next/head";
 import { lightTheme, darkTheme } from "../styles/theme";
@@ -29,7 +25,6 @@ const config = {
 function MyApp({ Component, pageProps }) {
   const [isDevMode, setDevMode] = useState(false);
   const [isDarkMode, setDarkMode] = useState(false);
-  const theme = isDarkMode ? darkTheme : lightTheme;
   return (
     <ChakraProvider theme={darkTheme}>
       <DAppProvider config={{}}>
@@ -41,7 +36,6 @@ function MyApp({ Component, pageProps }) {
               <title>Eth Gives</title>
               <link rel="icon" href="/favicon.ico" />
             </Head>
-            {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
             <Script id="google-analytics" strategy="afterInteractive">
               {`
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -78,22 +78,17 @@ export default function Page() {
         colSpan={[100, 100, 100, 55]}
         p="0"
         m="0"
-        // h="100vh"
         bg="leftPanel"
         overflowY="auto"
         css={{
           "&::-webkit-scrollbar": {
             width: "0px",
           },
-          // "&::-webkit-scrollbar-track": {
-          //   width: "6px",
-          // },
           "&::-webkit-scrollbar-thumb": {
             background: "#ffffff21",
             borderRadius: "24px",
           },
         }}
-        // bgGradient="radial(63.39% 55.09% at 50% 46.23%, rgba(0, 0, 0, 0.15) 0%, rgba(255, 255, 255, 0.07) 0.01%, rgba(0, 0, 0, 0.1) 130%, #FFFFFF 130%)"
       >
         <Container my="60px" px="30px">
           <Flex direction="column">

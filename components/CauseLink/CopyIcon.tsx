@@ -3,7 +3,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 import { useConfig } from "../../hooks";
 
 const CopyIcon: FC<IconProps> = (props) => {
-  const { isDarkMode } = useConfig();
+  const isDarkMode = true;
   return (
     <Icon
       {...props}

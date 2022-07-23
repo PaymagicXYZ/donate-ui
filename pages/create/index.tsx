@@ -136,7 +136,12 @@ export default function Page() {
                   Create a link
                 </Text>
               </Box>
-              <Text fontSize="select" fontWeight={300} opacity={0.6}>
+              <Text
+                fontSize="select"
+                fontWeight={300}
+                opacity={0.6}
+                color="text"
+              >
                 Want to support a cause? Create a shareable donation page to
                 raise funds, easily!
               </Text>
@@ -164,11 +169,17 @@ export default function Page() {
                 fontFamily="donate"
                 fontSize="medium"
               >
-                <Text opacity={0.2}>ethgives.to </Text>
-                <Text opacity={0.2} mx="8px" fontWeight={700}>
+                <Text opacity={0.2} color="text">
+                  ethgives.to{" "}
+                </Text>
+                <Text opacity={0.2} mx="8px" fontWeight={700} color="text">
                   /
                 </Text>
-                <Text fontWeight={700} opacity={!!causeSlug ? 0.5 : 0.2}>
+                <Text
+                  fontWeight={700}
+                  opacity={!!causeSlug ? 0.5 : 0.2}
+                  color="text"
+                >
                   {slugifyString(causeSlug) || "your-cause"}
                 </Text>
                 <Spacer />
