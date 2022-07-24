@@ -10,8 +10,9 @@ const ButtonComponent: FC<Props> = (props) => {
     <Button
       borderRadius="input"
       __css={{
-        background:
-          "linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(270deg, #F6677C 0%, #F58C61 100%);",
+        background: props.isDark
+          ? "rgba(26, 25, 29, 1)"
+          : "linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(270deg, #F6677C 0%, #F58C61 100%);",
       }}
       px="24px"
       py="10px"
@@ -19,7 +20,6 @@ const ButtonComponent: FC<Props> = (props) => {
       fontSize="18px"
       lineHeight="28px"
       {...props}
-      // w="204px"
       h="48px"
       onClick={props.onClick}
       _disabled={{
@@ -34,7 +34,9 @@ const ButtonComponent: FC<Props> = (props) => {
       }
       _hover={
         !props.isDisabled && {
-          bgGradient: "linear(270deg, #F6677C 0%, #F58C61 100%)",
+          bgGradient: props.isDark
+            ? "rgba(0, 0, 0, 1)"
+            : "linear(270deg, #F6677C 0%, #F58C61 100%)",
         }
       }
     >

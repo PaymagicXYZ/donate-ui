@@ -11,7 +11,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useIsSignedIn } from "../../hooks";
-import Layout from "../../components/Layout";
 
 const INITIAL_STATE = {
   url: "",
@@ -73,76 +72,74 @@ const EditCause = () => {
     setLoading(false);
   };
   return (
-    <Layout>
-      <FormControl>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="url">URL</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.url}
-            placeholder="unchain"
-            id="url"
-            name="url"
-          />
-          <FormHelperText>
-            URL Preview: https://ethgives.to/{formState.url}
-          </FormHelperText>
-        </CauseInputWrapper>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="title">Title</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.title}
-            placeholder="Donate to my cause!"
-            id="title"
-            name="title"
-          />
-        </CauseInputWrapper>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="description">description</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.description}
-            placeholder="Help me raise funds for x reasons"
-            id="description"
-            name="description"
-          />
-        </CauseInputWrapper>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="learn_more_link">Learn More Link</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.learn_more_link}
-            placeholder="https://twitter.com/learn_more_link..."
-            id="learn_more_link"
-            name="learn_more_link"
-          />
-        </CauseInputWrapper>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="donation_name">Recipient Name</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.donation_name}
-            placeholder="Unchain Fund"
-            id="donation_name"
-            name="donation_name"
-          />
-        </CauseInputWrapper>
-        <CauseInputWrapper>
-          <FormLabel htmlFor="recipient_address">Recipient Address</FormLabel>
-          <Input
-            onChange={handleChange}
-            value={formState.recipient_address}
-            placeholder="0x2hD02...."
-            id="recipient_address"
-            name="recipient_address"
-          />
-        </CauseInputWrapper>
-        <Button isFullWidth onClick={handleSubmit}>
-          {loading ? "Loading" : "Save"}
-        </Button>
-      </FormControl>
-    </Layout>
+    <FormControl>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="url">URL</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.url}
+          placeholder="unchain"
+          id="url"
+          name="url"
+        />
+        <FormHelperText>
+          URL Preview: https://ethgives.to/{formState.url}
+        </FormHelperText>
+      </CauseInputWrapper>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="title">Title</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.title}
+          placeholder="Donate to my cause!"
+          id="title"
+          name="title"
+        />
+      </CauseInputWrapper>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="description">description</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.description}
+          placeholder="Help me raise funds for x reasons"
+          id="description"
+          name="description"
+        />
+      </CauseInputWrapper>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="learn_more_link">Learn More Link</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.learn_more_link}
+          placeholder="https://twitter.com/learn_more_link..."
+          id="learn_more_link"
+          name="learn_more_link"
+        />
+      </CauseInputWrapper>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="donation_name">Recipient Name</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.donation_name}
+          placeholder="Unchain Fund"
+          id="donation_name"
+          name="donation_name"
+        />
+      </CauseInputWrapper>
+      <CauseInputWrapper>
+        <FormLabel htmlFor="recipient_address">Recipient Address</FormLabel>
+        <Input
+          onChange={handleChange}
+          value={formState.recipient_address}
+          placeholder="0x2hD02...."
+          id="recipient_address"
+          name="recipient_address"
+        />
+      </CauseInputWrapper>
+      <Button isFullWidth onClick={handleSubmit}>
+        {loading ? "Loading" : "Save"}
+      </Button>
+    </FormControl>
   );
 };
 

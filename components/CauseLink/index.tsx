@@ -30,7 +30,7 @@ const CauseLink = () => {
   };
 
   return (
-    <HStack w="full" spacing={4}>
+    <HStack w="full" spacing={4} maxHeight="36px">
       <HStack>
         <Link
           fontFamily="donate"

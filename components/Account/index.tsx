@@ -8,7 +8,7 @@ export default function Account(props) {
   const ENSname = useLookupAddress();
 
   if (!account) {
-    return <ConnectWallet />;
+    return <ConnectWallet {...props} />;
   }
   return (
     <Button

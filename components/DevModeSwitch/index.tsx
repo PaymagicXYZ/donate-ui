@@ -9,6 +9,7 @@ const DevModeSwitch = () => {
       alignItems="center"
       justifyContent="center"
       w="15"
+      marginRight="16px"
     >
       <FormLabel htmlFor="dev-mode-switch" mb="0" color="text">
         Use testnets?

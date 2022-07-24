@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
 import { SiweMessage } from "siwe";
 import DonationForm from "../components/DonationForm";
-import Layout from "../components/Layout";
-import Header from "../components/Header";
+import { FullHeader } from "../components/Header";
 import axios from "axios";
 import Link from "next/link";
 import {
@@ -25,6 +24,7 @@ import { useToast } from "@chakra-ui/react";
 import { supabaseClient as supabase } from "../supabaseClient";
 import Account from "../components/Account";
 import CauseList from "../components/CauseList";
+import { PannelContainer } from "../components/Pannels";
 
 export default function HomePage() {
   const [causeList, setCauseList] = useState<{ slug: string }[]>([]);
@@ -76,12 +76,11 @@ export default function HomePage() {
   };
 
   return (
-    <VStack bg="rgba(33, 32, 36, 1)" h="100vh">
-      <Header />
-      <Box py="50px"></Box>
-      <Box px="140px" w="full">
+    <PannelContainer>
+      <Box minHeight="100vh" py="62px" px="124px" bg="homePage" w="100vw">
+        <FullHeader />
         <CauseList />
       </Box>
-    </VStack>
+    </PannelContainer>
   );
 }

@@ -39,6 +39,7 @@ const createTheme = (mode) => {
       twitter: "#00ACEE",
       success: "#58C573",
       error: "#F6677C",
+      homePage: "#212024",
       modalList: {
         hover: isDarkMode ? "#1A1A1A" : "rgba(0, 0, 0, 0.05)",
         active: isDarkMode ? "#272727" : "#FFFFFF",
