@@ -77,7 +77,7 @@ export default function HomePage() {
 
   return (
     <PannelContainer>
-      <Box minHeight="100vh" py="62px" px="124px" bg="homePage" w="100vw">
+      <Box py="62px" px="124px" bg="homePage" w="100vw" h="100%">
         <FullHeader />
         <CauseList />
       </Box>
