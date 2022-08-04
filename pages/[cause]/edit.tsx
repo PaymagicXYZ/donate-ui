@@ -66,7 +66,7 @@ const EditCause = () => {
         title: "Changes saved.",
         description: "Your changes have been saved successfully.",
         status: "success",
-        position: "bottom-left",
+        position: "bottom-right",
       });
     }
     setLoading(false);

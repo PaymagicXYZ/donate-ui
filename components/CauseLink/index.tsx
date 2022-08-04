@@ -27,7 +27,7 @@ const CauseLink = () => {
       title: "Copied",
       description: "The link was copied to your clipboard.",
       status: "success",
-      position: "bottom-left",
+      position: "bottom-right",
     });
   };
 

@@ -14,7 +14,7 @@ export default function Notifications() {
           title: "Transaction submitted.",
           description: "Waiting for transaction to be confirmed.",
           status: "info",
-          position: "bottom-left",
+          position: "bottom-right",
           duration: null,
         });
       } else if (notification.type === "transactionSucceed") {
@@ -25,7 +25,7 @@ export default function Notifications() {
           title: "Transaction confirmed.",
           description: "Your donation was sent successfully.",
           status: "success",
-          position: "bottom-left",
+          position: "bottom-right",
         });
       }
     }
