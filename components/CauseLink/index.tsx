@@ -13,6 +13,8 @@ const CauseLink = () => {
     query: { cause },
   } = useRouter();
 
+  const boldHeader = !cause;
+
   useEffect(() => {
     setTwitterLink(
       `http://twitter.com/intent/tweet?text=Join%20me%20in%20supporting%20this%20cause!&url=${window.location.href}`
@@ -41,7 +43,7 @@ const CauseLink = () => {
           }}
           href="/"
         >
-          <Text opacity={0} color="text">
+          <Text opacity={0} color="text" fontWeight={boldHeader ? 700 : 400}>
             ethgives.to
           </Text>
           <Text
@@ -53,6 +55,7 @@ const CauseLink = () => {
             left={0}
             color="text"
             opacity={0.2}
+            fontWeight={boldHeader ? 700 : 400}
           >
             ethgives.to
           </Text>
@@ -67,6 +70,7 @@ const CauseLink = () => {
               opacity: 1,
             }}
             opacity={0}
+            fontWeight={boldHeader ? 700 : 400}
           >
             ethgives.to
           </Text>
