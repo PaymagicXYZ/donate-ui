@@ -21,7 +21,7 @@ export const RightHeader = () => {
           <Text fontWeight={700}>+ Create a link</Text>
         </Button>
       )}
-      <Account isDark={!isDonating} />
+      <Account isDark={isHome} />
     </Flex>
   );
 };
