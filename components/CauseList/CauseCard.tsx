@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, Center } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTotalFundsRaised } from "../../hooks";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
+import { CopyIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
 
 interface CauseData {
   title: string;
@@ -15,6 +17,7 @@ interface CauseData {
 const CauseCard = (cause: CauseData) => {
   const supabase = useContext(SupabaseContext);
   const [logoURL, setLogoURL] = useState("");
+  const toast = useToast();
   const fetchLogo = async () => {
     const { data, error } = await supabase.storage
       .from("logos")
@@ -26,6 +29,19 @@ const CauseCard = (cause: CauseData) => {
   useEffect(() => {
     fetchLogo();
   }, [cause]);
+
+  const copyToClipBoard = async (e) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/${cause.cause.slug}`;
+    await navigator.clipboard.writeText(url);
+    toast({
+      title: "Copied",
+      description: "The link was copied to your clipboard.",
+      status: "success",
+      position: "bottom-right",
+    });
+  };
+
   return (
     <Box
       _hover={{
@@ -58,15 +74,18 @@ const CauseCard = (cause: CauseData) => {
         <Text fontSize="20px" fontWeight={700} color="text">
           {cause.cause.title}
         </Text>
-        <Text
-          color="text"
-          fontSize="16px"
-          fontWeight={700}
-          opacity={0.2}
-          marginBottom="10px"
-        >
-          / {cause.cause.slug}
-        </Text>
+        <Flex marginBottom="10px">
+          <Text color="text" fontSize="16px" fontWeight={700} opacity={0.2}>
+            / {cause.cause.slug}
+          </Text>
+          <Center>
+            <CopyIcon
+              opacity={0.2}
+              marginLeft="8px"
+              onClick={copyToClipBoard}
+            />
+          </Center>
+        </Flex>
         <Text fontSize="16px" fontWeight={700} opacity={0.9} color="text">
           ${totalFundsRaised}
         </Text>
