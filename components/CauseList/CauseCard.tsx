@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Flex, Box, Text, GridItem } from "@chakra-ui/react";
+import { Flex, Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTotalFundsRaised } from "../../hooks";
@@ -27,7 +27,7 @@ const CauseCard = (cause: CauseData) => {
     fetchLogo();
   }, [cause]);
   return (
-    <GridItem
+    <Box
       _hover={{
         cursor: "pointer",
         bg: "rgba(0, 0, 0, 0.6)",
@@ -35,7 +35,7 @@ const CauseCard = (cause: CauseData) => {
       }}
       borderRadius="6px"
       h="263px"
-      w="290px"
+      maxW="320px"
       bg="#1A191D"
       onClick={() => router.push(`/${cause.cause.slug}`)}
     >
@@ -71,7 +71,7 @@ const CauseCard = (cause: CauseData) => {
           ${totalFundsRaised}
         </Text>
       </Flex>
-    </GridItem>
+    </Box>
   );
 };
 

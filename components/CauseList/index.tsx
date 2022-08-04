@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Grid } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import CauseCard from "./CauseCard";
 import { supabaseClient as supabase } from "../../supabaseClient";
 
-const CauseList = (props) => {
+const CauseList = () => {
   const [causeList, setCauseList] = useState([]);
   useEffect(() => {
     const fetchAllCauses = async () => {
@@ -14,11 +14,11 @@ const CauseList = (props) => {
   }, []);
 
   return (
-    <Grid templateColumns={`repeat(${props.col || 4}, 1fr)`} gap={4} py="50px">
+    <SimpleGrid gap={4} py="50px" minChildWidth="260px" maxChildWidth>
       {causeList.map((cause) => (
         <CauseCard key={cause.id} cause={cause} />
       ))}
-    </Grid>
+    </SimpleGrid>
   );
 };
 
