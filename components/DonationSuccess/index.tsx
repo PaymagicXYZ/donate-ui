@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Flex, Text, Center, Button, HStack } from "@chakra-ui/react";
-import TwitterIcon from "../CauseLink/TwitterIcon";
+import TwitterIcon from "../Icons/TwitterIcon";
 
 const DonationSuccess = () => {
   const [twitterLink, setTwitterLink] = useState("");

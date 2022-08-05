@@ -8,8 +8,8 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import CopyIcon from "./CopyIcon";
-import TwitterIcon from "./TwitterIcon";
+import CopyIcon from "../Icons/CopyIcon";
+import TwitterIcon from "../Icons/TwitterIcon";
 
 const CauseLink = () => {
   const [twitterLink, setTwitterLink] = useState("");
@@ -155,6 +155,7 @@ const CauseLink = () => {
               h="36px"
             >
               <IconButton
+                bg="rgba(0,0,0,0)"
                 _hover={{
                   opacity: 0,
                 }}
@@ -187,6 +188,7 @@ const CauseLink = () => {
                 icon={<CopyIcon />}
               />
               <IconButton
+                bg="rgba(0,0,0,0)"
                 aria-label="twitter-link"
                 _hover={{
                   opacity: 0,

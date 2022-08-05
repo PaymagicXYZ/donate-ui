@@ -12,9 +12,10 @@ const CauseList = () => {
     };
     fetchAllCauses();
   }, []);
+  console.log(causeList);
 
   return (
-    <SimpleGrid gap={4} py="50px" minChildWidth="260px" maxChildWidth>
+    <SimpleGrid gap={4} py="50px" minChildWidth="260px">
       {causeList.map((cause) => (
         <CauseCard key={cause.id} cause={cause} />
       ))}

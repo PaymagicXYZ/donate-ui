@@ -1,10 +1,18 @@
 import { useContext, useEffect, useState } from "react";
-import { Flex, Box, Text, Center } from "@chakra-ui/react";
+import {
+  Link,
+  Flex,
+  Box,
+  Text,
+  Center,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTotalFundsRaised } from "../../hooks";
 import { SupabaseContext } from "../../lib/SupabaseProvider";
-import { CopyIcon } from "@chakra-ui/icons";
+import CopyIcon from "../Icons/CopyIcon";
 import { useToast } from "@chakra-ui/react";
 
 interface CauseData {
@@ -15,7 +23,9 @@ interface CauseData {
 }
 
 const CauseCard = (cause: CauseData) => {
+  const boldHeader = true;
   const supabase = useContext(SupabaseContext);
+  const [linkActive, setLinkActive] = useState(false);
   const [logoURL, setLogoURL] = useState("");
   const toast = useToast();
   const fetchLogo = async () => {
@@ -74,18 +84,121 @@ const CauseCard = (cause: CauseData) => {
         <Text fontSize="20px" fontWeight={700} color="text">
           {cause.cause.title}
         </Text>
-        <Flex marginBottom="10px">
-          <Text color="text" fontSize="16px" fontWeight={700} opacity={0.2}>
-            / {cause.cause.slug}
-          </Text>
-          <Center>
-            <CopyIcon
-              opacity={0.2}
-              marginLeft="8px"
-              onClick={copyToClipBoard}
-            />
-          </Center>
-        </Flex>
+        <HStack w="full" spacing={4} maxHeight="36px" justify="center">
+          <HStack position="relative">
+            <Box
+              position="relative"
+              fontFamily="donate"
+              fontSize="16px"
+              w="2px"
+              h="24px"
+            >
+              <Text
+                fontWeight={700}
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                opacity={linkActive ? 0 : 0.2}
+                transitionDuration="200ms"
+              >
+                /
+              </Text>
+              <Text
+                fontWeight={700}
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                bgClip="text"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={linkActive ? 1 : 0}
+              >
+                /
+              </Text>
+            </Box>
+            <Box position="relative" fontFamily="donate" fontSize="16px">
+              <Text opacity={0} color="text">
+                {cause.cause.slug}
+              </Text>
+              <Text
+                fontWeight={700}
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                opacity={linkActive ? 0 : 0.2}
+                transitionDuration="200ms"
+              >
+                {cause.cause.slug}
+              </Text>
+              <Text
+                fontWeight={700}
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                bgClip="text"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={linkActive ? 1 : 0}
+              >
+                {cause.cause.slug}
+              </Text>
+            </Box>
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              position="relative"
+              fontFamily="donate"
+              fontSize="link"
+              h="36px"
+            >
+              <IconButton
+                size="sm"
+                marginTop="2px"
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                bg="rgba(0,0,0,0)"
+                opacity={0.2}
+                transitionDuration="200ms"
+                aria-label="copy-link"
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={copyToClipBoard}
+                icon={<CopyIcon />}
+              />
+              <IconButton
+                size="sm"
+                marginTop="2px"
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={0}
+                aria-label="copy-link"
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={copyToClipBoard}
+                _hover={{
+                  opacity: 1,
+                }}
+                icon={<CopyIcon />}
+              />
+            </Flex>
+          </HStack>
+        </HStack>
         <Text fontSize="16px" fontWeight={700} opacity={0.9} color="text">
           ${totalFundsRaised}
         </Text>
