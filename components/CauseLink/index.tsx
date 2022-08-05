@@ -1,14 +1,20 @@
-import { Box, Text, HStack, Link, useToast } from "@chakra-ui/react";
-import { useState, FC, useEffect, useRef } from "react";
+import {
+  Box,
+  Text,
+  HStack,
+  Link,
+  useToast,
+  IconButton,
+} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import CopyIcon from "./CopyIcon";
 import TwitterIcon from "./TwitterIcon";
 
 const CauseLink = () => {
   const [twitterLink, setTwitterLink] = useState("");
-  const [slugActive, setSlugActive] = useState(false);
+  const [linkActive, setLinkActive] = useState(false);
   const toast = useToast();
-  const ref = useRef(null);
   const {
     query: { cause },
   } = useRouter();
@@ -33,7 +39,7 @@ const CauseLink = () => {
 
   return (
     <HStack w="full" spacing={4} maxHeight="36px">
-      <HStack>
+      <HStack position="relative">
         <Link
           fontFamily="donate"
           fontSize="link"
@@ -69,7 +75,7 @@ const CauseLink = () => {
             _hover={{
               opacity: 1,
             }}
-            opacity={0}
+            opacity={linkActive ? 1 : 0}
             fontWeight={boldHeader ? 700 : 400}
           >
             ethgives.to
@@ -77,15 +83,40 @@ const CauseLink = () => {
         </Link>
         {!!cause && (
           <>
-            <Text
-              opacity={0.2}
-              fontWeight={700}
+            <Box
+              position="relative"
               fontFamily="donate"
               fontSize="link"
-              color="text"
+              w="12px"
+              h="36px"
             >
-              /
-            </Text>
+              <Text
+                fontWeight={700}
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                opacity={linkActive ? 0 : 0.2}
+                transitionDuration="200ms"
+              >
+                /
+              </Text>
+              <Text
+                fontWeight={700}
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                bgClip="text"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={linkActive ? 1 : 0}
+              >
+                /
+              </Text>
+            </Box>
             <Box position="relative" fontFamily="donate" fontSize="link">
               <Text opacity={0} color="text">
                 {cause}
@@ -99,7 +130,7 @@ const CauseLink = () => {
                 top={0}
                 left={0}
                 color="text"
-                opacity={slugActive ? 0 : 0.2}
+                opacity={linkActive ? 0 : 0.2}
                 transitionDuration="200ms"
               >
                 {cause}
@@ -112,42 +143,84 @@ const CauseLink = () => {
                 top={0}
                 transitionDuration="200ms"
                 left={0}
-                opacity={slugActive ? 1 : 0}
+                opacity={linkActive ? 1 : 0}
               >
                 {cause}
               </Text>
-              {/* <Text
-          ref={ref}
-          fontWeight={700}
-          fontFamily="donate"
-          fontSize="link"
-          color="text"
-          bgGradient={
-            slugActive ? "linear(90deg, #F46B47 0%, #F763B0 100%);" : ""
-          }
-          bgClip={slugActive ? "text" : ""}
-          opacity={slugActive ? 1 : 0.2}
-          // transitionTimingFunction="cubic-bezier(0, 0, .58, 1)"
-        >
-          {cause}
-        </Text> */}
             </Box>
-            <CopyIcon
-              onMouseEnter={() => setSlugActive(true)}
-              onMouseLeave={() => setSlugActive(false)}
-              onClick={copyToClipBoard}
-              opacity={0.2}
-            />
-            <Link
-              onMouseEnter={() => setSlugActive(true)}
-              onMouseLeave={() => setSlugActive(false)}
-              href={twitterLink}
-              isExternal
-              _focus={{ boxShadow: "none" }}
-              opacity={0.2}
+            <Box
+              position="relative"
+              fontFamily="donate"
+              fontSize="link"
+              h="36px"
             >
-              <TwitterIcon />
-            </Link>
+              <IconButton
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={0}
+                color="text"
+                opacity={0.2}
+                transitionDuration="200ms"
+                aria-label="copy-link"
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={copyToClipBoard}
+                icon={<CopyIcon />}
+              />
+              <IconButton
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={0}
+                opacity={0}
+                aria-label="copy-link"
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={copyToClipBoard}
+                _hover={{
+                  opacity: 1,
+                }}
+                icon={<CopyIcon />}
+              />
+              <IconButton
+                aria-label="twitter-link"
+                _hover={{
+                  opacity: 0,
+                }}
+                position="absolute"
+                top={0}
+                left={10}
+                color="text"
+                opacity={0.2}
+                transitionDuration="200ms"
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={() => window.location.replace(twitterLink)}
+                _focus={{ boxShadow: "none" }}
+                icon={<TwitterIcon />}
+              />
+              <IconButton
+                aria-label="twitter-link"
+                bgGradient="linear(90deg, #F46B47 0%, #F763B0 100%)"
+                position="absolute"
+                top={0}
+                transitionDuration="200ms"
+                left={10}
+                opacity={0}
+                onMouseEnter={() => setLinkActive(true)}
+                onMouseLeave={() => setLinkActive(false)}
+                onClick={() => window.location.replace(twitterLink)}
+                _focus={{ boxShadow: "none" }}
+                _hover={{
+                  opacity: 1,
+                }}
+                icon={<TwitterIcon />}
+              />
+            </Box>
           </>
         )}
       </HStack>
