@@ -82,7 +82,7 @@ const CreateEditForm = () => {
   };
 
   useEffect(() => {
-    if (!formState.slug.length) {
+    if (!formState.slug.length && !!slugToCreate) {
       setFormState({
         ...formState,
         slug: slugToCreate as string,
@@ -145,9 +145,6 @@ const CreateEditForm = () => {
   return (
     <FormControl>
       <CauseInputWrapper>
-        <FormLabel color="text" htmlFor="url">
-          Your link
-        </FormLabel>
         <Flex>
           <Text opacity={0.2} color="text">
             ethgives.to{" "}
