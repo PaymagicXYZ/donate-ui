@@ -32,8 +32,9 @@ const INITIAL_STATE = {
 
 const FormLabel = (props) => (
   <ChakraFormLabel
-    marginTop="24px"
-    fontWeight={600}
+    marginTop="32px"
+    marginBottom="16px"
+    fontWeight={400}
     fontSize="14px"
     {...props}
   />
@@ -208,6 +209,7 @@ const CreateEditForm = () => {
           _placeholder={{
             color: "input.placeholder",
             opacity: 0.4,
+            fontWeight: 400,
           }}
           bg="input.active"
           border="0"
@@ -233,6 +235,9 @@ const CreateEditForm = () => {
           onChange={handleChange}
           value={formState.learnMoreLink}
           placeholder="newspaper.com/my-cause"
+          _placeholder={{
+            fontWeight: 400,
+          }}
           id="learnMoreLink"
           name="learnMoreLink"
         />
@@ -252,7 +257,7 @@ const CreateEditForm = () => {
               cursor: "pointer",
             }}
             fontSize="12px"
-            fontWeight={600}
+            fontWeight={400}
             marginRight="16px"
             opacity={isCustomWallet ? 1 : 0.5}
           >
@@ -267,7 +272,7 @@ const CreateEditForm = () => {
               cursor: "pointer",
             }}
             fontSize="12px"
-            fontWeight={600}
+            fontWeight={400}
             opacity={isCustomWallet ? 0.5 : 1}
           >
             Current Wallet
