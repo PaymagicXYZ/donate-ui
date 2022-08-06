@@ -14,7 +14,11 @@ const CauseInfo: FC<Props> = ({ causeData }) => {
   return (
     <Flex direction="column" marginTop="80px" w="full" alignItems="flex-start">
       <Box borderRadius="full" overflow="hidden" h="96px" w="96px">
-        <Image src={causeData?.logoURL || logo} height="96px" width="96px" />
+        {causeData?.logoURL ? (
+          <Image src={causeData.logoURL} height="96px" width="96px" />
+        ) : (
+          <Box height="96px" width="96px" bg="black" borderRadius="full" />
+        )}
       </Box>
       <Text marginTop="24px" fontSize="title" fontWeight="700" color="text">
         {causeData?.title}

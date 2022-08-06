@@ -79,7 +79,11 @@ const CauseCard = (cause: CauseData) => {
           h="96px"
           marginBottom="10px"
         >
-          {!!logoURL && <Image height="96px" width="96px" src={logoURL} />}
+          {!!logoURL ? (
+            <Image height="96px" width="96px" src={logoURL} />
+          ) : (
+            <Box height="96px" width="96px" bg="black" borderRadius="full" />
+          )}
         </Box>
         <Text fontSize="20px" fontWeight={700} color="text">
           {cause.cause.title}
