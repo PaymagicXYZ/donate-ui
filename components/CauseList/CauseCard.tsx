@@ -89,7 +89,7 @@ const CauseCard = (cause: CauseData) => {
           {cause.cause.title}
         </Text>
         <HStack w="full" spacing={4} maxHeight="36px" justify="center">
-          <HStack position="relative">
+          <HStack position="relative" marginLeft="-32px">
             <Box
               position="relative"
               fontFamily="donate"
