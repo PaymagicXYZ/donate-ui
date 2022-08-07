@@ -13,7 +13,6 @@ interface Props {
 
 const History = (props: Props) => {
   const pastDonations = usePastDonations(props.recipentAddress);
-  const { isDarkMode } = useConfig();
   return pastDonations.length ? (
     <Flex
       color="text"
@@ -76,8 +75,7 @@ const History = (props: Props) => {
                 }`}
                 isExternal
               >
-                {format(donation.time)}{" "}
-                <ExternalLink color={isDarkMode ? "white" : "black"} />
+                {format(donation.time)} <ExternalLink color="white" />
               </Link>
             </Text>
           </HStack>
