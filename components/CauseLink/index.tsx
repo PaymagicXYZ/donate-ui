@@ -38,7 +38,7 @@ const CauseLink = () => {
   };
 
   return (
-    <HStack w="full" spacing={4} maxHeight="36px">
+    <HStack w="full" spacing={4} h="48px">
       <HStack position="relative">
         <Link
           fontFamily="donate"

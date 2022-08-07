@@ -75,9 +75,7 @@ export default function Page() {
   return (
     <PannelContainer>
       <LeftPannel>
-        <Flex direction="column">
-          <CauseList col={2} />
-        </Flex>
+        <CauseList />
       </LeftPannel>
       <RightPannel>
         <Box marginTop="45px" alignSelf="flex-start">

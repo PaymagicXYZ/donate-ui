@@ -19,6 +19,7 @@ import {
   Box,
   Container,
   Flex,
+  Switch,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { supabaseClient as supabase } from "../supabaseClient";
@@ -29,6 +30,7 @@ import { PannelContainer } from "../components/Pannels";
 export default function HomePage() {
   const [causeList, setCauseList] = useState<{ slug: string }[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const toast = useToast();
   const router = useRouter();
   const { account, chainId, library } = useEthers();
@@ -77,7 +79,7 @@ export default function HomePage() {
 
   return (
     <PannelContainer>
-      <Box py="62px" px="124px" bg="homePage" w="100vw" h="100%">
+      <Box py="62px" px="124px" bg="homePage" w="100vw" h="100vh">
         <FullHeader />
         <CauseList />
       </Box>
