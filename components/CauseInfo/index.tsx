@@ -12,7 +12,7 @@ interface Props {
 
 const CauseInfo: FC<Props> = ({ causeData }) => {
   return (
-    <Flex direction="column" marginTop="80px" w="full" alignItems="flex-start">
+    <Flex direction="column" w="full" alignItems="flex-start">
       <Box borderRadius="full" overflow="hidden" h="96px" w="96px">
         {causeData?.logoURL ? (
           <Image src={causeData.logoURL} height="96px" width="96px" />
