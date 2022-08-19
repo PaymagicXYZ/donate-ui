@@ -85,7 +85,7 @@ export default function Page() {
             <DonationSuccess />
           ) : (
             <>
-              <Box marginBottom="16px" marginTop="45px" alignSelf="flex-start">
+              <Box marginBottom="16px" alignSelf="flex-start">
                 <Text
                   fontWeight={700}
                   fontFamily="donate"
